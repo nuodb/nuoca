@@ -1,0 +1,60 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+## User editable
+basebox = "nuodb/coachUbuntu1404"
+
+mounts = [] # What local devices do you want mounted on the host? Format: [['/host/mount/point1', '/vm/mount/point/1'], ['/host/mount/point2', '/vm/mount/point2']]
+nodes = {
+  "r0c" => 1,
+  "r0db" => 2
+}
+private_network = "192.168.60.10"
+
+### End User editable
+
+servers = Array.new
+subnets = private_network.split('.')
+multinode = false
+nodes.each_key do |node_type|
+  number_of_nodes = nodes[node_type].to_i
+  (0..number_of_nodes-1).each do |i|
+    server = Hash.new
+    server['vagrantname'] = [node_type, i].join()
+    server['hostname'] = [server['vagrantname'], ".vagrantup.com"].join()
+    server['ipaddress'] = subnets.join('.')
+    subnets[3] = subnets[3].to_i + 1
+    servers << server
+  end
+end
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = basebox
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", 2048]
+    #   vb.gui = true
+  end
+  
+  mounts.each do |mount|
+    config.vm.synced_folder mount[0], mount[1]
+  end
+
+  servers.each do |server|
+    config.vm.define server['vagrantname'] do | client |
+      client.vm.hostname = server['hostname']
+      client.vm.network "private_network", ip: server['ipaddress']
+      if config.vm.box.include?("Ubuntu")
+        client.vm.provision "shell", inline: "sudo apt-get update"
+      end
+      # Populate /etc/hosts
+      servers.each do |server|
+        client.vm.provision "shell", inline: "if [ `grep -c #{server['hostname']} /etc/hosts` -lt 1 ]; then cp /etc/hosts /tmp/hosts && echo #{server['ipaddress']}    #{server['hostname'].split(".")[0]} #{server['hostname']} >> /tmp/hosts && sudo chown root:root /tmp/hosts && sudo chmod 644 /tmp/hosts && sudo mv /tmp/hosts /etc/hosts; fi;"
+      end
+    end
+  end
+end
+
