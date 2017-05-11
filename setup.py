@@ -31,8 +31,10 @@ if v[0] == 2 and v[1] == 7:
           author_email='prex-support@nuodb.com',
           data_files=data_files,
           install_requires=["argparse",
+                            "click",
                             "elasticsearch>=5.0.0,<6.0.0",
-                            "pypubsub==3.3.0"],
+                            "pyyaml"
+                            ],
           dependency_links=[],
           license='TBD',
           packages=['nuoca'],

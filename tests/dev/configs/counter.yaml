@@ -1,0 +1,5 @@
+---
+INPUT_PLUGINS:
+- mpCounterPlugin
+OUTPUT_PLUGINS:
+- printPlugin

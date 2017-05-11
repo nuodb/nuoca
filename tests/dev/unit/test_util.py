@@ -25,7 +25,9 @@ class TestNuoCATopDir(unittest.TestCase):
 
 class TestUtilLogging(unittest.TestCase):
   def runTest(self):
+    nuoca_util.nuoca_set_log_level(logging.INFO)
     nuoca_util.nuoca_log(logging.INFO, "Info message")
+    nuoca_util.nuoca_logging_shutdown()
 
 
 if __name__ == '__main__':
