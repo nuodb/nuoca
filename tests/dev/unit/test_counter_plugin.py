@@ -5,9 +5,11 @@ import unittest
 import nuoca_util
 import json
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
-from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, NuocaMPTransformPlugin
+from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
+  NuocaMPTransformPlugin
 
 from tests.dev.plugins.input.mpCounterPlugin import MPCounterPlugin
+from tests.dev.plugins.output.mpPrinterPlugin import MPPrinterPlugin
 
 class TestInputPlugins(unittest.TestCase):
   def _MPCounterPluginTest(self):
