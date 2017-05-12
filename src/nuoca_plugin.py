@@ -154,8 +154,6 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
           self._send_response(2, "Empty request from parent in Plugin: %s"
                               % self.name)
           continue
-        #request_from_parent = json.loads(request_str_from_parent)
-        #print(request_from_parent)
         if 'Action' not in request_from_parent:
           self._send_response(2, "Action missing from request in Plugin: %s"
                               % self.name)
