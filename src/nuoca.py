@@ -100,8 +100,8 @@ class NuoCA(object):
 
     except Exception as e:
       nuoca_log(logging.ERROR,
-                "Unable to collect response from plugin: %s"
-                % a_plugin.name)
+                "Unable to collect response from plugin: %s\n%s"
+                % (a_plugin.name, str(e)))
       return None
 
     # noinspection PyBroadException
@@ -119,9 +119,9 @@ class NuoCA(object):
 
     except Exception as e:
       nuoca_log(logging.ERROR,
-                "Unknown error attempting to collect"
-                " response from plugin: %s"
-                % a_plugin.name)
+                "Error attempting to collect"
+                " response from plugin: %s\n%s"
+                % (a_plugin.name, str(e)))
       return None
 
     return resp_values
@@ -142,8 +142,8 @@ class NuoCA(object):
         a_plugin.plugin_object.child_pipe.send(plugin_msg)
       except Exception as e:
         nuoca_log(logging.ERROR,
-                  "Unable to send 'Collect' message to plugin: %s"
-                  % a_plugin.name)
+                  "Unable to send %s message to plugin: %s\n%s"
+                  % (plugin_msg, a_plugin.name ,str(e)))
 
     for a_plugin in activated_plugins:
       resp_values = None
@@ -162,9 +162,9 @@ class NuoCA(object):
         rval.update(resp_values['Collected_Values'])
       except Exception as e:
         nuoca_log(logging.ERROR,
-                  "Unknown error attempting to collect"
-                  " response from plugin: %s"
-                  % a_plugin.name)
+                  "Error attempting to collect"
+                  " response from plugin: %s\n%s"
+                  % (a_plugin.name, str(e)))
     return rval
 
   def _store_outputs(self, collected_inputs):
