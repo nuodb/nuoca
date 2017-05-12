@@ -17,6 +17,13 @@ class NuocaMPPlugin(IMultiprocessChildPlugin):
   NuoCA plugins are based on Python Yapsy: http://yapsy.sourceforge.net/
   """
   def __init__(self, parent_pipe, name, plugin_type):
+    """
+    :param parent_pipe: Pipe setup by Yaspy
+    :param name: Name of the plugin.
+    :type name: ``str``
+    :param plugin_type: Plugin type: one of: "Input", "Output", "Transform"
+    :type plugin_type: ``str``
+    """
     nuoca_log(logging.INFO, "Creating plugin: %s" % name)
     self._parent_pipe = parent_pipe
     self._name = name
