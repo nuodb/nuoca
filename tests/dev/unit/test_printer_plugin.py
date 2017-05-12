@@ -3,7 +3,6 @@ from __future__ import print_function
 import os
 import unittest
 import nuoca_util
-import json
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
   NuocaMPTransformPlugin
@@ -35,20 +34,15 @@ class TestOutputPlugins(unittest.TestCase):
         printer_plugin = a_plugin
     self.assertIsNotNone(printer_plugin)
 
-    store_data = {
-                    'foo' : 1,
-                    'bar' : 2
-                 }
+    store_data = {'foo' : 1, 'bar' : 2}
     plugin_msg = {'action': "store", 'ts_values': store_data }
     plugin_resp_msg = None
     printer_plugin.plugin_object.child_pipe.send(plugin_msg)
     if printer_plugin.plugin_object.child_pipe.poll(child_pipe_timeout):
       plugin_resp_msg = printer_plugin.plugin_object.child_pipe.recv()
     self.assertIsNotNone(plugin_resp_msg)
-    resp_values = json.loads(plugin_resp_msg)
-    self.assertIsNotNone(resp_values)
-    self.assertTrue('status_code' in resp_values)
-    self.assertEqual(0, resp_values['status_code'])
+    self.assertTrue('status_code' in plugin_resp_msg)
+    self.assertEqual(0, plugin_resp_msg['status_code'])
 
     plugin_msg = {'action': "exit" }
     plugin_resp_msg = None

@@ -82,16 +82,14 @@ class NuoCA(object):
     Get the response message from the plugin
     :return: Response dictionary if successful, otherwise None.
     """
-    plugin_resp_msg = None
-    resp_values = None
+    response = None
     plugin_obj = a_plugin.plugin_object
     # noinspection PyBroadException
     try:
       if plugin_obj.child_pipe.poll(self._config.PLUGIN_PIPE_TIMEOUT):
-        plugin_resp_msg = plugin_obj.child_pipe.recv()
+        response = plugin_obj.child_pipe.recv()
         if self._verbose:
-          print("%s:%s" % (a_plugin.name, plugin_resp_msg))
-        resp_values = json.loads(plugin_resp_msg)
+          print("%s:%s" % (a_plugin.name, response))
       else:
         nuoca_log(logging.ERROR,
                   "Timeout collecting response values from plugin: %s"
@@ -106,12 +104,12 @@ class NuoCA(object):
 
     # noinspection PyBroadException
     try:
-      if not resp_values:
+      if not response:
         nuoca_log(logging.ERROR,
                   "Unable to collect response values from plugin: %s"
                   % a_plugin.name)
         return None
-      if resp_values['status_code'] != 0:
+      if response['status_code'] != 0:
         nuoca_log(logging.ERROR,
                   "Error collecting values from plugin: %s"
                   % a_plugin.name)
@@ -124,7 +122,7 @@ class NuoCA(object):
                 % (a_plugin.name, str(e)))
       return None
 
-    return resp_values
+    return response
 
   def _collect_inputs(self):
     """
@@ -132,7 +130,8 @@ class NuoCA(object):
     :return: ``dict`` of time-series data
     """
     # TODO - Use Threads so that we can do concurrent collection.
-    plugin_msg = "collect"
+    plugin_msg = {'action': 'collect',
+                  'collection_interval': self._collection_interval}
     rval = {}
     resp_values = None
     activated_plugins = self._get_activated_input_plugins()
@@ -148,9 +147,10 @@ class NuoCA(object):
     for a_plugin in activated_plugins:
       resp_values = None
       plugin_obj = a_plugin.plugin_object
-      resp_values = self._get_plugin_respose(a_plugin)
-      if not resp_values:
+      response = self._get_plugin_respose(a_plugin)
+      if not response:
         continue
+      resp_values = response['resp_values']
 
       # noinspection PyBroadException
       try:
@@ -171,7 +171,7 @@ class NuoCA(object):
     if not collected_inputs:
       return
     rval = {}
-    plugin_msg = {'action': "store", 'ts_values': collected_inputs}
+    plugin_msg = {'action': 'store', 'ts_values': collected_inputs}
     activated_plugins = self._get_activated_output_plugins()
     for a_plugin in activated_plugins:
       # noinspection PyBroadException
