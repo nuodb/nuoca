@@ -40,9 +40,9 @@ def function_exists(module, function):
   :type Python module object
 
   :param function: Name of the Python function
-  :type str
+  :type ``str``
 
-  :return: bool
+  :return: ``bool``
   """
   import inspect
   return hasattr(module, function) and any(
@@ -58,7 +58,7 @@ def resolve_function(module, function):
   :type Python module object
 
   :param function: Name of Python function
-  :type str
+  :type ``str``
 
   :return: Function or None if not found.
   """

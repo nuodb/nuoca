@@ -6,12 +6,13 @@ Created on May 4, 2017
 import os
 import yaml
 
+
 class NuocaConfig(object):
   """
   NuoCA Configuration elements.
   """
   NUOCA_TMPDIR = '/tmp/nuoca'  # Temporary directory for NuoCA
-  NUOCA_LOGFILE = '/tmp/nuoca/nuoca.log' # Path to logfile for NuoCA
+  NUOCA_LOGFILE = '/tmp/nuoca/nuoca.log'  # Path to logfile for NuoCA
   VAGRANT_TESTHOST = '192.168.60.10'  # Used for internal testing
   VAGRANT_USER = 'vagrant'  # Used for internal testing
   PLUGIN_PIPE_TIMEOUT = 5  # Plugin communication pipe timeout in seconds

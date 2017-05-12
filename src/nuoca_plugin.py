@@ -10,16 +10,17 @@ import logging
 from nuoca_util import nuoca_gettimestamp, nuoca_log
 from yapsy.IMultiprocessChildPlugin import IMultiprocessChildPlugin
 
+
 class NuocaMPPlugin(IMultiprocessChildPlugin):
   """
   Base class for NuoCA Multi-Process Plugins
   NuoCA plugins are based on Python Yapsy: http://yapsy.sourceforge.net/
   """
-  def __init__(self, parent_pipe, name, type):
+  def __init__(self, parent_pipe, name, plugin_type):
     nuoca_log(logging.INFO, "Creating plugin: %s" % name)
     self._parent_pipe = parent_pipe
     self._name = name
-    self._type = type
+    self._type = plugin_type
     self._enabled = False
     IMultiprocessChildPlugin.__init__(self, parent_pipe=parent_pipe)
 
@@ -70,7 +71,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     This function is called by Yapsy
     """
     self._enabled = True
-    while(self.enabled):
+    while self.enabled:
       collected_values = None
       response = {}
       try:
@@ -109,9 +110,8 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     :return: time-series values
     :type: ``dict``
     """
-    rval = {}
-    rval["NuoCA_Plugin"] = self.name
-    rval["Collect_Timestamp"] = nuoca_gettimestamp()
+    rval = {"NuoCA_Plugin": self.name,
+            "Collect_Timestamp": nuoca_gettimestamp()}
     return rval
 
 
@@ -129,10 +129,8 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
   def __init__(self, parent_pipe, name):
     super(NuocaMPOutputPlugin, self).__init__(parent_pipe, name, "Output")
 
-
   def _send_response(self, status_code, err_msg=None, resp_dict=None):
-    response = {}
-    response["StatusCode"] = status_code
+    response = {"StatusCode": status_code}
     if err_msg:
       response["ErrorMsg"] = err_msg
     if resp_dict:
@@ -145,7 +143,7 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
     This function is called by Yapsy
     """
     self._enabled = True
-    while (self.enabled):
+    while self.enabled:
       collected_values = None
       response = {}
       try:

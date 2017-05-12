@@ -3,7 +3,8 @@ import json
 import traceback
 from nuoca_util import *
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
-from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, NuocaMPTransformPlugin
+from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
+  NuocaMPTransformPlugin
 from nuoca_config import NuocaConfig
 
 
@@ -47,7 +48,6 @@ class NuoCA(object):
     self._plugin_directories = [input_plugin_dir,
                                 output_plugin_dir,
                                 transform_plugin_dir]
-
 
   def _collection_cycle(self, starttime):
     """
@@ -143,7 +143,7 @@ class NuoCA(object):
       except Exception as e:
         nuoca_log(logging.ERROR,
                   "Unable to send %s message to plugin: %s\n%s"
-                  % (plugin_msg, a_plugin.name ,str(e)))
+                  % (plugin_msg, a_plugin.name, str(e)))
 
     for a_plugin in activated_plugins:
       resp_values = None
@@ -171,7 +171,7 @@ class NuoCA(object):
     if not collected_inputs:
       return
     rval = {}
-    plugin_msg = {'Action': "Store", 'TS_Values': collected_inputs }
+    plugin_msg = {'Action': "Store", 'TS_Values': collected_inputs}
     activated_plugins = self._get_activated_output_plugins()
     for a_plugin in activated_plugins:
       # noinspection PyBroadException
@@ -179,11 +179,10 @@ class NuoCA(object):
         a_plugin.plugin_object.child_pipe.send(plugin_msg)
       except Exception as e:
         nuoca_log(logging.ERROR,
-                  "Unable to send 'Store' message to plugin: %s"
-                  % a_plugin.name)
+                  "Unable to send 'Store' message to plugin: %s\n%s"
+                  % (a_plugin.name, str(e)))
 
     for a_plugin in activated_plugins:
-      resp_values = None
       plugin_obj = a_plugin.plugin_object
       resp_values = self._get_plugin_respose(a_plugin)
       if not resp_values:
