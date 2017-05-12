@@ -1,0 +1,5 @@
+argparse
+click
+elasticsearch>=5.0.0,<6.0.0
+pyyaml
+Yapsy==1.11.223

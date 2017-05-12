@@ -1,11 +1,18 @@
 import os
+import time
 import uuid
 import hashlib
 import logging
+from nuoca_config import NuocaConfig
+
+
+# NuoCA Temp Dir
+if not os.path.exists(NuocaConfig.NUOCA_TMPDIR):
+  os.mkdir(NuocaConfig.NUOCA_TMPDIR)
 
 # Global NuoCA logger
 nuoca_logger = logging.getLogger('nuoca')
-loghandler = logging.FileHandler("nuoca.log")
+loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
 loghandler.setLevel(logging.INFO)
 loghandler.setFormatter(
   logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
@@ -33,9 +40,9 @@ def function_exists(module, function):
   :type Python module object
 
   :param function: Name of the Python function
-  :type str
+  :type ``str``
 
-  :return: bool
+  :return: ``bool``
   """
   import inspect
   return hasattr(module, function) and any(
@@ -51,7 +58,7 @@ def resolve_function(module, function):
   :type Python module object
 
   :param function: Name of Python function
-  :type str
+  :type ``str``
 
   :return: Function or None if not found.
   """
@@ -59,7 +66,7 @@ def resolve_function(module, function):
   if function_exists(module, function):
     func = getattr(module, function)
   if not func:
-    log(logging.ERROR, "Cannot find Python function %s in module %s" % (
+    nuoca_log(logging.ERROR, "Cannot find Python function %s in module %s" % (
       function, module
     ))
   return func
@@ -105,3 +112,10 @@ def nuoca_logging_shutdown():
   Shutdown ALL logging
   """
   logging.shutdown()
+
+
+def nuoca_gettimestamp():
+  """
+  Get the current Epoch time (Unix Timestamp)
+  """
+  return int(time.time())

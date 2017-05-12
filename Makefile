@@ -62,6 +62,6 @@ integration-test-start-vm:
 	(cd vagrant/ubuntu14_nuoca; vagrant up r0c0)
 
 unit-test:
-	(cd tests/dev && PYTHONPATH=../../src ./run_unit_tests.py)
+	(cd tests/dev && PYTHONPATH=../../src:../.. ./run_unit_tests.py)
 
 
