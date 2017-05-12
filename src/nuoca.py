@@ -63,11 +63,68 @@ class NuoCA(object):
 
   def _get_activated_input_plugins(self):
     """
-    Get a list of "activated" plugins
+    Get a list of "activated" input plugins
     """
     input_list = self.manager.getPluginsOfCategory('Input')
     activated_list = [x for x in input_list if x.is_activated]
     return activated_list
+
+  def _get_activated_output_plugins(self):
+    """
+    Get a list of "activated" output plugins
+    """
+    output_list = self.manager.getPluginsOfCategory('Output')
+    activated_list = [x for x in output_list if x.is_activated]
+    return activated_list
+
+  def _get_plugin_respose(self, a_plugin):
+    """
+    Get the response message from the plugin
+    :return: Response dictionary if successful, otherwise None.
+    """
+    plugin_resp_msg = None
+    resp_values = None
+    plugin_obj = a_plugin.plugin_object
+    # noinspection PyBroadException
+    try:
+      if plugin_obj.child_pipe.poll(self._config.PLUGIN_PIPE_TIMEOUT):
+        plugin_resp_msg = plugin_obj.child_pipe.recv()
+        if self._verbose:
+          print("%s:%s" % (a_plugin.name, plugin_resp_msg))
+        resp_values = json.loads(plugin_resp_msg)
+      else:
+        nuoca_log(logging.ERROR,
+                  "Timeout collecting response values from plugin: %s"
+                  % a_plugin.name)
+        return None
+
+    except Exception as e:
+      nuoca_log(logging.ERROR,
+                "Unable to collect response from plugin: %s"
+                % a_plugin.name)
+      return None
+
+    # noinspection PyBroadException
+    try:
+      if not resp_values:
+        nuoca_log(logging.ERROR,
+                  "Unable to collect response values from plugin: %s"
+                  % a_plugin.name)
+        return None
+      if resp_values['StatusCode'] != 0:
+        nuoca_log(logging.ERROR,
+                  "Error collecting values from plugin: %s"
+                  % a_plugin.name)
+        return None
+
+    except Exception as e:
+      nuoca_log(logging.ERROR,
+                "Unknown error attempting to collect"
+                " response from plugin: %s"
+                % a_plugin.name)
+      return None
+
+    return resp_values
 
   def _collect_inputs(self):
     """
@@ -79,7 +136,6 @@ class NuoCA(object):
     rval = {}
     resp_values = None
     activated_plugins = self._get_activated_input_plugins()
-
     for a_plugin in activated_plugins:
       # noinspection PyBroadException
       try:
@@ -90,40 +146,14 @@ class NuoCA(object):
                   % a_plugin.name)
 
     for a_plugin in activated_plugins:
-      plugin_resp_msg = None
       resp_values = None
       plugin_obj = a_plugin.plugin_object
-      # noinspection PyBroadException
-      try:
-        if plugin_obj.child_pipe.poll(self._config.PLUGIN_PIPE_TIMEOUT):
-          plugin_resp_msg = plugin_obj.child_pipe.recv()
-          if self._verbose:
-            print("%s:%s" % (a_plugin.name, plugin_resp_msg))
-          resp_values = json.loads(plugin_resp_msg)
-        else:
-          nuoca_log(logging.ERROR,
-                    "Timeout collecting response values from plugin: %s"
-                    % a_plugin.name)
-          continue
-
-      except Exception as e:
-        nuoca_log(logging.ERROR,
-                  "Unable to collect response from plugin: %s"
-                  % a_plugin.name)
+      resp_values = self._get_plugin_respose(a_plugin)
+      if not resp_values:
         continue
 
       # noinspection PyBroadException
       try:
-        if not resp_values:
-          nuoca_log(logging.ERROR,
-                    "Unable to collect response values from plugin: %s"
-                    % a_plugin.name)
-          continue
-        if resp_values['StatusCode'] != 0:
-          nuoca_log(logging.ERROR,
-                    "Error collecting values from plugin: %s"
-                    % a_plugin.name)
-          continue
         if 'Collected_Values' not in resp_values:
           nuoca_log(logging.ERROR,
                     "'Collected_Values' missing in response from plugin: %s"
@@ -135,13 +165,31 @@ class NuoCA(object):
                   "Unknown error attempting to collect"
                   " response from plugin: %s"
                   % a_plugin.name)
-
     return rval
 
   def _store_outputs(self, collected_inputs):
-    # TODO Implement after output plugins are implemented.
-    pass
+    if not collected_inputs:
+      return
+    rval = {}
+    plugin_msg = {'Action': "Store", 'TS_Values': collected_inputs }
+    activated_plugins = self._get_activated_output_plugins()
+    for a_plugin in activated_plugins:
+      # noinspection PyBroadException
+      try:
+        a_plugin.plugin_object.child_pipe.send(plugin_msg)
+      except Exception as e:
+        nuoca_log(logging.ERROR,
+                  "Unable to send 'Store' message to plugin: %s"
+                  % a_plugin.name)
 
+    for a_plugin in activated_plugins:
+      resp_values = None
+      plugin_obj = a_plugin.plugin_object
+      resp_values = self._get_plugin_respose(a_plugin)
+      if not resp_values:
+        continue
+
+    return rval
 
   def _create_plugin_manager(self):
     self.manager = MultiprocessPluginManager(
@@ -149,7 +197,7 @@ class NuoCA(object):
         plugin_info_ext="multiprocess-plugin")
     self.manager.setCategoriesFilter({
         "Input": NuocaMPInputPlugin,
-        "Ouput": NuocaMPOutputPlugin,
+        "Output": NuocaMPOutputPlugin,
         "Transform": NuocaMPTransformPlugin
     })
 
@@ -157,6 +205,8 @@ class NuoCA(object):
     self.manager.collectPlugins()
     for input_plugin in self._config.INPUT_PLUGINS:
       self.manager.activatePluginByName(input_plugin, 'Input')
+    for output_plugin in self._config.OUTPUT_PLUGINS:
+      self.manager.activatePluginByName(output_plugin, 'Output')
 
   def start(self):
     """
