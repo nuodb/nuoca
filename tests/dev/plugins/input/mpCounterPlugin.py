@@ -14,5 +14,5 @@ class MPCounterPlugin(NuocaMPInputPlugin):
   def collect(self):
     rval = super(MPCounterPlugin, self).collect()
     self.increment()
-    rval["Counter"] = self.get_count()
+    rval["counter"] = self.get_count()
     return rval

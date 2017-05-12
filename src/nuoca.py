@@ -56,7 +56,7 @@ class NuoCA(object):
     """
     nuoca_log(logging.INFO, "Starting collection interval: %s" % starttime)
     collected_inputs = self._collect_inputs()
-    collected_inputs['CollectionInterval'] = self._collection_interval
+    collected_inputs['collection_interval'] = self._collection_interval
     collected_inputs['timestamp'] = starttime + self._collection_interval
     # TODO Transformations
     self._store_outputs(collected_inputs)
@@ -111,7 +111,7 @@ class NuoCA(object):
                   "Unable to collect response values from plugin: %s"
                   % a_plugin.name)
         return None
-      if resp_values['StatusCode'] != 0:
+      if resp_values['status_code'] != 0:
         nuoca_log(logging.ERROR,
                   "Error collecting values from plugin: %s"
                   % a_plugin.name)
@@ -132,7 +132,7 @@ class NuoCA(object):
     :return: ``dict`` of time-series data
     """
     # TODO - Use Threads so that we can do concurrent collection.
-    plugin_msg = "Collect"
+    plugin_msg = "collect"
     rval = {}
     resp_values = None
     activated_plugins = self._get_activated_input_plugins()
@@ -154,12 +154,12 @@ class NuoCA(object):
 
       # noinspection PyBroadException
       try:
-        if 'Collected_Values' not in resp_values:
+        if 'collected_values' not in resp_values:
           nuoca_log(logging.ERROR,
                     "'Collected_Values' missing in response from plugin: %s"
                     % a_plugin.name)
           continue
-        rval.update(resp_values['Collected_Values'])
+        rval.update(resp_values['collected_values'])
       except Exception as e:
         nuoca_log(logging.ERROR,
                   "Error attempting to collect"
@@ -171,7 +171,7 @@ class NuoCA(object):
     if not collected_inputs:
       return
     rval = {}
-    plugin_msg = {'Action': "Store", 'TS_Values': collected_inputs}
+    plugin_msg = {'action': "store", 'ts_values': collected_inputs}
     activated_plugins = self._get_activated_output_plugins()
     for a_plugin in activated_plugins:
       # noinspection PyBroadException

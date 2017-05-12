@@ -20,9 +20,9 @@ class TestInputPlugins(unittest.TestCase):
     self.assertEqual(1, counter_plugin.get_count())
     resp_values = counter_plugin.collect()
     self.assertIsNotNone(resp_values)
-    self.assertIsNotNone(resp_values['NuoCA_Plugin'])
-    self.assertEqual(2, resp_values['Counter'])
-    self.assertIsNotNone(resp_values['Collect_Timestamp'])
+    self.assertIsNotNone(resp_values['nuoca_plugin'])
+    self.assertEqual(2, resp_values['counter'])
+    self.assertIsNotNone(resp_values['collect_timestamp'])
 
   def _MultiprocessPluginManagerTest(self, manager):
     child_pipe_timeout = 600
@@ -44,7 +44,7 @@ class TestInputPlugins(unittest.TestCase):
         counter_plugin = a_plugin
     self.assertIsNotNone(counter_plugin)
 
-    plugin_msg = "Collect"
+    plugin_msg = "collect"
     plugin_resp_msg = None
     counter_plugin.plugin_object.child_pipe.send(plugin_msg)
     if counter_plugin.plugin_object.child_pipe.poll(child_pipe_timeout):
@@ -52,13 +52,13 @@ class TestInputPlugins(unittest.TestCase):
     self.assertIsNotNone(plugin_resp_msg)
     resp_values = json.loads(plugin_resp_msg)
     self.assertIsNotNone(resp_values)
-    self.assertEqual(0, resp_values['StatusCode'])
-    self.assertIsNotNone(resp_values['Collected_Values'])
-    self.assertIsNotNone(resp_values['Collected_Values']['NuoCA_Plugin'])
-    self.assertEqual(1, resp_values['Collected_Values']['Counter'])
-    self.assertIsNotNone(resp_values['Collected_Values']['Collect_Timestamp'])
+    self.assertEqual(0, resp_values['status_code'])
+    self.assertIsNotNone(resp_values['collected_values'])
+    self.assertIsNotNone(resp_values['collected_values']['nuoca_plugin'])
+    self.assertEqual(1, resp_values['collected_values']['counter'])
+    self.assertIsNotNone(resp_values['collected_values']['collect_timestamp'])
 
-    plugin_msg = "Exit"
+    plugin_msg = "exit"
     plugin_resp_msg = None
     counter_plugin.plugin_object.child_pipe.send(plugin_msg)
     if counter_plugin.plugin_object.child_pipe.poll(child_pipe_timeout):

@@ -39,7 +39,7 @@ class TestOutputPlugins(unittest.TestCase):
                     'foo' : 1,
                     'bar' : 2
                  }
-    plugin_msg = {'Action': "Store", 'TS_Values': store_data }
+    plugin_msg = {'action': "store", 'ts_values': store_data }
     plugin_resp_msg = None
     printer_plugin.plugin_object.child_pipe.send(plugin_msg)
     if printer_plugin.plugin_object.child_pipe.poll(child_pipe_timeout):
@@ -47,10 +47,10 @@ class TestOutputPlugins(unittest.TestCase):
     self.assertIsNotNone(plugin_resp_msg)
     resp_values = json.loads(plugin_resp_msg)
     self.assertIsNotNone(resp_values)
-    self.assertTrue('StatusCode' in resp_values)
-    self.assertEqual(0, resp_values['StatusCode'])
+    self.assertTrue('status_code' in resp_values)
+    self.assertEqual(0, resp_values['status_code'])
 
-    plugin_msg = {'Action': "Exit" }
+    plugin_msg = {'action': "exit" }
     plugin_resp_msg = None
     printer_plugin.plugin_object.child_pipe.send(plugin_msg)
     if printer_plugin.plugin_object.child_pipe.poll(child_pipe_timeout):

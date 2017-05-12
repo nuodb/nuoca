@@ -76,23 +76,23 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
       response = {}
       try:
         content_from_parent = self.parent_pipe.recv()
-        if content_from_parent == "Collect":
+        if content_from_parent == "collect":
           collected_values = self.collect()
-          response["StatusCode"] = 0
-          response["Collected_Values"] = collected_values
-        elif content_from_parent == "Exit":
+          response["status_code"] = 0
+          response["collected_values"] = collected_values
+        elif content_from_parent == "exit":
           self._enabled = False
-          response["StatusCode"] = 0
-          response["Collected_Values"] = collected_values
+          response["status_code"] = 0
+          response["collected_values"] = collected_values
         else:
-          response["StatusCode"] = 2
-          response["ErrorMsg"] = \
+          response["status_code"] = 2
+          response["error_msg"] = \
             "NuoCA Message '%s' unknown" % \
                                  content_from_parent
       except Exception as e:
-        response["StatusCode"] = 1
-        response["ErrorMsg"] = "Unhandled exception: %s" % e
-        response["StackTrace"] = traceback.format_exc()
+        response["status_code"] = 1
+        response["error_msg"] = "Unhandled exception: %s" % e
+        response["stack_trace"] = traceback.format_exc()
       resp_msg = json.dumps(response)
       self.parent_pipe.send(resp_msg)
 
@@ -110,8 +110,8 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     :return: time-series values
     :type: ``dict``
     """
-    rval = {"NuoCA_Plugin": self.name,
-            "Collect_Timestamp": nuoca_gettimestamp()}
+    rval = {"nuoca_plugin": self.name,
+            "collect_timestamp": nuoca_gettimestamp()}
     return rval
 
 
@@ -130,11 +130,11 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
     super(NuocaMPOutputPlugin, self).__init__(parent_pipe, name, "Output")
 
   def _send_response(self, status_code, err_msg=None, resp_dict=None):
-    response = {"StatusCode": status_code}
+    response = {"status_code": status_code}
     if err_msg:
-      response["ErrorMsg"] = err_msg
+      response["error_msg"] = err_msg
     if resp_dict:
-      response["RespValues"] = resp_dict
+      response["resp_values"] = resp_dict
     resp_msg = json.dumps(response)
     self.parent_pipe.send(resp_msg)
 
@@ -152,17 +152,17 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
           self._send_response(2, "Empty request from parent in Plugin: %s"
                               % self.name)
           continue
-        if 'Action' not in request_from_parent:
+        if 'action' not in request_from_parent:
           self._send_response(2, "Action missing from request in Plugin: %s"
                               % self.name)
           continue
-        action = request_from_parent['Action']
-        if action == "Store":
-          ts_values = request_from_parent['TS_Values']
+        action = request_from_parent['action']
+        if action == "store":
+          ts_values = request_from_parent['ts_values']
           resp_from_store = self.store(ts_values)
           self._send_response(0, None, resp_from_store)
           continue
-        elif action == "Exit":
+        elif action == "exit":
           self._enabled = False
           self._send_response(0, None, {"goodbye": "world"})
           continue
@@ -171,9 +171,9 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
                               % (action, self.name))
           continue
       except Exception as e:
-        response["StatusCode"] = 1
-        response["ErrorMsg"] = "Unhandled exception: %s" % e
-        response["StackTrace"] = traceback.format_exc()
+        response["status_code"] = 1
+        response["error_msg"] = "Unhandled exception: %s" % e
+        response["stack_trace"] = traceback.format_exc()
         resp_msg = json.dumps(response)
         self.parent_pipe.send(resp_msg)
 
