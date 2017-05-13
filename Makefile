@@ -20,9 +20,9 @@
 clean: integration-test-clean-vm-box
 	find . -name '*.pyc' -exec rm -f {} +
 
-continuous-test: unit-test integration-test-destroy-vms integration-test
+continuous-test: unit-test integration-test
 
-integration-test: integration-test-start-vm
+integration-test:
 	tests/dev/integration/run_tests.sh
 
 integration-test-destroy-vms:
