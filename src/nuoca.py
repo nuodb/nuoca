@@ -14,7 +14,7 @@ class NuoCA(object):
   """
   def __init__(self, config_file=None, collection_interval=30,
                plugin_dir=None, starttime=None, verbose=False,
-               self_test=False):
+               self_test=False, log_level=logging.INFO):
     """
     :param config_file: Path to NuoCA configuration file.
     :type config_file: ``str``
@@ -35,7 +35,8 @@ class NuoCA(object):
     :type verbose: ``bool``
     """
     self._config = NuocaConfig(config_file)
-    nuoca_set_log_level(logging.INFO)
+
+    nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
     self._collection_interval = collection_interval
     self._starttime = starttime
@@ -111,12 +112,12 @@ class NuoCA(object):
     try:
       if not response:
         nuoca_log(logging.ERROR,
-                  "Unable to collect response values from plugin: %s"
+                  "Missing response from plugin: %s"
                   % a_plugin.name)
         return None
       if response['status_code'] != 0:
         nuoca_log(logging.ERROR,
-                  "Error collecting values from plugin: %s"
+                  "status_code missing from plugin response: %s"
                   % a_plugin.name)
         return None
 
@@ -294,12 +295,17 @@ class NuoCA(object):
               help='Run with verbose messages written to stdout')
 @click.option('--self-test', is_flag=True, default=False,
               help='Run 5 collection intervals then exit')
+@click.option('--log-level', default='INFO',
+              type=click.Choice(['CRITICAL', 'ERROR', 'WARNING',
+                                 'INFO', 'DEBUG']),
+              help='Set log level during test execution.')
 def nuoca(config_file, collection_interval, plugin_dir,
-          starttime, verbose, self_test):
+          starttime, verbose, self_test, log_level):
   nuoca_obj = None
   try:
     nuoca_obj = NuoCA(config_file, collection_interval, plugin_dir,
-                      starttime, verbose, self_test)
+                      starttime, verbose, self_test,
+                      logging.getLevelName(log_level))
     nuoca_obj.start()
   except AttributeError as e:
     msg = str(e)
