@@ -17,6 +17,13 @@ class NuocaMPPlugin(IMultiprocessChildPlugin):
   NuoCA plugins are based on Python Yapsy: http://yapsy.sourceforge.net/
   """
   def __init__(self, parent_pipe, name, plugin_type):
+    """
+    :param parent_pipe: Pipe setup by Yaspy
+    :param name: Name of the plugin.
+    :type name: ``str``
+    :param plugin_type: Plugin type: one of: "Input", "Output", "Transform"
+    :type plugin_type: ``str``
+    """
     nuoca_log(logging.INFO, "Creating plugin: %s" % name)
     self._parent_pipe = parent_pipe
     self._name = name
@@ -66,6 +73,14 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     """
     super(NuocaMPInputPlugin, self).__init__(parent_pipe, name, "Input")
 
+  def _send_response(self, status_code, err_msg=None, resp_dict=None):
+    response = {'status_code': status_code}
+    if err_msg:
+      response['error_msg'] = err_msg
+    if resp_dict:
+      response['resp_values'] = resp_dict
+    self.parent_pipe.send(response)
+
   def run(self):
     """
     This function is called by Yapsy
@@ -75,31 +90,39 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
       collected_values = None
       response = {}
       try:
-        content_from_parent = self.parent_pipe.recv()
-        if content_from_parent == "Collect":
-          collected_values = self.collect()
-          response["StatusCode"] = 0
-          response["Collected_Values"] = collected_values
-        elif content_from_parent == "Exit":
+        request_from_parent = self.parent_pipe.recv()
+        if not request_from_parent:
+          self._send_response(2, "Empty request from parent in Plugin: %s"
+                              % self.name)
+          continue
+        if 'action' not in request_from_parent:
+          self._send_response(2, "Action missing from request in Plugin: %s"
+                              % self.name)
+          continue
+        action = request_from_parent['action']
+        if action == 'collect':
+          collection_interval = request_from_parent['collection_interval']
+          collected_values = self.collect(collection_interval)
+          self._send_response(0, None, {'collected_values': collected_values})
+          continue
+        elif action == 'exit':
           self._enabled = False
-          response["StatusCode"] = 0
-          response["Collected_Values"] = collected_values
+          self._send_response(0, None, {'goodbye': 'world'})
+          continue
         else:
-          response["StatusCode"] = 2
-          response["ErrorMsg"] = \
-            "NuoCA Message '%s' unknown" % \
-                                 content_from_parent
+          self._send_response(2, "Action %s unknown in Plugin: %s"
+                              % (action, self.name))
+          continue
+
       except Exception as e:
-        response["StatusCode"] = 1
-        response["ErrorMsg"] = "Unhandled exception: %s" % e
-        response["StackTrace"] = traceback.format_exc()
-      resp_msg = json.dumps(response)
-      self.parent_pipe.send(resp_msg)
+        err_msg = "Unhandled exception: %s\n%s" % (e, traceback.format_exc())
+        self._send_response(1, err_msg)
+
 
   def deactivate(self):
     super(NuocaMPInputPlugin, self).deactivate()
 
-  def collect(self):
+  def collect(self, collection_interval):
     """
     NuoCA Plugins must implement their own collect() function and also call
     this collect() function.  The collect function must return a Python
@@ -107,11 +130,13 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
 
     NuoCA will call this function once at the beginning of each Collection
     Interval.
+    :param collection_interval: Collection Interval
+    :type collection_interval: ``int``
     :return: time-series values
     :type: ``dict``
     """
-    rval = {"NuoCA_Plugin": self.name,
-            "Collect_Timestamp": nuoca_gettimestamp()}
+    rval = {'nuoca_plugin': self.name,
+            'collect_timestamp': nuoca_gettimestamp()}
     return rval
 
 
@@ -130,13 +155,12 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
     super(NuocaMPOutputPlugin, self).__init__(parent_pipe, name, "Output")
 
   def _send_response(self, status_code, err_msg=None, resp_dict=None):
-    response = {"StatusCode": status_code}
+    response = {'status_code': status_code}
     if err_msg:
-      response["ErrorMsg"] = err_msg
+      response['error_msg'] = err_msg
     if resp_dict:
-      response["RespValues"] = resp_dict
-    resp_msg = json.dumps(response)
-    self.parent_pipe.send(resp_msg)
+      response['resp_values'] = resp_dict
+    self.parent_pipe.send(response)
 
   def run(self):
     """
@@ -152,30 +176,27 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
           self._send_response(2, "Empty request from parent in Plugin: %s"
                               % self.name)
           continue
-        if 'Action' not in request_from_parent:
+        if 'action' not in request_from_parent:
           self._send_response(2, "Action missing from request in Plugin: %s"
                               % self.name)
           continue
-        action = request_from_parent['Action']
-        if action == "Store":
-          ts_values = request_from_parent['TS_Values']
+        action = request_from_parent['action']
+        if action == 'store':
+          ts_values = request_from_parent['ts_values']
           resp_from_store = self.store(ts_values)
           self._send_response(0, None, resp_from_store)
           continue
-        elif action == "Exit":
+        elif action == 'exit':
           self._enabled = False
-          self._send_response(0, None, {"goodbye": "world"})
+          self._send_response(0, None, {'goodbye': 'world'})
           continue
         else:
           self._send_response(2, "Action %s unknown in Plugin: %s"
                               % (action, self.name))
           continue
       except Exception as e:
-        response["StatusCode"] = 1
-        response["ErrorMsg"] = "Unhandled exception: %s" % e
-        response["StackTrace"] = traceback.format_exc()
-        resp_msg = json.dumps(response)
-        self.parent_pipe.send(resp_msg)
+        err_msg = "Unhandled exception: %s\n%s" % (e, traceback.format_exc())
+        self._send_response(1, err_msg)
 
   def store(self, ts_values):
     pass

@@ -13,7 +13,8 @@ class NuoCA(object):
   NuoDB Collection Agent
   """
   def __init__(self, config_file=None, collection_interval=30,
-               plugin_dir=None, starttime=None, verbose=False):
+               plugin_dir=None, starttime=None, verbose=False,
+               self_test=False):
     """
     :param config_file: Path to NuoCA configuration file.
     :type config_file: ``str``
@@ -29,6 +30,9 @@ class NuoCA(object):
 
     :param verbose: Flag to indicate printing of verbose messages to stdout.
     :type verbose: ``bool``
+
+    :param verbose: Flag to indicate a 5 loop self test.
+    :type verbose: ``bool``
     """
     self._config = NuocaConfig(config_file)
     nuoca_set_log_level(logging.INFO)
@@ -38,6 +42,7 @@ class NuoCA(object):
     self._plugin_topdir = plugin_dir
     self._enabled = True
     self._verbose = verbose
+    self._self_test = self_test
     if not self._plugin_topdir:
       self._plugin_topdir = os.path.join(get_nuoca_topdir(),
                                          "plugins")
@@ -56,7 +61,7 @@ class NuoCA(object):
     """
     nuoca_log(logging.INFO, "Starting collection interval: %s" % starttime)
     collected_inputs = self._collect_inputs()
-    collected_inputs['CollectionInterval'] = self._collection_interval
+    collected_inputs['collection_interval'] = self._collection_interval
     collected_inputs['timestamp'] = starttime + self._collection_interval
     # TODO Transformations
     self._store_outputs(collected_inputs)
@@ -82,16 +87,14 @@ class NuoCA(object):
     Get the response message from the plugin
     :return: Response dictionary if successful, otherwise None.
     """
-    plugin_resp_msg = None
-    resp_values = None
+    response = None
     plugin_obj = a_plugin.plugin_object
     # noinspection PyBroadException
     try:
       if plugin_obj.child_pipe.poll(self._config.PLUGIN_PIPE_TIMEOUT):
-        plugin_resp_msg = plugin_obj.child_pipe.recv()
+        response = plugin_obj.child_pipe.recv()
         if self._verbose:
-          print("%s:%s" % (a_plugin.name, plugin_resp_msg))
-        resp_values = json.loads(plugin_resp_msg)
+          print("%s:%s" % (a_plugin.name, response))
       else:
         nuoca_log(logging.ERROR,
                   "Timeout collecting response values from plugin: %s"
@@ -106,12 +109,12 @@ class NuoCA(object):
 
     # noinspection PyBroadException
     try:
-      if not resp_values:
+      if not response:
         nuoca_log(logging.ERROR,
                   "Unable to collect response values from plugin: %s"
                   % a_plugin.name)
         return None
-      if resp_values['StatusCode'] != 0:
+      if response['status_code'] != 0:
         nuoca_log(logging.ERROR,
                   "Error collecting values from plugin: %s"
                   % a_plugin.name)
@@ -124,7 +127,21 @@ class NuoCA(object):
                 % (a_plugin.name, str(e)))
       return None
 
-    return resp_values
+    return response
+
+  def _exit_plugin(self, a_plugin):
+    """
+    Send Exit message to plugin.
+    :param a_plugin: The plugin
+    """
+    nuoca_log(logging.INFO, "Called to exit plugin: %s" % a_plugin.name)
+    plugin_msg = {'action': 'exit'}
+    try:
+      a_plugin.plugin_object.child_pipe.send(plugin_msg)
+    except Exception as e:
+      nuoca_log(logging.ERROR,
+                "Unable to send %s message to plugin: %s\n%s"
+                % (plugin_msg, a_plugin.name, str(e)))
 
   def _collect_inputs(self):
     """
@@ -132,7 +149,8 @@ class NuoCA(object):
     :return: ``dict`` of time-series data
     """
     # TODO - Use Threads so that we can do concurrent collection.
-    plugin_msg = "Collect"
+    plugin_msg = {'action': 'collect',
+                  'collection_interval': self._collection_interval}
     rval = {}
     resp_values = None
     activated_plugins = self._get_activated_input_plugins()
@@ -148,18 +166,19 @@ class NuoCA(object):
     for a_plugin in activated_plugins:
       resp_values = None
       plugin_obj = a_plugin.plugin_object
-      resp_values = self._get_plugin_respose(a_plugin)
-      if not resp_values:
+      response = self._get_plugin_respose(a_plugin)
+      if not response:
         continue
+      resp_values = response['resp_values']
 
       # noinspection PyBroadException
       try:
-        if 'Collected_Values' not in resp_values:
+        if 'collected_values' not in resp_values:
           nuoca_log(logging.ERROR,
                     "'Collected_Values' missing in response from plugin: %s"
                     % a_plugin.name)
           continue
-        rval.update(resp_values['Collected_Values'])
+        rval.update(resp_values['collected_values'])
       except Exception as e:
         nuoca_log(logging.ERROR,
                   "Error attempting to collect"
@@ -171,7 +190,7 @@ class NuoCA(object):
     if not collected_inputs:
       return
     rval = {}
-    plugin_msg = {'Action': "Store", 'TS_Values': collected_inputs}
+    plugin_msg = {'action': 'store', 'ts_values': collected_inputs}
     activated_plugins = self._get_activated_output_plugins()
     for a_plugin in activated_plugins:
       # noinspection PyBroadException
@@ -200,19 +219,31 @@ class NuoCA(object):
         "Transform": NuocaMPTransformPlugin
     })
 
-  def _load_plugins(self):
+  def _load_all_plugins(self):
     self.manager.collectPlugins()
     for input_plugin in self._config.INPUT_PLUGINS:
       self.manager.activatePluginByName(input_plugin, 'Input')
     for output_plugin in self._config.OUTPUT_PLUGINS:
       self.manager.activatePluginByName(output_plugin, 'Output')
+    # TODO Transform Plugins
+
+  def _remove_all_plugins(self):
+    for input_plugin in self._config.INPUT_PLUGINS:
+      self.manager.deactivatePluginByName(input_plugin, 'Input')
+      a_plugin = self.manager.getPluginByName(input_plugin, 'Input')
+      self._exit_plugin(a_plugin)
+    for output_plugin in self._config.OUTPUT_PLUGINS:
+      self.manager.deactivatePluginByName(output_plugin, 'Output')
+      a_plugin = self.manager.getPluginByName(output_plugin, 'Output')
+      self._exit_plugin(a_plugin)
+    # TODO Transform Plugins
 
   def start(self):
     """
     Startup NuoCA
     """
     self._create_plugin_manager()
-    self._load_plugins()
+    self._load_all_plugins()
 
     # Find the start of the next time interval
     current_timestamp = nuoca_gettimestamp()
@@ -225,21 +256,28 @@ class NuoCA(object):
       next_interval_starttime = self._starttime
 
     # Collection Interval Loop
+    loop_count = 0
     while self._enabled:
+      loop_count += 1
       current_timestamp = nuoca_gettimestamp()
       waittime = next_interval_starttime - current_timestamp
       if waittime > 0:
         time.sleep(waittime)
       next_interval_starttime += self._collection_interval
       self._collection_cycle(next_interval_starttime)
+      if self._self_test:
+        if loop_count >= 5:
+          self._enabled = False
 
   # noinspection PyMethodMayBeStatic
   def shutdown(self):
     """
     Shutdown NuoCA
     """
+    print("shutting down")
     nuoca_log(logging.INFO, "nuoca server shutdown")
     nuoca_logging_shutdown()
+    self._remove_all_plugins()
 
 
 @click.command()
@@ -254,11 +292,14 @@ class NuoCA(object):
                    'for first collection interval')
 @click.option('--verbose', is_flag=True, default=False,
               help='Run with verbose messages written to stdout')
-def nuoca(config_file, collection_interval, plugin_dir, starttime, verbose):
+@click.option('--self-test', is_flag=True, default=False,
+              help='Run 5 collection intervals then exit')
+def nuoca(config_file, collection_interval, plugin_dir,
+          starttime, verbose, self_test):
   nuoca_obj = None
   try:
-    nuoca_obj = NuoCA(config_file, collection_interval,
-                      plugin_dir, starttime, verbose)
+    nuoca_obj = NuoCA(config_file, collection_interval, plugin_dir,
+                      starttime, verbose, self_test)
     nuoca_obj.start()
   except AttributeError as e:
     msg = str(e)
