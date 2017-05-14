@@ -14,6 +14,12 @@ class TestInputPlugins(unittest.TestCase):
   def _MPCounterPluginTest(self):
     counter_plugin = MPCounterPlugin(None)
     self.assertIsNotNone(counter_plugin)
+    config = {'increment': 'not-an-integer'}
+    startup_rval = counter_plugin.startup(config)
+    self.assertFalse(startup_rval)
+    config = {'increment': 1}
+    startup_rval = counter_plugin.startup(config)
+    self.assertTrue(startup_rval)
     self.assertEqual(0, counter_plugin.get_count())
     counter_plugin.increment()
     self.assertEqual(1, counter_plugin.get_count())
@@ -22,6 +28,7 @@ class TestInputPlugins(unittest.TestCase):
     self.assertIsNotNone(resp_values['nuoca_plugin'])
     self.assertEqual(2, resp_values['counter'])
     self.assertIsNotNone(resp_values['collect_timestamp'])
+    counter_plugin.shutdown()
 
   def _MultiprocessPluginManagerTest(self, manager):
     child_pipe_timeout = 600
@@ -43,6 +50,14 @@ class TestInputPlugins(unittest.TestCase):
         counter_plugin = a_plugin
     self.assertIsNotNone(counter_plugin)
 
+    plugin_msg = {'action': 'startup', 'config': None}
+    plugin_resp_msg = None
+    counter_plugin.plugin_object.child_pipe.send(plugin_msg)
+    if counter_plugin.plugin_object.child_pipe.poll(child_pipe_timeout):
+      plugin_resp_msg = counter_plugin.plugin_object.child_pipe.recv()
+    self.assertIsNotNone(plugin_resp_msg)
+    self.assertEqual(0, plugin_resp_msg['status_code'])
+
     plugin_msg = {'action': 'collect', 'collection_interval':3}
     plugin_resp_msg = None
     counter_plugin.plugin_object.child_pipe.send(plugin_msg)
@@ -56,6 +71,10 @@ class TestInputPlugins(unittest.TestCase):
     self.assertIsNotNone(resp_values['collected_values']['nuoca_plugin'])
     self.assertEqual(1, resp_values['collected_values']['counter'])
     self.assertIsNotNone(resp_values['collected_values']['collect_timestamp'])
+
+    plugin_msg = {'action': 'shutdown'}
+    plugin_resp_msg = None
+    counter_plugin.plugin_object.child_pipe.send(plugin_msg)
 
     plugin_msg = {'action': 'exit'}
     plugin_resp_msg = None

@@ -105,6 +105,14 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
           collected_values = self.collect(collection_interval)
           self._send_response(0, None, {'collected_values': collected_values})
           continue
+        elif action == 'startup':
+          config = request_from_parent['config']
+          startup_rval = self.startup(config)
+          self._send_response(int(not startup_rval))
+          continue
+        elif action == 'shutdown':
+          self.shutdown()
+          continue
         elif action == 'exit':
           self._enabled = False
           self._send_response(0, None, {'goodbye': 'world'})
@@ -185,6 +193,14 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
           ts_values = request_from_parent['ts_values']
           resp_from_store = self.store(ts_values)
           self._send_response(0, None, resp_from_store)
+          continue
+        elif action == 'startup':
+          config = request_from_parent['config']
+          startup_rval = self.startup(config)
+          self._send_response(int(not startup_rval))
+          continue
+        elif action == 'shutdown':
+          self.shutdown()
           continue
         elif action == 'exit':
           self._enabled = False

@@ -1,5 +1,8 @@
 ---
 INPUT_PLUGINS:
-- mpCounterPlugin
+- mpCounterPlugin:
+    description : A simple counter
+    interval : 1
 OUTPUT_PLUGINS:
-- mpPrinterPlugin
+- mpPrinterPlugin:
+
