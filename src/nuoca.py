@@ -42,8 +42,16 @@ class NuoCA(object):
     self._starttime = starttime
     self._plugin_topdir = plugin_dir
     self._enabled = True
-    self._verbose = verbose
+    self._verbose = verbose  # Used to make stdout verbose.
     self._self_test = self_test
+
+    # The following self._*_plugins are dictionaries of two element
+    # tuples in the form: (plugin object, plugin configuration) keyed
+    # by the plugin name.
+    self._input_plugins = {}
+    self._output_plugins = {}
+    self._transform_plugins = {}
+
     if not self._plugin_topdir:
       self._plugin_topdir = os.path.join(get_nuoca_topdir(),
                                          "plugins")
@@ -55,15 +63,15 @@ class NuoCA(object):
                                 output_plugin_dir,
                                 transform_plugin_dir]
 
-  def _collection_cycle(self, starttime):
+  def _collection_cycle(self, endtime):
     """
-    _collection_cycle is called at the beginning of each Collection
+    _collection_cycle is called at the end of each Collection
     Interval.
     """
-    nuoca_log(logging.INFO, "Starting collection interval: %s" % starttime)
+    nuoca_log(logging.INFO, "Starting collection interval: %s" % endtime)
     collected_inputs = self._collect_inputs()
     collected_inputs['collection_interval'] = self._collection_interval
-    collected_inputs['timestamp'] = starttime + self._collection_interval
+    collected_inputs['timestamp'] = endtime
     # TODO Transformations
     self._store_outputs(collected_inputs)
 
@@ -115,7 +123,7 @@ class NuoCA(object):
                   "Missing response from plugin: %s"
                   % a_plugin.name)
         return None
-      if response['status_code'] != 0:
+      if not 'status_code' in response:
         nuoca_log(logging.ERROR,
                   "status_code missing from plugin response: %s"
                   % a_plugin.name)
@@ -130,6 +138,36 @@ class NuoCA(object):
 
     return response
 
+  def _startup_plugin(self, a_plugin, config=None):
+    """
+    Send start message to plugin.
+    :param a_plugin: The plugin
+    :param config: NuoCA Configuration
+    :type config: ``dict``
+    """
+    response = None
+    nuoca_log(logging.INFO, "Called to start plugin: %s" % a_plugin.name)
+    plugin_msg = {'action': 'startup', 'config': config}
+    try:
+      a_plugin.plugin_object.child_pipe.send(plugin_msg)
+    except Exception as e:
+      nuoca_log(logging.ERROR,
+                "Unable to send %s message to plugin: %s\n%s"
+                % (plugin_msg, a_plugin.name, str(e)))
+
+    try:
+      response = self._get_plugin_respose(a_plugin)
+    except Exception as e:
+      nuoca_log(logging.ERROR,
+                "Problem with response on %s message to plugin: %s\n%s"
+                % (plugin_msg, a_plugin.name, str(e)))
+    if response['status_code'] != 0:
+      nuoca_log(logging.ERROR,
+                "Disabling plugin that failed to startup: %s"
+                % a_plugin.name)
+      self.manager.deactivatePluginByName(a_plugin.name, a_plugin.category)
+      self._shutdown_plugin(a_plugin)
+
   def _exit_plugin(self, a_plugin):
     """
     Send Exit message to plugin.
@@ -137,6 +175,22 @@ class NuoCA(object):
     """
     nuoca_log(logging.INFO, "Called to exit plugin: %s" % a_plugin.name)
     plugin_msg = {'action': 'exit'}
+    try:
+      a_plugin.plugin_object.child_pipe.send(plugin_msg)
+    except Exception as e:
+      nuoca_log(logging.ERROR,
+                "Unable to send %s message to plugin: %s\n%s"
+                % (plugin_msg, a_plugin.name, str(e)))
+
+  def _shutdown_plugin(self, a_plugin):
+    """
+    Send stop message to plugin.
+    :param a_plugin: The plugin
+    :param config: NuoCA Configuration
+    :type config: ``dict``
+    """
+    nuoca_log(logging.INFO, "Called to shutdown plugin: %s" % a_plugin.name)
+    plugin_msg = {'action': 'shutdown'}
     try:
       a_plugin.plugin_object.child_pipe.send(plugin_msg)
     except Exception as e:
@@ -223,18 +277,50 @@ class NuoCA(object):
   def _load_all_plugins(self):
     self.manager.collectPlugins()
     for input_plugin in self._config.INPUT_PLUGINS:
-      self.manager.activatePluginByName(input_plugin, 'Input')
+      input_plugin_name = input_plugin.keys()[0]
+      if not self.manager.activatePluginByName(input_plugin_name, 'Input'):
+        err_msg = "Cannot activate input plugin: '%s', Skipping." % \
+                  input_plugin_name
+        nuoca_log(logging.WARNING, err_msg)
+      else:
+        a_plugin = self.manager.getPluginByName(input_plugin_name, 'Input')
+        if a_plugin:
+          input_plugin_config = input_plugin.values()[0]
+          self._startup_plugin(a_plugin, input_plugin_config)
+          self._input_plugins[input_plugin_name] = (a_plugin,
+                                                    input_plugin_config)
+
     for output_plugin in self._config.OUTPUT_PLUGINS:
-      self.manager.activatePluginByName(output_plugin, 'Output')
+      output_plugin_name = output_plugin.keys()[0]
+      if not self.manager.activatePluginByName(output_plugin_name, 'Output'):
+        err_msg = "Cannot activate output plugin: '%s', Skipping." % \
+                  output_plugin_name
+        nuoca_log(logging.WARNING, err_msg)
+      else:
+        a_plugin = self.manager.getPluginByName(output_plugin_name, 'Output')
+        if a_plugin:
+          output_plugin_config = output_plugin.values()[0]
+          self._startup_plugin(a_plugin, output_plugin_config)
+          self._output_plugins[output_plugin_name] = (a_plugin,
+                                                      output_plugin_config)
+    # TODO Transform Plugins
+
+  def _shutdown_all_plugins(self):
+    for input_plugin in self._input_plugins:
+      self.manager.deactivatePluginByName(input_plugin, 'Input')
+      a_plugin = self.manager.getPluginByName(input_plugin, 'Input')
+      self._shutdown_plugin(a_plugin)
+    for output_plugin in self._output_plugins:
+      self.manager.deactivatePluginByName(output_plugin, 'Output')
+      a_plugin = self.manager.getPluginByName(output_plugin, 'Output')
+      self._shutdown_plugin(a_plugin)
     # TODO Transform Plugins
 
   def _remove_all_plugins(self):
-    for input_plugin in self._config.INPUT_PLUGINS:
-      self.manager.deactivatePluginByName(input_plugin, 'Input')
+    for input_plugin in self._input_plugins:
       a_plugin = self.manager.getPluginByName(input_plugin, 'Input')
       self._exit_plugin(a_plugin)
-    for output_plugin in self._config.OUTPUT_PLUGINS:
-      self.manager.deactivatePluginByName(output_plugin, 'Output')
+    for output_plugin in self._output_plugins:
       a_plugin = self.manager.getPluginByName(output_plugin, 'Output')
       self._exit_plugin(a_plugin)
     # TODO Transform Plugins
@@ -248,24 +334,24 @@ class NuoCA(object):
 
     # Find the start of the next time interval
     current_timestamp = nuoca_gettimestamp()
-    next_interval_starttime = current_timestamp
+    next_interval_time = current_timestamp
     if self._starttime:
       if current_timestamp >= self._starttime:
         msg = "starttime must be in the future."
         nuoca_log(logging.ERROR, msg)
         raise AttributeError(msg)
-      next_interval_starttime = self._starttime
+      next_interval_time = self._starttime
 
     # Collection Interval Loop
     loop_count = 0
     while self._enabled:
       loop_count += 1
       current_timestamp = nuoca_gettimestamp()
-      waittime = next_interval_starttime - current_timestamp
+      waittime = next_interval_time - current_timestamp
       if waittime > 0:
         time.sleep(waittime)
-      next_interval_starttime += self._collection_interval
-      self._collection_cycle(next_interval_starttime)
+      next_interval_time += self._collection_interval
+      self._collection_cycle(next_interval_time)
       if self._self_test:
         if loop_count >= 5:
           self._enabled = False
@@ -278,6 +364,7 @@ class NuoCA(object):
     print("shutting down")
     nuoca_log(logging.INFO, "nuoca server shutdown")
     nuoca_logging_shutdown()
+    self._shutdown_all_plugins()
     self._remove_all_plugins()
 
 

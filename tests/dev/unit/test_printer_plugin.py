@@ -13,6 +13,8 @@ class TestOutputPlugins(unittest.TestCase):
   def _MPPrinterPluginTest(self):
     printer_plugin = MPPrinterPlugin(None)
     self.assertIsNotNone(printer_plugin)
+    startup_rval = printer_plugin.startup(None)
+    self.assertTrue(startup_rval)
     printer_plugin.store({'message': 'hello'})
 
   def _MultiprocessPluginManagerTest(self, manager):
@@ -33,6 +35,14 @@ class TestOutputPlugins(unittest.TestCase):
       if a_plugin.name == 'mpPrinterPlugin':
         printer_plugin = a_plugin
     self.assertIsNotNone(printer_plugin)
+
+    plugin_msg = {'action': 'startup', 'config': None}
+    plugin_resp_msg = None
+    printer_plugin.plugin_object.child_pipe.send(plugin_msg)
+    if printer_plugin.plugin_object.child_pipe.poll(child_pipe_timeout):
+      plugin_resp_msg = printer_plugin.plugin_object.child_pipe.recv()
+    self.assertIsNotNone(plugin_resp_msg)
+    self.assertEqual(0, plugin_resp_msg['status_code'])
 
     store_data = {'foo' : 1, 'bar' : 2}
     plugin_msg = {'action': "store", 'ts_values': store_data }

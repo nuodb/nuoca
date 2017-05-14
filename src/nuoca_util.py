@@ -117,8 +117,9 @@ def nuoca_log(log_level, msg):
   :param log_level: logger log level
   :param msg: str: log message
   """
-  global nuoca_logger
+  global nuoca_logger, nuoca_loghandler
   nuoca_logger.log(log_level, msg)
+  nuoca_loghandler.flush()
 
 
 def nuoca_logging_shutdown():

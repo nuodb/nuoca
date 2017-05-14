@@ -23,12 +23,17 @@ class NuocaConfig(object):
   OUTPUT_PLUGINS = []
   TRANSFORM_PLUGINS = []
 
+  def _validate(self, userconfig):
+    # TODO Implement
+    pass
+
   def __init__(self, config_file):
     if not config_file:
       raise AttributeError("You must provide a NuoCA Config file")
     if not os.path.exists(config_file):
       raise AttributeError("Config file: %s does not exist" % config_file)
     userconfig = yaml.load(open(config_file).read())
+    self._validate(userconfig)
     if not userconfig:
       return
     self.NUOCA_CONFIG_FILE = config_file
