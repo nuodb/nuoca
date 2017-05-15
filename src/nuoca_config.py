@@ -17,6 +17,8 @@ class NuocaConfig(object):
   VAGRANT_USER = 'vagrant'  # Used for internal testing
   PLUGIN_PIPE_TIMEOUT = 5  # Plugin communication pipe timeout in seconds
   NUOCA_CONFIG_FILE = None
+  SELFTEST_LOOP_COUNT = 5  # Number of Collection Intervals in selftest.
+  SUBPROCESS_EXIT_TIMEOUT = 5  # Max seconds to wait for subprocess exit
 
   # Plugins that will be populated from the NuoCA configuration file.
   INPUT_PLUGINS = []

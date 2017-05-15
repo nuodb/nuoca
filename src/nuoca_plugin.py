@@ -43,6 +43,10 @@ class NuocaMPPlugin(IMultiprocessChildPlugin):
   def enabled(self):
     return self._enabled
 
+  @enabled.setter
+  def enabled(self, value):
+    self._enabled = value
+
   def activate(self):
     nuoca_log(logging.INFO, "Activate plugin: %s" % self.name)
     super(NuocaMPPlugin, self).activate()
@@ -85,7 +89,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     """
     This function is called by Yapsy
     """
-    self._enabled = True
+    self.enabled = True
     while self.enabled:
       collected_values = None
       response = {}
@@ -114,7 +118,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
           self.shutdown()
           continue
         elif action == 'exit':
-          self._enabled = False
+          self.enabled = False
           self._send_response(0, None, {'goodbye': 'world'})
           continue
         else:
@@ -174,7 +178,7 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
     """
     This function is called by Yapsy
     """
-    self._enabled = True
+    self.enabled = True
     while self.enabled:
       collected_values = None
       response = {}
@@ -203,7 +207,7 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
           self.shutdown()
           continue
         elif action == 'exit':
-          self._enabled = False
+          self.enabled = False
           self._send_response(0, None, {'goodbye': 'world'})
           continue
         else:
