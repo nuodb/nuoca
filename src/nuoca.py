@@ -63,6 +63,10 @@ class NuoCA(object):
                                 output_plugin_dir,
                                 transform_plugin_dir]
 
+  @property
+  def config(self):
+    return self._config
+
   def _collection_cycle(self, endtime):
     """
     _collection_cycle is called at the end of each Collection
@@ -100,7 +104,7 @@ class NuoCA(object):
     plugin_obj = a_plugin.plugin_object
     # noinspection PyBroadException
     try:
-      if plugin_obj.child_pipe.poll(self._config.PLUGIN_PIPE_TIMEOUT):
+      if plugin_obj.child_pipe.poll(self.config.PLUGIN_PIPE_TIMEOUT):
         response = plugin_obj.child_pipe.recv()
         if self._verbose:
           print("%s:%s" % (a_plugin.name, response))
@@ -276,7 +280,7 @@ class NuoCA(object):
 
   def _load_all_plugins(self):
     self.manager.collectPlugins()
-    for input_plugin in self._config.INPUT_PLUGINS:
+    for input_plugin in self.config.INPUT_PLUGINS:
       input_plugin_name = input_plugin.keys()[0]
       if not self.manager.activatePluginByName(input_plugin_name, 'Input'):
         err_msg = "Cannot activate input plugin: '%s', Skipping." % \
@@ -290,7 +294,7 @@ class NuoCA(object):
           self._input_plugins[input_plugin_name] = (a_plugin,
                                                     input_plugin_config)
 
-    for output_plugin in self._config.OUTPUT_PLUGINS:
+    for output_plugin in self.config.OUTPUT_PLUGINS:
       output_plugin_name = output_plugin.keys()[0]
       if not self.manager.activatePluginByName(output_plugin_name, 'Output'):
         err_msg = "Cannot activate output plugin: '%s', Skipping." % \
@@ -316,7 +320,12 @@ class NuoCA(object):
       self._shutdown_plugin(a_plugin)
     # TODO Transform Plugins
 
-  def _remove_all_plugins(self):
+  def _remove_all_plugins(self, timeout=5):
+    """
+    Remove all plugins
+    :param timeout: Maximum seconds to wait for subprocess to exit.
+    :type timeout: ``int``
+    """
     for input_plugin in self._input_plugins:
       a_plugin = self.manager.getPluginByName(input_plugin, 'Input')
       self._exit_plugin(a_plugin)
@@ -324,6 +333,21 @@ class NuoCA(object):
       a_plugin = self.manager.getPluginByName(output_plugin, 'Output')
       self._exit_plugin(a_plugin)
     # TODO Transform Plugins
+
+    # At this point all configured plugin subprocesses should be exiting
+    # on their own.  However, if there is any plugin subprocess that didn't
+    # exit for any reason, we must terminate them so we don't hang the
+    # NuoCA process at exit.
+    all_plugins = self.manager.getAllPlugins()
+    wait_count = timeout  # maximum seconds to wait for processes
+                          # to exit on their own
+    for a_plugin in all_plugins:
+      while a_plugin.plugin_object.proc.is_alive() and wait_count > 0:
+        time.sleep(1)
+        wait_count -= 1
+      if a_plugin.plugin_object.proc.is_alive():
+        nuoca_log(logging.INFO, "Killing plugin subprocess: %s" % a_plugin)
+        a_plugin.plugin_object.proc.terminate()
 
   def start(self):
     """
@@ -353,19 +377,45 @@ class NuoCA(object):
       next_interval_time += self._collection_interval
       self._collection_cycle(next_interval_time)
       if self._self_test:
-        if loop_count >= 5:
+        if loop_count >= self._config.SELFTEST_LOOP_COUNT:
           self._enabled = False
 
   # noinspection PyMethodMayBeStatic
-  def shutdown(self):
+  def shutdown(self, timeout=5):
     """
     Shutdown NuoCA
+    :param timeout: Maximum seconds to wait for subprocess to exit.
+    :type timeout: ``int``
     """
-    print("shutting down")
     nuoca_log(logging.INFO, "nuoca server shutdown")
-    nuoca_logging_shutdown()
     self._shutdown_all_plugins()
-    self._remove_all_plugins()
+    self._remove_all_plugins(timeout)
+    nuoca_logging_shutdown()
+
+
+def nuoca_run(config_file, collection_interval, plugin_dir,
+              starttime, verbose, self_test,
+              log_level):
+  nuoca_obj = None
+  try:
+    nuoca_obj = NuoCA(config_file, collection_interval, plugin_dir,
+                      starttime, verbose, self_test,
+                      logging.getLevelName(log_level))
+    nuoca_obj.start()
+  except AttributeError as e:
+    msg = str(e)
+    nuoca_log(logging.ERROR, msg)
+    print(msg)
+  except Exception as e:
+    msg = "Unhandled exception: %s" % e
+    nuoca_log(logging.ERROR, msg)
+    print(msg)
+    stacktrace = traceback.format_exc()
+    print(stacktrace)
+  finally:
+    if nuoca_obj:
+      nuoca_obj.shutdown(nuoca_obj.config.SUBPROCESS_EXIT_TIMEOUT)
+  print("Done.")
 
 
 @click.command()
@@ -388,27 +438,8 @@ class NuoCA(object):
               help='Set log level during test execution.')
 def nuoca(config_file, collection_interval, plugin_dir,
           starttime, verbose, self_test, log_level):
-  nuoca_obj = None
-  try:
-    nuoca_obj = NuoCA(config_file, collection_interval, plugin_dir,
-                      starttime, verbose, self_test,
-                      logging.getLevelName(log_level))
-    nuoca_obj.start()
-  except AttributeError as e:
-    msg = str(e)
-    nuoca_log(logging.ERROR, msg)
-    print(msg)
-  except Exception as e:
-    msg = "Unhandled exception: %s" % e
-    nuoca_log(logging.ERROR, msg)
-    print(msg)
-    stacktrace = traceback.format_exc()
-    print(stacktrace)
-  finally:
-    if nuoca_obj:
-      nuoca_obj.shutdown()
-  print("Done.")
-
+  nuoca_run(config_file, collection_interval, plugin_dir,
+          starttime, verbose, self_test, log_level)
 
 if __name__ == "__main__":
   nuoca()
