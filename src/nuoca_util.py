@@ -17,7 +17,7 @@ nuoca_logger = logging.getLogger('nuoca')
 nuoca_loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
 nuoca_loghandler.setLevel(logging.INFO)
 nuoca_loghandler.setFormatter(
-  logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
+    logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
 nuoca_logger.addHandler(nuoca_loghandler)
 
 # Global Yapsy logger
@@ -25,7 +25,7 @@ yapsy_logger = logging.getLogger('yapsy')
 yapsy_loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
 yapsy_loghandler.setLevel(logging.INFO)
 yapsy_loghandler.setFormatter(
-  logging.Formatter('%(asctime)s YAPSY %(levelname)s %(message)s'))
+    logging.Formatter('%(asctime)s YAPSY %(levelname)s %(message)s'))
 yapsy_logger.addHandler(yapsy_loghandler)
 
 
@@ -48,7 +48,7 @@ def function_exists(module, function):
   Check Python module for specificed function.
 
   :param module: Python module
-  :type Python module object
+  :type module: ``types.ModuleType.``
 
   :param function: Name of the Python function
   :type ``str``
@@ -57,8 +57,8 @@ def function_exists(module, function):
   """
   import inspect
   return hasattr(module, function) and any(
-    function in f for f, _ in inspect.getmembers(
-      module, inspect.isroutine))
+      function in f for f, _ in inspect.getmembers(
+          module, inspect.isroutine))
 
 
 def resolve_function(module, function):
@@ -66,7 +66,7 @@ def resolve_function(module, function):
   Locate specified Python function in the specified Python package.
 
   :param module: A Python module
-  :type Python module object
+  :type module: ``types.ModuleType.``
 
   :param function: Name of Python function
   :type ``str``
@@ -78,7 +78,7 @@ def resolve_function(module, function):
     func = getattr(module, function)
   if not func:
     nuoca_log(logging.ERROR, "Cannot find Python function %s in module %s" % (
-      function, module
+        function, module
     ))
   return func
 

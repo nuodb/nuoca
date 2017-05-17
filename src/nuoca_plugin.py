@@ -4,7 +4,6 @@ Created on May 4, 2017
 @author: tgates
 """
 
-import json
 import traceback
 import logging
 from nuoca_util import nuoca_gettimestamp, nuoca_log
@@ -16,24 +15,24 @@ class NuocaMPPlugin(IMultiprocessChildPlugin):
   Base class for NuoCA Multi-Process Plugins
   NuoCA plugins are based on Python Yapsy: http://yapsy.sourceforge.net/
   """
-  def __init__(self, parent_pipe, name, plugin_type):
+  def __init__(self, parent_pipe, plugin_name, plugin_type):
     """
     :param parent_pipe: Pipe setup by Yaspy
-    :param name: Name of the plugin.
-    :type name: ``str``
+    :param plugin_name: Name of the plugin.
+    :type plugin_name: ``str``
     :param plugin_type: Plugin type: one of: "Input", "Output", "Transform"
     :type plugin_type: ``str``
     """
-    nuoca_log(logging.INFO, "Creating plugin: %s" % name)
+    nuoca_log(logging.INFO, "Creating plugin: %s" % plugin_name)
     self._parent_pipe = parent_pipe
-    self._name = name
+    self._plugin_name = plugin_name
     self._type = plugin_type
     self._enabled = False
     IMultiprocessChildPlugin.__init__(self, parent_pipe=parent_pipe)
 
   @property
-  def name(self):
-    return self._name
+  def plugin_name(self):
+    return self._plugin_name
 
   @property
   def type(self):
@@ -52,6 +51,12 @@ class NuocaMPPlugin(IMultiprocessChildPlugin):
     super(NuocaMPPlugin, self).activate()
     self._enabled = True
 
+  def startup(self, config):
+    pass
+
+  def shutdown(self):
+    pass
+
   def deactivate(self):
     nuoca_log(logging.INFO, "Deactivate plugin: %s" % self.name)
     super(NuocaMPPlugin, self).deactivate()
@@ -69,13 +74,13 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     2) call this __init__ function from the Plugin's __init__.
     3) Implement a collect() method that calls this collect() method.
   """
-  def __init__(self, parent_pipe, name):
+  def __init__(self, parent_pipe, plugin_name):
     """
     :param parent_pipe: Provided by Yapsy
-    :param name: Plugin name
-    :type name: ``str``
+    :param plugin_name: Plugin name
+    :type plugin_name: ``str``
     """
-    super(NuocaMPInputPlugin, self).__init__(parent_pipe, name, "Input")
+    super(NuocaMPInputPlugin, self).__init__(parent_pipe, plugin_name, "Input")
 
   def _send_response(self, status_code, err_msg=None, resp_dict=None):
     response = {'status_code': status_code}
@@ -91,8 +96,6 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     """
     self.enabled = True
     while self.enabled:
-      collected_values = None
-      response = {}
       try:
         request_from_parent = self.parent_pipe.recv()
         if not request_from_parent:
@@ -130,7 +133,6 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
         err_msg = "Unhandled exception: %s\n%s" % (e, traceback.format_exc())
         self._send_response(1, err_msg)
 
-
   def deactivate(self):
     super(NuocaMPInputPlugin, self).deactivate()
 
@@ -147,7 +149,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     :return: time-series values
     :type: ``dict``
     """
-    rval = {'nuoca_plugin': self.name,
+    rval = {'nuoca_plugin': self.plugin_name,
             'collect_timestamp': nuoca_gettimestamp()}
     return rval
 
@@ -163,8 +165,9 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
     2) call this __init__ function from the Plugin's __init__.
     3) Implement a store() method that calls this store() method.
   """
-  def __init__(self, parent_pipe, name):
-    super(NuocaMPOutputPlugin, self).__init__(parent_pipe, name, "Output")
+  def __init__(self, parent_pipe, plugin_name):
+    super(NuocaMPOutputPlugin, self).__init__(parent_pipe, plugin_name,
+                                              "Output")
 
   def _send_response(self, status_code, err_msg=None, resp_dict=None):
     response = {'status_code': status_code}
@@ -180,8 +183,6 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
     """
     self.enabled = True
     while self.enabled:
-      collected_values = None
-      response = {}
       try:
         request_from_parent = self.parent_pipe.recv()
         if not request_from_parent:
@@ -226,9 +227,9 @@ class NuocaMPTransformPlugin(NuocaMPPlugin):
   """
   NuoCA Multi-Process Transformation Plugin
   """
-  def __init__(self, parent_pipe, name):
+  def __init__(self, parent_pipe, plugin_name):
     super(NuocaMPTransformPlugin, self).__init__(parent_pipe,
-                                                 name, "Transform")
+                                                 plugin_name, "Transform")
     raise Exception("Not Yet Implemented")
 
 

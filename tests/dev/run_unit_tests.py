@@ -8,6 +8,7 @@ import os
 import sys
 import unittest
 
+
 def main():
     test_dir = os.path.join(os.path.dirname('__file__'), 'unit')
     suite = unittest.TestLoader().discover(test_dir, pattern="test_*.py")
