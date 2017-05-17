@@ -1,10 +1,9 @@
 import click
-import json
 import traceback
 from nuoca_util import *
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
-  NuocaMPTransformPlugin
+    NuocaMPTransformPlugin
 from nuoca_config import NuocaConfig
 
 
@@ -26,13 +25,16 @@ class NuoCA(object):
     :type plugin_dir: ``str``
 
     :param starttime: Epoch timestamp of start time of the first collection.
-    :type starttime: ``int``
+    :type starttime: ``int``, ``None``
 
     :param verbose: Flag to indicate printing of verbose messages to stdout.
     :type verbose: ``bool``
 
-    :param verbose: Flag to indicate a 5 loop self test.
-    :type verbose: ``bool``
+    :param self_test: Flag to indicate a 5 loop self test.
+    :type self_test: ``bool``
+
+    :param log_level: Python logging level
+    :type log_level: ``logging.level``
     """
     self._config = NuocaConfig(config_file)
 
@@ -67,15 +69,16 @@ class NuoCA(object):
   def config(self):
     return self._config
 
-  def _collection_cycle(self, endtime):
+  def _collection_cycle(self, collection_time):
     """
     _collection_cycle is called at the end of each Collection
     Interval.
     """
-    nuoca_log(logging.INFO, "Starting collection interval: %s" % endtime)
+    nuoca_log(logging.INFO, "Starting collection interval: %s" %
+              collection_time)
     collected_inputs = self._collect_inputs()
     collected_inputs['collection_interval'] = self._collection_interval
-    collected_inputs['timestamp'] = endtime
+    collected_inputs['timestamp'] = collection_time
     # TODO Transformations
     self._store_outputs(collected_inputs)
 
@@ -100,7 +103,6 @@ class NuoCA(object):
     Get the response message from the plugin
     :return: Response dictionary if successful, otherwise None.
     """
-    response = None
     plugin_obj = a_plugin.plugin_object
     # noinspection PyBroadException
     try:
@@ -127,7 +129,7 @@ class NuoCA(object):
                   "Missing response from plugin: %s"
                   % a_plugin.name)
         return None
-      if not 'status_code' in response:
+      if 'status_code' not in response:
         nuoca_log(logging.ERROR,
                   "status_code missing from plugin response: %s"
                   % a_plugin.name)
@@ -165,14 +167,15 @@ class NuoCA(object):
       nuoca_log(logging.ERROR,
                 "Problem with response on %s message to plugin: %s\n%s"
                 % (plugin_msg, a_plugin.name, str(e)))
-    if response['status_code'] != 0:
+    if not response or response['status_code'] != 0:
       nuoca_log(logging.ERROR,
                 "Disabling plugin that failed to startup: %s"
                 % a_plugin.name)
       self.manager.deactivatePluginByName(a_plugin.name, a_plugin.category)
       self._shutdown_plugin(a_plugin)
 
-  def _exit_plugin(self, a_plugin):
+  @staticmethod
+  def _exit_plugin(a_plugin):
     """
     Send Exit message to plugin.
     :param a_plugin: The plugin
@@ -186,12 +189,13 @@ class NuoCA(object):
                 "Unable to send %s message to plugin: %s\n%s"
                 % (plugin_msg, a_plugin.name, str(e)))
 
-  def _shutdown_plugin(self, a_plugin):
+  @staticmethod
+  def _shutdown_plugin(a_plugin):
     """
     Send stop message to plugin.
+
     :param a_plugin: The plugin
-    :param config: NuoCA Configuration
-    :type config: ``dict``
+    :type a_plugin: NuocaMPPlugin
     """
     nuoca_log(logging.INFO, "Called to shutdown plugin: %s" % a_plugin.name)
     plugin_msg = {'action': 'shutdown'}
@@ -211,7 +215,6 @@ class NuoCA(object):
     plugin_msg = {'action': 'collect',
                   'collection_interval': self._collection_interval}
     rval = {}
-    resp_values = None
     activated_plugins = self._get_activated_input_plugins()
     for a_plugin in activated_plugins:
       # noinspection PyBroadException
@@ -223,8 +226,6 @@ class NuoCA(object):
                   % (plugin_msg, a_plugin.name, str(e)))
 
     for a_plugin in activated_plugins:
-      resp_values = None
-      plugin_obj = a_plugin.plugin_object
       response = self._get_plugin_respose(a_plugin)
       if not response:
         continue
@@ -261,7 +262,6 @@ class NuoCA(object):
                   % (a_plugin.name, str(e)))
 
     for a_plugin in activated_plugins:
-      plugin_obj = a_plugin.plugin_object
       resp_values = self._get_plugin_respose(a_plugin)
       if not resp_values:
         continue
@@ -320,6 +320,32 @@ class NuoCA(object):
       self._shutdown_plugin(a_plugin)
     # TODO Transform Plugins
 
+  @staticmethod
+  def kill_all_plugin_processes(manager, timeout=5):
+    """
+    Kill any plugin processes that were left running after waiting up to
+    the timeout value..
+
+    :param manager: MultiprocessPluginManager
+    :type manager: MultiprocessPluginManager
+
+    :param timeout: Maximum time to wait (in seconds) for the process to
+    self exit before killing.
+    :type timeout: ``int``
+
+    """
+    if not manager:
+      return
+    all_plugins = manager.getAllPlugins()
+    wait_count = timeout
+    for a_plugin in all_plugins:
+      while a_plugin.plugin_object.proc.is_alive() and wait_count > 0:
+        time.sleep(1)
+        wait_count -= 1
+      if a_plugin.plugin_object.proc.is_alive():
+        nuoca_log(logging.INFO, "Killing plugin subprocess: %s" % a_plugin)
+        a_plugin.plugin_object.proc.terminate()
+
   def _remove_all_plugins(self, timeout=5):
     """
     Remove all plugins
@@ -338,16 +364,7 @@ class NuoCA(object):
     # on their own.  However, if there is any plugin subprocess that didn't
     # exit for any reason, we must terminate them so we don't hang the
     # NuoCA process at exit.
-    all_plugins = self.manager.getAllPlugins()
-    wait_count = timeout  # maximum seconds to wait for processes
-                          # to exit on their own
-    for a_plugin in all_plugins:
-      while a_plugin.plugin_object.proc.is_alive() and wait_count > 0:
-        time.sleep(1)
-        wait_count -= 1
-      if a_plugin.plugin_object.proc.is_alive():
-        nuoca_log(logging.INFO, "Killing plugin subprocess: %s" % a_plugin)
-        a_plugin.plugin_object.proc.terminate()
+    NuoCA.kill_all_plugin_processes(self.manager, timeout)
 
   def start(self):
     """
@@ -380,7 +397,6 @@ class NuoCA(object):
         if loop_count >= self._config.SELFTEST_LOOP_COUNT:
           self._enabled = False
 
-  # noinspection PyMethodMayBeStatic
   def shutdown(self, timeout=5):
     """
     Shutdown NuoCA
@@ -439,7 +455,7 @@ def nuoca_run(config_file, collection_interval, plugin_dir,
 def nuoca(config_file, collection_interval, plugin_dir,
           starttime, verbose, self_test, log_level):
   nuoca_run(config_file, collection_interval, plugin_dir,
-          starttime, verbose, self_test, log_level)
+            starttime, verbose, self_test, log_level)
 
 if __name__ == "__main__":
   nuoca()

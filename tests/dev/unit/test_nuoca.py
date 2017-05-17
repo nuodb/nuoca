@@ -6,6 +6,7 @@ import logging
 import nuoca_util
 import nuoca
 
+
 class TestNuoCA(unittest.TestCase):
 
   def setUp(self):
@@ -21,14 +22,14 @@ class TestNuoCA(unittest.TestCase):
 
   def test_empty_config(self):
     nuoca_obj = \
-      nuoca.NuoCA(
-        config_file=os.path.join(self._config_dir, "empty.yaml"),
-        collection_interval=1,
-        log_level=logging.ERROR,
-        plugin_dir=self._plugin_dir,
-        self_test=True,
-        starttime=None
-      )
+        nuoca.NuoCA(
+            config_file=os.path.join(self._config_dir, "empty.yaml"),
+            collection_interval=1,
+            log_level=logging.ERROR,
+            plugin_dir=self._plugin_dir,
+            self_test=True,
+            starttime=None
+        )
     self.assertIsNotNone(nuoca_obj)
     nuoca_obj.config.SELFTEST_LOOP_COUNT = 1
     nuoca_obj.start()
@@ -38,15 +39,14 @@ class TestNuoCA(unittest.TestCase):
     """
     Test using the mpCounterPlugin and mpPrinterPlugin
     """
-    nuoca_obj = \
-      nuoca.NuoCA(
+    nuoca_obj = nuoca.NuoCA(
         config_file=os.path.join(self._config_dir, "counter.yaml"),
         collection_interval=1,
         log_level=logging.ERROR,
         plugin_dir=self._plugin_dir,
         self_test=True,
-        starttime=nuoca_util.nuoca_gettimestamp()+1
-      )
+        starttime=nuoca_util.nuoca_gettimestamp() + 1
+    )
     self.assertIsNotNone(nuoca_obj)
     nuoca_obj.config.SELFTEST_LOOP_COUNT = 2
     nuoca_obj.start()

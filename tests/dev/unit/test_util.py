@@ -10,8 +10,8 @@ import logging
 class TestUtilRandomID(unittest.TestCase):
   def runTest(self):
     self.assertTrue(True)
-    id = nuoca_util.randomid()
-    self.assertTrue(id)
+    tid = nuoca_util.randomid()
+    self.assertTrue(tid)
 
 
 class TestNuoCATopDir(unittest.TestCase):
@@ -24,6 +24,7 @@ class TestNuoCATopDir(unittest.TestCase):
 
 
 class TestUtilLogging(unittest.TestCase):
+  # noinspection PyMethodMayBeStatic
   def runTest(self):
     nuoca_util.nuoca_set_log_level(logging.INFO)
     nuoca_util.nuoca_log(logging.INFO, "Info message")

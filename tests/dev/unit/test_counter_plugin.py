@@ -3,12 +3,13 @@ from __future__ import print_function
 import os
 import unittest
 import nuoca_util
+from nuoca import NuoCA
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
-  NuocaMPTransformPlugin
+    NuocaMPTransformPlugin
 
 from tests.dev.plugins.input.mpCounterPlugin import MPCounterPlugin
-from tests.dev.plugins.output.mpPrinterPlugin import MPPrinterPlugin
+
 
 class TestInputPlugins(unittest.TestCase):
   def _MPCounterPluginTest(self):
@@ -30,19 +31,19 @@ class TestInputPlugins(unittest.TestCase):
     self.assertIsNotNone(resp_values['collect_timestamp'])
     counter_plugin.shutdown()
 
-  def _MultiprocessPluginManagerTest(self, manager):
+  def _MultiprocessPluginManagerTest(self):
     child_pipe_timeout = 600
-    self.manager = manager
     self.manager.setCategoriesFilter({
-      "Input": NuocaMPInputPlugin,
-      "Ouput": NuocaMPOutputPlugin,
-      "Transform": NuocaMPTransformPlugin
+        "Input": NuocaMPInputPlugin,
+        "Ouput": NuocaMPOutputPlugin,
+        "Transform": NuocaMPTransformPlugin
     })
 
     self.manager.collectPlugins()
     all_plugins = self.manager.getAllPlugins()
     self.assertTrue(all_plugins)
     self.assertTrue(len(all_plugins) > 0)
+    counter_plugin = None
     for a_plugin in all_plugins:
       self.manager.activatePluginByName(a_plugin.name, 'Input')
       self.assertTrue(a_plugin.is_activated)
@@ -58,7 +59,7 @@ class TestInputPlugins(unittest.TestCase):
     self.assertIsNotNone(plugin_resp_msg)
     self.assertEqual(0, plugin_resp_msg['status_code'])
 
-    plugin_msg = {'action': 'collect', 'collection_interval':3}
+    plugin_msg = {'action': 'collect', 'collection_interval': 3}
     plugin_resp_msg = None
     counter_plugin.plugin_object.child_pipe.send(plugin_msg)
     if counter_plugin.plugin_object.child_pipe.poll(child_pipe_timeout):
@@ -73,7 +74,6 @@ class TestInputPlugins(unittest.TestCase):
     self.assertIsNotNone(resp_values['collected_values']['collect_timestamp'])
 
     plugin_msg = {'action': 'shutdown'}
-    plugin_resp_msg = None
     counter_plugin.plugin_object.child_pipe.send(plugin_msg)
 
     plugin_msg = {'action': 'exit'}
@@ -92,8 +92,12 @@ class TestInputPlugins(unittest.TestCase):
     input_plugin_dir = os.path.join(topdir, "tests/dev/plugins/input")
     dir_list = [input_plugin_dir]
     self._MPCounterPluginTest()
-    manager = MultiprocessPluginManager(directories_list=dir_list,
-                                        plugin_info_ext="multiprocess-plugin")
-    self._MultiprocessPluginManagerTest(manager)
+    self.manager = MultiprocessPluginManager(
+        directories_list=dir_list,
+        plugin_info_ext="multiprocess-plugin")
+    self._MultiprocessPluginManagerTest()
+
+  def tearDown(self):
+    NuoCA.kill_all_plugin_processes(self.manager, timeout=1)
 
 

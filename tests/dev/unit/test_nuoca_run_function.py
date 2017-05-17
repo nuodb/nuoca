@@ -2,9 +2,9 @@ from __future__ import print_function
 
 import os
 import unittest
-import logging
 import nuoca_util
 import nuoca
+
 
 class TestNuoCARunFunction(unittest.TestCase):
 
@@ -14,18 +14,16 @@ class TestNuoCARunFunction(unittest.TestCase):
     self._plugin_dir = os.path.join(self._topdir, "tests", "dev", "plugins")
     self._config_dir = os.path.join(self._topdir, "tests", "dev", "configs")
 
-  def test_dirs(self):
+  def test_nuoca_function(self):
     self.assertTrue(os.path.isdir(self._topdir))
     self.assertTrue(os.path.isdir(self._plugin_dir))
     self.assertTrue(os.path.isdir(self._config_dir))
-
-  def test_nuoca_function(self):
     nuoca.nuoca_run(
-      config_file=os.path.join(self._config_dir, "counter_quick.yaml"),
-      collection_interval=1,
-      log_level="ERROR",
-      plugin_dir=self._plugin_dir,
-      self_test=True,
-      starttime=nuoca_util.nuoca_gettimestamp() + 1,
-      verbose=False
+        config_file=os.path.join(self._config_dir, "counter_quick.yaml"),
+        collection_interval=1,
+        log_level="ERROR",
+        plugin_dir=self._plugin_dir,
+        self_test=True,
+        starttime=nuoca_util.nuoca_gettimestamp() + 1,
+        verbose=False
     )
