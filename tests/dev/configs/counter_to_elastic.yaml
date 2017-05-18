@@ -1,0 +1,17 @@
+---
+INPUT_PLUGINS:
+- mpCounterPlugin:
+    description : A simple counter
+    interval : 1
+OUTPUT_PLUGINS:
+- mpPrinterPlugin:
+- mpElasticSearch:
+  HOST : OA-ELK
+  PORT : 9200
+  USERNAME : elastic
+  PASSWORD : None
+  ES_INDEX : PI_Running
+  ES_BULK_CHUNK_SIZE : 75
+  ES_BULK_CHUNK_BYTES : 6291456
+
+
