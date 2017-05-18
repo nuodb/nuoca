@@ -52,10 +52,10 @@ class NuocaMPPlugin(IMultiprocessChildPlugin):
     self._enabled = True
 
   def startup(self, config):
-    pass
+    raise NotImplementedError("Child class must implement startup method")
 
   def shutdown(self):
-    pass
+    raise NotImplementedError("Child class must implement shutdown method")
 
   def deactivate(self):
     nuoca_log(logging.INFO, "Deactivate plugin: %s" % self.name)
