@@ -6,10 +6,9 @@ basebox = "ubuntu14_nuoca"
 
 mounts = [] # What local devices do you want mounted on the host? Format: [['/host/mount/point1', '/vm/mount/point/1'], ['/host/mount/point2', '/vm/mount/point2']]
 nodes = {
-  "r0c" => 1,
-  "r0db" => 2
+  "es" => 1
 }
-private_network = "192.168.60.10"
+private_network = "192.168.66.10"
 
 ### End User editable
 
@@ -33,9 +32,15 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = basebox
+  config.vm.network "forwarded_port", guest: 5601, host: 5601,
+    auto_correct: true
+  config.vm.network "forwarded_port", guest: 9200, host: 9200,
+    auto_correct: true
+  config.vm.network "forwarded_port", guest: 9300, host: 9300,
+    auto_correct: true
 
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", 2048]
+    vb.customize ["modifyvm", :id, "--memory", 4096]
     #   vb.gui = true
   end
 
@@ -52,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         client.vm.provision "shell", inline: "if [ `grep -c #{server['hostname']} /etc/hosts` -lt 1 ]; then cp /etc/hosts /tmp/hosts && echo #{server['ipaddress']}    #{server['hostname'].split(".")[0]} #{server['hostname']} >> /tmp/hosts && sudo chown root:root /tmp/hosts && sudo chmod 644 /tmp/hosts && sudo mv /tmp/hosts /etc/hosts; fi;"
       end
       client.vm.provision :file, source: "../..", destination: "/tmp/nuoca"
-      client.vm.provision "shell", path: "../nuoca_install.sh"
+      client.vm.provision "shell", path: "../nuoca_install.sh", privileged: false
     end
   end
 end
