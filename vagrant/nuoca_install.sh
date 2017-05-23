@@ -67,6 +67,7 @@ cd ${TOP_LEVEL_DIR}
 
 # Start kibana
 echo "Starting Kibana"
+echo 'server.host: "0.0.0.0"' | tee -a ${KIBANA_HOME}/config/kibana.yml
 ${KIBANA_HOME}/bin/kibana 1> /tmp/kibana.stdout 2> /tmp/kibana.stderr &
 
 sleep 5

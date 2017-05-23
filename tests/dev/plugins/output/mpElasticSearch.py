@@ -1,5 +1,6 @@
 import logging
-import requests
+from elasticsearch import Elasticsearch
+from elasticsearch import helpers
 from nuoca_plugin import NuocaMPOutputPlugin
 from nuoca_util import nuoca_log
 
@@ -24,7 +25,9 @@ class MPElasticSearch(NuocaMPOutputPlugin):
         nuoca_log(logging.ERROR,
                   "MPElasticSearch plugin INDEX configuration missing")
         return False
-      self._url = self._config['URI'] + '/' + self._config['INDEX']
+      self.elastic_hosts = [{"host": "localhost",
+                              "port": "9200"}]
+      self.es_obj = Elasticsearch(self.elastic_hosts, timeout=10)
       return True
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
@@ -38,7 +41,9 @@ class MPElasticSearch(NuocaMPOutputPlugin):
     try:
       nuoca_log(logging.DEBUG, "Called store() in MPElasticSearch process")
       rval = super(MPElasticSearch, self).store(ts_values)
-      req_resp = requests.put(self._url, data=ts_values)
+      req_resp = self.es_obj.index(index=self._config['INDEX'],
+                                   doc_type='nuoca', body=ts_values)
+      print(req_resp)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval
