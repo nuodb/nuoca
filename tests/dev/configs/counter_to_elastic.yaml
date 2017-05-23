@@ -1,0 +1,10 @@
+---
+INPUT_PLUGINS:
+- mpCounterPlugin:
+    description : A simple counter
+    interval : 1
+OUTPUT_PLUGINS:
+- mpPrinterPlugin:
+- mpElasticSearch:
+    URI: http://localhost:9200
+    INDEX : es_test

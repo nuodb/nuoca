@@ -238,7 +238,9 @@ class NuoCA(object):
                     "'Collected_Values' missing in response from plugin: %s"
                     % a_plugin.name)
           continue
-        rval.update(resp_values['collected_values'])
+        for collected_item in resp_values['collected_values']:
+          key_name = a_plugin.name + '.' + collected_item
+          rval[key_name] = resp_values['collected_values'][collected_item]
       except Exception as e:
         nuoca_log(logging.ERROR,
                   "Error attempting to collect"

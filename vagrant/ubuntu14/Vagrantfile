@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = basebox
 
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", 2048]
+    vb.customize ["modifyvm", :id, "--memory", 4096]
     #   vb.gui = true
   end
   
@@ -48,12 +48,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       client.vm.hostname = server['hostname']
       client.vm.network "private_network", ip: server['ipaddress']
       if config.vm.box.include?("Ubuntu")
-        client.vm.provision "shell", inline: "sudo apt-get update"
+        client.vm.provision "shell", inline: "apt-get update"
       end
       # Populate /etc/hosts
       servers.each do |server|
         client.vm.provision "shell", inline: "if [ `grep -c #{server['hostname']} /etc/hosts` -lt 1 ]; then cp /etc/hosts /tmp/hosts && echo #{server['ipaddress']}    #{server['hostname'].split(".")[0]} #{server['hostname']} >> /tmp/hosts && sudo chown root:root /tmp/hosts && sudo chmod 644 /tmp/hosts && sudo mv /tmp/hosts /etc/hosts; fi;"
       end
+      client.vm.provision "shell", inline: "apt-get install --yes openjdk-8-jdk"
+      client.vm.provision "shell", inline: "update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
+      client.vm.provision "shell", inline: "update-alternatives --set javac /usr/lib/jvm/java-8-openjdk-amd64/bin/javac"
+      client.vm.provision "shell", inline: "echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' > /etc/profile.d/jdk.sh"
+      client.vm.provision "shell", inline: "echo '* soft nofile 65536' | tee -a /etc/security/limits.conf"
+      client.vm.provision "shell", inline: "echo '* hard nofile 65536' | tee -a /etc/security/limits.conf"
     end
   end
 end

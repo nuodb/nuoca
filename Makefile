@@ -22,6 +22,22 @@ clean: integration-test-clean-vm-box
 
 continuous-test: unit-test integration-test
 
+elasticsearch-5.1.1.tar.gz:
+	wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.1.tar.gz
+
+kibana-5.1.1-linux-x86_64.tar.gz:
+	wget https://artifacts.elastic.co/downloads/kibana/kibana-5.1.1-linux-x86_64.tar.gz
+
+logstash-5.1.1.tar.gz:
+	wget https://artifacts.elastic.co/downloads/logstash/logstash-5.1.1.tar.gz
+
+filebeat-5.1.1-linux-x86_64.tar.gz:
+	wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.1.1-linux-x86_64.tar.gz
+
+elk-5.1.1: elasticsearch-5.1.1.tar.gz kibana-5.1.1-linux-x86_64.tar.gz logstash-5.1.1.tar.gz filebeat-5.1.1-linux-x86_64.tar.gz
+
+elk: elk-5.1.1
+
 integration-test:
 	tests/dev/integration/run_tests.sh
 
@@ -55,7 +71,7 @@ integration-test-build-vm-box: integration-test-clean-vm-box
 	mkdir vagrant/ubuntu14_nuoca
 	cp vagrant/ubuntu14/Vagrantfile.ubuntu14_nuoca vagrant/ubuntu14_nuoca/Vagrantfile
 
-integration-test-start-vm:
+integration-test-start-vm: elk
 	if [ ! -d vagrant/ubuntu14_nuoca ]; then \
 	  make integration-test-build-vm-box; \
 	fi
