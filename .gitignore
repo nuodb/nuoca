@@ -3,4 +3,10 @@
 nuoca.log
 *.pyc
 venv
-
+*.diff
+elasticsearch*.tar.gz
+filebeat*.tar.gz
+kibana*.tar.gz
+logstash*.tar.gz
+vagrant/ubuntu14_nuoca/
+nuoca.egg-info/
