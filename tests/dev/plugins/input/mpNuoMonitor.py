@@ -126,23 +126,6 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       collection_count = len(self._nuomonitor_collect_queue)
       if not collection_count:
         return rval
-      # process_collection = []
-      # for i in range(collection_count):
-      #   ci = self._nuomonitor_collect_queue.pop(0)
-      #   print("ci: %s" % ci)
-      #   process_collection.append(ci)
-      # for pi in process_collection[0]:
-      #   try:
-      #     if isinstance(process_collection[0][pi], (int, long, float, complex)):
-      #       new_val = process_collection[0][pi]
-      #       for i in range(1, collection_count):
-      #         new_val += process_collection[i][pi]
-      #       rval[pi] = new_val / collection_count
-      #     else:
-      #       rval[pi] = process_collection[0][pi]
-      #   except Exception as e:
-      #     nuoca_log(logging.WARNING, str(e))
-
       intermediate = defaultdict(list)
       for subdict in self._nuomonitor_collect_queue:
         for key, value in subdict.items():
