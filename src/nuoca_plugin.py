@@ -138,12 +138,18 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
 
   def collect(self, collection_interval):
     """
-    NuoCA Plugins must implement their own collect() function and also call
-    this collect() function.  The collect function must return a Python
-    dictionary of time-series values.
+    NuoCA Input Plugins must implement their own collect() method.  The
+    NuoCA Input Plugins must call this collect() method at the top of
+    their collect() method.  This method returns a python dictionary
+    of values that each NuoCA Input Plugin should add to their own
+    time-series information.
 
-    NuoCA will call this function once at the beginning of each Collection
+    Note: The plugin's collect() method must return a Python list
+    of one or more Python dictionaries that contain time-series values.
+
+    NuoCA will call the collect() method at the end of each Collection
     Interval.
+
     :param collection_interval: Collection Interval
     :type collection_interval: ``int``
     :return: time-series values

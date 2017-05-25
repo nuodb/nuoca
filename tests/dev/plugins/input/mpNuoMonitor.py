@@ -122,22 +122,15 @@ class MPNuoMonitor(NuocaMPInputPlugin):
                   ))
         return None
       nuoca_log(logging.DEBUG, "Called collect() in NuoMonitor Plugin process")
-      rval = super(MPNuoMonitor, self).collect(collection_interval)
+      base_values = super(MPNuoMonitor, self).collect(collection_interval)
       collection_count = len(self._nuomonitor_collect_queue)
       if not collection_count:
         return rval
-      intermediate = defaultdict(list)
-      for subdict in self._nuomonitor_collect_queue:
-        for key, value in subdict.items():
-          intermediate[key].append(value)
-      for ci in intermediate:
-        if isinstance(intermediate[ci][0], (int)):
-          rval[ci] = int(numpy.mean(intermediate[ci]))
-        elif isinstance(intermediate[ci][0], (float)):
-          rval[ci] = numpy.mean(intermediate[ci])
-        else:
-          rval[ci] = intermediate[ci][-1]
-      print(rval)
+
+      rval = []
+      for i in range(collection_count):
+        collected_dict = self._nuomonitor_collect_queue.pop(0)
+        rval.append(collected_dict)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval

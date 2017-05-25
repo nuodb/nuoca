@@ -7,7 +7,6 @@ INPUT_PLUGINS:
     nuomonitor_port: 8082
     nuomonitor_interval: 10
 OUTPUT_PLUGINS:
-- mpPrinterPlugin:
 - mpElasticSearch:
     URI: http://localhost:9200
     INDEX : es_test

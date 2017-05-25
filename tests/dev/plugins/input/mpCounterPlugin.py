@@ -34,9 +34,11 @@ class MPCounterPlugin(NuocaMPInputPlugin):
     rval = None
     try:
       nuoca_log(logging.DEBUG, "Called collect() in MPCounterPlugin process")
-      rval = super(MPCounterPlugin, self).collect(collection_interval)
+      collected_values = super(MPCounterPlugin, self).collect(collection_interval)
       self.increment()
-      rval["counter"] = self.get_count()
+      collected_values["counter"] = self.get_count()
+      rval = []
+      rval.append(collected_values)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval
