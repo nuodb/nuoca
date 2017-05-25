@@ -26,9 +26,10 @@ class TestInputPlugins(unittest.TestCase):
     self.assertEqual(1, counter_plugin.get_count())
     resp_values = counter_plugin.collect(3)
     self.assertIsNotNone(resp_values)
-    self.assertIsNotNone(resp_values['nuoca_plugin'])
-    self.assertEqual(2, resp_values['counter'])
-    self.assertIsNotNone(resp_values['collect_timestamp'])
+    self.assertTrue(type(resp_values) is list)
+    self.assertIsNotNone(resp_values[0]['nuoca_plugin'])
+    self.assertEqual(2, resp_values[0]['counter'])
+    self.assertIsNotNone(resp_values[0]['collect_timestamp'])
     counter_plugin.shutdown()
 
   def _MultiprocessPluginManagerTest(self):
@@ -69,9 +70,10 @@ class TestInputPlugins(unittest.TestCase):
     self.assertIsNotNone(resp_values)
     self.assertEqual(0, plugin_resp_msg['status_code'])
     self.assertIsNotNone(resp_values['collected_values'])
-    self.assertIsNotNone(resp_values['collected_values']['nuoca_plugin'])
-    self.assertEqual(1, resp_values['collected_values']['counter'])
-    self.assertIsNotNone(resp_values['collected_values']['collect_timestamp'])
+    self.assertTrue(type(resp_values['collected_values']) is list)
+    self.assertIsNotNone(resp_values['collected_values'][0]['nuoca_plugin'])
+    self.assertEqual(1, resp_values['collected_values'][0]['counter'])
+    self.assertIsNotNone(resp_values['collected_values'][0]['collect_timestamp'])
 
     plugin_msg = {'action': 'shutdown'}
     counter_plugin.plugin_object.child_pipe.send(plugin_msg)
