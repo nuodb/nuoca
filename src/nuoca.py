@@ -77,10 +77,12 @@ class NuoCA(object):
     nuoca_log(logging.INFO, "Starting collection interval: %s" %
               collection_time)
     collected_inputs = self._collect_inputs()
-    collected_inputs['collection_interval'] = self._collection_interval
-    collected_inputs['timestamp'] = collection_time
+    for list_item in collected_inputs:
+      list_item['collection_interval'] = self._collection_interval
+      if 'timestamp' not in list_item:
+        list_item['timestamp'] = collection_time
     # TODO Transformations
-    self._store_outputs(collected_inputs)
+      self._store_outputs(list_item)
 
   def _get_activated_input_plugins(self):
     """
@@ -214,7 +216,7 @@ class NuoCA(object):
     # TODO - Use Threads so that we can do concurrent collection.
     plugin_msg = {'action': 'collect',
                   'collection_interval': self._collection_interval}
-    rval = {}
+    rval = []
     activated_plugins = self._get_activated_input_plugins()
     for a_plugin in activated_plugins:
       # noinspection PyBroadException
@@ -238,9 +240,28 @@ class NuoCA(object):
                     "'Collected_Values' missing in response from plugin: %s"
                     % a_plugin.name)
           continue
-        for collected_item in resp_values['collected_values']:
-          key_name = a_plugin.name + '.' + collected_item
-          rval[key_name] = resp_values['collected_values'][collected_item]
+        if not resp_values['collected_values']:
+          nuoca_log(logging.DEBUG,
+                    "No time-series values were collected from plugin: %s"
+                    % a_plugin.name)
+          continue
+        if type(resp_values['collected_values']) is not list:
+          nuoca_log(logging.ERROR,
+                    "'Collected_Values' is not a list in "
+                    "response from plugin: %s"
+                    % a_plugin.name)
+          continue
+
+        list_count = len(resp_values['collected_values'])
+        for list_index in range(list_count):
+          new_values = {}
+          collected_dict = resp_values['collected_values'][list_index]
+          for collected_item in collected_dict:
+            key_name = a_plugin.name + '.' + collected_item
+            new_values[key_name] = collected_dict[collected_item]
+            if collected_item == 'TimeStamp':
+              new_values['timestamp'] = int(collected_dict[collected_item])
+          rval.append(new_values)
       except Exception as e:
         nuoca_log(logging.ERROR,
                   "Error attempting to collect"
