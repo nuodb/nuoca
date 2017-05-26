@@ -28,6 +28,8 @@ class MPElasticSearch(NuocaMPOutputPlugin):
       self.elastic_hosts = [{"host": "localhost",
                               "port": "9200"}]
       self.es_obj = Elasticsearch(self.elastic_hosts, timeout=10)
+      logger = logging.getLogger('elasticsearch')
+      logger.setLevel(logging.WARNING)
       return True
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
@@ -43,7 +45,7 @@ class MPElasticSearch(NuocaMPOutputPlugin):
       rval = super(MPElasticSearch, self).store(ts_values)
       req_resp = self.es_obj.index(index=self._config['INDEX'],
                                    doc_type='nuoca', body=ts_values)
-      print(req_resp)
+      nuoca_log(logging.DEBUG, "ElasticSearch response: %s" % str(req_resp))
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval

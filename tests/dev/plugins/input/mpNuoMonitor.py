@@ -44,7 +44,6 @@ class MPNuoMonitor(NuocaMPInputPlugin):
                   "response from nuomonitor: %s" % str(response))
         return rval
       rval = json.loads(response.content)
-      # print(rval)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval

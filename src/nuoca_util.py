@@ -134,3 +134,41 @@ def nuoca_gettimestamp():
   Get the current Epoch time (Unix Timestamp)
   """
   return int(time.time())
+
+
+def parse_keyval_list(options):
+  """
+  Convert list of key/value pairs (typically command line args) to a dict.
+
+  Typically, each element in the list is of the form
+      option=value
+  However, multiple values may be specified in list elements by separating
+  them with a comma (,) as in
+      a=1,b=5,c=elbow
+  Empty and all whitespace elements are also ignored
+
+  :param options: a list of option values to parse
+  :type options: list of str
+
+  :return: dictionary of individual converted options
+  :rtype: dict
+  """
+
+  ret = {}
+  if not options:
+    return ret  # ie empty dict
+
+  # Convert -o options to a dict.  -o can be specified multiple times and can
+  # have multiple values
+  for opt in options:
+    opt = opt.strip()
+    for elem in opt.split(','):
+      if not elem or elem.isspace():
+        continue
+      if '=' not in elem:
+        raise AttributeError("key/value pair {} missing '='".format(elem))
+      (k, v) = elem.split('=')
+      k = k.strip()
+      v = v.strip()
+      ret[k] = v
+  return ret

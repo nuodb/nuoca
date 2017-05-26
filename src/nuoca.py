@@ -13,7 +13,8 @@ class NuoCA(object):
   """
   def __init__(self, config_file=None, collection_interval=30,
                plugin_dir=None, starttime=None, verbose=False,
-               self_test=False, log_level=logging.INFO):
+               self_test=False, log_level=logging.INFO,
+               output_values=None):
     """
     :param config_file: Path to NuoCA configuration file.
     :type config_file: ``str``
@@ -35,6 +36,9 @@ class NuoCA(object):
 
     :param log_level: Python logging level
     :type log_level: ``logging.level``
+
+    :param output_values: list of strings parsable by utils.parse_keyval_list()
+    :type output_values: `list` of `str`
     """
     self._config = NuocaConfig(config_file)
 
@@ -46,6 +50,7 @@ class NuoCA(object):
     self._enabled = True
     self._verbose = verbose  # Used to make stdout verbose.
     self._self_test = self_test
+    self._output_values = parse_keyval_list(output_values)
 
     # The following self._*_plugins are dictionaries of two element
     # tuples in the form: (plugin object, plugin configuration) keyed
@@ -261,6 +266,8 @@ class NuoCA(object):
             new_values[key_name] = collected_dict[collected_item]
             if collected_item == 'TimeStamp':
               new_values['timestamp'] = int(collected_dict[collected_item])
+          if self._output_values:
+            new_values.update(self._output_values)
           rval.append(new_values)
       except Exception as e:
         nuoca_log(logging.ERROR,
@@ -434,12 +441,12 @@ class NuoCA(object):
 
 def nuoca_run(config_file, collection_interval, plugin_dir,
               starttime, verbose, self_test,
-              log_level):
+              log_level, output_values):
   nuoca_obj = None
   try:
     nuoca_obj = NuoCA(config_file, collection_interval, plugin_dir,
                       starttime, verbose, self_test,
-                      logging.getLevelName(log_level))
+                      logging.getLevelName(log_level), output_values)
     nuoca_obj.start()
   except AttributeError as e:
     msg = str(e)
@@ -475,10 +482,16 @@ def nuoca_run(config_file, collection_interval, plugin_dir,
               type=click.Choice(['CRITICAL', 'ERROR', 'WARNING',
                                  'INFO', 'DEBUG']),
               help='Set log level during test execution.')
+@click.option('--output-values',
+              '-o',
+              multiple=True,
+              default=None,
+              help='Optional. One or more output values as '
+                   'key=value pairs separated by commas. Multples allowed')
 def nuoca(config_file, collection_interval, plugin_dir,
-          starttime, verbose, self_test, log_level):
+          starttime, verbose, self_test, log_level, output_values):
   nuoca_run(config_file, collection_interval, plugin_dir,
-            starttime, verbose, self_test, log_level)
+            starttime, verbose, self_test, log_level, output_values)
 
 if __name__ == "__main__":
   nuoca()
