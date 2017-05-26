@@ -1,6 +1,5 @@
 click==6.7
 elasticsearch>=5.0.0,<6.0.0
-numpy==1.12.1
 PyYaml==3.12
 requests==2.14.2
 Yapsy==1.11.223

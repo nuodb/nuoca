@@ -1,11 +1,9 @@
 import json
 import logging
-import numpy
 import requests
 import threading
 import time
 
-from collections import defaultdict
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log, nuoca_gettimestamp
 
