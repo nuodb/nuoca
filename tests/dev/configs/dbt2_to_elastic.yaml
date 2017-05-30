@@ -1,0 +1,9 @@
+---
+INPUT_PLUGINS:
+- mmpDbt2InputPlugin:
+    description : Collect tps (notpm) and latency summary from dbt2 workload
+    dbt2_log_dir: /var/tmp/dbt2-lhartford/logs/dbt2
+OUTPUT_PLUGINS:
+- mpElasticSearch:
+    URI: http://localhost:9200
+    INDEX : es_test

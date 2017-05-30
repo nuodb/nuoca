@@ -1,0 +1,9 @@
+[Core]
+Name = mpDbt2InputPlugin
+Module = mpDbt2InputPlugin
+
+[Documentation]
+Author = Lance Hartford
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = An input plugin for sending dbt2 stats to NuoCA.
