@@ -1,0 +1,9 @@
+---
+INPUT_PLUGINS:
+- OLTPBenchPlugin:
+    description : Internal OLTPBench workload plugin
+    log_file: stdout
+    log_dir: ~/
+OUTPUT_PLUGINS:
+- mpPrinterPlugin:
+
