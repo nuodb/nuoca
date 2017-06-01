@@ -8,5 +8,5 @@ INPUT_PLUGINS:
     nuomonitor_interval: 10
 OUTPUT_PLUGINS:
 - mpElasticSearch:
-    URI: http://localhost:9200
+    URI: http://ip-172-31-47-51.us-west-2.compute.internal:9200
     INDEX : es_test
