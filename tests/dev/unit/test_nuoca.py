@@ -45,7 +45,7 @@ class TestNuoCA(unittest.TestCase):
         log_level=logging.ERROR,
         plugin_dir=self._plugin_dir,
         self_test=True,
-        starttime=nuoca_util.nuoca_gettimestamp() + 1
+        starttime=None
     )
     self.assertIsNotNone(nuoca_obj)
     nuoca_obj.config.SELFTEST_LOOP_COUNT = 2

@@ -40,12 +40,21 @@ class NuoCA(object):
     :param output_values: list of strings parsable by utils.parse_keyval_list()
     :type output_values: `list` of `str`
     """
+
+    self._starttime = starttime
+    if self._starttime:
+      # Make sure that starttime is now or in the future.
+      current_timestamp = nuoca_gettimestamp()
+      if current_timestamp >= self._starttime:
+        msg = "starttime must be now or in the future."
+        nuoca_log(logging.ERROR, msg)
+        raise AttributeError(msg)
+
     self._config = NuocaConfig(config_file)
 
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
     self._collection_interval = collection_interval
-    self._starttime = starttime
     self._plugin_topdir = plugin_dir
     self._enabled = True
     self._verbose = verbose  # Used to make stdout verbose.
@@ -404,14 +413,11 @@ class NuoCA(object):
     self._load_all_plugins()
 
     # Find the start of the next time interval
-    current_timestamp = nuoca_gettimestamp()
-    next_interval_time = current_timestamp
+    next_interval_time = None
     if self._starttime:
-      if current_timestamp >= self._starttime:
-        msg = "starttime must be in the future."
-        nuoca_log(logging.ERROR, msg)
-        raise AttributeError(msg)
       next_interval_time = self._starttime
+    else:
+      next_interval_time = nuoca_gettimestamp()
 
     # Collection Interval Loop
     loop_count = 0
