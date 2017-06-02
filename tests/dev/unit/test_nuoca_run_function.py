@@ -24,7 +24,7 @@ class TestNuoCARunFunction(unittest.TestCase):
         log_level="ERROR",
         plugin_dir=self._plugin_dir,
         self_test=True,
-        starttime=nuoca_util.nuoca_gettimestamp() + 1,
+        starttime=nuoca_util.nuoca_gettimestamp() + 3,
         verbose=False,
         output_values=None
     )
