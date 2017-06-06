@@ -147,11 +147,11 @@ class Dbt2ResultsParser:
     duration = float(self.end_time - self.start_time)
     if self.transactions > 1 and duration > 0:
       lat_avg = self.sum_latencies / self.transactions
-      metrics['notpm'] = str(float(self.transactions) * 60.0 / duration)
-      metrics['lat_avg'] = str(lat_avg)
+      metrics['notpm'] = float(self.transactions) * 60.0 / duration
+      metrics['lat_avg'] = float(lat_avg)
       # Estimating 90th percentile from standard deviation
       stddev = sqrt((self.sum_latencies_sq / self.transactions) - (lat_avg * lat_avg))
-      metrics['lat_90th'] = str(lat_avg + stddev * 1.28)
+      metrics['lat_90th'] = float(lat_avg + stddev * 1.28)
       return metrics
     else:
       return None
