@@ -55,6 +55,10 @@ class NuoCA(object):
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
     self._collection_interval = collection_interval
+    if not starttime:
+      self._starttime = None
+    else:
+      self._starttime = int(starttime)
     self._plugin_topdir = plugin_dir
     self._enabled = True
     self._verbose = verbose  # Used to make stdout verbose.
