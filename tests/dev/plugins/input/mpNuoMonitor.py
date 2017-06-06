@@ -43,7 +43,7 @@ class MPNuoMonitor(NuocaMPInputPlugin):
         return rval
       rval = json.loads(response.content)
     except Exception as e:
-      nuoca_log(logging.ERROR, str(e))
+      nuoca_log(logging.ERROR, "NuoMonitor collection error: %s" % str(e))
     return rval
 
   def _collection_thread(self):
