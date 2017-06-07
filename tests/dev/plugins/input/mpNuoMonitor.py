@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 import requests
 import threading
 import time
@@ -13,11 +14,12 @@ from nuoca_util import nuoca_log, nuoca_gettimestamp
 #
 # - mpNuoMonitor:
 #    description : Collection from internal nuomonitor tool
+#    database_regex_pattern: dbt2
+#    host_uuid_shortname: True
 #    broker: 172.19.0.16
 #    nuomonitor_host: localhost
 #    nuomonitor_port: 8028
 #    nuomonitor_interval: 10
-
 
 class MPNuoMonitor(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
@@ -29,6 +31,8 @@ class MPNuoMonitor(NuocaMPInputPlugin):
     self._nuomonitor_port = None
     self._nuomonitor_interval = None
     self._nuomonitor_url = None
+    self._database_regex_pattern = '.*'
+    self._host_uuid_shortname = False
     self._thread = None
     self._nuomonitor_collect_queue = []
 
@@ -94,6 +98,11 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       self._nuomonitor_url = "http://%s:%s/api/v1/metrics/latest" % \
                              (self._nuomonitor_host,
                               self._nuomonitor_port)
+      if 'database_regex_pattern' in config:
+        self._database_regex_pattern = config['database_regex_pattern']
+      if 'host_uuid_shortname' in config:
+        self._host_uuid_shortname = \
+          config['host_uuid_shortname'].lower() in ("yes", "true", "t", "1")
       self._enabled = True
       self._thread = threading.Thread(target=self._collection_thread)
       self._thread.daemon = True
@@ -108,6 +117,7 @@ class MPNuoMonitor(NuocaMPInputPlugin):
     pass
 
   def collect(self, collection_interval):
+    uuid_hostname_regex = '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-'
     rval = None
     try:
       if collection_interval < self._nuomonitor_interval:
@@ -127,7 +137,14 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       rval = []
       for i in range(collection_count):
         collected_dict = self._nuomonitor_collect_queue.pop(0)
-        rval.append(collected_dict)
+        m = re.search(self._database_regex_pattern, collected_dict['Database'])
+        if m:
+          if self._host_uuid_shortname:
+            m2 = re.search(uuid_hostname_regex, collected_dict['Hostname'])
+            if m2:
+              shortid = collected_dict['Hostname'][37:]
+              collected_dict['HostShortID'] = shortid
+          rval.append(collected_dict)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval
