@@ -101,8 +101,7 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       if 'database_regex_pattern' in config:
         self._database_regex_pattern = config['database_regex_pattern']
       if 'host_uuid_shortname' in config:
-        self._host_uuid_shortname = \
-          config['host_uuid_shortname'].lower() in ("yes", "true", "t", "1")
+        self._host_uuid_shortname = config['host_uuid_shortname']
       self._enabled = True
       self._thread = threading.Thread(target=self._collection_thread)
       self._thread.daemon = True
@@ -143,6 +142,11 @@ class MPNuoMonitor(NuocaMPInputPlugin):
             m2 = re.search(uuid_hostname_regex, collected_dict['Hostname'])
             if m2:
               shortid = collected_dict['Hostname'][37:]
+              if 'NodeType' in collected_dict:
+                if collected_dict['NodeType'] == 'Transaction':
+                  shortid += "(TE)"
+                elif collected_dict['NodeType'] == 'Storage':
+                  shortid += "(SM)"
               collected_dict['HostShortID'] = shortid
           rval.append(collected_dict)
     except Exception as e:
