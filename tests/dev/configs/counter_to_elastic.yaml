@@ -6,5 +6,6 @@ INPUT_PLUGINS:
 OUTPUT_PLUGINS:
 - mpPrinterPlugin:
 - mpElasticSearch:
-    URI: http://localhost:9200
+    HOST: localhost
+    PORT: 9200
     INDEX : es_test

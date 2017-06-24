@@ -75,7 +75,7 @@ integration-test-start-vm: elk
 	if [ ! -d vagrant/ubuntu14_nuoca ]; then \
 	  make integration-test-build-vm-box; \
 	fi
-	(cd vagrant/ubuntu14_nuoca; vagrant up r0c0)
+	(cd vagrant/ubuntu14_nuoca; vagrant up es0)
 
 unit-test:
 	(cd tests/dev && PYTHONPATH=../../src:../.. ./run_unit_tests.py)

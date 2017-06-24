@@ -17,22 +17,26 @@ class MPElasticSearch(NuocaMPOutputPlugin):
         nuoca_log(logging.ERROR,
                   "MPElasticSearch plugin configuration missing")
         return False
-      if 'URI' not in self._config:
+      if 'HOST' not in self._config:
         nuoca_log(logging.ERROR,
-                  "MPElasticSearch plugin URI configuration missing")
+                  "MPElasticSearch plugin HOST configuration missing")
+        return False
+      if 'PORT' not in self._config:
+        nuoca_log(logging.ERROR,
+                  "MPElasticSearch plugin PORT configuration missing")
         return False
       if 'INDEX' not in self._config:
         nuoca_log(logging.ERROR,
                   "MPElasticSearch plugin INDEX configuration missing")
         return False
-      self.elastic_hosts = [{"host": "localhost",
-                              "port": "9200"}]
+      self.elastic_hosts = [{"host": self._config['HOST'],
+                              "port": self._config['PORT']}]
       self.es_obj = Elasticsearch(self.elastic_hosts, timeout=10)
       logger = logging.getLogger('elasticsearch')
       logger.setLevel(logging.WARNING)
       return True
     except Exception as e:
-      nuoca_log(logging.ERROR, str(e))
+      nuoca_log(logging.ERROR, "ElasticSearch Store error: %s" % str(e))
       return False
 
   def shutdown(self):
