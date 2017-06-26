@@ -1,11 +1,11 @@
 ---
 INPUT_PLUGINS:
-- mpCounterPlugin:
+- Counter:
     description : A simple counter
     interval : 1
 OUTPUT_PLUGINS:
-- mpPrinterPlugin:
-- mpElasticSearch:
+- Printer:
+- ElasticSearch:
     HOST: localhost
     PORT: 9200
     INDEX : es_test

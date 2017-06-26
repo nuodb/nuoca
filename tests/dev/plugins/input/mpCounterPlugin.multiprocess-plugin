@@ -1,5 +1,5 @@
 [Core]
-Name = mpCounterPlugin
+Name = Counter
 Module = mpCounterPlugin
 
 [Documentation]
