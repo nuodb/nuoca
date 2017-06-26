@@ -48,7 +48,7 @@ class TestInputPlugins(unittest.TestCase):
     for a_plugin in all_plugins:
       self.manager.activatePluginByName(a_plugin.name, 'Input')
       self.assertTrue(a_plugin.is_activated)
-      if a_plugin.name == 'mpCounterPlugin':
+      if a_plugin.name == 'Counter':
         counter_plugin = a_plugin
     self.assertIsNotNone(counter_plugin)
 

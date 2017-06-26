@@ -1,7 +1,7 @@
 ---
 INPUT_PLUGINS:
-- mpDbt2InputPlugin:
+- WL.Dbt2:
     description : Collect tps (notpm) and latency summary from dbt2 workload
     dbt2_log_dir: /tmp/logs/dbt2
 OUTPUT_PLUGINS:
-- mpPrinterPlugin:
+- Printer:

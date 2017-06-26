@@ -1,13 +1,13 @@
 ---
 INPUT_PLUGINS:
-- mpNuoMonitor:
+- NuoMon:
     description : Collection from internal nuomonitor tool
     broker: 172.19.0.16
     nuomonitor_host: localhost
     nuomonitor_port: 8082
     nuomonitor_interval: 10
 OUTPUT_PLUGINS:
-- mpElasticSearch:
+- ElasticSearch:
     HOST: localhost
     PORT: 9200
     INDEX : es_test

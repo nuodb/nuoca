@@ -34,7 +34,7 @@ class TestOutputPlugins(unittest.TestCase):
     printer_plugin = None
     for a_plugin in all_plugins:
       self.manager.activatePluginByName(a_plugin.name, 'Output')
-      if a_plugin.name == 'mpPrinterPlugin':
+      if a_plugin.name == 'Printer':
         printer_plugin = a_plugin
     self.assertIsNotNone(printer_plugin)
 

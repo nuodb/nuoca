@@ -1,5 +1,5 @@
 [Core]
-Name = OLTPBenchPlugin
+Name = WL.OLTPBenchPlugin
 Module = OLTPBenchPlugin
 
 [Documentation]
