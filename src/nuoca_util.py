@@ -10,27 +10,34 @@ from nuoca_config import NuocaConfig
 if not os.path.exists(NuocaConfig.NUOCA_TMPDIR):
   os.mkdir(NuocaConfig.NUOCA_TMPDIR)
 
-logging.basicConfig(level=logging.INFO)
-
-# Global NuoCA logger
-nuoca_logger = logging.getLogger('nuoca')
-nuoca_loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
-nuoca_loghandler.setLevel(logging.INFO)
-nuoca_loghandler.setFormatter(
-    logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
-nuoca_logger.addHandler(nuoca_loghandler)
-
-# Global Yapsy logger
-yapsy_logger = logging.getLogger('yapsy')
-yapsy_loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
-yapsy_loghandler.setLevel(logging.INFO)
-yapsy_loghandler.setFormatter(
-    logging.Formatter('%(asctime)s YAPSY %(levelname)s %(message)s'))
-yapsy_logger.addHandler(yapsy_loghandler)
-
+nuoca_logger = None
+nuoca_loghandler = None
+yapsy_logger = None
+yapsy_loghandler = None
 
 # Global top level directory
 nuoca_topdir = None  # Top level directory for NuoCA
+
+def initialize_logger():
+  global nuoca_logger, nuoca_loghandler
+  global yapsy_logger, yapsy_loghandler
+
+  logging.basicConfig(level=logging.INFO)
+  # Global NuoCA logger
+  nuoca_logger = logging.getLogger('nuoca')
+  nuoca_loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
+  nuoca_loghandler.setLevel(logging.INFO)
+  nuoca_loghandler.setFormatter(
+    logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
+  nuoca_logger.addHandler(nuoca_loghandler)
+
+  # Global Yapsy logger
+  yapsy_logger = logging.getLogger('yapsy')
+  yapsy_loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
+  yapsy_loghandler.setLevel(logging.INFO)
+  yapsy_loghandler.setFormatter(
+    logging.Formatter('%(asctime)s YAPSY %(levelname)s %(message)s'))
+  yapsy_logger.addHandler(yapsy_loghandler)
 
 
 def randomid():
@@ -104,7 +111,7 @@ def nuoca_set_log_level(log_level):
   :param log_level: logger log level
   :type: logger level
   """
-  global nuoca_loghandler, yapsy_logger
+  global nuoca_loghandler, yapsy_loghandler
   logging.getLogger('nuoca').setLevel(level=log_level)
   logging.getLogger('yapsy').setLevel(level=log_level)
   nuoca_loghandler.setLevel(log_level)

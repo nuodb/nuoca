@@ -52,6 +52,8 @@ class NuoCA(object):
 
     self._config = NuocaConfig(config_file)
 
+    initialize_logger()
+
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
     self._collection_interval = collection_interval

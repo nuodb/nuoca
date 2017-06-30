@@ -1,4 +1,6 @@
 ---
+NUOCA_LOGFILE: /tmp/nuoca_counter.log
+
 INPUT_PLUGINS:
 - Counter:
     description : A simple counter
