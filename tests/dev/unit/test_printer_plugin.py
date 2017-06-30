@@ -13,6 +13,7 @@ from tests.dev.plugins.output.mpPrinterPlugin import MPPrinterPlugin
 
 class TestOutputPlugins(unittest.TestCase):
   def _MPPrinterPluginTest(self):
+    nuoca_util.initialize_logger()
     printer_plugin = MPPrinterPlugin(None)
     self.assertIsNotNone(printer_plugin)
     startup_rval = printer_plugin.startup(None)
