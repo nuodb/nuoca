@@ -1,12 +1,14 @@
 from __future__ import print_function
 
 import unittest
+import nuoca_util
 
 from tests.dev.plugins.input.mpDbt2InputPlugin import MPDbt2InputPlugin
 
 
 class TestInputPlugins(unittest.TestCase):
   def _MPDbt2InputPluginTest(self):
+    nuoca_util.initialize_logger()
     dbt2_plugin = MPDbt2InputPlugin(None)
     self.assertIsNotNone(dbt2_plugin)
 
