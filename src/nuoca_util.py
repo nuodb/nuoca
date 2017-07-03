@@ -1,6 +1,7 @@
 import os
 import time
 import uuid
+import sys
 import hashlib
 import logging
 from nuoca_config import NuocaConfig
@@ -125,6 +126,9 @@ def nuoca_log(log_level, msg):
   :param msg: str: log message
   """
   global nuoca_logger, nuoca_loghandler
+  if not nuoca_logger:
+    sys.stderr.write(msg)
+    return
   nuoca_logger.log(log_level, msg)
   nuoca_loghandler.flush()
 
