@@ -7,7 +7,7 @@ import os
 
 class OLTPBenchPlugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(OLTPBenchPlugin, self).__init__(parent_pipe, 'OLTPBenchPlugin')
+    super(OLTPBenchPlugin, self).__init__(parent_pipe, 'OLTPBench')
     self._config = None
     self._last_tps = None
     self._last_ltc = None

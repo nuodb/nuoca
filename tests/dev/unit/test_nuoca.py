@@ -23,7 +23,7 @@ class TestNuoCA(unittest.TestCase):
   def test_empty_config(self):
     nuoca_obj = \
         nuoca.NuoCA(
-            config_file=os.path.join(self._config_dir, "empty.yaml"),
+            config_file=os.path.join(self._config_dir, "empty.yml"),
             collection_interval=1,
             log_level=logging.ERROR,
             plugin_dir=self._plugin_dir,
@@ -40,7 +40,7 @@ class TestNuoCA(unittest.TestCase):
     Test using the mpCounterPlugin and mpPrinterPlugin
     """
     nuoca_obj = nuoca.NuoCA(
-        config_file=os.path.join(self._config_dir, "counter.yaml"),
+        config_file=os.path.join(self._config_dir, "counter.yml"),
         collection_interval=1,
         log_level=logging.ERROR,
         plugin_dir=self._plugin_dir,

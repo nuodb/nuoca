@@ -23,7 +23,7 @@ from nuoca_util import nuoca_log, nuoca_gettimestamp
 
 class MPNuoMonitor(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(MPNuoMonitor, self).__init__(parent_pipe, 'NuoMonitor')
+    super(MPNuoMonitor, self).__init__(parent_pipe, 'NuoMon')
     self._config = None
     self._broker = None
     self._enabled = False

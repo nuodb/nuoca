@@ -8,7 +8,7 @@ from tests.dev.plugins.input.mpDbt2InputPlugin import MPDbt2InputPlugin
 
 class TestInputPlugins(unittest.TestCase):
   def _MPDbt2InputPluginTest(self):
-    nuoca_util.initialize_logger()
+    nuoca_util.initialize_logger("/tmp/nuoca.test.log")
     dbt2_plugin = MPDbt2InputPlugin(None)
     self.assertIsNotNone(dbt2_plugin)
 

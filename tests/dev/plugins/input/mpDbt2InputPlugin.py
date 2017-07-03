@@ -10,7 +10,7 @@ from nuoca_util import nuoca_log
 
 class MPDbt2InputPlugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(MPDbt2InputPlugin, self).__init__(parent_pipe, 'mpDbt2InputMonitor')
+    super(MPDbt2InputPlugin, self).__init__(parent_pipe, 'Dbt2')
     self._dbt2_log_dir = None
 
   def startup(self, config=None):
