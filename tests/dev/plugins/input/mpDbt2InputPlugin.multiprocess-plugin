@@ -1,5 +1,5 @@
 [Core]
-Name = mWL.Dbt2
+Name = WL.Dbt2
 Module = mpDbt2InputPlugin
 
 [Documentation]
