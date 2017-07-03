@@ -52,7 +52,7 @@ class NuoCA(object):
 
     self._config = NuocaConfig(config_file)
 
-    initialize_logger()
+    initialize_logger(self._config.NUOCA_LOGFILE)
 
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")

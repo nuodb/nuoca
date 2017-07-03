@@ -5,7 +5,7 @@ from nuoca_util import nuoca_log
 
 class MPPrinterPlugin(NuocaMPOutputPlugin):
   def __init__(self, parent_pipe, config=None):
-    super(MPPrinterPlugin, self).__init__(parent_pipe, 'PrinterPlugin')
+    super(MPPrinterPlugin, self).__init__(parent_pipe, 'Printer')
     self._config = config
 
   def startup(self, config=None):

@@ -18,14 +18,14 @@ yapsy_loghandler = None
 # Global top level directory
 nuoca_topdir = None  # Top level directory for NuoCA
 
-def initialize_logger():
+def initialize_logger(nuoca_logfile_name):
   global nuoca_logger, nuoca_loghandler
   global yapsy_logger, yapsy_loghandler
 
   logging.basicConfig(level=logging.INFO)
   # Global NuoCA logger
   nuoca_logger = logging.getLogger('nuoca')
-  nuoca_loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
+  nuoca_loghandler = logging.FileHandler(nuoca_logfile_name)
   nuoca_loghandler.setLevel(logging.INFO)
   nuoca_loghandler.setFormatter(
     logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
@@ -33,7 +33,7 @@ def initialize_logger():
 
   # Global Yapsy logger
   yapsy_logger = logging.getLogger('yapsy')
-  yapsy_loghandler = logging.FileHandler(NuocaConfig.NUOCA_LOGFILE)
+  yapsy_loghandler = logging.FileHandler(nuoca_logfile_name)
   yapsy_loghandler.setLevel(logging.INFO)
   yapsy_loghandler.setFormatter(
     logging.Formatter('%(asctime)s YAPSY %(levelname)s %(message)s'))

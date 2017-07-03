@@ -6,7 +6,7 @@ pushd $SELF_PATH >/dev/null
 fake_logdir="/tmp"
 fake_logname="oltpbench.out"
 full_log="${fake_logdir}/${fake_logname}"
-fake_cfg="tests/dev/configs/oltpbench-fake.yaml"
+fake_cfg="tests/dev/configs/oltpbench-fake.yml"
 
 fail() {
     echo "ERROR: $1"

@@ -19,7 +19,7 @@ class TestNuoCARunFunction(unittest.TestCase):
     self.assertTrue(os.path.isdir(self._plugin_dir))
     self.assertTrue(os.path.isdir(self._config_dir))
     nuoca.nuoca_run(
-        config_file=os.path.join(self._config_dir, "counter_quick.yaml"),
+        config_file=os.path.join(self._config_dir, "counter_quick.yml"),
         collection_interval=1,
         log_level="ERROR",
         plugin_dir=self._plugin_dir,

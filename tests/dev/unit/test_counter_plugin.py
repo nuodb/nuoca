@@ -13,7 +13,7 @@ from tests.dev.plugins.input.mpCounterPlugin import MPCounterPlugin
 
 class TestInputPlugins(unittest.TestCase):
   def _MPCounterPluginTest(self):
-    nuoca_util.initialize_logger()
+    nuoca_util.initialize_logger("/tmp/nuoca.test.log")
     counter_plugin = MPCounterPlugin(None)
     self.assertIsNotNone(counter_plugin)
     config = {'increment': 'not-an-integer'}
