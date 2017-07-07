@@ -1,8 +1,11 @@
 ---
+SELFTEST_LOOP_COUNT: 1
+SUBPROCESS_EXIT_TIMEOUT: 1
+
 INPUT_PLUGINS:
-- mpCounterPlugin:
+- Counter:
     description : A simple counter
     interval : 1
 OUTPUT_PLUGINS:
-- mpPrinterPlugin:
+- Printer:
 

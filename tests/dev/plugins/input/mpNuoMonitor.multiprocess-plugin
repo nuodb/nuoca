@@ -1,5 +1,5 @@
 [Core]
-Name = mpNuoMonitor
+Name = NuoMon
 Module = mpNuoMonitor
 
 [Documentation]

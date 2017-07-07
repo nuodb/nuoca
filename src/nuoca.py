@@ -52,6 +52,8 @@ class NuoCA(object):
 
     self._config = NuocaConfig(config_file)
 
+    initialize_logger(self._config.NUOCA_LOGFILE)
+
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
     self._collection_interval = collection_interval
@@ -64,6 +66,10 @@ class NuoCA(object):
     self._verbose = verbose  # Used to make stdout verbose.
     self._self_test = self_test
     self._output_values = parse_keyval_list(output_values)
+    if self._output_values:
+      for output_val in self._output_values:
+        nuoca_log(logging.INFO, "Output Key: '%s' set to Value: '%s'" %
+                  (output_val, self._output_values[output_val]) )
 
     # The following self._*_plugins are dictionaries of two element
     # tuples in the form: (plugin object, plugin configuration) keyed

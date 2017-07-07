@@ -1,10 +1,7 @@
 ---
 INPUT_PLUGINS:
-- mmpDbt2InputPlugin:
+- WL.Dbt2:
     description : Collect tps (notpm) and latency summary from dbt2 workload
     dbt2_log_dir: /tmp/logs/dbt2
 OUTPUT_PLUGINS:
-- mpElasticSearch:
-    HOST: localhost
-    PORT: 9200
-    INDEX : es_test
+- Printer:

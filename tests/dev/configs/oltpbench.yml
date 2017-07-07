@@ -1,9 +1,9 @@
 ---
 INPUT_PLUGINS:
-- OLTPBenchPlugin:
+- WL.OLTPBench:
     description : Internal OLTPBench workload plugin
     log_file: stdout
     log_dir: ~/
 OUTPUT_PLUGINS:
-- mpPrinterPlugin:
+- Printer:
 

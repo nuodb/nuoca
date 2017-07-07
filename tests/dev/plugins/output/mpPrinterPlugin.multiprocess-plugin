@@ -1,5 +1,5 @@
 [Core]
-Name = mpPrinterPlugin
+Name = Printer
 Module = mpPrinterPlugin
 
 [Documentation]
