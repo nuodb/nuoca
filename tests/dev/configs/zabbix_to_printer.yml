@@ -1,0 +1,31 @@
+---
+INPUT_PLUGINS:
+- ZBX:
+    description : Collect machine stats from Zabbix
+    server: localhost
+    autoDiscoverMonitors: true
+    keys:
+    - system.uptime
+    - system.cpu.intr
+    - vm.memory.size[available]
+    - system.cpu.switches
+    - system.cpu.util[,interrupt]
+    - system.boottime
+    - system.cpu.util[,idle]
+    - system.cpu.util[,system]
+    - system.cpu.util[,iowait]
+    - system.cpu.util[,nice]
+    - system.cpu.util[,user]
+    - system.cpu.util[,softirq]
+    - system.localtime
+    - system.cpu.util[,steal]
+    - system.users.num
+    - proc.num[]
+    - vm.memory.size[total]
+    - system.uname
+    - system.hostname
+    - kernel.maxproc
+    - kernel.maxfiles
+OUTPUT_PLUGINS:
+- Printer:
+

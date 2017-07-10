@@ -4,6 +4,7 @@ import uuid
 import sys
 import hashlib
 import logging
+import subprocess
 from nuoca_config import NuocaConfig
 
 
@@ -183,3 +184,22 @@ def parse_keyval_list(options):
       v = v.strip()
       ret[k] = v
   return ret
+
+
+def search_running_processes(search_str):
+  '''
+  Return True if the search_str is in the command of any running process
+
+  :param process_name: Name of process
+  :type process_name: ``str``
+
+  :return: True if process name is found, otherwise False
+  '''
+  try:
+    p = subprocess.Popen(["ps", "axo", "comm"], stdout=subprocess.PIPE)
+    out, err = p.communicate()
+    if (search_str in out):
+      return True
+  except Exception:
+    return False
+  return False

@@ -105,6 +105,12 @@ class TestUtilParseOptions(unittest.TestCase):
                                  "key/value pair crunch missing '='"):
       nuoca_util.parse_keyval_list(['apple=jacks,crunch'])
 
+class TestProcessRunning(unittest.TestCase):
+  def runTest(self):
+    p1_status = nuoca_util.search_running_processes('python')
+    self.assertTrue(p1_status)
+    p2_status = nuoca_util.search_running_processes('no-such-process')
+    self.assertFalse(p2_status)
 
 if __name__ == '__main__':
   sys.exit(unittest.main())

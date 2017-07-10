@@ -80,4 +80,12 @@ integration-test-start-vm: elk
 unit-test:
 	(cd tests/dev && PYTHONPATH=../../src:../.. ./run_unit_tests.py)
 
+zabbix-install-debian:
+	wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-agent_2.2.11-1+trusty_amd64.deb
+	wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-get_2.2.11-1+trusty_amd64.deb
+	sudo dpkg -i zabbix-agent_2.2.11-1+trusty_amd64.deb
+	sudo dpkg -i zabbix-get_2.2.11-1+trusty_amd64.deb
 
+zabbix-uninstall-debian:
+	sudo dpkg -r zabbix-agent
+	sudo dpkg -r zabbix-get
