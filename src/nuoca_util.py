@@ -203,3 +203,19 @@ def search_running_processes(search_str):
   except Exception:
     return False
   return False
+
+
+def execute_command(command):
+  '''
+  Execute a posix command
+
+  :param command: command line to execute
+  :type command: ``str``
+
+  :return: Python tuple of (exit_code, stdout, stderr)
+  '''
+  p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE,
+                       stderr=subprocess.PIPE)
+  stdout, stderr = p.communicate()
+  exit_code = p.returncode
+  return (exit_code, stdout, stderr)
