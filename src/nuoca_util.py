@@ -219,3 +219,20 @@ def execute_command(command):
   stdout, stderr = p.communicate()
   exit_code = p.returncode
   return (exit_code, stdout, stderr)
+
+
+def coerce_numeric(s):
+  '''
+  Convert the string to an integer or float, if it is numeric.
+  :param s:
+  :type s: ``str``
+
+  :return: integer, or float, or just a string.
+  '''
+  try:
+    return int(s)
+  except ValueError:
+    try:
+      return float(s)
+    except ValueError:
+      return s
