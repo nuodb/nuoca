@@ -4,5 +4,8 @@ python:
 
 services:
   - elasticsearch
+  -
 
-script: make continuous-test
+script:
+  - make zabbix-install-debian
+  - make continuous-test
