@@ -13,7 +13,9 @@ from nuoca_util import nuoca_log, search_running_processes, \
 # by zabbix is controlled by the 'keys' section.  The key names are in the
 # Zabbix key name format.  The 'autoDiscoverMonitors' boolean is used to
 # automatically include file system mounts, devices, and network interfaces in
-# the collected 'keys'
+# the collected 'keys'.  The loading of 'autoDiscoverMonitors' only happens
+# when this plugin is initialized.  Dynamic changes to file system mounts,
+# devices, or network interfaces will require reloading this plugin.
 #
 # This was developed and tested using Zabbix 2.2.11-1 on Ubuntu.
 #
