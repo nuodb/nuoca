@@ -32,12 +32,12 @@ bg_fake_client() {
 create_config() {
     echo "---
 INPUT_PLUGINS:
-- OLTPBenchPlugin:
+- WL.OLTPBench:
     description : Internal OLTPBench workload plugin
     log_file: $fake_logname 
     log_dir: $fake_logdir
 OUTPUT_PLUGINS:
-- mpPrinterPlugin:
+- Printer:
 " > ${fake_cfg}
 }
 

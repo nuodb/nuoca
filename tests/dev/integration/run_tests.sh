@@ -15,4 +15,9 @@ ${THIS_DIR}/../../etc/elastic_search/es_test_create_index.sh
 python ${THIS_DIR}/../../../src/nuoca.py --config-file ${THIS_DIR}/../../../tests/dev/configs/counter_to_elastic.yml --plugin-dir ${THIS_DIR}/../../../tests/dev/plugins --collection-interval=1 --self-test
 ${THIS_DIR}/../../etc/elastic_search/es_test_show_counts.sh
 ${THIS_DIR}/../../etc/elastic_search/es_test_get_count.sh
+
+# oltpbench plugin
 ${THIS_DIR}/test-oltpbench-plugin.sh
+
+# Zabbix plugin
+python ${THIS_DIR}/../../../src/nuoca.py --config-file ${THIS_DIR}/../../../tests/dev/configs/zabbix_to_printer.yml --plugin-dir ${THIS_DIR}/../../../tests/dev/plugins --collection-interval=1 --self-test

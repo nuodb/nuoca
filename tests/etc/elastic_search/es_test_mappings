@@ -17,6 +17,26 @@
           "timestamp" : {
               "type": "date",
               "format": "epoch_second"
+          },
+          "ZBX.system.localtime": {
+              "type": "date",
+              "format": "epoch_second"
+          },
+          "ZBX.system.boottime": {
+              "type": "date",
+              "format": "epoch_second"
+          },
+          "ZBX.collect_timestamp": {
+              "type": "date",
+              "format": "epoch_second"
+          },
+          "WL.Dbt2.collect_timestamp": {
+              "type": "date",
+              "format": "epoch_second"
+          },
+          "WL.OLTPBench.collect_timestamp": {
+              "type": "date",
+              "format": "epoch_second"
           }
         }
       }

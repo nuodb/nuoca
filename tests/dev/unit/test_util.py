@@ -5,7 +5,7 @@ import sys
 import unittest
 import nuoca_util
 import logging
-
+import socket
 
 class TestUtilRandomID(unittest.TestCase):
   def runTest(self):
@@ -105,6 +105,38 @@ class TestUtilParseOptions(unittest.TestCase):
                                  "key/value pair crunch missing '='"):
       nuoca_util.parse_keyval_list(['apple=jacks,crunch'])
 
+class TestProcessRunning(unittest.TestCase):
+  def runTest(self):
+    p1_status = nuoca_util.search_running_processes('python')
+    self.assertTrue(p1_status)
+    p2_status = nuoca_util.search_running_processes('no-such-process')
+    self.assertFalse(p2_status)
+
+
+class TestExecuteCommand(unittest.TestCase):
+  def runTest(self):
+    (ec, stdout, stderr) = nuoca_util.execute_command('hostname')
+    self.assertEqual(0, ec)
+    localhostname = socket.gethostname()
+    self.assertEqual(localhostname, stdout.strip())
+    self.assertEqual('', stderr)
+    (ec, stdout, stderr) = nuoca_util.execute_command('no-such-command')
+    self.assertEqual(127, ec)
+    self.assertEqual('', stdout)
+    self.assertTrue('no-such-command: not found' in stderr)
+
+
+class TestCoerceNumeric(unittest.TestCase):
+  def runTest(self):
+    val1 = nuoca_util.coerce_numeric('23')
+    self.assertTrue(type(val1) is int)
+    self.assertEqual(23, val1)
+    val2 = nuoca_util.coerce_numeric('3.141597')
+    self.assertTrue(type(val2) is float)
+    self.assertEqual(3.141597, val2)
+    val3 = nuoca_util.coerce_numeric('foo')
+    self.assertTrue(type(val3) is str)
+    self.assertEqual('foo', val3)
 
 if __name__ == '__main__':
   sys.exit(unittest.main())
