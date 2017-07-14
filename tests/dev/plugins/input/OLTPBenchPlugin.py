@@ -1,6 +1,6 @@
 import logging
 from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log
+from nuoca_util import nuoca_log, coerce_numeric
 import subprocess
 import re
 import os
@@ -67,7 +67,10 @@ printf $(grep 'Latency Average: ' {} | tail -1 | sed 's/.*Latency Average: //; s
       if not self.run_parser():
         return None
       if self._metrics_dict:
-        collected_values.update(self._metrics_dict)
+        for metric_item in self._metrics_dict:
+          if self._metrics_dict[metric_item]:
+            collected_values[metric_item] = \
+              coerce_numeric(self._metrics_dict[metric_item])
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval
