@@ -1,9 +1,10 @@
 import logging
 from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log
+from nuoca_util import nuoca_log, coerce_numeric
 import subprocess
 import re
 import os
+
 
 class OLTPBenchPlugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
@@ -42,7 +43,8 @@ printf $(grep 'Latency Average: ' {} | tail -1 | sed 's/.*Latency Average: //; s
         output = subprocess.check_output(
             cmd, stderr=subprocess.STDOUT, shell=True)
     except subprocess.CalledProcessError as e:
-        nuoca_log(logging.ERROR, "run_parser ERROR: RC: %d, ERR: %s" % (e.returncode, e.output))
+        nuoca_log(logging.ERROR, "run_parser ERROR: RC: %d, ERR: %s" %
+                  (e.returncode, e.output))
         return None
     nuoca_log(logging.DEBUG, "Parser output: %s" % (format(output)))
     self._metrics_dict = dict(re.findall(r'(\w+)="([^"]+)"', output))
@@ -60,14 +62,19 @@ printf $(grep 'Latency Average: ' {} | tail -1 | sed 's/.*Latency Average: //; s
   def collect(self, collection_interval):
     rval = None
     try:
-      nuoca_log(logging.DEBUG, "Called collect() in OLTPBenchPlugin process...")
-      collected_values = super(OLTPBenchPlugin, self).collect(collection_interval)
+      nuoca_log(logging.DEBUG,
+                "Called collect() in OLTPBenchPlugin process...")
+      collected_values = \
+        super(OLTPBenchPlugin, self).collect(collection_interval)
       rval = []
       rval.append(collected_values)
       if not self.run_parser():
         return None
       if self._metrics_dict:
-        collected_values.update(self._metrics_dict)
+        for metric_item in self._metrics_dict:
+          if self._metrics_dict[metric_item]:
+            collected_values[metric_item] = \
+              coerce_numeric(self._metrics_dict[metric_item])
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval
