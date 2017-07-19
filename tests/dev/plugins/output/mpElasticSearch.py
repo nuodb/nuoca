@@ -1,6 +1,5 @@
 import logging
 from elasticsearch import Elasticsearch
-from elasticsearch import helpers
 from nuoca_plugin import NuocaMPOutputPlugin
 from nuoca_util import nuoca_log
 
@@ -9,28 +8,17 @@ class MPElasticSearch(NuocaMPOutputPlugin):
   def __init__(self, parent_pipe, config=None):
     super(MPElasticSearch, self).__init__(parent_pipe, 'ElasticSearch')
     self._config = config
+    self.elastic_hosts = None
+    self.es_obj = None
 
   def startup(self, config=None):
     try:
       self._config = config
-      if not self._config:
-        nuoca_log(logging.ERROR,
-                  "MPElasticSearch plugin configuration missing")
-        return False
-      if 'HOST' not in self._config:
-        nuoca_log(logging.ERROR,
-                  "MPElasticSearch plugin HOST configuration missing")
-        return False
-      if 'PORT' not in self._config:
-        nuoca_log(logging.ERROR,
-                  "MPElasticSearch plugin PORT configuration missing")
-        return False
-      if 'INDEX' not in self._config:
-        nuoca_log(logging.ERROR,
-                  "MPElasticSearch plugin INDEX configuration missing")
+      required_config_items = ['HOST', 'PORT', 'INDEX']
+      if not self.has_required_config_items(config, required_config_items):
         return False
       self.elastic_hosts = [{"host": self._config['HOST'],
-                              "port": self._config['PORT']}]
+                             "port": self._config['PORT']}]
       self.es_obj = Elasticsearch(self.elastic_hosts, timeout=10)
       logger = logging.getLogger('elasticsearch')
       logger.setLevel(logging.WARNING)

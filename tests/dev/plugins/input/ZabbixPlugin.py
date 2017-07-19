@@ -3,7 +3,7 @@ import re
 
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log, search_running_processes, \
-  execute_command, coerce_numeric
+    execute_command, coerce_numeric
 
 # mpZabbix plugin
 #
@@ -48,6 +48,7 @@ from nuoca_util import nuoca_log, search_running_processes, \
 #    - kernel.maxproc
 #    - kernel.maxfiles
 #
+
 
 class MPZabbix(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
@@ -104,16 +105,9 @@ class MPZabbix(NuocaMPInputPlugin):
         return False
 
       # Validate the configuration.
-      if not config:
-        nuoca_log(logging.ERROR, "ZBX plugin missing config")
-        return False
       required_config_items = ['autoDiscoverMonitors', 'server', 'keys']
-      for config_item in required_config_items:
-        if config_item not in config:
-          nuoca_log(logging.ERROR,
-                    "ZBX plugin '%s' missing from config" %
-                    config_item)
-          return False
+      if not self.has_required_config_items(config, required_config_items):
+        return False
 
       if config['autoDiscoverMonitors']:
         self._auto_discover_monitors()
@@ -129,7 +123,6 @@ class MPZabbix(NuocaMPInputPlugin):
   def shutdown(self):
     pass
 
-
   def collect(self, collection_interval):
     rval = []
     collected_values = super(MPZabbix, self).collect(collection_interval)
@@ -141,7 +134,8 @@ class MPZabbix(NuocaMPInputPlugin):
           nuoca_log(logging.ERROR, "Problem with zabbix_get command.")
           return False
         if stdout.strip() is 'ZBX_NOTSUPPORTED':
-          nuoca_log(logging.WARNING, "zabbix_get on key '%s' returned ZBX_NOTSUPPORTED" % key)
+          nuoca_log(logging.WARNING,
+                    "zabbix_get on key '%s' returned ZBX_NOTSUPPORTED" % key)
         collected_values[key] = coerce_numeric(stdout.strip())
       rval.append(collected_values)
     except Exception as e:

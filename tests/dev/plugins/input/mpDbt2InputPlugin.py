@@ -16,14 +16,11 @@ class MPDbt2InputPlugin(NuocaMPInputPlugin):
   def startup(self, config=None):
     try:
       self._dbt2_log_dir = None
-      if config:
-        if 'dbt2_log_dir' in config:
-          self._dbt2_log_dir = config['dbt2_log_dir']
-          return True
-        else:
-          nuoca_log(logging.ERROR, 'dbt2_log_dir is a required config parameter.')
-      else:
-        nuoca_log(logging.ERROR, 'no config object found.')
+      required_config_items = ['dbt2_log_dir']
+      if not self.has_required_config_items(config, required_config_items):
+        return False
+      self._dbt2_log_dir = config['dbt2_log_dir']
+      return True
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return False
@@ -58,12 +55,15 @@ class MPDbt2InputPlugin(NuocaMPInputPlugin):
       dbt2_parser = Dbt2ResultsParser()
       # Find two most recent mix logs
       if not os.path.exists(self._dbt2_log_dir):
-        nuoca_log(logging.WARNING, "DBT2 log path not found (" + self._dbt2_log_dir + ").")
+        nuoca_log(logging.WARNING,
+                  "DBT2 log path not found (" + self._dbt2_log_dir + ").")
       else:
-        entries = (os.path.join(self._dbt2_log_dir, fn) for fn in os.listdir(self._dbt2_log_dir) if
+        entries = (os.path.join(self._dbt2_log_dir, fn) for fn in
+                   os.listdir(self._dbt2_log_dir) if
                    fn.startswith('mix'))
         entries = ((os.stat(path), path) for path in entries)
-        entries = list(sorted(((stat[ST_CTIME], path) for stat, path in entries)))
+        entries = list(sorted(((stat[ST_CTIME], path) for stat,
+                                                          path in entries)))
         if len(entries) < 2:
           nuoca_log(logging.INFO, "DBT2: There are not two mix logs yet.")
         else:
@@ -91,7 +91,8 @@ class MPDbt2InputPlugin(NuocaMPInputPlugin):
 
 """
 Mostly copied from dbt2's dbt2-post-process
-Removed concept of rampup and steady-state since this is for real-time monitoring
+Removed concept of rampup and steady-state since this is for real-time
+monitoring
 Removed tracking all metrics except New Order for efficiency.
 """
 
@@ -142,15 +143,17 @@ class Dbt2ResultsParser:
 
   def process_metrics(self, metrics):
     if self.parse_errors > 0:
-      nuoca_log(logging.INFO, "DBT2: process_metrics: there were " + self.parse_errors +
-        " parse errors reading the logs")
+      nuoca_log(logging.INFO,
+                "DBT2: process_metrics: there were " + self.parse_errors +
+                " parse errors reading the logs")
     duration = float(self.end_time - self.start_time)
     if self.transactions > 1 and duration > 0:
       lat_avg = self.sum_latencies / self.transactions
       metrics['notpm'] = float(self.transactions) * 60.0 / duration
       metrics['lat_avg'] = float(lat_avg)
       # Estimating 90th percentile from standard deviation
-      stddev = sqrt((self.sum_latencies_sq / self.transactions) - (lat_avg * lat_avg))
+      stddev = sqrt((self.sum_latencies_sq / self.transactions) -
+                    (lat_avg * lat_avg))
       metrics['lat_90th'] = float(lat_avg + stddev * 1.28)
       return metrics
     else:

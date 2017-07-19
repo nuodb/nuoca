@@ -20,10 +20,11 @@ class OLTPBenchPlugin(NuocaMPInputPlugin):
     nuoca_log(logging.INFO, "Setting up oltpbenchplugin..")
     try:
       self._config = config
-      if config:
-        for var in 'log_file', 'log_dir':
-          if var in config:
-            exec("self._" + var + " = str(config['" + var + "'])")
+      required_config_items = ['log_dir', 'log_file']
+      if not self.has_required_config_items(config, required_config_items):
+        return False
+      for var in 'log_file', 'log_dir':
+        exec("self._" + var + " = str(config['" + var + "'])")
       return True
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
