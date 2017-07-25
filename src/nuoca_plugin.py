@@ -62,6 +62,30 @@ class NuocaMPPlugin(IMultiprocessChildPlugin):
     super(NuocaMPPlugin, self).deactivate()
     self._enabled = False
 
+  def has_required_config_items(self, config, required_config_items):
+    """
+    Check that the configuration contains the required items.
+
+    :param config: Configuration to check
+    :type config: ``dict``
+
+    :param required_config_items: List of required configuration item names
+    :type required_config_items: ``List[str]``
+
+    :return: False if config or required items are missing.  Otherwise
+    return True.
+    """
+    if not config:
+      nuoca_log(logging.ERROR, "%s plugin: missing config file." %
+                self._plugin_name)
+      return False
+    for config_item in required_config_items:
+      if config_item not in config:
+        nuoca_log(logging.ERROR, "%s plugin: '%s' missing from config." %
+                  (self._plugin_name, config_item))
+        return False
+    return True
+
 
 class NuocaMPInputPlugin(NuocaMPPlugin):
   """

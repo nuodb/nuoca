@@ -21,6 +21,7 @@ from nuoca_util import nuoca_log, nuoca_gettimestamp
 #    nuomonitor_port: 8028
 #    nuomonitor_interval: 10
 
+
 class MPNuoMonitor(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
     super(MPNuoMonitor, self).__init__(parent_pipe, 'NuoMon')
@@ -76,18 +77,10 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       self._config = config
 
       # Validate the configuration.
-      if not config:
-        nuoca_log(logging.ERROR, "NuoMonitor plugin missing config")
-        return False
       required_config_items = ['broker', 'nuomonitor_host',
                                'nuomonitor_port', 'nuomonitor_interval']
-      for config_item in required_config_items:
-        if config_item not in config:
-          nuoca_log(logging.ERROR,
-                    "NuoMonitor plugin '%s' missing from config" %
-                    config_item)
-          return False
-
+      if not self.has_required_config_items(config, required_config_items):
+        return False
       nuoca_log(logging.INFO, "NuoMonitor plugin config: %s" %
                 str(self._config))
 
@@ -116,7 +109,8 @@ class MPNuoMonitor(NuocaMPInputPlugin):
     pass
 
   def collect(self, collection_interval):
-    uuid_hostname_regex = '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-'
+    uuid_hostname_regex = \
+      '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-'
     rval = None
     try:
       if collection_interval < self._nuomonitor_interval:
