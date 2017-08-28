@@ -1,12 +1,26 @@
 import json
 import logging
-import re
-import requests
 import threading
 import time
 
+import sys
+import re
+import requests
+import yaml
 from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log, nuoca_gettimestamp
+from nuoca_util import nuoca_log
+
+from nuomon.nuomon_monitor import get_nuodb_metrics
+from nuomon.nuomon_broadcast import MetricsConsumer, MetricsProducer
+
+#print sys.path
+
+#from nuomon_broadcast import MetricsConsumer, MetricsProducer, get_nuodb_metrics
+
+#from nuomon_broadcast import MetricsConsumer
+#from nuomon_broadcast import MetricsProducer
+#from nuomon_broadcast import get_nuodb_metrics
+
 
 # mpNuoMonitor plugin
 #
@@ -17,9 +31,27 @@ from nuoca_util import nuoca_log, nuoca_gettimestamp
 #    database_regex_pattern: dbt2
 #    host_uuid_shortname: True
 #    broker: 172.19.0.16
-#    nuomonitor_host: localhost
-#    nuomonitor_port: 8028
-#    nuomonitor_interval: 10
+#    domain_username: domain
+#    domain_password: bird
+
+
+class NuoMonHandler(MetricsConsumer):
+  """ NuoMon handler that listens for messages from BroadcastListener."""
+
+  NuoMonitorObject = None
+
+  def __init__(self, NuoMonitorObject):
+    super(NuoMonHandler, self).__init__()
+    self.NuoMonitorObject = NuoMonitorObject
+    pass
+
+  def onMetrics(self, description):
+    # print yaml.dump(description)
+    pass
+
+  def onValues(self, values):
+    self.NuoMonitorObject._nuomonitor_collect_queue.append(values)
+    pass
 
 
 class MPNuoMonitor(NuocaMPInputPlugin):
@@ -28,10 +60,10 @@ class MPNuoMonitor(NuocaMPInputPlugin):
     self._config = None
     self._broker = None
     self._enabled = False
-    self._nuomonitor_host = None
-    self._nuomonitor_port = None
-    self._nuomonitor_interval = None
-    self._nuomonitor_url = None
+    self._numon_handler_ready = False
+    self._domain_username = 'domain'
+    self._domain_password = 'bird'
+    self._domain_metrics = None
     self._database_regex_pattern = '.*'
     self._host_uuid_shortname = False
     self._thread = None
@@ -51,57 +83,50 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       nuoca_log(logging.ERROR, "NuoMonitor collection error: %s" % str(e))
     return rval
 
-  def _collection_thread(self):
+  def _nuomon_handler_thread(self):
     # Find the start of the next time interval
-    current_timestamp = nuoca_gettimestamp()
-    next_interval_time = current_timestamp + self._nuomonitor_interval
+    time.sleep(2) # TODO: Bad timing assumption here?
+    obj = NuoMonHandler(self)
+    obj.start()
+    self._numon_handler_ready = True
+    self._domain_metrics.wait_forever()
 
-    # Collection Interval Loop
-    loop_count = 0
-    while self._enabled:
-      try:
-        loop_count += 1
-        current_timestamp = nuoca_gettimestamp()
-        waittime = next_interval_time - current_timestamp
-        if waittime > 0:
-          time.sleep(waittime)
-        next_interval_time += self._nuomonitor_interval
-        content = self._collection_cycle(next_interval_time)
-        for ci in content:
-          self._nuomonitor_collect_queue.append(ci)
-      except Exception as e:
-        nuoca_log(logging.ERROR, str(e))
 
   def startup(self, config=None):
     try:
       self._config = config
 
       # Validate the configuration.
-      required_config_items = ['broker', 'nuomonitor_host',
-                               'nuomonitor_port', 'nuomonitor_interval']
+      required_config_items = ['broker', 'domain_username', 'domain_password']
       if not self.has_required_config_items(config, required_config_items):
         return False
       nuoca_log(logging.INFO, "NuoMonitor plugin config: %s" %
                 str(self._config))
 
       self._broker = config['broker']
-      self._nuomonitor_host = config['nuomonitor_host']
-      self._nuomonitor_port = config['nuomonitor_port']
-      self._nuomonitor_interval = config['nuomonitor_interval']
-      self._nuomonitor_url = "http://%s:%s/api/v1/metrics/latest" % \
-                             (self._nuomonitor_host,
-                              self._nuomonitor_port)
+      self._domain_username = config['domain_username']
+      self._domain_password = config['domain_password']
       if 'database_regex_pattern' in config:
         self._database_regex_pattern = config['database_regex_pattern']
       if 'host_uuid_shortname' in config:
         self._host_uuid_shortname = config['host_uuid_shortname']
       self._enabled = True
-      self._thread = threading.Thread(target=self._collection_thread)
+
+      self._domain_metrics = \
+        get_nuodb_metrics(self._broker,
+                          self._domain_password,
+                          listener=MetricsProducer,
+                          user=self._domain_username)
+      self._thread = threading.Thread(target=self._nuomon_handler_thread)
       self._thread.daemon = True
       self._thread.start()
-      return True
+      try_count = 0;
+      while not self._numon_handler_ready and try_count < 5:
+        try_count += 1
+        time.sleep(1)
+      return self._numon_handler_ready
     except Exception as e:
-      nuoca_log(logging.ERROR, str(e))
+      nuoca_log(logging.ERROR, "NuoMon Plugin: %s" % str(e))
       return False
 
   def shutdown(self):
@@ -113,14 +138,6 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-'
     rval = None
     try:
-      if collection_interval < self._nuomonitor_interval:
-        nuoca_log(logging.ERROR,
-                  "nuoca collection interval %s is smaller "
-                  "than the NuoMonitor plugin interval %s" % (
-                      collection_interval,
-                      self._nuomonitor_interval
-                  ))
-        return None
       nuoca_log(logging.DEBUG, "Called collect() in NuoMonitor Plugin process")
       base_values = super(MPNuoMonitor, self).collect(collection_interval)
       collection_count = len(self._nuomonitor_collect_queue)
@@ -130,6 +147,7 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       rval = []
       for i in range(collection_count):
         collected_dict = self._nuomonitor_collect_queue.pop(0)
+        # print collected_dict
         m = re.search(self._database_regex_pattern, collected_dict['Database'])
         if m:
           if self._host_uuid_shortname:

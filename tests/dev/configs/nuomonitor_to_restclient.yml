@@ -6,6 +6,9 @@ INPUT_PLUGINS:
     nuomonitor_host: localhost
     nuomonitor_port: 8082
     nuomonitor_interval: 10
+    domain_username: domain
+    domain_password: bird
+
 OUTPUT_PLUGINS:
 - RestClient:
     url: app_{}_host
