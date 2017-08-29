@@ -160,7 +160,7 @@ class MPNuoMonitor(NuocaMPInputPlugin):
                   shortid += "(TE)"
                 elif collected_dict['NodeType'] == 'Storage':
                   shortid += "(SM)"
-              shortid_with_pid = shortid + collected_dict['NuoMon.ProcessId']
+              shortid_with_pid = shortid + collected_dict['ProcessId']
               collected_dict['HostShortID'] = shortid
               collected_dict['HostShortIDwithPID'] = shortid_with_pid
           rval.append(collected_dict)
