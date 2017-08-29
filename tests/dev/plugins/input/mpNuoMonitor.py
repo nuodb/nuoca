@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import threading
 import time
 
@@ -103,9 +104,9 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       nuoca_log(logging.INFO, "NuoMonitor plugin config: %s" %
                 str(self._config))
 
-      self._broker = config['broker']
-      self._domain_username = config['domain_username']
-      self._domain_password = config['domain_password']
+      self._broker = os.path.expandvars(config['broker'])
+      self._domain_username = os.path.expandvars(config['domain_username'])
+      self._domain_password = os.path.expandvars(config['domain_password'])
       if 'database_regex_pattern' in config:
         self._database_regex_pattern = config['database_regex_pattern']
       if 'host_uuid_shortname' in config:
