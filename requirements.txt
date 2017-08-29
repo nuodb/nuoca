@@ -3,3 +3,5 @@ elasticsearch>=5.0.0,<6.0.0
 PyYaml==3.12
 requests==2.14.2
 Yapsy==1.11.223
+aenum==2.0.8
+wrapt==1.10.11
