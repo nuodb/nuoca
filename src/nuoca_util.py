@@ -127,8 +127,6 @@ def nuoca_log(log_level, msg):
   :param msg: str: log message
   """
   global nuoca_logger, nuoca_loghandler
-  if log_level == logging.ERROR:
-    pass
   if not nuoca_logger:
     sys.stderr.write(msg)
     return

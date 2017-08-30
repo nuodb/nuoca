@@ -228,7 +228,8 @@ class MetricsProducer(MetricsListener):
     @print_exc        
     @trace
     def onValuesRequest(self,replyTo):
-        pub.sendMessage(replyTo,identity=self.identity,body=self.values)
+        if self.identity:
+            pub.sendMessage(replyTo,identity=self.identity,body=self.values)
 
     def getIdentity(self):
         class Identity(object):
@@ -269,7 +270,7 @@ if __name__ == "__main__":
             print yaml.dump(values)
             pass
 
-    broker='localhost:17931'
+    broker='localhost'
     d=get_nuodb_metrics(broker,'bird',listener=MetricsProducer)
 
     # request / reply assumes that data has already been cached.

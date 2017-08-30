@@ -4,7 +4,7 @@ NUOCA_LOGFILE: /tmp/nuoca_nuomonitor_to_printer.log
 INPUT_PLUGINS:
 - NuoMon:
     description : Collection from internal nuomonitor tool
-    broker: localhost:17931
+    broker: localhost
     domain_username: domain
     domain_password: bird
 
