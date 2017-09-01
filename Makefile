@@ -1,7 +1,18 @@
 # Testing nuoca
 #
+# On a local devo workstation, the nuoca integration tests depends on a
+# Vagrant box which contains a copy of the nuoca source code on it.  To test
+# from a local devo workstation you must first start that Vagrant box or
+# remake and restart that Vagrant box to pickup nuoca code changes:
+#
+#   make clean
+#   make integration-test-start-vm
+#
+# Testing on Travis-CI doesn't use a Vagrant box.  The local Travis machine
+# is used for all testing.
+#
 # To run all nuoca tests:
-# 
+#
 #   make continuous-test
 #
 # To clean up:

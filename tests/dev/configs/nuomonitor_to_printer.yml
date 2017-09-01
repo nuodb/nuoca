@@ -1,11 +1,13 @@
 ---
+NUOCA_LOGFILE: /tmp/nuoca_nuomonitor_to_printer.log
+
 INPUT_PLUGINS:
 - NuoMon:
     description : Collection from internal nuomonitor tool
-    broker: 172.19.0.16
-    nuomonitor_host: localhost
-    nuomonitor_port: 8082
-    nuomonitor_interval: 10
+    broker: localhost
+    domain_username: domain
+    domain_password: bird
+
 OUTPUT_PLUGINS:
 - Printer:
 
