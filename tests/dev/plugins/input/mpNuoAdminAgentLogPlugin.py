@@ -340,17 +340,17 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
     try:
       nuoca_log(logging.DEBUG, "Called collect() in NuoAdminAgentLog Plugin process")
       base_values = super(MPNuoAdminAgentLog, self).collect(collection_interval)
-      rval = []
-      rval.append(base_values)
-      rval['Hostname'] = self._local_hostname
+      base_values['Hostname'] = self._local_hostname
       if self._host_shortid:
-        rval['HostShortID'] = self._host_shortid
+        base_values['HostShortID'] = self._host_shortid
+      rval = []
       collection_count = len(self._nuoAdminAgentLog_collect_queue)
       if not collection_count:
         return rval
 
       for i in range(collection_count):
         collected_dict = self._nuoAdminAgentLog_collect_queue.pop(0)
+        collected_dict.update(base_values)
         rval.append(collected_dict)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))

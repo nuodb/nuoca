@@ -130,6 +130,8 @@ def nuoca_log(log_level, msg):
   if not nuoca_logger:
     sys.stderr.write(msg)
     return
+  if log_level == logging.ERROR:
+    pass
   nuoca_logger.log(log_level, msg)
   nuoca_loghandler.flush()
 
