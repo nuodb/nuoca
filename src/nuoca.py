@@ -138,12 +138,14 @@ class NuoCA(object):
           print("%s:%s" % (a_plugin.name, response))
       else:
         nuoca_log(logging.ERROR,
+                  "NuoCA._get_plugin_respose: "
                   "Timeout collecting response values from plugin: %s"
                   % a_plugin.name)
         return None
 
     except Exception as e:
       nuoca_log(logging.ERROR,
+                "NuoCA._get_plugin_respose: "
                 "Unable to collect response from plugin: %s\n%s"
                 % (a_plugin.name, str(e)))
       return None
@@ -152,18 +154,20 @@ class NuoCA(object):
     try:
       if not response:
         nuoca_log(logging.ERROR,
+                  "NuoCA._get_plugin_respose: "
                   "Missing response from plugin: %s"
                   % a_plugin.name)
         return None
       if 'status_code' not in response:
         nuoca_log(logging.ERROR,
+                  "NuoCA._get_plugin_respose: "
                   "status_code missing from plugin response: %s"
                   % a_plugin.name)
         return None
 
     except Exception as e:
       nuoca_log(logging.ERROR,
-                "Error attempting to collect"
+                "NuoCA._get_plugin_respose: Error attempting to collect"
                 " response from plugin: %s\n%s"
                 % (a_plugin.name, str(e)))
       return None
@@ -248,6 +252,7 @@ class NuoCA(object):
         a_plugin.plugin_object.child_pipe.send(plugin_msg)
       except Exception as e:
         nuoca_log(logging.ERROR,
+                  "NuoCA._collect_inputs: "
                   "Unable to send %s message to plugin: %s\n%s"
                   % (plugin_msg, a_plugin.name, str(e)))
 
@@ -261,6 +266,7 @@ class NuoCA(object):
       try:
         if 'collected_values' not in resp_values:
           nuoca_log(logging.ERROR,
+                    "NuoCA._collect_inputs: "
                     "'Collected_Values' missing in response from plugin: %s"
                     % a_plugin.name)
           continue
@@ -271,6 +277,7 @@ class NuoCA(object):
           continue
         if type(resp_values['collected_values']) is not list:
           nuoca_log(logging.ERROR,
+                    "NuoCA._collect_inputs: "
                     "'Collected_Values' is not a list in "
                     "response from plugin: %s"
                     % a_plugin.name)
@@ -289,7 +296,9 @@ class NuoCA(object):
             new_values.update(self._output_values)
           rval.append(new_values)
       except Exception as e:
+
         nuoca_log(logging.ERROR,
+                  "NuoCA._collect_inputs: "
                   "Error attempting to collect"
                   " response from plugin: %s\n%s"
                   % (a_plugin.name, str(e)))
