@@ -4,10 +4,10 @@ NUOCA_LOGFILE: /tmp/nuoca_nuoadminagentlog_to_elastic.log
 INPUT_PLUGINS:
 - NuoAdminAgentLog:
     description : Collection from NuoDB Admin Agent logfile
-    agentLogfile: /home/tgates/coach_results.save/00f4e05b-403c-4f63-887e-c8331ef4087a/hosts/r0db0/agent.log
+    agentLogfile: /var/log/nuodb/agent.log
 
 OUTPUT_PLUGINS:
 - ElasticSearch:
-    HOST: 172.31.44.119
+    HOST: localhost
     PORT: 9200
-    INDEX : es_test10
+    INDEX : es_test

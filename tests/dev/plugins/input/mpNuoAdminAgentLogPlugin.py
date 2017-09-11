@@ -4,6 +4,8 @@ import re
 import socket
 import subprocess
 import threading
+from dateutil.parser import parse as date_parse
+from calendar import timegm
 
 from Queue import Queue, Empty
 
@@ -199,9 +201,9 @@ def process(event):
 class Process:
   def __init__(self):
     grok_patterns = [
-      "%{TIMESTAMP_ISO8601:TimeStamp} %{LOGLEVEL:loglevel} %{NOTSPACE:logger} %{NOTSPACE:thread} +%{GREEDYDATA:message}",
-      "%{TIMESTAMP_ISO8601:TimeStamp} \[%{POSINT:processid}\] +%{GREEDYDATA:message}",
-      "%{TIMESTAMP_ISO8601:TimeStamp} %{LOGLEVEL:loglevel} +%{GREEDYDATA:message}"
+      "%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:loglevel} %{NOTSPACE:logger} %{NOTSPACE:thread} +%{GREEDYDATA:message}",
+      "%{TIMESTAMP_ISO8601:timestamp} \[%{POSINT:processid}\] +%{GREEDYDATA:message}",
+      "%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:loglevel} +%{GREEDYDATA:message}"
     ]
     self.groks = [Grok(pattern) for pattern in grok_patterns]
     self.event = None
@@ -351,6 +353,9 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
       for i in range(collection_count):
         collected_dict = self._nuoAdminAgentLog_collect_queue.pop(0)
         collected_dict.update(base_values)
+        if collected_dict['timestamp']:
+          dt = date_parse(collected_dict['timestamp'])
+          collected_dict['TimeStamp'] = timegm(dt.timetuple())
         rval.append(collected_dict)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))

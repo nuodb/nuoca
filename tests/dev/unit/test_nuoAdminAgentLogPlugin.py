@@ -40,8 +40,10 @@ class TestInputPlugins(unittest.TestCase):
         nuoAdminAgentLog_plugin = a_plugin
     self.assertIsNotNone(nuoAdminAgentLog_plugin)
 
-    config = {'agentLogfile': '/home/tgates/coach_results.save/00f4e05b-403c-4f63-887e-c8331ef4087a/hosts/r0db0/agent.log'}
-    #config = {'agentLogfile': '/home/tgates/coach_results.save/aa3657a3-d697-4075-8470-6015d906dd47/hosts/r0db6/agent.log'}
+    cwd = os.getcwd()
+    config = {'agentLogfile':
+                "%s/../test_data/00f4e05b-403c-4f63-887e-c8331ef4087a"
+                ".r0db0.agent.log" % cwd}
     plugin_msg = {'action': 'startup', 'config': config}
     plugin_resp_msg = None
     nuoAdminAgentLog_plugin.plugin_object.child_pipe.send(plugin_msg)
@@ -50,7 +52,7 @@ class TestInputPlugins(unittest.TestCase):
     self.assertIsNotNone(plugin_resp_msg)
     self.assertEqual(0, plugin_resp_msg['status_code'])
 
-    time.sleep(30)
+    time.sleep(3)
 
     plugin_msg = {'action': 'collect', 'collection_interval': 3}
     plugin_resp_msg = None
