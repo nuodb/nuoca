@@ -199,9 +199,9 @@ def process(event):
 class Process:
   def __init__(self):
     grok_patterns = [
-      "%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:loglevel} %{NOTSPACE:logger} %{NOTSPACE:thread} +%{GREEDYDATA:message}",
-      "%{TIMESTAMP_ISO8601:timestamp} \[%{POSINT:processid}\] +%{GREEDYDATA:message}",
-      "%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:loglevel} +%{GREEDYDATA:message}"
+      "%{TIMESTAMP_ISO8601:TimeStamp} %{LOGLEVEL:loglevel} %{NOTSPACE:logger} %{NOTSPACE:thread} +%{GREEDYDATA:message}",
+      "%{TIMESTAMP_ISO8601:TimeStamp} \[%{POSINT:processid}\] +%{GREEDYDATA:message}",
+      "%{TIMESTAMP_ISO8601:TimeStamp} %{LOGLEVEL:loglevel} +%{GREEDYDATA:message}"
     ]
     self.groks = [Grok(pattern) for pattern in grok_patterns]
     self.event = None
