@@ -40,10 +40,10 @@ class TestInputPlugins(unittest.TestCase):
         nuoAdminAgentLog_plugin = a_plugin
     self.assertIsNotNone(nuoAdminAgentLog_plugin)
 
-    cwd = os.getcwd()
+    dir_path = os.path.dirname(os.path.realpath(__file__))
     config = {'agentLogfile':
                 "%s/../test_data/00f4e05b-403c-4f63-887e-c8331ef4087a"
-                ".r0db0.agent.log" % cwd}
+                ".r0db0.agent.log" % dir_path}
     plugin_msg = {'action': 'startup', 'config': config}
     plugin_resp_msg = None
     nuoAdminAgentLog_plugin.plugin_object.child_pipe.send(plugin_msg)
