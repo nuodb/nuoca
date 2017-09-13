@@ -132,7 +132,6 @@ def mapstableid(event):
 
 def peerhandle(event):
   if 'stableid' in event:
-    stableid = event['stableid']
     event['iporaddr'] = event['peerhost']
     event['port'] = event['peerport']
     event['iporaddr'] = event['peeraddr']
@@ -278,11 +277,11 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
         process.next(line)
         self._lines_processed += 1
       if process.event:
-        self._nuoAdminAgentLog_collect_queue.append(process.event)
+        self.nuoAdminAgentLog_collect_queue.append(process.event)
       if not line:
         process.complete()
         if process.event:
-          self._nuoAdminAgentLog_collect_queue.append(process.event)
+          self.nuoAdminAgentLog_collect_queue.append(process.event)
           process.event = None
     nuoca_log(logging.INFO,
               "NuoAdminAgentLog plugin process_agent_log_thread "
@@ -340,8 +339,10 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
   def collect(self, collection_interval):
     rval = None
     try:
-      nuoca_log(logging.DEBUG, "Called collect() in NuoAdminAgentLog Plugin process")
-      base_values = super(MPNuoAdminAgentLog, self).collect(collection_interval)
+      nuoca_log(logging.DEBUG,
+                "Called collect() in NuoAdminAgentLog Plugin process")
+      base_values = super(MPNuoAdminAgentLog, self).\
+        collect(collection_interval)
       base_values['Hostname'] = self._local_hostname
       if self._host_shortid:
         base_values['HostShortID'] = self._host_shortid
