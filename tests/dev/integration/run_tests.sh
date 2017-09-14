@@ -10,7 +10,7 @@ NUOCA_TOPDIR="$(pwd)"
 
 cd ${THIS_DIR}
 
-PYTHONPATH="${NUOCA_TOPDIR}/lib"
+export PYTHONPATH="${NUOCA_TOPDIR}/lib"
 
 # counter plugin
 python ${NUOCA_TOPDIR}/src/nuoca.py --config-file ${NUOCA_TOPDIR}/tests/dev/configs/counter.yml --plugin-dir ${NUOCA_TOPDIR}/tests/dev/plugins --collection-interval=1 --self-test

@@ -35,28 +35,28 @@ message_patterns = {
   "PeerService$EntryListener.handleMessage": "Peering reply from \[%{IPORHOST:peerhost}?/%{IPORHOST:peeraddr}?:%{POSINT:peerport}, uuid:%{UUID:stableid}\] \(%{NUODB_AGENTTYPE:peertype}\)",
   "TagServer$DomainJoinedRunnable.run": "Region is: %{GREEDYDATA:region}",
   # INFO EventManager.notifyPeerEvent (serv-socket7-thread-62) Peer left: [Peer 10.3.91.5:48004 (broker)]
-  "EventManager.notifyPeerEvent": "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action}: \[%{NUODB_PEER:_peer}\]",
+  "EventManager.notifyPeerEvent": "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action}: \[%{NUODB_PEER:peer_description}\]",
   "EventManager.nofifyDomainEvent": "%{NUODB_ACTIONS:action} %{NUODB_ENTITY:entity}",
 
   # INFO    EventManager.notifyNodeEvent (serv-socket6-thread-163) Node joined: [Node SM db=[realtime] pid=17719 id=2 req=null (Peer 10.3.90.4:48004 (broker))]
   # WARNING EventManager.notifyNodeEvent (serv-socket7-thread-3222) Node joined with null Peer ignored: [Node SM db=[JPMC] pid=16015 id=11 req=SMs (10.3.91.4:48005)]
-  "EventManager.notifyNodeEvent": "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action}%{GREEDYDATA:comment}?: %{NUODB_NODE:_node}",
-  "EventManager.notifyNodeIdSet": "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action}=%{POSINT:newnodeid} %{NUODB_NODE:_node}",
-  "EventManager.notifyNodeStateChange": "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action} changed to %{WORD:node_state} %{NUODB_NODE:_node}",
+  "EventManager.notifyNodeEvent": "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action}%{GREEDYDATA:comment}?: %{NUODB_NODE:node_description}",
+  "EventManager.notifyNodeIdSet": "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action}=%{POSINT:newnodeid} %{NUODB_NODE:node_description}",
+  "EventManager.notifyNodeStateChange": "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action} changed to %{WORD:node_state} %{NUODB_NODE:node_description}",
   "EventManager.notifyNodeFailure": [
     "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action} peer=\[%{NUODB_PEER}\] startId=\[%{NUMBER:startId}\]:%{NUODB_GREEDYDATA:comment}",
-    "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action} %{NUODB_NODE:_node}: %{NUODB_GREEDYDATA:comment}"],
-  "ProcessService$ProcessReaper.reapConnected": "%{WORD:action} process with pid %{NUODB_PID:pid} and exit code %{NUMBER:exitcode}",
+    "%{NUODB_ENTITY:entity} %{NUODB_ACTIONS:action} %{NUODB_NODE:node_description}: %{NUODB_GREEDYDATA:comment}"],
+  "ProcessService$ProcessReaper.reapConnected": "%{WORD:action} process with pid %{NUODB_PID:node_pid} and exit code %{NUMBER:exitcode}",
   "ProcessService.nodeLeft": [
-    "%{WORD:action} up pid.%{NUMBER:pid} with exit code.%{NUMBER:exitcode}",
-    "Marking process with %{NUODB_ENTITY:entity} object %{NUODB_NODE:_node} for %{NUODB_ACTIONS:action}"],
+    "%{WORD:action} up pid.%{NUMBER:node_pid} with exit code.%{NUMBER:exitcode}",
+    "Marking process with %{NUODB_ENTITY:entity} object %{NUODB_NODE:node_description} for %{NUODB_ACTIONS:action}"],
   "NuoAgent.logReady": "%{GREEDYDATA:comment}; agent is ready",
   "NuoAgent.shutdown": "%{GREEDYDATA:comment}"
 
 }
 
 nuodb_patterns = {
-  "NUODB_NODE": "\[Node %{WORD:node_type} db=\[%{WORD:dbname}\] pid=%{POSINT:pid} id=%{INT:nodeid} req=%{WORD:nodegroup} \((%{IPORHOST:peeraddr}:%{NUMBER:nodeport}|%{NUODB_PEER:_peer})\)\]",
+  "NUODB_NODE": "\[Node %{WORD:node_type} db=\[%{WORD:dbname}\] pid=%{POSINT:node_pid} id=%{INT:nodeid} req=%{WORD:nodegroup} \((%{IPORHOST:peeraddr}:%{NUMBER:nodeport}|%{NUODB_PEER:peer_description})\)\]",
   "NUODB_ENTITY": "([nN]ode|[pP]eer|[dD]omain)",
   "NUODB_ACTIONS": "([Jj]oined|left|state|setId|failed|reaping)",
   "NUODB_AGENTTYPE": "(broker|agent)",
@@ -117,7 +117,7 @@ def exitcycle(event):
     if 'exitcode' in event:
       event['comment'] = "exit code " + event['exitcode']
     event['entity'] = "Node"
-    event['pid'] = event['pid'].replace(',', '')
+    event['node_pid'] = event['node_pid'].replace(',', '')
     event['node_state'] = "FINISHED"
     lifecycle(event)
 
@@ -201,7 +201,7 @@ class Process:
   def __init__(self):
     grok_patterns = [
       "%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:loglevel} %{NOTSPACE:logger} %{NOTSPACE:thread} +%{GREEDYDATA:message}",
-      "%{TIMESTAMP_ISO8601:timestamp} \[%{POSINT:processid}\] +%{GREEDYDATA:message}",
+      "%{TIMESTAMP_ISO8601:timestamp} \[%{POSINT:engine_pid}\] +%{GREEDYDATA:message}",
       "%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:loglevel} +%{GREEDYDATA:message}"
     ]
     self.groks = [Grok(pattern) for pattern in grok_patterns]
