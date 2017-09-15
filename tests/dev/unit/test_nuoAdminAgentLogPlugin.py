@@ -16,6 +16,10 @@ from tests.dev.plugins.input.mpNuoAdminAgentLogPlugin import MPNuoAdminAgentLog
 
 
 class TestInputPlugins(unittest.TestCase):
+  def __init__(self, methodName='runTest'):
+    self.manager = None
+    super(TestInputPlugins, self).__init__(methodName)
+
   def _MPNuoAdminAgentLogPluginTest(self, test_node_id):
     nuoca_util.initialize_logger("/tmp/nuoca.test.log")
     nuoAdminAgentLog_plugin = MPNuoAdminAgentLog(None)
@@ -139,6 +143,7 @@ class TestInputPlugins(unittest.TestCase):
     self._MultiprocessPluginManagerTest()
 
   def tearDown(self):
-    NuoCA.kill_all_plugin_processes(self.manager, timeout=10)
+    if self.manager:
+      NuoCA.kill_all_plugin_processes(self.manager, timeout=10)
 
 
