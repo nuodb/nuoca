@@ -4,6 +4,7 @@ import os
 import gzip
 import unittest
 import nuoca_util
+import socket
 import time
 import json
 
@@ -18,6 +19,7 @@ from tests.dev.plugins.input.mpNuoAdminAgentLogPlugin import MPNuoAdminAgentLog
 class TestInputPlugins(unittest.TestCase):
   def __init__(self, methodName='runTest'):
     self.manager = None
+    self.local_hostname = socket.gethostname()
     super(TestInputPlugins, self).__init__(methodName)
 
   def _MPNuoAdminAgentLogPluginTest(self, test_node_id):
@@ -48,6 +50,7 @@ class TestInputPlugins(unittest.TestCase):
     counter = 0
     for expected_line in expected_line_values:
       del expected_line['collect_timestamp']
+      expected_line['Hostname'] = self.local_hostname
       self.assertIsNotNone(resp_values[counter]['collect_timestamp'])
       self.assertDictContainsSubset(expected_line, resp_values[counter])
       counter += 1
@@ -113,6 +116,7 @@ class TestInputPlugins(unittest.TestCase):
     counter = 0
     for expected_line in expected_line_values['collected_values']:
       del expected_line['collect_timestamp']
+      expected_line['Hostname'] = self.local_hostname
       self.assertIsNotNone(
         resp_values['collected_values'][counter]['collect_timestamp'])
       self.assertDictContainsSubset(expected_line,
