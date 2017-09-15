@@ -194,7 +194,7 @@ def process(event):
       logger = elogger[:elogger.rfind('.')]
       if logger in event_handlers:
         event_handlers[logger](event)
-    print event
+    # print event
 
 
 class Process:
