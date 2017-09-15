@@ -296,7 +296,6 @@ class NuoCA(object):
             new_values.update(self._output_values)
           rval.append(new_values)
       except Exception as e:
-
         nuoca_log(logging.ERROR,
                   "NuoCA._collect_inputs: "
                   "Error attempting to collect"
