@@ -206,8 +206,10 @@ class Process:
     ]
     self.groks = [Grok(pattern) for pattern in grok_patterns]
     self.event = None
+    self.processed_event = None
 
   def next(self, line):
+    self.processed_event = None
     nevent = None
     for pattern in self.groks:
       nevent = pattern.match(line[:-1])
@@ -218,6 +220,7 @@ class Process:
     else:
       if self.event is not None:
         process(self.event)
+        self.processed_event = self.event
         self.event = None
       if nevent is not None:
         self.event = nevent
@@ -227,8 +230,10 @@ class Process:
     pass
 
   def complete(self):
+    self.processed_event = None
     if self.event is not None:
       process(self.event)
+      self.processed_event = self.event
 
 
 class MPNuoAdminAgentLog(NuocaMPInputPlugin):
@@ -276,13 +281,14 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
       if line:
         process.next(line)
         self._lines_processed += 1
-      if process.event:
-        self.nuoAdminAgentLog_collect_queue.append(process.event)
+      if process.processed_event:
+        self.nuoAdminAgentLog_collect_queue.append(process.processed_event)
       if not line:
         process.complete()
-        if process.event:
-          self.nuoAdminAgentLog_collect_queue.append(process.event)
+        if process.processed_event:
+          self.nuoAdminAgentLog_collect_queue.append(process.processed_event)
           process.event = None
+          process.processed_event = None
     nuoca_log(logging.INFO,
               "NuoAdminAgentLog plugin process_agent_log_thread "
               "completed %s lines" % str(self._lines_processed))
