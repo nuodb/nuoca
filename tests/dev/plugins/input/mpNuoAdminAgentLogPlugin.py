@@ -259,7 +259,7 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
 
   def _tail_forever_thread(self, filename):
     self._tail_subprocess = \
-      subprocess.Popen(["tail", "-c", "+0", "-f", filename],
+      subprocess.Popen(["tail", "-c", "+0", "-F", filename],
                         stdout=subprocess.PIPE)
     while self._enabled:
       line = self._tail_subprocess.stdout.readline()
