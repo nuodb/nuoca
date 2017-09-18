@@ -5,7 +5,7 @@ python:
   - "2.7"
 
 env:
-  - NUOVERSION=2.3.1.14 NUODB_ADD_DOMAIN_PASS=yes NUODB_START_AGENT=yes NUODB_START_REST_API=yes
+  - NUOVERSION=2.6.1.5 NUODB_ADD_DOMAIN_PASS=yes NUODB_START_AGENT=yes NUODB_START_REST_API=yes
 
 notifications:
   recipients:
