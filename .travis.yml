@@ -32,7 +32,7 @@ before_install:
   - if [[ "${NUODB_START_REST_API}" == "yes" ]]; then sudo service nuoagent start; fi
   - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process sm host localhost database test archive /var/tmp/nuodb initialize true"
   - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process te host localhost database test options '--dba-user dba --dba-password dba'"
-  - ${NUODB_ROOT}/bin/nuosql test@localhost --user dba --password dba < test/etc/create_user_cloud.sql
+  - ${NUODB_ROOT}/bin/nuosql test@localhost --user dba --password dba < tests/etc/create_user_cloud.sql
 
 services:
   - elasticsearch
