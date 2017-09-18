@@ -4,14 +4,40 @@ language: python
 python:
   - "2.7"
 
+env:
+  - NUOVERSION=2.3.1.14 NUODB_ADD_DOMAIN_PASS=yes NUODB_START_AGENT=yes NUODB_START_REST_API=yes
+
+notifications:
+  recipients:
+    - tgates@nuodb.com
+
 before_install:
+  - uname -a
+  - export NUODB_ROOT=/opt/nuodb
+  - export NUODB_INCLUDE_DIR=/opt/nuodb/include
+  - export NUODB_LIB_DIR=/opt/nuodb/lib64
+  - export TZ=America/New_York
+  - cat /etc/debian_version
   - wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-agent_2.2.11-1+trusty_amd64.deb
   - wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-get_2.2.11-1+trusty_amd64.deb
   - sudo dpkg -i zabbix-agent_2.2.11-1+trusty_amd64.deb
   - sudo dpkg -i zabbix-get_2.2.11-1+trusty_amd64.deb
+  - wget -q http://download.nuohub.org/nuodb_${NUOVERSION}_amd64.deb --output-document=/var/tmp/nuodb.deb
+  - sudo dpkg -i /var/tmp/nuodb.deb
+  - sleep 5
+  - if [[ "${NUODB_ADD_DOMAIN_PASS}" == "yes" ]] ; then sudo chmod 777 $NUODB_ROOT/etc/default.properties; printf "\ndomainPassword = bird\n" >> $NUODB_ROOT/etc/default.properties; sudo chmod 600 $NUODB_ROOT/etc/default.properties; fi
+  - if [[ "${NUODB_START_AGENT}" == "yes" ]]; then sudo service nuoagent start; fi
+  - if [[ "${NUODB_START_REST_API}" == "yes" ]]; then sudo service nuoagent start; fi
+  - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process sm host localhost database test archive /var/tmp/nuodb initialize true"
+  - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process te host localhost database test options '--dba-user dba --dba-password dba'"
+  - ${NUODB_ROOT}/bin/nuosql test@localhost --user dba --password dba < create_user_cloud.sql
 
 services:
   - elasticsearch
 
+install:
+  - true
+
 script:
   - make continuous-test
+
