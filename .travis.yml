@@ -22,8 +22,8 @@ before_install:
   - wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-get_2.2.11-1+trusty_amd64.deb
   - sudo dpkg -i zabbix-agent_2.2.11-1+trusty_amd64.deb
   - sudo dpkg -i zabbix-get_2.2.11-1+trusty_amd64.deb
-  - sudo echo madvise > /sys/kernel/mm/transparent_hugepage/enabled
-  - sudo echo madvise > /sys/kernel/mm/transparent_hugepage/defrag
+  - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled'
+  - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/defrag'
   - wget -q http://download.nuohub.org/nuodb_${NUOVERSION}_amd64.deb --output-document=/var/tmp/nuodb.deb
   - sudo dpkg -i /var/tmp/nuodb.deb
   - sleep 5
@@ -32,7 +32,7 @@ before_install:
   - if [[ "${NUODB_START_REST_API}" == "yes" ]]; then sudo service nuoagent start; fi
   - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process sm host localhost database test archive /var/tmp/nuodb initialize true"
   - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process te host localhost database test options '--dba-user dba --dba-password dba'"
-  - ${NUODB_ROOT}/bin/nuosql test@localhost --user dba --password dba < create_user_cloud.sql
+  - ${NUODB_ROOT}/bin/nuosql test@localhost --user dba --password dba < test/etc/create_user_cloud.sql
 
 services:
   - elasticsearch
