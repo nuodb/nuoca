@@ -16,7 +16,6 @@ from nuomon.nuomon_broadcast import MetricsConsumer, MetricsProducer
 # - mpNuoMonitor:
 #    description : Collection from internal nuomonitor tool
 #    database_regex_pattern: dbt2
-#    host_uuid_shortname: True
 #    broker: 172.19.0.16
 #    domain_username: domain
 #    domain_password: bird

@@ -1,0 +1,10 @@
+[Core]
+Name = NuoAdminAgentLog
+Module = mpNuoAdminAgentLogPlugin
+
+[Documentation]
+Author = Tom Gates
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = Collection of log data from the NuoDB Admin logfile.
+

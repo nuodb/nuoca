@@ -37,6 +37,10 @@
           "WL.OLTPBench.collect_timestamp": {
               "type": "date",
               "format": "epoch_second"
+          },
+          "NuoAdminAgentLog.collect_timestamp": {
+              "type": "date",
+              "format": "epoch_second"
           }
         }
       }

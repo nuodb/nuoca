@@ -1,0 +1,1666 @@
+-------------------------------------------------------------------------------
+Mon Jun  6 14:38:05 UTC 2016: Starting NuoDB agent
+2016-06-06T14:38:06.175+0000 INFO Logging.checkConsoleHandler (main) Validating ConsoleHandler
+2016-06-06T14:38:06.200+0000 INFO Environment.logEnv (main) NuoAgent version: 2.5.4.master-2625
+2016-06-06T14:38:06.200+0000 INFO Environment.logEnv (main) NuoDB HOME directory: /opt/nuodb
+2016-06-06T14:38:06.201+0000 INFO Environment.logEnv (main) NuoDB CFG directory: /etc/nuodb
+2016-06-06T14:38:06.201+0000 INFO Environment.logEnv (main) NuoDB VAR directory: /var/opt/nuodb
+2016-06-06T14:38:06.201+0000 INFO Environment.logEnv (main) NuoDB LOG directory: /var/log/nuodb
+2016-06-06T14:38:06.201+0000 INFO Environment.logEnv (main) NuoDB BIN directory: null
+2016-06-06T14:38:06.201+0000 INFO Environment.logEnv (main) Java: Oracle Corporation 1.7.0_95
+2016-06-06T14:38:06.201+0000 INFO Environment.logEnv (main) Java Runtime: OpenJDK Runtime Environment 1.7.0_95-b00
+2016-06-06T14:38:06.201+0000 INFO Environment.logEnv (main) Java VM: OpenJDK 64-Bit Server VM 24.95-b01
+2016-06-06T14:38:06.202+0000 INFO Environment.logEnv (main) Java Home directory: /usr/lib/jvm/java-7-openjdk-amd64/jre
+2016-06-06T14:38:06.236+0000 INFO URLPropertiesProvider.<init> (main) using default properties file: /opt/nuodb/etc/default.properties
+2016-06-06T14:38:06.271+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftHeartbeatTimeout=500
+2016-06-06T14:38:06.271+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftLogCompactionThreshold=2147483647
+2016-06-06T14:38:06.271+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftMaxElectionTimeout=8300
+2016-06-06T14:38:06.272+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftMembershipCmdMaxRetry=60
+2016-06-06T14:38:06.272+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftMinElectionTimeout=4100
+2016-06-06T14:38:06.272+0000 INFO PropertiesContainerImpl.logProps (main) Property advertiseAlt=false
+2016-06-06T14:38:06.272+0000 INFO PropertiesContainerImpl.logProps (main) Property altAddr=
+2016-06-06T14:38:06.272+0000 INFO PropertiesContainerImpl.logProps (main) Property automationTemplate=Minimally Redundant
+2016-06-06T14:38:06.272+0000 INFO PropertiesContainerImpl.logProps (main) Property balancer=RoundRobinBalancer
+2016-06-06T14:38:06.273+0000 INFO PropertiesContainerImpl.logProps (main) Property broker=true
+2016-06-06T14:38:06.273+0000 INFO PropertiesContainerImpl.logProps (main) Property domain=domain
+2016-06-06T14:38:06.273+0000 INFO PropertiesContainerImpl.logProps (main) Property enableAutomation=true
+2016-06-06T14:38:06.274+0000 INFO PropertiesContainerImpl.logProps (main) Property enableResync=true
+2016-06-06T14:38:06.274+0000 INFO PropertiesContainerImpl.logProps (main) Property enableSystemDatabase=true
+2016-06-06T14:38:06.274+0000 INFO PropertiesContainerImpl.logProps (main) Property heartbeatPeerTimeout=600
+2016-06-06T14:38:06.274+0000 INFO PropertiesContainerImpl.logProps (main) Property hostTags=SM_OK, journal_base=/var/opt/nuodb/production_journals, archive_base=/var/opt/nuodb/production_archives
+2016-06-06T14:38:06.274+0000 INFO PropertiesContainerImpl.logProps (main) Property localBindAddress=
+2016-06-06T14:38:06.274+0000 INFO PropertiesContainerImpl.logProps (main) Property metricsPurgeAge=12h
+2016-06-06T14:38:06.275+0000 INFO PropertiesContainerImpl.logProps (main) Property nodeStartTimeoutSec=30
+2016-06-06T14:38:06.275+0000 INFO PropertiesContainerImpl.logProps (main) Property peer=
+2016-06-06T14:38:06.275+0000 INFO PropertiesContainerImpl.logProps (main) Property peerWaitInterval=10
+2016-06-06T14:38:06.275+0000 INFO PropertiesContainerImpl.logProps (main) Property peerWaitTimeout=120
+2016-06-06T14:38:06.275+0000 INFO PropertiesContainerImpl.logProps (main) Property port=48004
+2016-06-06T14:38:06.275+0000 INFO PropertiesContainerImpl.logProps (main) Property portRange=48005
+2016-06-06T14:38:06.276+0000 INFO PropertiesContainerImpl.logProps (main) Property processStartWaitBarrier=All
+2016-06-06T14:38:06.276+0000 INFO PropertiesContainerImpl.logProps (main) Property propertyProvider=com.nuodb.agent.plugin.URLPropertiesProvider
+2016-06-06T14:38:06.276+0000 INFO PropertiesContainerImpl.logProps (main) Property raft=
+2016-06-06T14:38:06.276+0000 INFO PropertiesContainerImpl.logProps (main) Property region=us-west-2
+2016-06-06T14:38:06.276+0000 INFO PropertiesContainerImpl.logProps (main) Property removeSelfOnShutdown=false
+2016-06-06T14:38:06.277+0000 INFO PropertiesContainerImpl.logProps (main) Property runEnforcerOnEveryEvent=true
+2016-06-06T14:38:06.277+0000 INFO PropertiesContainerImpl.logProps (main) Property schEnforcerInitDelaySec=15
+2016-06-06T14:38:06.277+0000 INFO PropertiesContainerImpl.logProps (main) Property schEnforcerPeriodSec=10
+2016-06-06T14:38:06.277+0000 INFO PropertiesContainerImpl.logProps (main) Property singleHostDbRestart=true
+2016-06-06T14:38:06.277+0000 INFO PropertiesContainerImpl.logProps (main) Property statsIntervalSeconds=20
+2016-06-06T14:38:06.364+0000 INFO PeerContainerImpl$LocalPeer.initStableId (main) Initializing local peer as stableId uuid:a242810e-cd49-4cc2-b240-b80e6c35e470
+2016-06-06T14:38:06.374+0000 INFO PeerContainerImpl$LocalPeer.<init> (main) local bind address=06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0/172.31.47.59:48004, hostname=06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0
+2016-06-06T14:38:06.378+0000 INFO PeerContainerImpl.<init> (main) peer unstableId=[9a42a00a-b985-47fe-a5bf-b81db7c8c361], peer=[], port=48004, raft=true, address=[06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0/172.31.47.59:48004], addrToAdvertise=[null]
+2016-06-06T14:38:06.392+0000 INFO SigarContainerImpl.setLoadLibraryPath (main) java.library.path = /opt/nuodb/jar/../plugin/agent:/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2016-06-06T14:38:06.392+0000 INFO SigarContainerImpl.start (main) start: uuid:a242810e-cd49-4cc2-b240-b80e6c35e470
+2016-06-06T14:38:06.402+0000 INFO SigarContainerImpl.printNuodbProcStats (Thread-1) nuodb ps
+8729	nuodb	14:38	1.3G	 30M	 11M	S	0:0	java:com.nuodb.agent.NuoAgent
+2016-06-06T14:38:06.488+0000 INFO RaftContainer.<init> (main) Running as Broker, Setting up Raft server
+2016-06-06T14:38:06.504+0000 INFO RaftContainer.<init> (main) Initializing empty config
+2016-06-06T14:38:06.748+0000 INFO RaftContainer.<init> (main) [LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)] LocalServer id=LocalServer id=-5602275564364372880 addr=06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0/172.31.47.59:48004
+2016-06-06T14:38:06.748+0000 INFO RaftContainer.<init> (main) [LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)] RaftConfiguration=[]
+2016-06-06T14:38:06.850+0000 INFO LicenseContainerRaftImpl.<init> (main) Loading non-enforcing license container
+2016-06-06T14:38:06.851+0000 INFO TLSCertificateContainerImpl.readPeerConfigFile (main) Peer configuration file /etc/nuodb/peerConfig.xml was not found.
+2016-06-06T14:38:06.863+0000 INFO StatsAggregatorContainerImpl.<init> (main) statsSet=[ArchiveQueue, ArchiveSyncThrottleTime, BytesReceived, BytesSent, ClientCncts, ClientReceived, ClientSent, Commits, Deletes, DiskWritten, HeapAllocated, HeapMapped, Inserts, JrnlWrites, Memory, OS-cpuSystemTimePercent, OS-cpuTotalTimePercent, OS-fsVarDirUsePercent, OS-memUsedPercent, OS-netAllInbound, OS-netAllOutbound, ObjectsCreated, P-cpuUsage, PendingInsertWaitTime, PendingUpdateStallCount, PendingUpdateWaitTime, PercentCpuTime, PercentSystemTime, PercentUserTime, PlatformCatalogStallCount, PlatformObjectCheckCompleteTime, PlatformObjectCheckOpenTime, PlatformObjectCheckPopulatedTime, Rollbacks, SqlListenerIdleTime, SqlListenerSqlProcTime, SqlListenerStallTime, SqlListenerThrottleTime, StallPointWaitTime, Stalls, Updates, WaitForSplitTime]
+2016-06-06T14:38:06.867+0000 INFO AdminDbContainerImpl.<init> (main) enableAutomation=true, enableSystemDatabase=true
+2016-06-06T14:38:06.877+0000 INFO AdminDbContainerImpl.setupDaos (main) connecting to [jdbc:com.nuodb://06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004/nuodb_system]
+2016-06-06T14:38:06.943+0000 INFO SRPVerifier.<init> (main) SRPVerifier loaded as an available verifier
+2016-06-06T14:38:07.418+0000 INFO PeerService.<init> (main) protocol version 4
+2016-06-06T14:38:07.427+0000 INFO DomainStateService.ready (main) Starting resync thread
+2016-06-06T14:38:07.428+0000 INFO SimpleAutoRestarter.ready (main) autostart disabled, Broker peered
+2016-06-06T14:38:07.430+0000 INFO PeerService.resolveEntrySession (main) peer=
+2016-06-06T14:38:07.430+0000 WARNING PeerService.resolveEntrySession (main) Failed to peer=
+2016-06-06T14:38:07.431+0000 INFO RaftPeerService.bootstrap (main) First peer, add self to raft
+2016-06-06T14:38:07.434+0000 INFO LocalServer.start (main) Starting with provisional membership
+2016-06-06T14:38:07.438+0000 INFO SigarContainerImpl$ReconnectTimer.run (Thread-9) found no running Nodes to reconnect
+2016-06-06T14:38:07.439+0000 INFO LocalServer.start (main) Raft server started
+2016-06-06T14:38:07.439+0000 INFO LocalServer.logNewRole (main) [-5602275564364372880] Converting to CANDIDATE (term=1, index=0)
+2016-06-06T14:38:07.442+0000 INFO LocalServer.logNewRole (main) [-5602275564364372880] Converting to LEADER (term=1, index=0)
+2016-06-06T14:38:07.525+0000 INFO RaftContainer.migrateOldConfig (main) Migrating durable config from f/s to KV Store ...
+2016-06-06T14:38:07.528+0000 WARNING LocalConfigurationProvider.moveAside (main) Rename cfg to /etc/nuodb/cfg.org
+2016-06-06T14:38:07.530+0000 INFO RaftContainer.loadDefaultConfigs (main) set config key=alarmDefs/nodefailed.default
+2016-06-06T14:38:07.532+0000 INFO RaftContainer.loadDefaultConfigs (main) set config key=alarmDefs/enforcerNodeBackoff.default
+2016-06-06T14:38:07.544+0000 INFO RaftContainer.loadDefaultConfigs (main) set config key=alarmDefs/enforcerNodeBackoffMaxRetried.default
+2016-06-06T14:38:07.544+0000 INFO LocalServer.dropProvisionalMembership (main) Dropping with provisional membership
+2016-06-06T14:38:07.544+0000 INFO EventManager.notifyDomainEvent (main) Joined Domain
+2016-06-06T14:38:07.551+0000 INFO EventingContainerImpl$DomainListenerImpl$1.run (evt-domain-list) EventContainer is ready (1 alarms read)
+2016-06-06T14:38:07.554+0000 INFO TagContainerImpl$DomainJoinedRunnable.run (Thread-10) TagContainer is ready
+2016-06-06T14:38:07.556+0000 INFO TagService$DomainJoinedRunnable.run (Thread-11) Region is: us-west-2
+2016-06-06T14:38:07.556+0000 INFO NuoAgent.logReady (main) startup completed; agent is ready
+2016-06-06T14:38:07.576+0000 WARNING DomainConfig.migrateDomainConfig (Thread-12) durable configuration key [Description] migrated
+2016-06-06T14:38:07.654+0000 INFO DomainConfig.addTemplateConfig (Thread-12) creating template [Multi Host]
+2016-06-06T14:38:07.657+0000 INFO DomainConfig.addTemplateConfig (Thread-12) creating template [Geo-distributed]
+2016-06-06T14:38:07.661+0000 INFO DomainConfig.addTemplateConfig (Thread-12) creating template [Minimally Redundant]
+2016-06-06T14:38:07.664+0000 INFO DomainConfig.addTemplateConfig (Thread-12) creating template [Single Host]
+2016-06-06T14:38:07.717+0000 INFO DescriptionService$DbWaiterThread.run (Thread-13) Waiting for nuodb_system database ...
+2016-06-06T14:38:07.717+0000 INFO DescriptionService$DbWaiterThread.run (Thread-13) Didn't find nuodb_system database. Running enforcer
+2016-06-06T14:38:07.943+0000 INFO DomainStateService$DomainStateResyncThread.resync (DsmResynch) Resync Successful. Domain state was not updated ([])
+2016-06-06T14:38:08.122+0000 INFO DescriptionService.startAdminDb (Thread-13) Creating new nuodb_system database
+2016-06-06T14:38:08.135+0000 INFO Enforcer.enforceCreate (Thread-13) Enforcing creation of database [nuodb_system]
+2016-06-06T14:38:08.212+0000 [8804] Starting Storage Manager 2.5.4.master-2625-d9bf111eae: database=nuodb_system, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T14:38:08.217+0000 [8804] Node startup failed: /var/opt/nuodb/production_archives/nuodb_system: Unable to create archive directory: Permission denied
+2016-06-06T14:38:08.217+0000 [8804] Stopped Storage Manager: database=nuodb_system: exiting with failure (5)
+2016-06-06T14:38:08.217+0000 INFO EventManager.notifyNodeFailure (serv-socket8-thread-2) Node failed peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)] startId=[7428529380001]: /var/opt/nuodb/production_archives/nuodb_system: Unable to create archive directory: Permission denied
+2016-06-06T14:38:08.219+0000 SEVERE DescriptionService.startAdminDb (Thread-13) Failed to create nuodb_system database: failed to start process [ProcessSpec[nuodb_system, SM, req=SMs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]], archive=/var/opt/nuodb/production_archives/nuodb_system]: [/var/opt/nuodb/production_archives/nuodb_system: Unable to create archive directory: Permission denied]
+java.io.IOException: failed to start process [ProcessSpec[nuodb_system, SM, req=SMs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]], archive=/var/opt/nuodb/production_archives/nuodb_system]: [/var/opt/nuodb/production_archives/nuodb_system: Unable to create archive directory: Permission denied]
+	at com.nuodb.agent.description.Utils.waitForStart(Utils.java:54)
+	at com.nuodb.agent.description.Enforcer.enforceCreate(Enforcer.java:228)
+	at com.nuodb.agent.description.Enforcer.enforceInternal(Enforcer.java:165)
+	at com.nuodb.agent.description.Enforcer.enforce(Enforcer.java:117)
+	at com.nuodb.agent.DescriptionContainerImpl.enforce(DescriptionContainerImpl.java:129)
+	at com.nuodb.agent.service.DescriptionService.enforceDatabase(DescriptionService.java:709)
+	at com.nuodb.agent.service.DescriptionService.startAdminDb(DescriptionService.java:1231)
+	at com.nuodb.agent.service.DescriptionService.access$900(DescriptionService.java:61)
+	at com.nuodb.agent.service.DescriptionService$DbWaiterThread.run(DescriptionService.java:995)
+Caused by: java.lang.IllegalStateException: [/var/opt/nuodb/production_archives/nuodb_system: Unable to create archive directory: Permission denied]
+	at com.nuodb.agent.description.FutureNode.get(FutureNode.java:108)
+	at com.nuodb.agent.description.Utils.waitForStart(Utils.java:52)
+	... 8 more
+2016-06-06T14:38:08.225+0000 INFO DescriptionContainerImpl$ConfigWriteCollector.writeItem (conf-writer) write [configuration/backoffStats/nuodb_system/uuid:a242810e-cd49-4cc2-b240-b80e6c35e470/SM/SMs=1]
+2016-06-06T14:38:08.230+0000 INFO EventManager.notifyNodeFailure (serv-socket8-thread-2) Node failed peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)] startId=[7428529380001]: Unknown startup failure
+2016-06-06T14:38:11.863+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=9a77b60e-66c3-4790-8d8c-4167d4921d34 entity=[uuid:a242810e-cd49-4cc2-b240-b80e6c35e470] def=[Alarm Definition [NodeFailed.default]: type=NodeFailed dimension=Host entity=* (Warning)] ud=[Host [LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]: /var/opt/nuodb/production_archives/nuodb_system: Unable to create archive directory: Permission denied]
+2016-06-06T14:38:11.872+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=5683b361-02e9-4a2e-88ca-e44f6e61ce12 entity=[uuid:a242810e-cd49-4cc2-b240-b80e6c35e470] def=[Alarm Definition [NodeFailed.default]: type=NodeFailed dimension=Host entity=* (Warning)] ud=[Host [LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]: Unknown startup failure]
+2016-06-06T14:38:38.358+0000 INFO RaftPeerService.constructPeer (serv-socket8-thread-4) Successful incoming connection from Peer 172.31.47.157:48004 (broker)
+2016-06-06T14:38:38.358+0000 INFO RaftPeerService.addToMembership (serv-socket8-thread-4) sync add [Peer 172.31.47.157:48004 (broker)]
+2016-06-06T14:38:38.383+0000 INFO EventManager.notifyPeerEvent (serv-socket8-thread-4) Peer joined: [Peer 172.31.47.157:48004 (broker)]
+2016-06-06T14:38:38.404+0000 INFO SimpleAutoRestarter.peerJoined (serv-socket8-thread-4) disable autostart, peer joined [Peer 172.31.47.157:48004 (broker)]
+2016-06-06T14:38:39.204+0000 INFO RaftPeerService.constructPeer (serv-socket8-thread-5) Successful incoming connection from Peer 172.31.40.53:48004 (broker)
+2016-06-06T14:38:39.204+0000 INFO RaftPeerService.addToMembership (serv-socket8-thread-5) sync add [Peer 172.31.40.53:48004 (broker)]
+2016-06-06T14:38:39.237+0000 INFO EventManager.notifyPeerEvent (serv-socket8-thread-5) Peer joined: [Peer 172.31.40.53:48004 (broker)]
+2016-06-06T14:38:40.048+0000 INFO RaftPeerService.constructPeer (serv-socket8-thread-6) Successful incoming connection from Peer 172.31.34.45:48004 (broker)
+2016-06-06T14:38:40.048+0000 INFO RaftPeerService.addToMembership (serv-socket8-thread-6) sync add [Peer 172.31.34.45:48004 (broker)]
+2016-06-06T14:38:40.071+0000 INFO EventManager.notifyPeerEvent (serv-socket8-thread-6) Peer joined: [Peer 172.31.34.45:48004 (broker)]
+2016-06-06T14:39:06.960+0000 INFO ProcessService$ProcessReaper.reapConnected (proc-reaper10-thread-1) Reaping process with pid 8,804 and exit code 5
+2016-06-06T14:39:26.561+0000 INFO DomainConfig.addDescriptionConfig (serv-socket8-thread-13) create database [dbt2] template [Single Host]
+2016-06-06T14:39:26.566+0000 INFO Enforcer.enforceCreate (serv-socket8-thread-13) Enforcing creation of database [dbt2]
+2016-06-06T14:39:26.570+0000 [10772] Starting Storage Manager 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T14:39:26.580+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T14:39:26.580+0000 [10772] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Storage, Storage Groups: (2,Starting,0),
+2016-06-06T14:39:26.583+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:39:26.688+0000 INFO DatabaseContainerRaftImpl$RaftDatabaseImpl.proposeInitialNode (serv-socket8-thread-14) Node Node SM db=[dbt2] pid=10772 id=-1 req=SMs (local) is initial node
+2016-06-06T14:39:26.688+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-14) Node joined: [Node SM db=[dbt2] pid=10772 id=-1 req=SMs (local)]
+2016-06-06T14:39:26.703+0000 [10772] This is the initial node for database dbt2
+2016-06-06T14:39:26.703+0000 [10772] StorageGroupContainer::addLocal. NodeId: 2147483647, SG: (2,Starting,1),
+2016-06-06T14:39:26.704+0000 [10772] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:39:26.705+0000 [10772] Registered node: NodeId: 1, LocalNodeId: 0
+2016-06-06T14:39:26.706+0000 [10772] This node address 172.31.47.59, port 48005, cloud time 0, geo region us-west-2 altAddress none
+2016-06-06T14:39:26.706+0000 [10772] Database formed: effective version 589824 (2.5.4)
+2016-06-06T14:39:26.706+0000 [10772] StorageGroupContainer::broadcastLocal. NodeId: 1, SGs: (2,Starting,1),
+2016-06-06T14:39:26.706+0000 [10772] StorageGroupContainer::addLocal. NodeId: 1, SG: (2,Running,1),
+2016-06-06T14:39:26.709+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:39:26.712+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-14) Node setId=1 [Node SM db=[dbt2] pid=10772 id=-1 req=SMs (local)]
+2016-06-06T14:39:26.713+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-14) Node state changed to ACTIVE [Node SM db=[dbt2] pid=10772 id=1 req=SMs (local)]
+2016-06-06T14:39:26.719+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-14) Node state changed to RUNNING [Node SM db=[dbt2] pid=10772 id=1 req=SMs (local)]
+2016-06-06T14:39:27.733+0000 [10788] Starting Transaction Engine 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T14:39:27.734+0000 [10788] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:39:27.734+0000 [10788] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:39:27.735+0000 [10788] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:39:27.764+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-15) Node joined: [Node TE db=[dbt2] pid=10788 id=-1 req=TEs (local)]
+2016-06-06T14:39:27.766+0000 [10788] Entering the database dbt2 through node at 127.0.0.1:48005
+2016-06-06T14:39:27.766+0000 [10788] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:39:27.766+0000 [10788] Entering database via node "127.0.0.1", port 48005
+2016-06-06T14:39:27.766+0000 [10788] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T14:39:27.766+0000 [10788] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-06-06T14:39:27.767+0000 [10772] Received connection from 127.0.0.1
+2016-06-06T14:39:27.768+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:39:27.768+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:39:27.768+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:39:27.768+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:39:27.768+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:39:27.768+0000 [10772] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-06-06T14:39:27.768+0000 [10772] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:39:27.770+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:39:27.770+0000 [10772] MsgWelcome sent to: 127.0.0.1
+2016-06-06T14:39:27.770+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:39:27.767+0000 [10788] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:39:27.768+0000 [10788] SocketBuffer::writeMessage
+2016-06-06T14:39:27.775+0000 [10788] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:39:27.776+0000 [10788] SocketBuffer::writeMessage
+2016-06-06T14:39:27.776+0000 [10788] SocketBuffer::writeMessage
+2016-06-06T14:39:27.776+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:39:27.777+0000 [10772] Registered node: NodeId: 2, LocalNodeId: 1
+2016-06-06T14:39:27.777+0000 [10788] Registered node: NodeId: 1, LocalNodeId: 1
+2016-06-06T14:39:27.777+0000 [10788] This node address 172.31.47.59, port 48006, cloud time 0, geo region us-west-2 altAddress none
+2016-06-06T14:39:27.777+0000 [10772] Broadcasting new node with remote address: 127.0.0.1
+2016-06-06T14:39:27.781+0000 [10788] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-06-06T14:39:27.781+0000 [10788] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-06-06T14:39:27.781+0000 [10788] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-06-06T14:39:27.781+0000 [10788] Registered node: NodeId: 2, LocalNodeId: 0
+2016-06-06T14:39:27.782+0000 [10788] Database entered: effective version 589824 (2.5.4)
+2016-06-06T14:39:28.345+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-15) Node setId=2 [Node TE db=[dbt2] pid=10788 id=-1 req=TEs (local)]
+2016-06-06T14:39:28.346+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-15) Node state changed to ACTIVE [Node TE db=[dbt2] pid=10788 id=2 req=TEs (local)]
+2016-06-06T14:39:28.349+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-15) Node state changed to RUNNING [Node TE db=[dbt2] pid=10788 id=2 req=TEs (local)]
+2016-06-06T14:39:28.349+0000 INFO DatabaseConfig.addArchiveLocations (serv-socket8-thread-13) adding archive(s): DescriptionArchives [{PeerAndReqKey [stableId=uuid:a242810e-cd49-4cc2-b240-b80e6c35e470, reqName=SMs]=SM location: RequirementsName=[SMs], Region=[us-west-2], Archive=[/var/opt/nuodb/production_archives/dbt2], Journal-dir=[/var/opt/nuodb/production_journals/dbt2]}]
+2016-06-06T14:39:28.353+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-15) Database [dbt2] has become active
+2016-06-06T14:42:45.027+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.030+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:45.055+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.057+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.108+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.109+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.136+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.137+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.171+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.173+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.198+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.200+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.233+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.235+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.259+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.261+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.300+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.301+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.333+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.334+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.369+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.371+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:45.407+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.409+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.434+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.436+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:45.560+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:45.562+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:48.815+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.818+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:48.822+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.824+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:48.836+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.839+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:48.847+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.849+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.849+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:48.855+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.859+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:48.865+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.865+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:48.867+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.867+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:48.887+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:42:48.889+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.908+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:48.912+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:48.928+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.003 seconds
+2016-06-06T14:42:49.374+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:49.376+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:49.796+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:49.797+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:50.285+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:50.287+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:50.608+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:50.609+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:42:51.076+0000 [10788] Received connection from 172.31.39.84
+2016-06-06T14:42:51.078+0000 [10788] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:43:59.790+0000 [10788] /home/bamboo/MASTER-BUILD-LIN/Foundation/JEMemory.cpp:83: FATAL:
+*** Stacktrace:
+0x7985fa
+0x815584
+0x81f5ac
+0x7ea3a6
+0x73f51f
+0x73f808
+0x831e2c
+0x832327
+0x84e366
+0x5c51e7
+0x645a1c
+0x648009
+0x57c003
+0x54e1ec
+2016-06-06T14:43:59.790+0000 [10788] allocation failure
+2016-06-06T14:44:00.115+0000 [10772] Unsent queue size to node 2 on shutdown is 2, buffer size is 309
+2016-06-06T14:44:00.115+0000 [10772] Listener for node 2 -> 1 failed: recv failed: Connection reset by peer (104)
+2016-06-06T14:44:00.115+0000 [10772] connection to node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 closed: recv failed: Connection reset by peer (104)
+2016-06-06T14:44:00.115+0000 [10772] Node listener thread to 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 is exiting: recv failed: Connection reset by peer (104)
+2016-06-06T14:44:00.117+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-15) Node left (observed): [Node TE db=[dbt2] pid=10788 id=2 req=TEs (local)]
+2016-06-06T14:44:00.120+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:44:00.120+0000 [10772] Connection from node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 died: recv failed: Connection reset by peer (104)
+2016-06-06T14:44:00.120+0000 [10772] StorageGroupContainer::applyRemoteDied. NodeId: 2
+2016-06-06T14:44:00.139+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-15) Database [dbt2] has become inactive, was previously active for 0:04:31.765
+2016-06-06T14:44:00.151+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-15) cleaning up pid 10788 with exit code 255
+2016-06-06T14:44:00.169+0000 INFO Enforcer.enforceRemaining (asynch-dao5-thread-4) Starting ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]]
+2016-06-06T14:44:00.179+0000 [10772] GeoRegionMgr::releaseId. Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:44:00.231+0000 [10864] Starting Transaction Engine 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T14:44:00.231+0000 [10864] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:44:00.231+0000 [10864] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:44:00.232+0000 [10864] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:44:00.273+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-15) Node joined: [Node TE db=[dbt2] pid=10864 id=-1 req=TEs (local)]
+2016-06-06T14:44:00.274+0000 [10864] Entering the database dbt2 through node at 127.0.0.1:48005
+2016-06-06T14:44:00.274+0000 [10864] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:44:00.275+0000 [10772] Received connection from 127.0.0.1
+2016-06-06T14:44:00.275+0000 [10864] Entering database via node "127.0.0.1", port 48005
+2016-06-06T14:44:00.275+0000 [10864] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T14:44:00.275+0000 [10864] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-06-06T14:44:00.276+0000 [10864] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:44:00.277+0000 [10864] SocketBuffer::writeMessage
+2016-06-06T14:44:00.277+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:44:00.277+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:44:00.277+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:44:00.277+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:44:00.277+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:44:00.277+0000 [10772] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-06-06T14:44:00.277+0000 [10772] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:44:00.280+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:44:00.280+0000 [10772] MsgWelcome sent to: 127.0.0.1
+2016-06-06T14:44:00.280+0000 [10864] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:44:00.281+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:44:00.282+0000 [10864] SocketBuffer::writeMessage
+2016-06-06T14:44:00.282+0000 [10864] SocketBuffer::writeMessage
+2016-06-06T14:44:00.282+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:44:00.282+0000 [10772] Registered node: NodeId: 3, LocalNodeId: 1
+2016-06-06T14:44:00.282+0000 [10864] Registered node: NodeId: 1, LocalNodeId: 1
+2016-06-06T14:44:00.283+0000 [10864] This node address 172.31.47.59, port 48006, cloud time 0, geo region us-west-2 altAddress none
+2016-06-06T14:44:00.283+0000 [10772] Broadcasting new node with remote address: 127.0.0.1
+2016-06-06T14:44:00.283+0000 [10864] Cloud time is adjusted to 274
+2016-06-06T14:44:00.284+0000 [10864] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-06-06T14:44:00.284+0000 [10864] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-06-06T14:44:00.284+0000 [10864] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-06-06T14:44:00.284+0000 [10864] Registered node: NodeId: 3, LocalNodeId: 0
+2016-06-06T14:44:00.284+0000 [10864] Database entered: effective version 589824 (2.5.4)
+2016-06-06T14:44:00.285+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-15) Node setId=3 [Node TE db=[dbt2] pid=10864 id=-1 req=TEs (local)]
+2016-06-06T14:44:00.287+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-15) Node state changed to ACTIVE [Node TE db=[dbt2] pid=10864 id=3 req=TEs (local)]
+2016-06-06T14:44:00.290+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-15) Node state changed to RUNNING [Node TE db=[dbt2] pid=10864 id=3 req=TEs (local)]
+2016-06-06T14:44:00.291+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-15) Database [dbt2] has become active, was previously inactive for 0:00:00.173
+2016-06-06T14:44:05.308+0000 [10864] Received connection from 172.31.39.84
+2016-06-06T14:44:05.317+0000 [10864] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:44:06.309+0000 [10864] Received connection from 172.31.39.84
+2016-06-06T14:44:06.328+0000 [10864] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.017 seconds
+2016-06-06T14:44:06.570+0000 [10772] Received connection from 172.31.47.59
+2016-06-06T14:44:06.653+0000 [10864] Received connection from 172.31.47.59
+2016-06-06T14:44:07.309+0000 [10864] Received connection from 172.31.39.84
+2016-06-06T14:44:07.311+0000 [10864] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:44:08.320+0000 [10864] Received connection from 172.31.39.84
+2016-06-06T14:44:08.322+0000 [10864] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:44:09.314+0000 [10864] Received connection from 172.31.39.84
+2016-06-06T14:44:09.332+0000 [10864] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:44:10.313+0000 [10864] Received connection from 172.31.39.84
+2016-06-06T14:44:10.314+0000 [10864] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:44:10.444+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1841, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.444+0000 [10864] Table 82/1: Duplicate GC request record94001
+2016-06-06T14:44:10.445+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1842, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.446+0000 [10864] Table 82/1: Duplicate GC request record94002
+2016-06-06T14:44:10.446+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1843, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.446+0000 [10864] Table 82/1: Duplicate GC request record94003
+2016-06-06T14:44:10.446+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1844, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.446+0000 [10864] Table 82/1: Duplicate GC request record94004
+2016-06-06T14:44:10.446+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1845, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.446+0000 [10864] Table 82/1: Duplicate GC request record94005
+2016-06-06T14:44:10.446+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1846, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.446+0000 [10864] Table 82/1: Duplicate GC request record94006
+2016-06-06T14:44:10.447+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1847, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.447+0000 [10864] Table 82/1: Duplicate GC request record94007
+2016-06-06T14:44:10.447+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1848, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.447+0000 [10864] Table 82/1: Duplicate GC request record94008
+2016-06-06T14:44:10.447+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1849, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.447+0000 [10864] Table 82/1: Duplicate GC request record94009
+2016-06-06T14:44:10.447+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1850, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.447+0000 [10864] Table 82/1: Duplicate GC request record94010
+2016-06-06T14:44:10.447+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1851, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.447+0000 [10864] Table 82/1: Duplicate GC request record94011
+2016-06-06T14:44:10.447+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1852, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.447+0000 [10864] Table 82/1: Duplicate GC request record94012
+2016-06-06T14:44:10.448+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1853, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.448+0000 [10864] Table 82/1: Duplicate GC request record94013
+2016-06-06T14:44:10.448+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1854, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.448+0000 [10864] Table 82/1: Duplicate GC request record94014
+2016-06-06T14:44:10.448+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1855, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.448+0000 [10864] Table 82/1: Duplicate GC request record94015
+2016-06-06T14:44:10.448+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1856, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.448+0000 [10864] Table 82/1: Duplicate GC request record94016
+2016-06-06T14:44:10.448+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1857, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.448+0000 [10864] Table 82/1: Duplicate GC request record94017
+2016-06-06T14:44:10.448+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1858, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.448+0000 [10864] Table 82/1: Duplicate GC request record94018
+2016-06-06T14:44:10.449+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1859, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.449+0000 [10864] Table 82/1: Duplicate GC request record94019
+2016-06-06T14:44:10.449+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1860, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.449+0000 [10864] Table 82/1: Duplicate GC request record94020
+2016-06-06T14:44:10.449+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1861, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.449+0000 [10864] Table 82/1: Duplicate GC request record94021
+2016-06-06T14:44:10.449+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1862, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.449+0000 [10864] Table 82/1: Duplicate GC request record94022
+2016-06-06T14:44:10.449+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1863, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.449+0000 [10864] Table 82/1: Duplicate GC request record94023
+2016-06-06T14:44:10.449+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1864, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.449+0000 [10864] Table 82/1: Duplicate GC request record94024
+2016-06-06T14:44:10.449+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1865, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.449+0000 [10864] Table 82/1: Duplicate GC request record94025
+2016-06-06T14:44:10.450+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1866, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.450+0000 [10864] Table 82/1: Duplicate GC request record94026
+2016-06-06T14:44:10.450+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1867, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.450+0000 [10864] Table 82/1: Duplicate GC request record94027
+2016-06-06T14:44:10.450+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1868, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.450+0000 [10864] Table 82/1: Duplicate GC request record94028
+2016-06-06T14:44:10.450+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1869, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.450+0000 [10864] Table 82/1: Duplicate GC request record94029
+2016-06-06T14:44:10.450+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1870, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.450+0000 [10864] Table 82/1: Duplicate GC request record94030
+2016-06-06T14:44:10.450+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1871, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.450+0000 [10864] Table 82/1: Duplicate GC request record94031
+2016-06-06T14:44:10.450+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1872, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.450+0000 [10864] Table 82/1: Duplicate GC request record94032
+2016-06-06T14:44:10.451+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1873, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.451+0000 [10864] Table 82/1: Duplicate GC request record94033
+2016-06-06T14:44:10.451+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1874, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.451+0000 [10864] Table 82/1: Duplicate GC request record94034
+2016-06-06T14:44:10.451+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1875, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.451+0000 [10864] Table 82/1: Duplicate GC request record94035
+2016-06-06T14:44:10.451+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1876, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.451+0000 [10864] Table 82/1: Duplicate GC request record94036
+2016-06-06T14:44:10.451+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1877, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.451+0000 [10864] Table 82/1: Duplicate GC request record94037
+2016-06-06T14:44:10.453+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1878, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.453+0000 [10864] Table 82/1: Duplicate GC request record94038
+2016-06-06T14:44:10.454+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1879, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.454+0000 [10864] Table 82/1: Duplicate GC request record94039
+2016-06-06T14:44:10.454+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1880, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.454+0000 [10864] Table 82/1: Duplicate GC request record94040
+2016-06-06T14:44:10.454+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1881, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.454+0000 [10864] Table 82/1: Duplicate GC request record94041
+2016-06-06T14:44:10.454+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1882, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.454+0000 [10864] Table 82/1: Duplicate GC request record94042
+2016-06-06T14:44:10.454+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1883, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.454+0000 [10864] Table 82/1: Duplicate GC request record94043
+2016-06-06T14:44:10.454+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1884, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.454+0000 [10864] Table 82/1: Duplicate GC request record94044
+2016-06-06T14:44:10.454+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1885, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.454+0000 [10864] Table 82/1: Duplicate GC request record94045
+2016-06-06T14:44:10.457+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1886, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.457+0000 [10864] Table 82/1: Duplicate GC request record94046
+2016-06-06T14:44:10.459+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1887, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.459+0000 [10864] Table 82/1: Duplicate GC request record94047
+2016-06-06T14:44:10.459+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1888, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.459+0000 [10864] Table 82/1: Duplicate GC request record94048
+2016-06-06T14:44:10.459+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1889, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.459+0000 [10864] Table 82/1: Duplicate GC request record94049
+2016-06-06T14:44:10.459+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1890, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.459+0000 [10864] Table 82/1: Duplicate GC request record94050
+2016-06-06T14:44:10.459+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1891, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.459+0000 [10864] Table 82/1: Duplicate GC request record94051
+2016-06-06T14:44:10.459+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1892, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.459+0000 [10864] Table 82/1: Duplicate GC request record94052
+2016-06-06T14:44:10.460+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1893, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.460+0000 [10864] Table 82/1: Duplicate GC request record94053
+2016-06-06T14:44:10.460+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1894, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.460+0000 [10864] Table 82/1: Duplicate GC request record94054
+2016-06-06T14:44:10.460+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1895, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.460+0000 [10864] Table 82/1: Duplicate GC request record94055
+2016-06-06T14:44:10.460+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1896, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.460+0000 [10864] Table 82/1: Duplicate GC request record94056
+2016-06-06T14:44:10.460+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1897, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.460+0000 [10864] Table 82/1: Duplicate GC request record94057
+2016-06-06T14:44:10.460+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1898, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.460+0000 [10864] Table 82/1: Duplicate GC request record94058
+2016-06-06T14:44:10.460+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1899, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.460+0000 [10864] Table 82/1: Duplicate GC request record94059
+2016-06-06T14:44:10.461+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1900, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.461+0000 [10864] Table 82/1: Duplicate GC request record94060
+2016-06-06T14:44:10.461+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1901, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.461+0000 [10864] Table 82/1: Duplicate GC request record94061
+2016-06-06T14:44:10.461+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1902, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.461+0000 [10864] Table 82/1: Duplicate GC request record94062
+2016-06-06T14:44:10.463+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1903, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.463+0000 [10864] Table 82/1: Duplicate GC request record94063
+2016-06-06T14:44:10.464+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1904, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.464+0000 [10864] Table 82/1: Duplicate GC request record94064
+2016-06-06T14:44:10.464+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1905, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.464+0000 [10864] Table 82/1: Duplicate GC request record94065
+2016-06-06T14:44:10.464+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1906, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.464+0000 [10864] Table 82/1: Duplicate GC request record94066
+2016-06-06T14:44:10.464+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1907, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.464+0000 [10864] Table 82/1: Duplicate GC request record94067
+2016-06-06T14:44:10.465+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1908, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.465+0000 [10864] Table 82/1: Duplicate GC request record94068
+2016-06-06T14:44:10.466+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1909, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.466+0000 [10864] Table 82/1: Duplicate GC request record94069
+2016-06-06T14:44:10.466+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1910, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.466+0000 [10864] Table 82/1: Duplicate GC request record94070
+2016-06-06T14:44:10.466+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1911, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.466+0000 [10864] Table 82/1: Duplicate GC request record94071
+2016-06-06T14:44:10.467+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1912, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.467+0000 [10864] Table 82/1: Duplicate GC request record94072
+2016-06-06T14:44:10.467+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1913, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.467+0000 [10864] Table 82/1: Duplicate GC request record94073
+2016-06-06T14:44:10.467+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1914, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.467+0000 [10864] Table 82/1: Duplicate GC request record94074
+2016-06-06T14:44:10.467+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1915, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.467+0000 [10864] Table 82/1: Duplicate GC request record94075
+2016-06-06T14:44:10.468+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1916, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.468+0000 [10864] Table 82/1: Duplicate GC request record94076
+2016-06-06T14:44:10.468+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1917, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.468+0000 [10864] Table 82/1: Duplicate GC request record94077
+2016-06-06T14:44:10.468+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1918, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.468+0000 [10864] Table 82/1: Duplicate GC request record94078
+2016-06-06T14:44:10.468+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1919, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.468+0000 [10864] Table 82/1: Duplicate GC request record94079
+2016-06-06T14:44:10.468+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1920, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.468+0000 [10864] Table 82/1: Duplicate GC request record94080
+2016-06-06T14:44:10.473+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1921, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.473+0000 [10864] Table 82/1: Duplicate GC request record94081
+2016-06-06T14:44:10.474+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1922, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.474+0000 [10864] Table 82/1: Duplicate GC request record94082
+2016-06-06T14:44:10.474+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1923, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.474+0000 [10864] Table 82/1: Duplicate GC request record94083
+2016-06-06T14:44:10.474+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1924, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.474+0000 [10864] Table 82/1: Duplicate GC request record94084
+2016-06-06T14:44:10.475+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1925, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.475+0000 [10864] Table 82/1: Duplicate GC request record94085
+2016-06-06T14:44:10.475+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1926, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.477+0000 [10864] Table 82/1: Duplicate GC request record94086
+2016-06-06T14:44:10.479+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1927, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.479+0000 [10864] Table 82/1: Duplicate GC request record94087
+2016-06-06T14:44:10.479+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1928, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.479+0000 [10864] Table 82/1: Duplicate GC request record94088
+2016-06-06T14:44:10.480+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1929, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.480+0000 [10864] Table 82/1: Duplicate GC request record94089
+2016-06-06T14:44:10.480+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1930, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.480+0000 [10864] Table 82/1: Duplicate GC request record94090
+2016-06-06T14:44:10.480+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1931, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.480+0000 [10864] Table 82/1: Duplicate GC request record94091
+2016-06-06T14:44:10.480+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1932, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.480+0000 [10864] Table 82/1: Duplicate GC request record94092
+2016-06-06T14:44:10.481+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1933, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.481+0000 [10864] Table 82/1: Duplicate GC request record94093
+2016-06-06T14:44:10.481+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1934, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.481+0000 [10864] Table 82/1: Duplicate GC request record94094
+2016-06-06T14:44:10.482+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1935, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.482+0000 [10864] Table 82/1: Duplicate GC request record94095
+2016-06-06T14:44:10.484+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1936, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.484+0000 [10864] Table 82/1: Duplicate GC request record94096
+2016-06-06T14:44:10.484+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1937, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.484+0000 [10864] Table 82/1: Duplicate GC request record94097
+2016-06-06T14:44:10.484+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1938, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.484+0000 [10864] Table 82/1: Duplicate GC request record94098
+2016-06-06T14:44:10.484+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1939, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.484+0000 [10864] Table 82/1: Duplicate GC request record94099
+2016-06-06T14:44:10.485+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1940, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.485+0000 [10864] Table 82/1: Duplicate GC request record94100
+2016-06-06T14:44:10.485+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1941, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.485+0000 [10864] Table 82/1: Duplicate GC request record94101
+2016-06-06T14:44:10.488+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1942, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.488+0000 [10864] Table 82/1: Duplicate GC request record94102
+2016-06-06T14:44:10.490+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1943, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.490+0000 [10864] Table 82/1: Duplicate GC request record94103
+2016-06-06T14:44:10.490+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1944, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.490+0000 [10864] Table 82/1: Duplicate GC request record94104
+2016-06-06T14:44:10.491+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1945, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.491+0000 [10864] Table 82/1: Duplicate GC request record94105
+2016-06-06T14:44:10.491+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1946, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.491+0000 [10864] Table 82/1: Duplicate GC request record94106
+2016-06-06T14:44:10.491+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1947, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.491+0000 [10864] Table 82/1: Duplicate GC request record94107
+2016-06-06T14:44:10.492+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1948, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.492+0000 [10864] Table 82/1: Duplicate GC request record94108
+2016-06-06T14:44:10.492+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1949, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.492+0000 [10864] Table 82/1: Duplicate GC request record94109
+2016-06-06T14:44:10.492+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1950, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.492+0000 [10864] Table 82/1: Duplicate GC request record94110
+2016-06-06T14:44:10.493+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1951, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.493+0000 [10864] Table 82/1: Duplicate GC request record94111
+2016-06-06T14:44:10.496+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1952, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.496+0000 [10864] Table 82/1: Duplicate GC request record94112
+2016-06-06T14:44:10.496+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1953, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.496+0000 [10864] Table 82/1: Duplicate GC request record94113
+2016-06-06T14:44:10.496+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1954, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.496+0000 [10864] Table 82/1: Duplicate GC request record94114
+2016-06-06T14:44:10.496+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1955, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.496+0000 [10864] Table 82/1: Duplicate GC request record94115
+2016-06-06T14:44:10.496+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1956, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.496+0000 [10864] Table 82/1: Duplicate GC request record94116
+2016-06-06T14:44:10.496+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1957, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.496+0000 [10864] Table 82/1: Duplicate GC request record94117
+2016-06-06T14:44:10.496+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1958, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.496+0000 [10864] Table 82/1: Duplicate GC request record94118
+2016-06-06T14:44:10.496+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1959, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.496+0000 [10864] Table 82/1: Duplicate GC request record94119
+2016-06-06T14:44:10.498+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1960, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.498+0000 [10864] Table 82/1: Duplicate GC request record94120
+2016-06-06T14:44:10.499+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1961, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.499+0000 [10864] Table 82/1: Duplicate GC request record94121
+2016-06-06T14:44:10.499+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1962, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.499+0000 [10864] Table 82/1: Duplicate GC request record94122
+2016-06-06T14:44:10.500+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1963, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.500+0000 [10864] Table 82/1: Duplicate GC request record94123
+2016-06-06T14:44:10.503+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1964, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.503+0000 [10864] Table 82/1: Duplicate GC request record94124
+2016-06-06T14:44:10.503+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1965, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.503+0000 [10864] Table 82/1: Duplicate GC request record94125
+2016-06-06T14:44:10.503+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1966, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.503+0000 [10864] Table 82/1: Duplicate GC request record94126
+2016-06-06T14:44:10.503+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1967, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.503+0000 [10864] Table 82/1: Duplicate GC request record94127
+2016-06-06T14:44:10.503+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1968, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.503+0000 [10864] Table 82/1: Duplicate GC request record94128
+2016-06-06T14:44:10.503+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1969, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.503+0000 [10864] Table 82/1: Duplicate GC request record94129
+2016-06-06T14:44:10.503+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1970, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.503+0000 [10864] Table 82/1: Duplicate GC request record94130
+2016-06-06T14:44:10.504+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1971, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.504+0000 [10864] Table 82/1: Duplicate GC request record94131
+2016-06-06T14:44:10.504+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1972, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.504+0000 [10864] Table 82/1: Duplicate GC request record94132
+2016-06-06T14:44:10.504+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1973, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.504+0000 [10864] Table 82/1: Duplicate GC request record94133
+2016-06-06T14:44:10.506+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1974, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.506+0000 [10864] Table 82/1: Duplicate GC request record94134
+2016-06-06T14:44:10.506+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1975, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.506+0000 [10864] Table 82/1: Duplicate GC request record94135
+2016-06-06T14:44:10.506+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1976, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.506+0000 [10864] Table 82/1: Duplicate GC request record94136
+2016-06-06T14:44:10.506+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1977, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.507+0000 [10864] Table 82/1: Duplicate GC request record94137
+2016-06-06T14:44:10.507+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1978, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.507+0000 [10864] Table 82/1: Duplicate GC request record94138
+2016-06-06T14:44:10.507+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1979, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.507+0000 [10864] Table 82/1: Duplicate GC request record94139
+2016-06-06T14:44:10.507+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1980, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.507+0000 [10864] Table 82/1: Duplicate GC request record94140
+2016-06-06T14:44:10.509+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1981, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.509+0000 [10864] Table 82/1: Duplicate GC request record94141
+2016-06-06T14:44:10.511+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1982, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.511+0000 [10864] Table 82/1: Duplicate GC request record94142
+2016-06-06T14:44:10.514+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1983, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.514+0000 [10864] Table 82/1: Duplicate GC request record94143
+2016-06-06T14:44:10.514+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1984, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.514+0000 [10864] Table 82/1: Duplicate GC request record94144
+2016-06-06T14:44:10.514+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1985, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.514+0000 [10864] Table 82/1: Duplicate GC request record94145
+2016-06-06T14:44:10.515+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1986, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.515+0000 [10864] Table 82/1: Duplicate GC request record94146
+2016-06-06T14:44:10.515+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1987, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.515+0000 [10864] Table 82/1: Duplicate GC request record94147
+2016-06-06T14:44:10.516+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1988, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.516+0000 [10864] Table 82/1: Duplicate GC request record94148
+2016-06-06T14:44:10.516+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1989, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.516+0000 [10864] Table 82/1: Duplicate GC request record94149
+2016-06-06T14:44:10.517+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1990, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.517+0000 [10864] Table 82/1: Duplicate GC request record94150
+2016-06-06T14:44:10.517+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1991, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.517+0000 [10864] Table 82/1: Duplicate GC request record94151
+2016-06-06T14:44:10.517+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1992, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.517+0000 [10864] Table 82/1: Duplicate GC request record94152
+2016-06-06T14:44:10.517+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1993, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.517+0000 [10864] Table 82/1: Duplicate GC request record94153
+2016-06-06T14:44:10.517+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1994, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.517+0000 [10864] Table 82/1: Duplicate GC request record94154
+2016-06-06T14:44:10.517+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1995, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.517+0000 [10864] Table 82/1: Duplicate GC request record94155
+2016-06-06T14:44:10.519+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1996, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.519+0000 [10864] Table 82/1: Duplicate GC request record94156
+2016-06-06T14:44:10.519+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1997, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.519+0000 [10864] Table 82/1: Duplicate GC request record94157
+2016-06-06T14:44:10.520+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1998, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.520+0000 [10864] Table 82/1: Duplicate GC request record94158
+2016-06-06T14:44:10.520+0000 [10864] Missing blobData during deleteBlob, recordNumber: 1999, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.521+0000 [10864] Table 82/1: Duplicate GC request record94159
+2016-06-06T14:44:10.521+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2000, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.521+0000 [10864] Table 82/1: Duplicate GC request record94160
+2016-06-06T14:44:10.521+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2001, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.521+0000 [10864] Table 82/1: Duplicate GC request record94161
+2016-06-06T14:44:10.521+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2002, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.521+0000 [10864] Table 82/1: Duplicate GC request record94162
+2016-06-06T14:44:10.521+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2003, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.521+0000 [10864] Table 82/1: Duplicate GC request record94163
+2016-06-06T14:44:10.521+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2004, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.521+0000 [10864] Table 82/1: Duplicate GC request record94164
+2016-06-06T14:44:10.521+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2005, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.521+0000 [10864] Table 82/1: Duplicate GC request record94165
+2016-06-06T14:44:10.522+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2006, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.522+0000 [10864] Table 82/1: Duplicate GC request record94166
+2016-06-06T14:44:10.523+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2007, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.523+0000 [10864] Table 82/1: Duplicate GC request record94167
+2016-06-06T14:44:10.523+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2008, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.523+0000 [10864] Table 82/1: Duplicate GC request record94168
+2016-06-06T14:44:10.524+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2009, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.524+0000 [10864] Table 82/1: Duplicate GC request record94169
+2016-06-06T14:44:10.525+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2010, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.525+0000 [10864] Table 82/1: Duplicate GC request record94170
+2016-06-06T14:44:10.525+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2011, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.525+0000 [10864] Table 82/1: Duplicate GC request record94171
+2016-06-06T14:44:10.525+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2012, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.525+0000 [10864] Table 82/1: Duplicate GC request record94172
+2016-06-06T14:44:10.527+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2013, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.527+0000 [10864] Table 82/1: Duplicate GC request record94173
+2016-06-06T14:44:10.529+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2014, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.529+0000 [10864] Table 82/1: Duplicate GC request record94174
+2016-06-06T14:44:10.529+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2015, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.529+0000 [10864] Table 82/1: Duplicate GC request record94175
+2016-06-06T14:44:10.529+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2016, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.529+0000 [10864] Table 82/1: Duplicate GC request record94176
+2016-06-06T14:44:10.530+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2017, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.530+0000 [10864] Table 82/1: Duplicate GC request record94177
+2016-06-06T14:44:10.530+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2018, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.530+0000 [10864] Table 82/1: Duplicate GC request record94178
+2016-06-06T14:44:10.530+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2019, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.530+0000 [10864] Table 82/1: Duplicate GC request record94179
+2016-06-06T14:44:10.531+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2020, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.531+0000 [10864] Table 82/1: Duplicate GC request record94180
+2016-06-06T14:44:10.533+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2021, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.533+0000 [10864] Table 82/1: Duplicate GC request record94181
+2016-06-06T14:44:10.534+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2022, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.534+0000 [10864] Table 82/1: Duplicate GC request record94182
+2016-06-06T14:44:10.534+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2023, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.534+0000 [10864] Table 82/1: Duplicate GC request record94183
+2016-06-06T14:44:10.535+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2024, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.535+0000 [10864] Table 82/1: Duplicate GC request record94184
+2016-06-06T14:44:10.535+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2025, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.535+0000 [10864] Table 82/1: Duplicate GC request record94185
+2016-06-06T14:44:10.536+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2026, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.536+0000 [10864] Table 82/1: Duplicate GC request record94186
+2016-06-06T14:44:10.537+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2027, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.537+0000 [10864] Table 82/1: Duplicate GC request record94187
+2016-06-06T14:44:10.539+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2028, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.539+0000 [10864] Table 82/1: Duplicate GC request record94188
+2016-06-06T14:44:10.539+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2029, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.539+0000 [10864] Table 82/1: Duplicate GC request record94189
+2016-06-06T14:44:10.539+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2030, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.539+0000 [10864] Table 82/1: Duplicate GC request record94190
+2016-06-06T14:44:10.541+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2031, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.541+0000 [10864] Table 82/1: Duplicate GC request record94191
+2016-06-06T14:44:10.541+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2032, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.541+0000 [10864] Table 82/1: Duplicate GC request record94192
+2016-06-06T14:44:10.543+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2033, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.543+0000 [10864] Table 82/1: Duplicate GC request record94193
+2016-06-06T14:44:10.543+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2034, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.543+0000 [10864] Table 82/1: Duplicate GC request record94194
+2016-06-06T14:44:10.544+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2035, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.544+0000 [10864] Table 82/1: Duplicate GC request record94195
+2016-06-06T14:44:10.544+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2036, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.544+0000 [10864] Table 82/1: Duplicate GC request record94196
+2016-06-06T14:44:10.546+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2037, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.546+0000 [10864] Table 82/1: Duplicate GC request record94197
+2016-06-06T14:44:10.547+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2038, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.547+0000 [10864] Table 82/1: Duplicate GC request record94198
+2016-06-06T14:44:10.549+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2039, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.549+0000 [10864] Table 82/1: Duplicate GC request record94199
+2016-06-06T14:44:10.549+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2040, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.549+0000 [10864] Table 82/1: Duplicate GC request record94200
+2016-06-06T14:44:10.549+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2041, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.549+0000 [10864] Table 82/1: Duplicate GC request record94201
+2016-06-06T14:44:10.549+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2042, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.549+0000 [10864] Table 82/1: Duplicate GC request record94202
+2016-06-06T14:44:10.549+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2043, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.549+0000 [10864] Table 82/1: Duplicate GC request record94203
+2016-06-06T14:44:10.555+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2044, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.555+0000 [10864] Table 82/1: Duplicate GC request record94204
+2016-06-06T14:44:10.556+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2045, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.556+0000 [10864] Table 82/1: Duplicate GC request record94205
+2016-06-06T14:44:10.556+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2046, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.556+0000 [10864] Table 82/1: Duplicate GC request record94206
+2016-06-06T14:44:10.556+0000 [10864] Missing blobData during deleteBlob, recordNumber: 2047, ObjectInfo: Blobs 1352/83: 
+2016-06-06T14:44:10.556+0000 [10864] Table 82/1: Duplicate GC request record94207
+2016-06-06T14:44:11.312+0000 [10864] Received connection from 172.31.39.84
+2016-06-06T14:44:11.314+0000 [10864] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:44:12.312+0000 [10864] Received connection from 172.31.39.84
+2016-06-06T14:44:12.318+0000 [10864] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:44:22.378+0000 [10864] Table 70/1: Duplicate GC request record162001
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162002
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162003
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162004
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162005
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162006
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162007
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162008
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162009
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162010
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162011
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162012
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162013
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162014
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162015
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162016
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162017
+2016-06-06T14:44:22.388+0000 [10864] Table 70/1: Duplicate GC request record162018
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162019
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162020
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162021
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162022
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162023
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162024
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162025
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162026
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162027
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162028
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162029
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162030
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162031
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162032
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162033
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162034
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162035
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162036
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162037
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162038
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162039
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162040
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162041
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162042
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162043
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162044
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162045
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162046
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162047
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162048
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162049
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162050
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162051
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162052
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162053
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162054
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162055
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162056
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162057
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162058
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162059
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162060
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162061
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162062
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162063
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162064
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162065
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162066
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162067
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162068
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162069
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162070
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162071
+2016-06-06T14:44:22.389+0000 [10864] Table 70/1: Duplicate GC request record162072
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162073
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162074
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162075
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162076
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162077
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162078
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162079
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162080
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162081
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162082
+2016-06-06T14:44:22.390+0000 [10864] Table 70/1: Duplicate GC request record162083
+2016-06-06T14:44:22.392+0000 [10864] Table 70/1: Duplicate GC request record162084
+2016-06-06T14:44:22.392+0000 [10864] Table 70/1: Duplicate GC request record162085
+2016-06-06T14:44:22.392+0000 [10864] Table 70/1: Duplicate GC request record162086
+2016-06-06T14:44:22.392+0000 [10864] Table 70/1: Duplicate GC request record162087
+2016-06-06T14:44:22.394+0000 [10864] Table 70/1: Duplicate GC request record162088
+2016-06-06T14:44:22.394+0000 [10864] Table 70/1: Duplicate GC request record162089
+2016-06-06T14:44:22.394+0000 [10864] Table 70/1: Duplicate GC request record162090
+2016-06-06T14:44:22.394+0000 [10864] Table 70/1: Duplicate GC request record162091
+2016-06-06T14:44:22.409+0000 [10864] Table 70/1: Duplicate GC request record162092
+2016-06-06T14:44:22.409+0000 [10864] Table 70/1: Duplicate GC request record162093
+2016-06-06T14:44:22.409+0000 [10864] Table 70/1: Duplicate GC request record162094
+2016-06-06T14:44:22.409+0000 [10864] Table 70/1: Duplicate GC request record162095
+2016-06-06T14:44:22.409+0000 [10864] Table 70/1: Duplicate GC request record162096
+2016-06-06T14:44:22.409+0000 [10864] Table 70/1: Duplicate GC request record162097
+2016-06-06T14:44:22.409+0000 [10864] Table 70/1: Duplicate GC request record162098
+2016-06-06T14:44:22.409+0000 [10864] Table 70/1: Duplicate GC request record162099
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162100
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162101
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162102
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162103
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162104
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162105
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162106
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162107
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162108
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162109
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162110
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162111
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162112
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162113
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162114
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162115
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162116
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162117
+2016-06-06T14:44:22.410+0000 [10864] Table 70/1: Duplicate GC request record162118
+2016-06-06T14:44:22.411+0000 [10864] Table 70/1: Duplicate GC request record162119
+2016-06-06T14:44:22.411+0000 [10864] Table 70/1: Duplicate GC request record162120
+2016-06-06T14:44:22.411+0000 [10864] Table 70/1: Duplicate GC request record162121
+2016-06-06T14:44:22.411+0000 [10864] Table 70/1: Duplicate GC request record162122
+2016-06-06T14:44:22.411+0000 [10864] Table 70/1: Duplicate GC request record162123
+2016-06-06T14:44:22.411+0000 [10864] Table 70/1: Duplicate GC request record162124
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162125
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162126
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162127
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162128
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162129
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162130
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162131
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162132
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162133
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162134
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162135
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162136
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162137
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162138
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162139
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162140
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162141
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162142
+2016-06-06T14:44:22.415+0000 [10864] Table 70/1: Duplicate GC request record162143
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162144
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162145
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162146
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162147
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162148
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162149
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162150
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162151
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162152
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162153
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162154
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162155
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162156
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162157
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162158
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162159
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162160
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162161
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162162
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162163
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162164
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162165
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162166
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162167
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162168
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162169
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162170
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162171
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162172
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162173
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162174
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162175
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162176
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162177
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162178
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162179
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162180
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162181
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162182
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162183
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162184
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162185
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162186
+2016-06-06T14:44:22.416+0000 [10864] Table 70/1: Duplicate GC request record162187
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162188
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162189
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162190
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162191
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162192
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162193
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162194
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162195
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162196
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162197
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162198
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162199
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162200
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162201
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162202
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162203
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162204
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162205
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162206
+2016-06-06T14:44:22.417+0000 [10864] Table 70/1: Duplicate GC request record162207
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162208
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162209
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162210
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162211
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162212
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162213
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162214
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162215
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162216
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162217
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162218
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162219
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162220
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162221
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162222
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162223
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162224
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162225
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162226
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162227
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162228
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162229
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162230
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162231
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162232
+2016-06-06T14:44:22.418+0000 [10864] Table 70/1: Duplicate GC request record162233
+2016-06-06T14:44:22.419+0000 [10864] Table 70/1: Duplicate GC request record162234
+2016-06-06T14:44:22.419+0000 [10864] Table 70/1: Duplicate GC request record162235
+2016-06-06T14:44:22.419+0000 [10864] Table 70/1: Duplicate GC request record162236
+2016-06-06T14:44:22.419+0000 [10864] Table 70/1: Duplicate GC request record162237
+2016-06-06T14:44:22.419+0000 [10864] Table 70/1: Duplicate GC request record162238
+2016-06-06T14:44:22.419+0000 [10864] Table 70/1: Duplicate GC request record162239
+2016-06-06T14:44:22.419+0000 [10864] Table 70/1: Duplicate GC request record162240
+2016-06-06T14:44:22.420+0000 [10864] Table 70/1: Duplicate GC request record162241
+2016-06-06T14:44:24.904+0000 [10864] /home/bamboo/MASTER-BUILD-LIN/Foundation/JEMemory.cpp:83: FATAL:
+*** Stacktrace:
+0x85b3c2
+0x8607c8
+0x866de3
+0x75a908
+0x5239c2
+0x51d2c5
+0x57bc02
+0x57bf05
+0x57e005
+2016-06-06T14:44:24.931+0000 [10772] getnameinfo(127.0.0.1) => localhost in 0.002 seconds
+2016-06-06T14:44:24.931+0000 [10772] Listener for node 3 -> 1 failed: connection closed by localhost:33396
+2016-06-06T14:44:24.931+0000 [10772] connection to node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 closed: connection closed by localhost:33396
+2016-06-06T14:44:24.931+0000 [10772] Node listener thread to 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 is exiting: connection closed by localhost:33396
+2016-06-06T14:44:24.932+0000 [10772] Unsent queue size to node 3 on shutdown is 0, buffer size is 239
+2016-06-06T14:44:24.933+0000 [10772] Failure sending MsgObjectWritten. Object: Data 142/71: , NodeChangeNumber: 2
+2016-06-06T14:44:24.933+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:44:24.933+0000 [10772] Connection from node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 died: connection closed by localhost:33396
+2016-06-06T14:44:24.935+0000 [10772] StorageGroupContainer::applyRemoteDied. NodeId: 3
+2016-06-06T14:44:24.936+0000 [10772] Failure sending MsgObjectWritten. Object: Data 144/71: , NodeChangeNumber: 3
+2016-06-06T14:44:24.939+0000 [10772] Failure sending MsgObjectWritten. Object: Data 147/71: , NodeChangeNumber: 4
+2016-06-06T14:44:24.941+0000 [10772] Failure sending MsgObjectWritten. Object: Data 155/71: , NodeChangeNumber: 61
+0x57e153
+0x5042cd
+0x50b3d02016-06-06T14:44:24.943+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-15) Node left (observed): [Node TE db=[dbt2] pid=10864 id=3 req=TEs (local)]
+2016-06-06T14:44:24.943+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-15) Database [dbt2] has become inactive, was previously active for 0:00:24.652
+2016-06-06T14:44:24.951+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-15) cleaning up pid 10864 with exit code 255
+
+0x507866
+0x50688b
+2016-06-06T14:44:24.942+0000 [10772] Failure sending MsgObjectWritten. Object: Data 151/71: , NodeChangeNumber: 4
+2016-06-06T14:44:24.944+0000 [10772] Failure sending MsgObjectWritten. Object: Data 152/71: , NodeChangeNumber: 5
+2016-06-06T14:44:24.946+0000 [10772] Failure sending MsgObjectWritten. Object: Data 154/71: , NodeChangeNumber: 7
+2016-06-06T14:44:24.948+0000 [10772] Failure sending MsgObjectWritten. Object: Data 158/71: , NodeChangeNumber: 2
+2016-06-06T14:44:24.950+0000 [10772] Failure sending MsgObjectWritten. Object: Data 159/71: , NodeChangeNumber: 2
+2016-06-06T14:44:24.963+0000 INFO ProcessService$ProcessReader.run (Thread-79) pipe failed for process
+java.io.IOException: Stream closed
+	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:162)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:325)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:283)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:325)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.fill(BufferedReader.java:154)
+	at java.io.BufferedReader.readLine(BufferedReader.java:317)
+	at java.io.BufferedReader.readLine(BufferedReader.java:382)
+	at com.nuodb.agent.service.ProcessService$ProcessReader.run(ProcessService.java:847)
+	at java.lang.Thread.run(Thread.java:745)
+2016-06-06T14:44:24.978+0000 INFO DescriptionContainerImpl$ConfigWriteCollector.writeItem (conf-writer) write [configuration/backoffStats/dbt2/uuid:a242810e-cd49-4cc2-b240-b80e6c35e470/TE/TEs=1]
+2016-06-06T14:44:25.010+0000 [10772] GeoRegionMgr::releaseId. Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:44:34.985+0000 WARNING Enforcer.isBackoffDelay (descsvc-enfc17-thread-1) Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=24671 nextEnforcerTime=2016-06-06T14:45:24.944+0000 retryCount=1/10
+2016-06-06T14:44:34.985+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=79c430a1-2f90-4259-95e3-9ee59bcdcd42 entity=[dbt2] def=[Alarm Definition [EnforcerNodeBackoff.default]: type=EnforcerNodeBackoff dimension=Database entity=* (Warning)] ud=[Database [dbt2]: Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=24671 nextEnforcerTime=2016-06-06T14:45:24.944+0000 retryCount=1/10]
+2016-06-06T14:45:25.020+0000 INFO Enforcer.enforceRemaining (descsvc-enfc17-thread-1) Starting ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]]
+2016-06-06T14:45:25.030+0000 [11882] Starting Transaction Engine 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T14:45:25.030+0000 [11882] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:45:25.030+0000 [11882] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:45:25.031+0000 [11882] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:45:25.065+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-23) Node joined: [Node TE db=[dbt2] pid=11882 id=-1 req=TEs (local)]
+2016-06-06T14:45:25.066+0000 [11882] Entering the database dbt2 through node at 127.0.0.1:48005
+2016-06-06T14:45:25.066+0000 [11882] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:45:25.067+0000 [11882] Entering database via node "127.0.0.1", port 48005
+2016-06-06T14:45:25.067+0000 [11882] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T14:45:25.067+0000 [11882] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-06-06T14:45:25.067+0000 [10772] Received connection from 127.0.0.1
+2016-06-06T14:45:25.067+0000 [11882] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:45:25.068+0000 [11882] SocketBuffer::writeMessage
+2016-06-06T14:45:25.068+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:45:25.068+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:45:25.068+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:45:25.068+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:45:25.069+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:45:25.069+0000 [10772] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-06-06T14:45:25.069+0000 [10772] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:45:25.070+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:45:25.070+0000 [10772] MsgWelcome sent to: 127.0.0.1
+2016-06-06T14:45:25.070+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:45:25.073+0000 [11882] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:45:25.074+0000 [11882] SocketBuffer::writeMessage
+2016-06-06T14:45:25.079+0000 [11882] SocketBuffer::writeMessage
+2016-06-06T14:45:25.079+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:45:25.079+0000 [10772] Registered node: NodeId: 4, LocalNodeId: 1
+2016-06-06T14:45:25.079+0000 [11882] Registered node: NodeId: 1, LocalNodeId: 1
+2016-06-06T14:45:25.080+0000 [11882] This node address 172.31.47.59, port 48006, cloud time 0, geo region us-west-2 altAddress none
+2016-06-06T14:45:25.081+0000 [10772] Broadcasting new node with remote address: 127.0.0.1
+2016-06-06T14:45:25.081+0000 [11882] Cloud time is adjusted to 359
+2016-06-06T14:45:25.081+0000 [11882] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-06-06T14:45:25.081+0000 [11882] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-06-06T14:45:25.081+0000 [11882] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-06-06T14:45:25.081+0000 [11882] Registered node: NodeId: 4, LocalNodeId: 0
+2016-06-06T14:45:25.082+0000 [11882] Database entered: effective version 589824 (2.5.4)
+2016-06-06T14:45:25.082+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-23) Node setId=4 [Node TE db=[dbt2] pid=11882 id=-1 req=TEs (local)]
+2016-06-06T14:45:25.082+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-23) Node state changed to ACTIVE [Node TE db=[dbt2] pid=11882 id=4 req=TEs (local)]
+2016-06-06T14:45:25.093+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-23) Node state changed to RUNNING [Node TE db=[dbt2] pid=11882 id=4 req=TEs (local)]
+2016-06-06T14:45:25.094+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-23) Database [dbt2] has become active, was previously inactive for 0:01:00.151
+2016-06-06T14:45:25.133+0000 [11882] Received connection from 172.31.47.59
+2016-06-06T14:45:26.134+0000 [11882] Received connection from 172.31.39.84
+2016-06-06T14:45:26.136+0000 [11882] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:45:26.243+0000 [11882] Received connection from 172.31.39.84
+2016-06-06T14:45:26.248+0000 [11882] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:45:26.249+0000 [11882] Received connection from 172.31.39.84
+2016-06-06T14:45:26.254+0000 [11882] Received connection from 172.31.39.84
+2016-06-06T14:45:26.263+0000 [11882] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.004 seconds
+2016-06-06T14:45:26.263+0000 [11882] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:45:26.264+0000 [11882] Received connection from 172.31.39.84
+2016-06-06T14:45:26.269+0000 [11882] Received connection from 172.31.39.84
+2016-06-06T14:45:26.275+0000 [11882] Received connection from 172.31.39.84
+2016-06-06T14:45:26.277+0000 [11882] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.003 seconds
+2016-06-06T14:45:26.283+0000 [11882] Received connection from 172.31.39.84
+2016-06-06T14:45:26.283+0000 [11882] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.003 seconds
+2016-06-06T14:45:26.283+0000 [11882] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.003 seconds
+2016-06-06T14:45:26.289+0000 [11882] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.003 seconds
+2016-06-06T14:45:41.938+0000 [11882] Missing blobData during deleteBlob, recordNumber: 738, ObjectInfo: Blobs 1426/83: 
+2016-06-06T14:45:41.949+0000 [11882] Missing blobData during deleteBlob, recordNumber: 739, ObjectInfo: Blobs 1426/83: 
+2016-06-06T14:45:41.950+0000 [11882] Missing blobData during deleteBlob, recordNumber: 741, ObjectInfo: Blobs 1426/83: 
+2016-06-06T14:45:41.956+0000 [11882] Missing blobData during deleteBlob, recordNumber: 746, ObjectInfo: Blobs 1426/83: 
+2016-06-06T14:45:41.966+0000 [11882] Missing blobData during deleteBlob, recordNumber: 750, ObjectInfo: Blobs 1426/83: 
+2016-06-06T14:45:42.034+0000 [11882] Missing blobData during deleteBlob, recordNumber: 752, ObjectInfo: Blobs 1426/83: 
+2016-06-06T14:45:42.045+0000 [11882] Missing blobData during deleteBlob, recordNumber: 749, ObjectInfo: Blobs 1426/83: 
+2016-06-06T14:45:42.053+0000 [11882] Missing blobData during deleteBlob, recordNumber: 753, ObjectInfo: Blobs 1426/83: 
+2016-06-06T14:45:43.805+0000 [11882] /home/bamboo/MASTER-BUILD-LIN/Foundation/JEMemory.cpp:83: FATAL:
+*** Stacktrace:
+0x73d620
+0x7b7f2e
+0x7b90ea
+0x99be65
+0x99b21a
+0x7fdf9d5ee184
+0x7fdf9d31b37d clone+109
+2016-06-06T14:45:43.805+0000 [11882] /home/bamboo/MASTER-BUILD-LIN/Foundation/JEMemory.cpp:83: FATAL:
+*** Stacktrace:
+0x750a9e
+0x7f7e5b
+0x7fa3f4
+0x7fafbe
+0x7fbacb
+0x7fba1d
+0x8978f1
+0x750cba
+0x750eef
+0x6c94c1
+0x6c9592
+0x60ae04
+0x60e007
+0x667e2e
+2016-06-06T14:45:44.008+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-23) Node left (observed): [Node TE db=[dbt2] pid=11882 id=4 req=TEs (local)]
+2016-06-06T14:45:44.008+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-23) Database [dbt2] has become inactive, was previously active for 0:00:18.914
+2016-06-06T14:45:44.012+0000 [10772] Listener for node 4 -> 1 failed: recv failed: Connection reset by peer (104)
+2016-06-06T14:45:44.012+0000 [10772] connection to node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 closed: recv failed: Connection reset by peer (104)
+2016-06-06T14:45:44.012+0000 [10772] Node listener thread to 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 is exiting: recv failed: Connection reset by peer (104)
+2016-06-06T14:45:44.012+0000 [10772] Unsent queue size to node 4 on shutdown is 2, buffer size is 172
+2016-06-06T14:45:44.013+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1290/83: , NodeChangeNumber: 23
+2016-06-06T14:45:44.014+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:45:44.014+0000 [10772] Connection from node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 died: recv failed: Connection reset by peer (104)
+2016-06-06T14:45:44.014+0000 [10772] StorageGroupContainer::applyRemoteDied. NodeId: 4
+2016-06-06T14:45:44.015+0000 [10772] Failure sending MsgObjectWritten. Object: Data 60/75: , NodeChangeNumber: 112
+2016-06-06T14:45:43.888+0000 [11882] allocation failurepure virtual method called
+terminate called without an active exception
+pure virtual method called
+terminate called recursively
+pure virtual method called
+terminate called recursively
+pure virtual method called
+terminate called recursively
+pure virtual method called
+terminate called recursively
+2016-06-06T14:45:43.888+0000 [11882] allocation failure
+2016-06-06T14:45:44.018+0000 [10772] Failure sending MsgObjectWritten. Object: Data 136/75: , NodeChangeNumber: 423
+2016-06-06T14:45:44.020+0000 [10772] Failure sending MsgObjectWritten. Object: Data 215/75: , NodeChangeNumber: 37
+2016-06-06T14:45:44.022+0000 [10772] Failure sending MsgObjectWritten. Object: Data 216/75: , NodeChangeNumber: 307
+2016-06-06T14:45:44.024+0000 INFO DescriptionContainerImpl$ConfigWriteCollector.writeItem (conf-writer) write [configuration/backoffStats/dbt2/uuid:a242810e-cd49-4cc2-b240-b80e6c35e470/TE/TEs=2]
+2016-06-06T14:45:44.023+0000 [10772] Failure sending MsgObjectWritten. Object: Data 296/75: , NodeChangeNumber: 339
+2016-06-06T14:45:44.028+0000 [10772] Failure sending MsgObjectWritten. Object: Data 297/75: , NodeChangeNumber: 104
+2016-06-06T14:45:44.030+0000 [10772] Failure sending MsgObjectWritten. Object: Data 376/75: , NodeChangeNumber: 254
+2016-06-06T14:45:44.031+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-23) cleaning up pid 11882 with exit code 255
+2016-06-06T14:45:44.032+0000 [10772] Failure sending MsgObjectWritten. Object: Data 377/75: , NodeChangeNumber: 131
+2016-06-06T14:45:44.034+0000 [10772] Failure sending MsgObjectWritten. Object: Data 8/77: , NodeChangeNumber: 45
+2016-06-06T14:45:44.035+0000 [10772] Failure sending MsgObjectWritten. Object: Data 13/77: , NodeChangeNumber: 45
+2016-06-06T14:45:44.038+0000 [10772] Failure sending MsgObjectWritten. Object: Records 15/77: , NodeChangeNumber: 105
+2016-06-06T14:45:44.040+0000 [10772] Failure sending MsgObjectWritten. Object: Data 21/77: , NodeChangeNumber: 5
+2016-06-06T14:45:44.040+0000 [10772] Failure sending MsgObjectWritten. Object: Data 22/77: , NodeChangeNumber: 75
+2016-06-06T14:45:44.042+0000 [10772] Failure sending MsgObjectWritten. Object: Records 566/83: , NodeChangeNumber: 110
+2016-06-06T14:45:44.044+0000 [10772] Failure sending MsgObjectWritten. Object: Records 29/77: , NodeChangeNumber: 105
+2016-06-06T14:45:44.046+0000 [10772] Failure sending MsgObjectWritten. Object: Data 30/77: , NodeChangeNumber: 45
+2016-06-06T14:45:44.048+0000 [10772] Failure sending MsgObjectWritten. Object: Index 64/79: , NodeChangeNumber: 220
+2016-06-06T14:45:44.050+0000 [10772] Failure sending MsgObjectWritten. Object: Index 597/83: , NodeChangeNumber: 37
+2016-06-06T14:45:44.052+0000 [10772] Failure sending MsgObjectWritten. Object: Data 323/77: , NodeChangeNumber: 446
+2016-06-06T14:45:44.053+0000 [10772] Failure sending MsgObjectWritten. Object: Records 33/77: , NodeChangeNumber: 105
+2016-06-06T14:45:44.056+0000 [10772] Failure sending MsgObjectWritten. Object: Data 35/77: , NodeChangeNumber: 45
+2016-06-06T14:45:44.057+0000 [10772] Failure sending MsgObjectWritten. Object: Records 43/77: , NodeChangeNumber: 105
+2016-06-06T14:45:44.059+0000 [10772] Failure sending MsgObjectWritten. Object: Data 44/77: , NodeChangeNumber: 45
+2016-06-06T14:45:44.060+0000 [10772] Failure sending MsgObjectWritten. Object: Data 3/88: , NodeChangeNumber: 144
+2016-06-06T14:45:44.062+0000 [10772] Failure sending MsgObjectWritten. Object: Records 49/77: , NodeChangeNumber: 105
+2016-06-06T14:45:44.064+0000 [10772] Failure sending MsgObjectWritten. Object: Data 51/77: , NodeChangeNumber: 45
+2016-06-06T14:45:44.065+0000 [10772] Failure sending MsgObjectWritten. Object: Records 59/77: , NodeChangeNumber: 104
+2016-06-06T14:45:44.068+0000 [10772] Failure sending MsgObjectWritten. Object: Data 60/77: , NodeChangeNumber: 46
+2016-06-06T14:45:44.073+0000 [10772] Failure sending MsgObjectWritten. Object: Index 1006/83: , NodeChangeNumber: 28
+2016-06-06T14:45:44.095+0000 [10772] GeoRegionMgr::releaseId. Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:45:55.200+0000 WARNING Enforcer.isBackoffDelay (descsvc-enfc17-thread-1) Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=18943 nextEnforcerTime=2016-06-06T14:47:44.008+0000 retryCount=2/10
+2016-06-06T14:45:55.200+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=3271321a-b698-4cf5-b4d6-a8c4f82dfe47 entity=[dbt2] def=[Alarm Definition [EnforcerNodeBackoff.default]: type=EnforcerNodeBackoff dimension=Database entity=* (Warning)] ud=[Database [dbt2]: Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=18943 nextEnforcerTime=2016-06-06T14:47:44.008+0000 retryCount=2/10]
+2016-06-06T14:47:45.250+0000 INFO Enforcer.enforceRemaining (descsvc-enfc17-thread-1) Starting ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]]
+2016-06-06T14:47:45.264+0000 [13275] Starting Transaction Engine 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T14:47:45.264+0000 [13275] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:47:45.264+0000 [13275] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:47:45.264+0000 [13275] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:47:45.302+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-30) Node joined: [Node TE db=[dbt2] pid=13275 id=-1 req=TEs (local)]
+2016-06-06T14:47:45.303+0000 [13275] Entering the database dbt2 through node at 127.0.0.1:48005
+2016-06-06T14:47:45.303+0000 [13275] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:47:45.304+0000 [13275] Entering database via node "127.0.0.1", port 48005
+2016-06-06T14:47:45.304+0000 [13275] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T14:47:45.304+0000 [13275] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-06-06T14:47:45.304+0000 [13275] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:47:45.305+0000 [13275] SocketBuffer::writeMessage
+2016-06-06T14:47:45.311+0000 [13275] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:47:45.313+0000 [13275] SocketBuffer::writeMessage
+2016-06-06T14:47:45.313+0000 [13275] SocketBuffer::writeMessage
+2016-06-06T14:47:45.314+0000 [13275] Registered node: NodeId: 1, LocalNodeId: 1
+2016-06-06T14:47:45.314+0000 [13275] This node address 172.31.47.59, port 48006, cloud time 0, geo region us-west-2 altAddress none
+2016-06-06T14:47:45.304+0000 [10772] Received connection from 127.0.0.1
+2016-06-06T14:47:45.305+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:47:45.305+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:47:45.305+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:47:45.305+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:47:45.305+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:47:45.305+0000 [10772] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-06-06T14:47:45.305+0000 [10772] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:47:45.311+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:47:45.311+0000 [10772] MsgWelcome sent to: 127.0.0.1
+2016-06-06T14:47:45.312+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:47:45.313+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:47:45.313+0000 [10772] Registered node: NodeId: 5, LocalNodeId: 1
+2016-06-06T14:47:45.317+0000 [10772] Broadcasting new node with remote address: 127.0.0.1
+2016-06-06T14:47:45.317+0000 [13275] Cloud time is adjusted to 499
+2016-06-06T14:47:45.317+0000 [13275] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-06-06T14:47:45.317+0000 [13275] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-06-06T14:47:45.317+0000 [13275] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-06-06T14:47:45.317+0000 [13275] Registered node: NodeId: 5, LocalNodeId: 0
+2016-06-06T14:47:45.317+0000 [13275] Database entered: effective version 589824 (2.5.4)
+2016-06-06T14:47:45.318+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-30) Node setId=5 [Node TE db=[dbt2] pid=13275 id=-1 req=TEs (local)]
+2016-06-06T14:47:45.318+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-30) Node state changed to ACTIVE [Node TE db=[dbt2] pid=13275 id=5 req=TEs (local)]
+2016-06-06T14:47:45.327+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-30) Node state changed to RUNNING [Node TE db=[dbt2] pid=13275 id=5 req=TEs (local)]
+2016-06-06T14:47:45.327+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-30) Database [dbt2] has become active, was previously inactive for 0:02:01.319
+2016-06-06T14:47:45.373+0000 [13275] Received connection from 172.31.47.59
+2016-06-06T14:47:46.550+0000 [13275] Received connection from 172.31.39.84
+2016-06-06T14:47:46.551+0000 [13275] Received connection from 172.31.39.84
+2016-06-06T14:47:46.552+0000 [13275] Received connection from 172.31.39.84
+2016-06-06T14:47:46.552+0000 [13275] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:47:46.553+0000 [13275] Received connection from 172.31.39.84
+2016-06-06T14:47:46.554+0000 [13275] Received connection from 172.31.39.84
+2016-06-06T14:47:46.554+0000 [13275] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:47:46.555+0000 [13275] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:47:46.555+0000 [13275] Received connection from 172.31.39.84
+2016-06-06T14:47:46.556+0000 [13275] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:47:46.557+0000 [13275] Received connection from 172.31.39.84
+2016-06-06T14:47:46.557+0000 [13275] Received connection from 172.31.39.84
+2016-06-06T14:47:46.557+0000 [13275] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:47:46.557+0000 [13275] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:47:46.559+0000 [13275] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:47:46.559+0000 [13275] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:47:54.828+0000 [13275] /home/bamboo/MASTER-BUILD-LIN/Foundation/JEMemory.cpp:83: FATAL:
+*** Stacktrace:
+0x7f2778
+0x7f37a6
+0x818b8d
+0x81fe71
+0x82068d
+0x81d04c
+0x77bf57
+0x7b779f
+0x7b9100
+0x99be65
+0x99b21a
+0x7f983802b184
+0x7f9837d5837d clone+109
+2016-06-06T14:47:54.828+0000 [13275] allocation failure2016-06-06T14:47:54.828+0000 [13275] /home/bamboo/MASTER-BUILD-LIN/Foundation/JEMemory.cpp:83: FATAL:
+*** Stacktrace:
+0x750a9e
+0x7f7e5b
+0x7fa3f4
+0x7fafbe
+0x7fbacb
+0x7fba1d
+0x8978f1
+0x750cba
+0x750eef
+0x6c94c1
+0x6c9592
+0x60ae04
+0x60e007
+0x667e2e
+2016-06-06T14:47:54.828+0000 [13275] allocation failure
+2016-06-06T14:47:54.856+0000 [10772] Listener for node 5 -> 1 failed: recv failed: Connection reset by peer (104)
+2016-06-06T14:47:54.856+0000 [10772] connection to node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 closed: recv failed: Connection reset by peer (104)
+2016-06-06T14:47:54.856+0000 [10772] Node listener thread to 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 is exiting: recv failed: Connection reset by peer (104)
+2016-06-06T14:47:54.856+0000 [10772] Unsent queue size to node 5 on shutdown is 0, buffer size is 253
+2016-06-06T14:47:54.856+0000 [10772] Failure sending MsgObjectWritten. Object: Index 1038/83: , NodeChangeNumber: 36
+2016-06-06T14:47:54.858+0000 [10772] Failure sending MsgObjectWritten. Object: Data 126/83: , NodeChangeNumber: 4
+2016-06-06T14:47:54.860+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:47:54.860+0000 [10772] Connection from node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 died: recv failed: Connection reset by peer (104)
+2016-06-06T14:47:54.860+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1128/83: , NodeChangeNumber: 5
+2016-06-06T14:47:54.861+0000 [10772] StorageGroupContainer::applyRemoteDied. NodeId: 5
+2016-06-06T14:47:54.863+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-30) Node left (observed): [Node TE db=[dbt2] pid=13275 id=5 req=TEs (local)]
+2016-06-06T14:47:54.863+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-30) Database [dbt2] has become inactive, was previously active for 0:00:09.536
+2016-06-06T14:47:54.869+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1174/83: , NodeChangeNumber: 7
+2016-06-06T14:47:54.872+0000 [10772] Failure sending MsgObjectWritten. Object: Index 1215/83: , NodeChangeNumber: 47
+2016-06-06T14:47:54.879+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-30) cleaning up pid 13275 with exit code 255
+2016-06-06T14:47:54.880+0000 [10772] Failure sending MsgObjectWritten. Object: Index 1204/83: , NodeChangeNumber: 33
+2016-06-06T14:47:54.883+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1091/83: , NodeChangeNumber: 4
+2016-06-06T14:47:54.885+0000 [10772] Failure sending MsgObjectWritten. Object: Data 984/83: , NodeChangeNumber: 4
+2016-06-06T14:47:54.887+0000 INFO DescriptionContainerImpl$ConfigWriteCollector.writeItem (conf-writer) write [configuration/backoffStats/dbt2/uuid:a242810e-cd49-4cc2-b240-b80e6c35e470/TE/TEs=3]
+2016-06-06T14:47:54.887+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1177/71: , NodeChangeNumber: 4
+2016-06-06T14:47:54.891+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1175/71: , NodeChangeNumber: 6
+2016-06-06T14:47:54.894+0000 [10772] Failure sending MsgObjectWritten. Object: Index 13/79: , NodeChangeNumber: 75
+2016-06-06T14:47:54.896+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1244/71: , NodeChangeNumber: 36
+2016-06-06T14:47:54.898+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1119/83: , NodeChangeNumber: 4
+2016-06-06T14:47:54.900+0000 [10772] Failure sending MsgObjectWritten. Object: Data 102/71: , NodeChangeNumber: 5
+2016-06-06T14:47:54.902+0000 [10772] Failure sending MsgObjectWritten. Object: Data 468/83: , NodeChangeNumber: 4
+2016-06-06T14:47:54.903+0000 [10772] Failure sending MsgObjectWritten. Object: Data 400/71: , NodeChangeNumber: 5
+2016-06-06T14:47:54.905+0000 [10772] Failure sending MsgObjectWritten. Object: Records 125/71: , NodeChangeNumber: 27
+2016-06-06T14:47:54.907+0000 [10772] Failure sending MsgObjectWritten. Object: Data 549/83: , NodeChangeNumber: 5
+2016-06-06T14:47:54.910+0000 [10772] Failure sending MsgObjectWritten. Object: Records 544/71: , NodeChangeNumber: 219
+2016-06-06T14:47:54.912+0000 [10772] Failure sending MsgObjectWritten. Object: Index 578/71: , NodeChangeNumber: 111
+2016-06-06T14:47:54.913+0000 [10772] Failure sending MsgObjectWritten. Object: Data 239/71: , NodeChangeNumber: 3
+2016-06-06T14:47:54.916+0000 [10772] Failure sending MsgObjectWritten. Object: Index 18/77: , NodeChangeNumber: 79
+2016-06-06T14:47:54.919+0000 [10772] Failure sending MsgObjectWritten. Object: Index 20/77: , NodeChangeNumber: 65
+2016-06-06T14:47:54.924+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1241/71: , NodeChangeNumber: 29
+2016-06-06T14:47:54.931+0000 [10772] Failure sending MsgObjectWritten. Object: Data 588/71: , NodeChangeNumber: 7
+2016-06-06T14:47:54.934+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1011/71: , NodeChangeNumber: 18
+2016-06-06T14:47:54.939+0000 [10772] Failure sending MsgObjectWritten. Object: Data 762/83: , NodeChangeNumber: 3
+2016-06-06T14:47:54.943+0000 [10772] Failure sending MsgObjectWritten. Object: Data 640/83: , NodeChangeNumber: 5
+2016-06-06T14:47:54.945+0000 [10772] Failure sending MsgObjectWritten. Object: Data 688/83: , NodeChangeNumber: 5
+2016-06-06T14:47:54.954+0000 [10772] Failure sending MsgObjectWritten. Object: Data 704/83: , NodeChangeNumber: 2
+2016-06-06T14:47:54.957+0000 [10772] Failure sending MsgObjectWritten. Object: Data 758/83: , NodeChangeNumber: 4
+2016-06-06T14:47:54.959+0000 [10772] Failure sending MsgObjectWritten. Object: Data 601/83: , NodeChangeNumber: 4
+2016-06-06T14:47:54.971+0000 [10772] GeoRegionMgr::releaseId. Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:48:05.331+0000 WARNING Enforcer.isBackoffDelay (descsvc-enfc17-thread-1) Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=9562 nextEnforcerTime=2016-06-06T14:51:54.864+0000 retryCount=3/10
+2016-06-06T14:48:05.331+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=e54b2430-91f5-4ec7-8075-760faaa2724b entity=[dbt2] def=[Alarm Definition [EnforcerNodeBackoff.default]: type=EnforcerNodeBackoff dimension=Database entity=* (Warning)] ud=[Database [dbt2]: Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=9562 nextEnforcerTime=2016-06-06T14:51:54.864+0000 retryCount=3/10]
+2016-06-06T14:51:55.421+0000 INFO Enforcer.enforceRemaining (descsvc-enfc17-thread-1) Starting ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]]
+2016-06-06T14:51:55.431+0000 [15017] Starting Transaction Engine 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T14:51:55.431+0000 [15017] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:51:55.431+0000 [15017] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:51:55.431+0000 [15017] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:51:55.468+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-35) Node joined: [Node TE db=[dbt2] pid=15017 id=-1 req=TEs (local)]
+2016-06-06T14:51:55.469+0000 [15017] Entering the database dbt2 through node at 127.0.0.1:48005
+2016-06-06T14:51:55.469+0000 [15017] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:51:55.471+0000 [15017] Entering database via node "127.0.0.1", port 48005
+2016-06-06T14:51:55.471+0000 [15017] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T14:51:55.471+0000 [15017] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-06-06T14:51:55.471+0000 [10772] Received connection from 127.0.0.1
+2016-06-06T14:51:55.472+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:51:55.472+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:51:55.472+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T14:51:55.472+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T14:51:55.472+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:51:55.472+0000 [10772] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-06-06T14:51:55.472+0000 [10772] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:51:55.474+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:51:55.474+0000 [10772] MsgWelcome sent to: 127.0.0.1
+2016-06-06T14:51:55.474+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:51:55.471+0000 [15017] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:51:55.472+0000 [15017] SocketBuffer::writeMessage
+2016-06-06T14:51:55.479+0000 [15017] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T14:51:55.480+0000 [15017] SocketBuffer::writeMessage
+2016-06-06T14:51:55.480+0000 [15017] SocketBuffer::writeMessage
+2016-06-06T14:51:55.480+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T14:51:55.480+0000 [10772] Registered node: NodeId: 6, LocalNodeId: 1
+2016-06-06T14:51:55.480+0000 [15017] Registered node: NodeId: 1, LocalNodeId: 1
+2016-06-06T14:51:55.481+0000 [15017] This node address 172.31.47.59, port 48006, cloud time 0, geo region us-west-2 altAddress none
+2016-06-06T14:51:55.483+0000 [10772] Broadcasting new node with remote address: 127.0.0.1
+2016-06-06T14:51:55.483+0000 [15017] Cloud time is adjusted to 749
+2016-06-06T14:51:55.483+0000 [15017] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-06-06T14:51:55.483+0000 [15017] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-06-06T14:51:55.483+0000 [15017] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-06-06T14:51:55.483+0000 [15017] Registered node: NodeId: 6, LocalNodeId: 0
+2016-06-06T14:51:55.484+0000 [15017] Database entered: effective version 589824 (2.5.4)
+2016-06-06T14:51:55.484+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-35) Node setId=6 [Node TE db=[dbt2] pid=15017 id=-1 req=TEs (local)]
+2016-06-06T14:51:55.484+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-35) Node state changed to ACTIVE [Node TE db=[dbt2] pid=15017 id=6 req=TEs (local)]
+2016-06-06T14:51:55.491+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-35) Node state changed to RUNNING [Node TE db=[dbt2] pid=15017 id=6 req=TEs (local)]
+2016-06-06T14:51:55.491+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-35) Database [dbt2] has become active, was previously inactive for 0:04:00.628
+2016-06-06T14:51:55.542+0000 [15017] Received connection from 172.31.47.59
+2016-06-06T14:51:57.835+0000 [15017] Received connection from 172.31.39.84
+2016-06-06T14:51:57.835+0000 [15017] Received connection from 172.31.39.84
+2016-06-06T14:51:57.837+0000 [15017] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:51:57.837+0000 [15017] Received connection from 172.31.39.84
+2016-06-06T14:51:57.838+0000 [15017] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:51:57.844+0000 [15017] Received connection from 172.31.39.84
+2016-06-06T14:51:57.845+0000 [15017] Received connection from 172.31.39.84
+2016-06-06T14:51:57.846+0000 [15017] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T14:51:57.847+0000 [15017] Received connection from 172.31.39.84
+2016-06-06T14:51:57.855+0000 [15017] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.003 seconds
+2016-06-06T14:51:57.856+0000 [15017] Received connection from 172.31.39.84
+2016-06-06T14:51:57.856+0000 [15017] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:51:57.862+0000 [15017] Received connection from 172.31.39.84
+2016-06-06T14:51:57.862+0000 [15017] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:51:57.862+0000 [15017] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:51:57.870+0000 [15017] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.000 seconds
+2016-06-06T14:52:05.908+0000 [15017] pthread_create failed, errno 12
+terminate called after throwing an instance of 'PlatformException'
+2016-06-06T14:52:20.530+0000 WARNING HostService$LocalNodeMonitor.run (hostsvc-ping13-thread-2) No response for 20 seconds from process: 15017
+2016-06-06T14:52:20.839+0000 [10772] getnameinfo(127.0.0.1) => localhost in 0.015 seconds
+2016-06-06T14:52:20.839+0000 [10772] Unsent queue size to node 6 on shutdown is 0, buffer size is 27
+2016-06-06T14:52:20.867+0000 [10772] Listener for node 6 -> 1 failed: connection closed by localhost:34124
+2016-06-06T14:52:20.867+0000 [10772] connection to node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 closed: connection closed by localhost:34124
+2016-06-06T14:52:20.867+0000 [10772] Node listener thread to 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 is exiting: connection closed by localhost:34124
+2016-06-06T14:52:20.867+0000 [10772] Failure sending MsgObjectWritten. Object: Records 2/86: , NodeChangeNumber: 1442
+2016-06-06T14:52:20.869+0000 [10772] Failure sending MsgObjectWritten. Object: Records 47/71: , NodeChangeNumber: 235
+2016-06-06T14:52:20.870+0000 [10772] Failure sending MsgObjectWritten. Object: Data 42/86: , NodeChangeNumber: 189
+2016-06-06T14:52:20.886+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T14:52:20.886+0000 [10772] Connection from node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 died: connection closed by localhost:34124
+2016-06-06T14:52:20.886+0000 [10772] StorageGroupContainer::applyRemoteDied. NodeId: 6
+2016-06-06T14:52:20.895+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-35) Node left (observed): [Node TE db=[dbt2] pid=15017 id=6 req=TEs (local)]
+2016-06-06T14:52:20.908+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-35) Database [dbt2] has become inactive, was previously active for 0:00:25.417
+2016-06-06T14:52:20.918+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-35) cleaning up pid 15017 with exit code 134
+2016-06-06T14:52:20.936+0000 INFO DescriptionContainerImpl$ConfigWriteCollector.writeItem (conf-writer) write [configuration/backoffStats/dbt2/uuid:a242810e-cd49-4cc2-b240-b80e6c35e470/TE/TEs=4]
+2016-06-06T14:52:20.961+0000 [10772] GeoRegionMgr::releaseId. Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T14:52:25.746+0000 WARNING Enforcer.isBackoffDelay (descsvc-enfc17-thread-1) Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=25440 nextEnforcerTime=2016-06-06T15:00:25.745+0000 retryCount=4/10
+2016-06-06T14:52:25.746+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=d708f6ea-2808-4fe0-b738-921d8f72e07f entity=[dbt2] def=[Alarm Definition [EnforcerNodeBackoff.default]: type=EnforcerNodeBackoff dimension=Database entity=* (Warning)] ud=[Database [dbt2]: Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=25440 nextEnforcerTime=2016-06-06T15:00:25.745+0000 retryCount=4/10]
+2016-06-06T15:00:25.887+0000 INFO Enforcer.enforceRemaining (descsvc-enfc17-thread-1) Starting ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]]
+2016-06-06T15:00:25.947+0000 [18703] Starting Transaction Engine 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T15:00:25.963+0000 [18703] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:00:25.963+0000 [18703] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:00:25.968+0000 [18703] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:00:26.024+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-45) Node joined: [Node TE db=[dbt2] pid=18703 id=-1 req=TEs (local)]
+2016-06-06T15:00:26.025+0000 [18703] Entering the database dbt2 through node at 127.0.0.1:48005
+2016-06-06T15:00:26.025+0000 [18703] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T15:00:26.026+0000 [18703] Entering database via node "127.0.0.1", port 48005
+2016-06-06T15:00:26.026+0000 [18703] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T15:00:26.026+0000 [18703] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-06-06T15:00:26.026+0000 [18703] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:00:26.027+0000 [10772] Received connection from 127.0.0.1
+2016-06-06T15:00:26.027+0000 [18703] SocketBuffer::writeMessage
+2016-06-06T15:00:26.028+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:00:26.028+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:00:26.028+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:00:26.028+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:00:26.028+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:00:26.028+0000 [10772] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-06-06T15:00:26.028+0000 [10772] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T15:00:26.030+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:00:26.030+0000 [18703] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T15:00:26.032+0000 [18703] SocketBuffer::writeMessage
+2016-06-06T15:00:26.035+0000 [18703] SocketBuffer::writeMessage
+2016-06-06T15:00:26.035+0000 [10772] MsgWelcome sent to: 127.0.0.1
+2016-06-06T15:00:26.035+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:00:26.035+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:00:26.035+0000 [10772] Registered node: NodeId: 7, LocalNodeId: 1
+2016-06-06T15:00:26.035+0000 [18703] Registered node: NodeId: 1, LocalNodeId: 1
+2016-06-06T15:00:26.037+0000 [18703] This node address 172.31.47.59, port 48006, cloud time 1, geo region us-west-2 altAddress none
+2016-06-06T15:00:26.037+0000 [10772] Broadcasting new node with remote address: 127.0.0.1
+2016-06-06T15:00:26.037+0000 [18703] Cloud time is adjusted to 1260
+2016-06-06T15:00:26.038+0000 [18703] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-06-06T15:00:26.038+0000 [18703] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-06-06T15:00:26.038+0000 [18703] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-06-06T15:00:26.038+0000 [18703] Registered node: NodeId: 7, LocalNodeId: 0
+2016-06-06T15:00:26.039+0000 [18703] Database entered: effective version 589824 (2.5.4)
+2016-06-06T15:00:26.039+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-45) Node setId=7 [Node TE db=[dbt2] pid=18703 id=-1 req=TEs (local)]
+2016-06-06T15:00:26.039+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-45) Node state changed to ACTIVE [Node TE db=[dbt2] pid=18703 id=7 req=TEs (local)]
+2016-06-06T15:00:26.040+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-45) Node state changed to RUNNING [Node TE db=[dbt2] pid=18703 id=7 req=TEs (local)]
+2016-06-06T15:00:26.047+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-45) Database [dbt2] has become active, was previously inactive for 0:08:05.139
+2016-06-06T15:00:26.089+0000 [18703] Received connection from 172.31.47.59
+2016-06-06T15:00:29.677+0000 [18703] Received connection from 172.31.39.84
+2016-06-06T15:00:29.678+0000 [18703] Received connection from 172.31.39.84
+2016-06-06T15:00:29.678+0000 [18703] Received connection from 172.31.39.84
+2016-06-06T15:00:29.679+0000 [18703] Received connection from 172.31.39.84
+2016-06-06T15:00:29.679+0000 [18703] Received connection from 172.31.39.84
+2016-06-06T15:00:29.680+0000 [18703] Received connection from 172.31.39.84
+2016-06-06T15:00:29.681+0000 [18703] Received connection from 172.31.39.84
+2016-06-06T15:00:29.681+0000 [18703] Received connection from 172.31.39.84
+2016-06-06T15:00:29.686+0000 [18703] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:00:29.687+0000 [18703] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:00:29.687+0000 [18703] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:00:29.687+0000 [18703] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:00:29.687+0000 [18703] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:00:29.687+0000 [18703] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:00:29.687+0000 [18703] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:00:29.687+0000 [18703] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:00:36.232+0000 [18703] pthread_create failed, errno 12
+terminate called after throwing an instance of 'PlatformException'
+2016-06-06T15:00:45.785+0000 WARNING PeerService$PeerMonitor.run (peersvc-ping15-thread-2) No response for 11 seconds from [Peer 172.31.40.53:48004 (broker)]
+2016-06-06T15:00:48.440+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-45) Node left (observed): [Node TE db=[dbt2] pid=18703 id=7 req=TEs (local)]
+2016-06-06T15:00:48.449+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-45) Database [dbt2] has become inactive, was previously active for 0:00:22.402
+2016-06-06T15:00:48.459+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-45) cleaning up pid 18703 with exit code 134
+2016-06-06T15:00:48.494+0000 [10772] Listener for node 7 -> 1 failed: recv failed: Connection reset by peer (104)
+2016-06-06T15:00:48.494+0000 [10772] connection to node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 closed: recv failed: Connection reset by peer (104)
+2016-06-06T15:00:48.494+0000 [10772] Node listener thread to 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 is exiting: recv failed: Connection reset by peer (104)
+2016-06-06T15:00:48.497+0000 [10772] Unsent queue size to node 7 on shutdown is 1, buffer size is 0
+2016-06-06T15:00:48.499+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.003 seconds
+2016-06-06T15:00:48.499+0000 [10772] Connection from node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 died: recv failed: Connection reset by peer (104)
+2016-06-06T15:00:48.502+0000 [10772] StorageGroupContainer::applyRemoteDied. NodeId: 7
+2016-06-06T15:00:48.502+0000 INFO DescriptionContainerImpl$ConfigWriteCollector.writeItem (conf-writer) write [configuration/backoffStats/dbt2/uuid:a242810e-cd49-4cc2-b240-b80e6c35e470/TE/TEs=5]
+2016-06-06T15:00:48.569+0000 [10772] GeoRegionMgr::releaseId. Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T15:00:56.300+0000 WARNING PeerService$PeerMonitor.run (peersvc-ping15-thread-1) No response for 11 seconds from [Peer 172.31.40.53:48004 (broker)]
+2016-06-06T15:00:56.305+0000 WARNING Enforcer.isBackoffDelay (descsvc-enfc17-thread-1) Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=22429 nextEnforcerTime=2016-06-06T15:16:48.453+0000 retryCount=5/10
+2016-06-06T15:00:56.306+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=86fe48ac-8421-4799-9022-f114cb72466a entity=[dbt2] def=[Alarm Definition [EnforcerNodeBackoff.default]: type=EnforcerNodeBackoff dimension=Database entity=* (Warning)] ud=[Database [dbt2]: Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]] Stats uptime=22429 nextEnforcerTime=2016-06-06T15:16:48.453+0000 retryCount=5/10]
+2016-06-06T15:16:56.574+0000 INFO Enforcer.enforceRemaining (descsvc-enfc17-thread-1) Starting ProcessSpec[dbt2, TE, req=TEs, peer=[LocalPeer 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48004 (broker)]]
+2016-06-06T15:16:56.632+0000 [25928] Starting Transaction Engine 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T15:16:56.646+0000 [25928] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:16:56.646+0000 [25928] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:16:56.652+0000 [25928] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:16:56.712+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-53) Node joined: [Node TE db=[dbt2] pid=25928 id=-1 req=TEs (local)]
+2016-06-06T15:16:56.713+0000 [25928] Entering the database dbt2 through node at 127.0.0.1:48005
+2016-06-06T15:16:56.714+0000 [25928] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T15:16:56.714+0000 [25928] Entering database via node "127.0.0.1", port 48005
+2016-06-06T15:16:56.714+0000 [25928] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T15:16:56.714+0000 [25928] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-06-06T15:16:56.714+0000 [25928] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:16:56.715+0000 [10772] Received connection from 127.0.0.1
+2016-06-06T15:16:56.716+0000 [25928] SocketBuffer::writeMessage
+2016-06-06T15:16:56.716+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:16:56.716+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:16:56.716+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:16:56.716+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:16:56.717+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:16:56.717+0000 [10772] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-06-06T15:16:56.717+0000 [10772] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T15:16:56.719+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:16:56.719+0000 [25928] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T15:16:56.723+0000 [25928] SocketBuffer::writeMessage
+2016-06-06T15:16:56.723+0000 [25928] SocketBuffer::writeMessage
+2016-06-06T15:16:56.723+0000 [10772] MsgWelcome sent to: 127.0.0.1
+2016-06-06T15:16:56.723+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:16:56.723+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:16:56.723+0000 [10772] Registered node: NodeId: 8, LocalNodeId: 1
+2016-06-06T15:16:56.724+0000 [25928] Registered node: NodeId: 1, LocalNodeId: 1
+2016-06-06T15:16:56.725+0000 [25928] This node address 172.31.47.59, port 48006, cloud time 0, geo region us-west-2 altAddress none
+2016-06-06T15:16:56.725+0000 [10772] Broadcasting new node with remote address: 127.0.0.1
+2016-06-06T15:16:56.727+0000 [25928] Cloud time is adjusted to 2250
+2016-06-06T15:16:56.727+0000 [25928] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-06-06T15:16:56.727+0000 [25928] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-06-06T15:16:56.727+0000 [25928] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-06-06T15:16:56.727+0000 [25928] Registered node: NodeId: 8, LocalNodeId: 0
+2016-06-06T15:16:56.728+0000 [25928] Database entered: effective version 589824 (2.5.4)
+2016-06-06T15:16:56.728+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-53) Node setId=8 [Node TE db=[dbt2] pid=25928 id=-1 req=TEs (local)]
+2016-06-06T15:16:56.728+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-53) Node state changed to ACTIVE [Node TE db=[dbt2] pid=25928 id=8 req=TEs (local)]
+2016-06-06T15:16:56.729+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-53) Node state changed to RUNNING [Node TE db=[dbt2] pid=25928 id=8 req=TEs (local)]
+2016-06-06T15:16:56.736+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-53) Database [dbt2] has become active, was previously inactive for 0:16:08.287
+2016-06-06T15:16:56.776+0000 [25928] Received connection from 172.31.47.59
+2016-06-06T15:16:58.482+0000 [25928] Received connection from 172.31.39.84
+2016-06-06T15:16:58.483+0000 [25928] Received connection from 172.31.39.84
+2016-06-06T15:16:58.484+0000 [25928] Received connection from 172.31.39.84
+2016-06-06T15:16:58.484+0000 [25928] Received connection from 172.31.39.84
+2016-06-06T15:16:58.484+0000 [25928] Received connection from 172.31.39.84
+2016-06-06T15:16:58.484+0000 [25928] Received connection from 172.31.39.84
+2016-06-06T15:16:58.485+0000 [25928] Received connection from 172.31.39.84
+2016-06-06T15:16:58.485+0000 [25928] Received connection from 172.31.39.84
+2016-06-06T15:16:58.491+0000 [25928] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T15:16:58.491+0000 [25928] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T15:16:58.491+0000 [25928] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T15:16:58.491+0000 [25928] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T15:16:58.491+0000 [25928] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T15:16:58.492+0000 [25928] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:16:58.492+0000 [25928] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:16:58.492+0000 [25928] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T15:17:12.043+0000 [25928] pthread_create failed, errno 12
+terminate called after throwing an instance of 'PlatformException'
+2016-06-06T15:17:13.272+0000 INFO LocalServer.logNewRole (raft-svr-msg2-thread-1) [-5602275564364372880] Converting to FOLLOWER (term=2, index=39) (leader=unknown)
+2016-06-06T15:17:13.277+0000 INFO LocalServer.logNewRole (raft-svr-msg2-thread-1) [-5602275564364372880] Converting to FOLLOWER (term=2, index=39) (leader=-7746466045435336933)
+2016-06-06T15:17:16.250+0000 WARNING PeerService$PeerMonitor.run (peersvc-ping15-thread-1) No response for 11 seconds from [Peer 172.31.34.45:48004 (broker)]
+2016-06-06T15:17:23.101+0000 WARNING HostService$LocalNodeMonitor.run (hostsvc-ping13-thread-1) No response for 22 seconds from process: 25928
+2016-06-06T15:17:24.980+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-53) Node left (observed): [Node TE db=[dbt2] pid=25928 id=8 req=TEs (local)]
+2016-06-06T15:17:24.984+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-53) Database [dbt2] has become inactive, was previously active for 0:00:28.248
+2016-06-06T15:17:24.988+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-53) cleaning up pid 25928 with exit code 134
+2016-06-06T15:17:24.996+0000 [10772] Unsent queue size to node 8 on shutdown is 2, buffer size is 29
+2016-06-06T15:17:24.996+0000 [10772] Listener for node 8 -> 1 failed: recv failed: Connection reset by peer (104)
+2016-06-06T15:17:24.996+0000 [10772] connection to node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 closed: recv failed: Connection reset by peer (104)
+2016-06-06T15:17:24.996+0000 [10772] Node listener thread to 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 is exiting: recv failed: Connection reset by peer (104)
+2016-06-06T15:17:24.997+0000 [10772] Failure sending MsgObjectWritten. Object: Records 81/79: , NodeChangeNumber: 620
+2016-06-06T15:17:24.998+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:17:24.998+0000 [10772] Connection from node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 died: recv failed: Connection reset by peer (104)
+2016-06-06T15:17:24.999+0000 [10772] StorageGroupContainer::applyRemoteDied. NodeId: 8
+2016-06-06T15:17:25.006+0000 [10772] Failure sending MsgObjectWritten. Object: Index 32/79: , NodeChangeNumber: 57
+2016-06-06T15:17:25.008+0000 [10772] Failure sending MsgObjectWritten. Object: Data 362/77: , NodeChangeNumber: 466
+2016-06-06T15:17:25.010+0000 [10772] Failure sending MsgObjectWritten. Object: Records 361/77: , NodeChangeNumber: 467
+2016-06-06T15:17:25.012+0000 [10772] Failure sending MsgObjectWritten. Object: Index 143/77: , NodeChangeNumber: 39
+2016-06-06T15:17:25.015+0000 [10772] Failure sending MsgObjectWritten. Object: Index 144/77: , NodeChangeNumber: 27
+2016-06-06T15:17:25.017+0000 [10772] Failure sending MsgObjectWritten. Object: Data 630/75: , NodeChangeNumber: 723
+2016-06-06T15:17:25.019+0000 [10772] Failure sending MsgObjectWritten. Object: Index 619/75: , NodeChangeNumber: 195
+2016-06-06T15:17:25.021+0000 [10772] Failure sending MsgObjectWritten. Object: Records 965/71: , NodeChangeNumber: 58
+2016-06-06T15:17:25.023+0000 [10772] Failure sending MsgObjectWritten. Object: Data 1316/71: , NodeChangeNumber: 28
+2016-06-06T15:17:25.025+0000 [10772] Failure sending MsgObjectWritten. Object: Index 982/71: , NodeChangeNumber: 34
+2016-06-06T15:17:25.033+0000 [10772] Failure sending MsgObjectWritten. Object: TransactionManager 2/1: , NodeChangeNumber: 4622
+2016-06-06T15:17:25.035+0000 [10772] Failure sending MsgObjectWritten. Object: Data 82/79: , NodeChangeNumber: 619
+2016-06-06T15:17:25.039+0000 [10772] Failure sending MsgObjectWritten. Object: Index 14/79: , NodeChangeNumber: 74
+2016-06-06T15:17:25.041+0000 [10772] Failure sending MsgObjectWritten. Object: Index 52/77: , NodeChangeNumber: 36
+2016-06-06T15:17:25.043+0000 [10772] Failure sending MsgObjectWritten. Object: Index 63/77: , NodeChangeNumber: 40
+2016-06-06T15:17:25.066+0000 [10772] GeoRegionMgr::releaseId. Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T15:17:34.243+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=b408577a-0f41-43a6-beef-a199eff28944 entity=[dbt2] def=[Alarm Definition [EnforcerNodeBackoff.default]: type=EnforcerNodeBackoff dimension=Database entity=* (Warning)] ud=[Database [dbt2]: Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[Peer 172.31.47.59:48004 (broker)]] Stats uptime=-1 nextEnforcerTime=2016-06-06T15:33:34.126+0000 retryCount=5/10]
+2016-06-06T15:33:34.716+0000 [611] Starting Transaction Engine 2.5.4.master-2625-d9bf111eae: database=dbt2, protocol=1.589824.d9bf111eae (2.5.4)
+2016-06-06T15:33:34.729+0000 [611] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:33:34.729+0000 [611] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:33:34.735+0000 [611] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:33:34.796+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-63) Node joined: [Node TE db=[dbt2] pid=611 id=-1 req=TEs (local)]
+2016-06-06T15:33:34.798+0000 [611] Entering the database dbt2 through node at 127.0.0.1:48005
+2016-06-06T15:33:34.798+0000 [611] GeoRegionMgr::add. New Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T15:33:34.798+0000 [611] Entering database via node "127.0.0.1", port 48005
+2016-06-06T15:33:34.798+0000 [611] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-06-06T15:33:34.798+0000 [611] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-06-06T15:33:34.799+0000 [10772] Received connection from 127.0.0.1
+2016-06-06T15:33:34.800+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:33:34.800+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:33:34.800+0000 [10772] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-06-06T15:33:34.800+0000 [10772] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-06-06T15:33:34.800+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:33:34.800+0000 [10772] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-06-06T15:33:34.800+0000 [10772] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T15:33:34.799+0000 [611] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:33:34.800+0000 [611] SocketBuffer::writeMessage
+2016-06-06T15:33:34.803+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:33:34.803+0000 [611] GeoRegionMgr::add. Existing Region Name: us-west-2, Region ID: 0, Use Count: 2
+2016-06-06T15:33:34.805+0000 [611] SocketBuffer::writeMessage
+2016-06-06T15:33:34.805+0000 [611] SocketBuffer::writeMessage
+2016-06-06T15:33:34.805+0000 [10772] MsgWelcome sent to: 127.0.0.1
+2016-06-06T15:33:34.805+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:33:34.805+0000 [10772] SocketBuffer::writeMessage
+2016-06-06T15:33:34.807+0000 [611] Registered node: NodeId: 1, LocalNodeId: 1
+2016-06-06T15:33:34.808+0000 [611] This node address 172.31.47.59, port 48006, cloud time 0, geo region us-west-2 altAddress none
+2016-06-06T15:33:34.805+0000 [10772] Registered node: NodeId: 9, LocalNodeId: 1
+2016-06-06T15:33:34.809+0000 [10772] Broadcasting new node with remote address: 127.0.0.1
+2016-06-06T15:33:34.811+0000 [611] Cloud time is adjusted to 3248
+2016-06-06T15:33:34.811+0000 [611] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-06-06T15:33:34.811+0000 [611] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-06-06T15:33:34.811+0000 [611] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-06-06T15:33:34.811+0000 [611] Registered node: NodeId: 9, LocalNodeId: 0
+2016-06-06T15:33:34.812+0000 [611] Database entered: effective version 589824 (2.5.4)
+2016-06-06T15:33:34.812+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-63) Node setId=9 [Node TE db=[dbt2] pid=611 id=-1 req=TEs (local)]
+2016-06-06T15:33:34.812+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-63) Node state changed to ACTIVE [Node TE db=[dbt2] pid=611 id=9 req=TEs (local)]
+2016-06-06T15:33:34.813+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-63) Node state changed to RUNNING [Node TE db=[dbt2] pid=611 id=9 req=TEs (local)]
+2016-06-06T15:33:34.813+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-63) Database [dbt2] has become active, was previously inactive for 0:16:09.829
+2016-06-06T15:33:34.861+0000 [611] Received connection from 172.31.47.59
+2016-06-06T15:33:35.412+0000 [611] Received connection from 172.31.39.84
+2016-06-06T15:33:35.416+0000 [611] Received connection from 172.31.39.84
+2016-06-06T15:33:35.416+0000 [611] Received connection from 172.31.39.84
+2016-06-06T15:33:35.416+0000 [611] Received connection from 172.31.39.84
+2016-06-06T15:33:35.416+0000 [611] Received connection from 172.31.39.84
+2016-06-06T15:33:35.416+0000 [611] Received connection from 172.31.39.84
+2016-06-06T15:33:35.416+0000 [611] Received connection from 172.31.39.84
+2016-06-06T15:33:35.416+0000 [611] Received connection from 172.31.39.84
+2016-06-06T15:33:35.422+0000 [611] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T15:33:35.422+0000 [611] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.001 seconds
+2016-06-06T15:33:35.423+0000 [611] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:33:35.423+0000 [611] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:33:35.423+0000 [611] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:33:35.423+0000 [611] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:33:35.423+0000 [611] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:33:35.423+0000 [611] getnameinfo(172.31.39.84) => ip-172-31-39-84.us-west-2.compute.internal in 0.002 seconds
+2016-06-06T15:33:41.950+0000 [611] /home/bamboo/MASTER-BUILD-LIN/Foundation/JEMemory.cpp:83: FATAL:
+*** Stacktrace:
+0x73d620
+0x7b7f2e
+0x7b90ea
+0x99be65
+0x99b21a
+0x7ff5e790a184
+0x7ff5e763737d clone+109
+2016-06-06T15:33:41.950+0000 [611] allocation failureGenerated core: /var/log/nuodb/crash/core.nuodb.06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0.611
+2016-06-06T15:33:52.863+0000 [10772] Listener for node 9 -> 1 failed: recv failed: Connection reset by peer (104)
+2016-06-06T15:33:52.863+0000 [10772] connection to node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 closed: recv failed: Connection reset by peer (104)
+2016-06-06T15:33:52.863+0000 [10772] Node listener thread to 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0:48006 is exiting: recv failed: Connection reset by peer (104)
+2016-06-06T15:33:52.864+0000 [10772] Unsent queue size to node 9 on shutdown is 0, buffer size is 80
+2016-06-06T15:33:52.861+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-63) Node left (observed): [Node TE db=[dbt2] pid=611 id=9 req=TEs (local)]
+2016-06-06T15:33:52.864+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-63) Database [dbt2] has become inactive, was previously active for 0:00:18.051
+2016-06-06T15:33:52.883+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-63) cleaning up pid 611 with exit code 255
+2016-06-06T15:33:52.867+0000 [10772] getnameinfo(172.31.47.59) => 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 in 0.000 seconds
+2016-06-06T15:33:52.867+0000 [10772] Connection from node 06a32504-c2c9-41bc-9b48-030982c5ea43-r0db0 died: recv failed: Connection reset by peer (104)
+2016-06-06T15:33:52.868+0000 [10772] StorageGroupContainer::applyRemoteDied. NodeId: 9
+2016-06-06T15:33:52.869+0000 [10772] Failure sending MsgObjectWritten. Object: Records 371/77: , NodeChangeNumber: 608
+2016-06-06T15:33:52.880+0000 [10772] Failure sending MsgObjectWritten. Object: Index 196/77: , NodeChangeNumber: 34
+2016-06-06T15:33:52.885+0000 [10772] Failure sending MsgObjectWritten. Object: Index 202/77: , NodeChangeNumber: 31
+2016-06-06T15:33:52.888+0000 [10772] Failure sending MsgObjectWritten. Object: Data 644/75: , NodeChangeNumber: 322
+2016-06-06T15:33:52.890+0000 [10772] Failure sending MsgObjectWritten. Object: Records 643/75: , NodeChangeNumber: 322
+2016-06-06T15:33:52.898+0000 [10772] Failure sending MsgObjectWritten. Object: Index 606/75: , NodeChangeNumber: 306
+2016-06-06T15:33:52.936+0000 [10772] GeoRegionMgr::releaseId. Region Name: us-west-2, Region ID: 0, Use Count: 1
+2016-06-06T15:33:54.853+0000 WARNING EventingContainerImpl.raise (stats-wtch3-thread-1) Alarm id=7dac6091-4446-4f43-bd95-40995125b600 entity=[dbt2] def=[Alarm Definition [EnforcerNodeBackoff.default]: type=EnforcerNodeBackoff dimension=Database entity=* (Warning)] ud=[Database [dbt2]: Skip due to backoff ProcessSpec[dbt2, TE, req=TEs, peer=[Peer 172.31.47.59:48004 (broker)]] Stats uptime=18093 nextEnforcerTime=2016-06-06T16:05:52.740+0000 retryCount=6/10]

@@ -1,0 +1,211 @@
+-------------------------------------------------------------------------------
+Thu Apr 21 12:42:05 UTC 2016: Starting NuoDB agent
+2016-04-21T12:42:06.466+0000 INFO Environment.logEnv (main) NuoAgent version: 2.4.1-2
+2016-04-21T12:42:06.478+0000 INFO Environment.logEnv (main) NuoDB HOME directory: /opt/nuodb
+2016-04-21T12:42:06.478+0000 INFO Environment.logEnv (main) NuoDB CFG directory: /etc/nuodb
+2016-04-21T12:42:06.479+0000 INFO Environment.logEnv (main) NuoDB VAR directory: /var/opt/nuodb
+2016-04-21T12:42:06.479+0000 INFO Environment.logEnv (main) NuoDB LOG directory: /var/log/nuodb
+2016-04-21T12:42:06.479+0000 INFO Environment.logEnv (main) NuoDB BIN directory: null
+2016-04-21T12:42:06.479+0000 INFO Environment.logEnv (main) Java: Oracle Corporation 1.7.0_95
+2016-04-21T12:42:06.480+0000 INFO Environment.logEnv (main) Java Runtime: OpenJDK Runtime Environment 1.7.0_95-b00
+2016-04-21T12:42:06.480+0000 INFO Environment.logEnv (main) Java VM: OpenJDK 64-Bit Server VM 24.95-b01
+2016-04-21T12:42:06.480+0000 INFO Environment.logEnv (main) Java Home directory: /usr/lib/jvm/java-7-openjdk-amd64/jre
+2016-04-21T12:42:06.575+0000 INFO URLPropertiesProvider.<init> (main) using default properties file: /opt/nuodb/etc/default.properties
+2016-04-21T12:42:06.610+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftHeartbeatTimeout=500
+2016-04-21T12:42:06.610+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftLogCompactionThreshold=2147483647
+2016-04-21T12:42:06.611+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftMaxElectionTimeout=8300
+2016-04-21T12:42:06.611+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftMembershipCmdMaxRetry=60
+2016-04-21T12:42:06.612+0000 INFO PropertiesContainerImpl.logProps (main) Property RaftMinElectionTimeout=4100
+2016-04-21T12:42:06.612+0000 INFO PropertiesContainerImpl.logProps (main) Property advertiseAlt=false
+2016-04-21T12:42:06.613+0000 INFO PropertiesContainerImpl.logProps (main) Property altAddr=
+2016-04-21T12:42:06.613+0000 INFO PropertiesContainerImpl.logProps (main) Property automationTemplate=Minimally Redundant
+2016-04-21T12:42:06.614+0000 INFO PropertiesContainerImpl.logProps (main) Property balancer=RoundRobinBalancer
+2016-04-21T12:42:06.614+0000 INFO PropertiesContainerImpl.logProps (main) Property broker=true
+2016-04-21T12:42:06.615+0000 INFO PropertiesContainerImpl.logProps (main) Property domain=domain
+2016-04-21T12:42:06.615+0000 INFO PropertiesContainerImpl.logProps (main) Property enableAutomation=true
+2016-04-21T12:42:06.616+0000 INFO PropertiesContainerImpl.logProps (main) Property enableResync=true
+2016-04-21T12:42:06.616+0000 INFO PropertiesContainerImpl.logProps (main) Property enableSystemDatabase=true
+2016-04-21T12:42:06.617+0000 INFO PropertiesContainerImpl.logProps (main) Property heartbeatPeerTimeout=600
+2016-04-21T12:42:06.617+0000 INFO PropertiesContainerImpl.logProps (main) Property hostTags=SM_OK
+2016-04-21T12:42:06.618+0000 INFO PropertiesContainerImpl.logProps (main) Property localBindAddress=
+2016-04-21T12:42:06.619+0000 INFO PropertiesContainerImpl.logProps (main) Property metricsPurgeAge=12h
+2016-04-21T12:42:06.619+0000 INFO PropertiesContainerImpl.logProps (main) Property peer=10.176.4.58
+2016-04-21T12:42:06.620+0000 INFO PropertiesContainerImpl.logProps (main) Property peerWaitInterval=10
+2016-04-21T12:42:06.620+0000 INFO PropertiesContainerImpl.logProps (main) Property peerWaitTimeout=120
+2016-04-21T12:42:06.621+0000 INFO PropertiesContainerImpl.logProps (main) Property port=48004
+2016-04-21T12:42:06.622+0000 INFO PropertiesContainerImpl.logProps (main) Property portRange=48005
+2016-04-21T12:42:06.622+0000 INFO PropertiesContainerImpl.logProps (main) Property processStartWaitBarrier=All
+2016-04-21T12:42:06.623+0000 INFO PropertiesContainerImpl.logProps (main) Property propertyProvider=com.nuodb.agent.plugin.URLPropertiesProvider
+2016-04-21T12:42:06.623+0000 INFO PropertiesContainerImpl.logProps (main) Property raft=
+2016-04-21T12:42:06.624+0000 INFO PropertiesContainerImpl.logProps (main) Property region=iad
+2016-04-21T12:42:06.625+0000 INFO PropertiesContainerImpl.logProps (main) Property removeSelfOnShutdown=false
+2016-04-21T12:42:06.625+0000 INFO PropertiesContainerImpl.logProps (main) Property runEnforcerOnEveryEvent=true
+2016-04-21T12:42:06.626+0000 INFO PropertiesContainerImpl.logProps (main) Property schEnforcerInitDelaySec=15
+2016-04-21T12:42:06.626+0000 INFO PropertiesContainerImpl.logProps (main) Property schEnforcerPeriodSec=10
+2016-04-21T12:42:06.627+0000 INFO PropertiesContainerImpl.logProps (main) Property singleHostDbRestart=true
+2016-04-21T12:42:06.627+0000 INFO PropertiesContainerImpl.logProps (main) Property statsIntervalSeconds=20
+2016-04-21T12:42:06.823+0000 INFO PeerUtil.generateStableId (main) Generated new host stable ID
+2016-04-21T12:42:06.825+0000 INFO PeerContainerImpl$LocalPeer.initStableId (main) Initializing local peer as stableId uuid:50c6d7be-07c1-4b5c-8014-90bb67bc7ee1
+2016-04-21T12:42:06.837+0000 INFO PeerContainerImpl$LocalPeer.<init> (main) local bind address=fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2/10.176.4.120:48004, hostname=fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2
+2016-04-21T12:42:06.846+0000 INFO PeerContainerImpl.<init> (main) peer unstableId=[29989abb-02d0-4163-8fb2-ec9d3586de3d], peer=[10.176.4.58], port=48004, raft=true, address=[fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2/10.176.4.120:48004], addrToAdvertise=[null]
+2016-04-21T12:42:06.872+0000 INFO SigarContainerImpl.setLoadLibraryPath (main) java.library.path = /opt/nuodb/jar/../plugin/agent:/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2016-04-21T12:42:06.873+0000 INFO SigarContainerImpl.start (main) start: uuid:50c6d7be-07c1-4b5c-8014-90bb67bc7ee1
+2016-04-21T12:42:07.000+0000 INFO SigarContainerImpl.printNuodbProcStats (Thread-1) nuodb ps
+21837	nuodb	12:42	1.0G	 28M	 11M	S	0:0	java:com.nuodb.agent.NuoAgent
+2016-04-21T12:42:07.162+0000 INFO RaftContainer.<init> (main) Running as Broker, Setting up Raft server
+2016-04-21T12:42:07.201+0000 INFO RaftContainer.<init> (main) Initializing empty config
+2016-04-21T12:42:07.701+0000 INFO RaftContainer.<init> (main) [LocalPeer fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2:48004 (broker)] LocalServer id=LocalServer id=-9217583402746872095 addr=fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2/10.176.4.120:48004
+2016-04-21T12:42:07.702+0000 INFO RaftContainer.<init> (main) [LocalPeer fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2:48004 (broker)] RaftConfiguration=[]
+2016-04-21T12:42:07.818+0000 INFO LicenseContainerRaftImpl.<init> (main) Loading non-enforcing license container
+2016-04-21T12:42:07.832+0000 INFO StatsAggregatorContainerImpl.<init> (main) statsSet=[ArchiveQueue, ArchiveSyncThrottleTime, BytesReceived, BytesSent, ClientCncts, ClientReceived, ClientSent, Commits, Deletes, DiskWritten, HeapAllocated, HeapMapped, Inserts, JrnlWrites, Memory, OS-cpuSystemTimePercent, OS-cpuTotalTimePercent, OS-fsVarDirUsePercent, OS-memUsedPercent, OS-netAllInbound, OS-netAllOutbound, ObjectsCreated, PendingInsertWaitTime, PendingUpdateStallCount, PendingUpdateWaitTime, PercentCpuTime, PercentSystemTime, PercentUserTime, PlatformCatalogStallCount, PlatformObjectCheckCompleteTime, PlatformObjectCheckOpenTime, PlatformObjectCheckPopulatedTime, Rollbacks, SqlListenerIdleTime, SqlListenerSqlProcTime, SqlListenerStallTime, SqlListenerThrottleTime, StallPointWaitTime, Stalls, Updates, WaitForSplitTime]
+2016-04-21T12:42:07.839+0000 INFO AdminDbContainerImpl.<init> (main) enableAutomation=true, enableSystemDatabase=true
+2016-04-21T12:42:07.856+0000 INFO AdminDbContainerImpl.setupDaos (main) connecting to [jdbc:com.nuodb://fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2:48004/nuodb_system]
+2016-04-21T12:42:07.991+0000 INFO SRPVerifier.<init> (main) SRPVerifier loaded as an available verifier
+2016-04-21T12:42:08.315+0000 INFO PeerService.<init> (main) protocol version 4
+2016-04-21T12:42:08.334+0000 INFO DomainStateService.ready (main) Starting resync thread
+2016-04-21T12:42:08.336+0000 INFO SimpleAutoRestarter.ready (main) autostart disabled, Broker peered
+2016-04-21T12:42:08.341+0000 INFO PeerService.resolveEntrySession (main) peer=10.176.4.58
+2016-04-21T12:42:08.341+0000 INFO PeerService.resolveEntrySession (main) Trying to peer (1) [10.176.4.58] ...
+2016-04-21T12:42:08.358+0000 INFO SigarContainerImpl$ReconnectTimer.run (Thread-9) found no running Nodes to reconnect
+2016-04-21T12:42:08.470+0000 INFO PeerService.establishPeer (main) Send peering message to peer [/10.176.4.58] ...
+2016-04-21T12:42:08.481+0000 INFO LocalServer.start (main) Raft server started
+2016-04-21T12:42:08.481+0000 INFO NuoAgent.logReady (main) startup completed; agent is ready
+2016-04-21T12:42:08.645+0000 INFO EventManager.notifyPeerEvent (serv-socket8-thread-2) Peer joined: [Peer 10.176.4.58:48004 (broker)]
+2016-04-21T12:42:08.676+0000 INFO SimpleAutoRestarter.peerJoined (serv-socket8-thread-2) disable autostart, peer joined [Peer 10.176.4.58:48004 (broker)]
+2016-04-21T12:42:08.677+0000 INFO PeerService$EntryListener.handleMessage (serv-socket8-thread-2) Peering reply from [/10.176.4.58:48004, uuid:d7f8f95e-e9d3-46c9-ab2f-5cd42f55f54d] (broker)
+2016-04-21T12:42:08.685+0000 INFO RaftPeerService.constructPeer (serv-socket8-thread-3) Successful incoming connection from Peer 10.176.4.79:48004 (broker)
+2016-04-21T12:42:08.711+0000 INFO PeerService$EntryListener.handleMessage (serv-socket8-thread-2) License Allowed Hosts: 2
+2016-04-21T12:42:08.713+0000 INFO EventManager.notifyPeerEvent (serv-socket8-thread-3) Peer joined: [Peer 10.176.4.79:48004 (broker)]
+2016-04-21T12:42:08.727+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-2) Node joined: [Node SM db=[nuodb_system] pid=20425 id=1 req=SMs (Peer 10.176.4.58:48004 (broker))]
+2016-04-21T12:42:08.728+0000 INFO EventManager.notifyDomainEvent (serv-socket8-thread-3) Joined Domain
+2016-04-21T12:42:08.741+0000 INFO EventingContainerImpl$DomainListenerImpl$1.run (evt-domain-list) EventContainer is ready (0 alarms read)
+2016-04-21T12:42:08.756+0000 INFO TagContainerImpl$DomainJoinedRunnable.run (Thread-17) TagContainer is ready
+2016-04-21T12:42:08.759+0000 INFO TagService$DomainJoinedRunnable.run (Thread-18) Region is: iad
+2016-04-21T12:42:08.824+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-2) Node joined: [Node TE db=[nuodb_system] pid=20556 id=2 req=TEs (Peer 10.176.4.58:48004 (broker))]
+2016-04-21T12:42:08.826+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-2) Database [nuodb_system] has become active
+2016-04-21T12:42:08.833+0000 INFO AdminDbContainerImpl.initDaos (serv-socket8-thread-2) Starting DAOs (iad) ..
+2016-04-21T12:42:09.098+0000 INFO PeerService.removePendingBroker (serv-socket8-thread-2) removed pending broker session [/10.176.4.58]
+2016-04-21T12:42:09.178+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-3) Node joined: [Node SM db=[nuodb_system] pid=22031 id=-1 req=SMs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:09.305+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-3) Node setId=3 [Node SM db=[nuodb_system] pid=22031 id=-1 req=SMs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:09.326+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-3) Node state changed to ACTIVE [Node SM db=[nuodb_system] pid=22031 id=3 req=SMs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:09.360+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-3) Node state changed to SYNCING [Node SM db=[nuodb_system] pid=22031 id=3 req=SMs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:09.917+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-3) Node state changed to RUNNING [Node SM db=[nuodb_system] pid=22031 id=3 req=SMs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:09.959+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-3) Node joined: [Node TE db=[nuodb_system] pid=22063 id=-1 req=TEs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:10.081+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-3) Node setId=4 [Node TE db=[nuodb_system] pid=22063 id=-1 req=TEs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:10.090+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-3) Node state changed to ACTIVE [Node TE db=[nuodb_system] pid=22063 id=4 req=TEs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:10.104+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-3) Node state changed to RUNNING [Node TE db=[nuodb_system] pid=22063 id=4 req=TEs (Peer 10.176.4.79:48004 (broker))]
+2016-04-21T12:42:10.318+0000 INFO DomainStateService$DomainStateResyncThread.resync (DsmResynch) Resync Successful. Domain state was not updated ([])
+2016-04-21T12:42:19.596+0000 INFO DescriptionService$DomainJoinedRunnable.run (Thread-19) Only Leader bootstraps nuodb_system
+2016-04-21T12:42:27.096+0000 INFO RaftPeerService$ConnectRunnable.run (raftpeersvc-reconnect16-thread-1) connecting to id=uuid:2d6095a5-4925-4f9f-82ef-b2b1df33af7c addr=10.176.6.231:48004
+2016-04-21T12:42:27.193+0000 INFO PeerService.establishPeer (raftpeersvc-reconnect16-thread-1) Send peering message to peer [/10.176.6.231] ...
+2016-04-21T12:42:27.248+0000 INFO EventManager.notifyPeerEvent (serv-socket8-thread-4) Peer joined: [Peer 10.176.6.231:48004 (broker)]
+2016-04-21T12:42:27.348+0000 INFO PeerService$EntryListener.handleMessage (serv-socket8-thread-4) Peering reply from [/10.176.6.231:48004, uuid:2d6095a5-4925-4f9f-82ef-b2b1df33af7c] (broker)
+2016-04-21T12:42:27.349+0000 INFO PeerService$EntryListener.handleMessage (serv-socket8-thread-4) License Allowed Hosts: 2
+2016-04-21T12:42:27.350+0000 INFO PeerService.removePendingBroker (serv-socket8-thread-4) removed pending broker session [/10.176.6.231]
+2016-04-21T12:43:47.593+0000 [22537] Cannot determine if Linux kernel transparent hugepage support is enabled, please make sure transparent huge page support is disabled.
+2016-04-21T12:43:47.593+0000 [22537] See http://doc.nuodb.com/Latest/Default.htm#Installing-NuoDB-on-Linux.htm for details
+2016-04-21T12:43:47.593+0000 [22537] Starting Storage Manager 2.4.1-2-8720e7df01: database=tiny, protocol=1.262144.8720e7df01 (2.4|2.4.1)
+2016-04-21T12:43:47.652+0000 [22537] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-04-21T12:43:47.653+0000 [22537] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Storage, Storage Groups: (2,Starting,0),
+2016-04-21T12:43:47.701+0000 INFO DatabaseContainerRaftImpl$RaftDatabaseImpl.proposeInitialNode (serv-socket8-thread-5) Node Node SM db=[tiny] pid=22537 id=-1 req=SMs (local) is initial node
+2016-04-21T12:43:47.702+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-5) Node joined: [Node SM db=[tiny] pid=22537 id=-1 req=SMs (local)]
+2016-04-21T12:43:47.710+0000 [22537] This is the initial node for database tiny
+2016-04-21T12:43:47.710+0000 [22537] StorageGroupContainer::addLocal. NodeId: 2147483647, SG: (2,Starting,1),
+2016-04-21T12:43:47.710+0000 [22537] GeoRegionMgr::add. New Region Name: iad, Region ID: 0, Use Count: 1
+2016-04-21T12:43:47.726+0000 [22537] Registered node: NodeId: 1, LocalNodeId: 0
+2016-04-21T12:43:47.727+0000 [22537] This node address 10.176.4.120, port 48005, cloud time 0, geo region iad altAddress none
+2016-04-21T12:43:47.727+0000 [22537] Database formed: effective version 262144 (2.4|2.4.1)
+2016-04-21T12:43:47.727+0000 [22537] StorageGroupContainer::broadcastLocal. NodeId: 1, SGs: (2,Starting,1),
+2016-04-21T12:43:47.727+0000 [22537] StorageGroupContainer::updateLocalState. NodeId: 1, State: Running
+2016-04-21T12:43:47.727+0000 [22537] StorageGroupContainer::addLocal. NodeId: 1, SG: (2,Running,1),
+2016-04-21T12:43:47.731+0000 [22537] Notice: Could not preallocate file. Using fsync instead. fallocate: Operation not supported, File: /var/opt/nuodb/production-archives/tiny/7585ba26-5744-f94e-1390-3ac63ce768ff/njf_0/1.njf
+2016-04-21T12:43:47.751+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-5) Node setId=1 [Node SM db=[tiny] pid=22537 id=-1 req=SMs (local)]
+2016-04-21T12:43:47.754+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-5) Node state changed to ACTIVE [Node SM db=[tiny] pid=22537 id=1 req=SMs (local)]
+2016-04-21T12:43:47.755+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-5) Node state changed to RUNNING [Node SM db=[tiny] pid=22537 id=1 req=SMs (local)]
+2016-04-21T12:43:48.791+0000 [22554] Cannot determine if Linux kernel transparent hugepage support is enabled, please make sure transparent huge page support is disabled.
+2016-04-21T12:43:48.791+0000 [22554] See http://doc.nuodb.com/Latest/Default.htm#Installing-NuoDB-on-Linux.htm for details
+2016-04-21T12:43:48.791+0000 [22554] Starting Transaction Engine 2.4.1-2-8720e7df01: database=tiny, protocol=1.262144.8720e7df01 (2.4|2.4.1)
+2016-04-21T12:43:48.791+0000 [22554] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-04-21T12:43:48.791+0000 [22554] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-04-21T12:43:48.894+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-6) Node joined: [Node TE db=[tiny] pid=22554 id=-1 req=TEs (local)]
+2016-04-21T12:43:48.899+0000 [22554] Entering the database tiny through node at 127.0.0.1:48005
+2016-04-21T12:43:48.899+0000 [22554] GeoRegionMgr::add. New Region Name: iad, Region ID: 0, Use Count: 1
+2016-04-21T12:43:48.900+0000 [22554] Entering database via node "127.0.0.1", port 48005
+2016-04-21T12:43:48.900+0000 [22554] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-04-21T12:43:48.900+0000 [22554] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-04-21T12:43:48.901+0000 [22537] Received connection from 127.0.0.1
+2016-04-21T12:43:48.903+0000 [22554] SocketBuffer::writeMessage
+2016-04-21T12:43:48.903+0000 [22537] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-04-21T12:43:48.903+0000 [22537] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-04-21T12:43:48.903+0000 [22537] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-04-21T12:43:48.903+0000 [22537] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-04-21T12:43:48.904+0000 [22537] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-04-21T12:43:48.904+0000 [22537] GeoRegionMgr::add. Existing Region Name: iad, Region ID: 0, Use Count: 2
+2016-04-21T12:43:48.905+0000 [22537] MsgWelcome sent to address 127.0.0.1, port 48006
+2016-04-21T12:43:48.905+0000 [22537] SocketBuffer::writeMessage
+2016-04-21T12:43:48.907+0000 [22537] SocketBuffer::writeMessage
+2016-04-21T12:43:48.908+0000 [22554] GeoRegionMgr::add. Existing Region Name: iad, Region ID: 0, Use Count: 2
+2016-04-21T12:43:48.910+0000 [22554] SocketBuffer::writeMessage
+2016-04-21T12:43:48.910+0000 [22554] SocketBuffer::writeMessage
+2016-04-21T12:43:48.911+0000 [22537] SocketBuffer::writeMessage
+2016-04-21T12:43:48.911+0000 [22537] Registered node: NodeId: 2, LocalNodeId: 1
+2016-04-21T12:43:48.911+0000 [22554] Registered node: NodeId: 1, LocalNodeId: 1
+2016-04-21T12:43:48.912+0000 [22554] This node address 10.176.4.120, port 48006, cloud time 0, geo region iad altAddress none
+2016-04-21T12:43:48.912+0000 [22537] Broadcasting new node with remote address: 127.0.0.1
+2016-04-21T12:43:48.913+0000 [22554] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-04-21T12:43:48.913+0000 [22554] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-04-21T12:43:48.914+0000 [22554] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-04-21T12:43:48.914+0000 [22554] Registered node: NodeId: 2, LocalNodeId: 0
+2016-04-21T12:43:48.914+0000 [22554] Database entered: effective version 262144 (2.4|2.4.1)
+2016-04-21T12:43:49.492+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-6) Node setId=2 [Node TE db=[tiny] pid=22554 id=-1 req=TEs (local)]
+2016-04-21T12:43:49.494+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-6) Node state changed to ACTIVE [Node TE db=[tiny] pid=22554 id=2 req=TEs (local)]
+2016-04-21T12:43:49.495+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-6) Node state changed to RUNNING [Node TE db=[tiny] pid=22554 id=2 req=TEs (local)]
+2016-04-21T12:43:49.496+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-6) Database [tiny] has become active
+2016-04-21T12:59:42.162+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-6) Node left (observed): [Node TE db=[tiny] pid=22554 id=2 req=TEs (local)]
+2016-04-21T12:59:42.248+0000 [22537] connection to node fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2:48006 closed: remote connection closed
+2016-04-21T12:59:42.248+0000 [22537] Node listener thread to fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2:48006 is exiting: remote connection closed
+2016-04-21T12:59:42.249+0000 [22537] Connection from node fa2461c7-bca2-4df5-91e3-251084e1b8d1-r0db2 died: remote connection closed
+2016-04-21T12:59:42.272+0000 [22537] StorageGroupContainer::applyRemoteDied. NodeId: 2
+2016-04-21T12:59:42.273+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-6) Database [tiny] has become inactive, was previously active for 0:15:52.667
+2016-04-21T12:59:42.303+0000 INFO ProcessService.nodeLeft (serv-socket8-thread-6) cleaning up pid 22554 with exit code 134
+2016-04-21T12:59:42.312+0000 [22537] GeoRegionMgr::releaseId. Region Name: iad, Region ID: 0, Use Count: 1
+2016-04-21T12:59:49.322+0000 [28692] Cannot determine if Linux kernel transparent hugepage support is enabled, please make sure transparent huge page support is disabled.
+2016-04-21T12:59:49.322+0000 [28692] See http://doc.nuodb.com/Latest/Default.htm#Installing-NuoDB-on-Linux.htm for details
+2016-04-21T12:59:49.322+0000 [28692] Starting Transaction Engine 2.4.1-2-8720e7df01: database=tiny, protocol=1.262144.8720e7df01 (2.4|2.4.1)
+2016-04-21T12:59:49.323+0000 [28692] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-04-21T12:59:49.323+0000 [28692] Node::initStorageGroups. LocalNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-04-21T12:59:49.361+0000 INFO EventManager.notifyNodeEvent (serv-socket8-thread-6) Node joined: [Node TE db=[tiny] pid=28692 id=-1 req=TEs (local)]
+2016-04-21T12:59:49.368+0000 [28692] Entering the database tiny through node at 127.0.0.1:48005
+2016-04-21T12:59:49.368+0000 [28692] GeoRegionMgr::add. New Region Name: iad, Region ID: 0, Use Count: 1
+2016-04-21T12:59:49.369+0000 [28692] Entering database via node "127.0.0.1", port 48005
+2016-04-21T12:59:49.369+0000 [28692] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (2,Starting,0),
+2016-04-21T12:59:49.369+0000 [28692] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Unknown, Storage Groups: (2,Starting,0),
+2016-04-21T12:59:49.370+0000 [22537] Received connection from 127.0.0.1
+2016-04-21T12:59:49.371+0000 [28692] SocketBuffer::writeMessage
+2016-04-21T12:59:49.372+0000 [22537] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-04-21T12:59:49.372+0000 [22537] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-04-21T12:59:49.372+0000 [22537] StorageGroupContainer::initReserved. NodeId: 2147483647, SG: (1,Running,0),
+2016-04-21T12:59:49.372+0000 [22537] Node::initStorageGroups. RemoteNode. NodeId: 2147483647, Type: Transaction, Storage Groups: (1,Running,0),
+2016-04-21T12:59:49.372+0000 [22537] Connecting to remote node with remote address 127.0.0.1, port 48006
+2016-04-21T12:59:49.372+0000 [22537] GeoRegionMgr::add. Existing Region Name: iad, Region ID: 0, Use Count: 2
+2016-04-21T12:59:49.374+0000 [22537] MsgWelcome sent to address 127.0.0.1, port 48006
+2016-04-21T12:59:49.374+0000 [22537] SocketBuffer::writeMessage
+2016-04-21T12:59:49.384+0000 [28692] GeoRegionMgr::add. Existing Region Name: iad, Region ID: 0, Use Count: 2
+2016-04-21T12:59:49.386+0000 [28692] SocketBuffer::writeMessage
+2016-04-21T12:59:49.386+0000 [22537] SocketBuffer::writeMessage
+2016-04-21T12:59:49.389+0000 [28692] SocketBuffer::writeMessage
+2016-04-21T12:59:49.389+0000 [22537] SocketBuffer::writeMessage
+2016-04-21T12:59:49.389+0000 [22537] Registered node: NodeId: 3, LocalNodeId: 1
+2016-04-21T12:59:49.389+0000 [28692] Registered node: NodeId: 1, LocalNodeId: 1
+2016-04-21T12:59:49.390+0000 [22537] Broadcasting new node with remote address: 127.0.0.1
+2016-04-21T12:59:49.390+0000 [28692] This node address 10.176.4.120, port 48006, cloud time 0, geo region iad altAddress none
+2016-04-21T12:59:49.394+0000 [28692] Cloud time is adjusted to 962
+2016-04-21T12:59:49.394+0000 [28692] StorageGroupContainer::applyRemoteMerge. NodeId: 1, RemoteSGs: (2,Running,1),
+2016-04-21T12:59:49.394+0000 [28692] StorageGroupContainer::addRemote. NodeId 1, SG: (2,Running,1),
+2016-04-21T12:59:49.394+0000 [28692] StorageGroupContainer::addRemote. Received later add operation. NodeId: 1, aSG: (2,Running,1), mySG: (2,Starting,0),
+2016-04-21T12:59:49.395+0000 [28692] Registered node: NodeId: 3, LocalNodeId: 0
+2016-04-21T12:59:49.396+0000 [28692] Database entered: effective version 262144 (2.4|2.4.1)
+2016-04-21T12:59:49.397+0000 INFO EventManager.notifyNodeIdSet (serv-socket8-thread-6) Node setId=3 [Node TE db=[tiny] pid=28692 id=-1 req=TEs (local)]
+2016-04-21T12:59:49.398+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-6) Node state changed to ACTIVE [Node TE db=[tiny] pid=28692 id=3 req=TEs (local)]
+2016-04-21T12:59:49.399+0000 INFO EventManager.notifyNodeStateChange (serv-socket8-thread-6) Node state changed to RUNNING [Node TE db=[tiny] pid=28692 id=3 req=TEs (local)]
+2016-04-21T12:59:49.400+0000 INFO DatabaseContainerImpl$DatabaseImpl.updateDatabaseActiveStatus (serv-socket8-thread-6) Database [tiny] has become active, was previously inactive for 0:00:07.237

@@ -89,7 +89,7 @@ integration-test-start-vm: elk
 	(cd vagrant/ubuntu14_nuoca; vagrant up es0)
 
 unit-test:
-	(cd tests/dev && PYTHONPATH=../../src:../.. ./run_unit_tests.py)
+	(cd tests/dev && PYTHONPATH=../../src:../..:../../lib ./run_unit_tests.py)
 
 zabbix-install-debian:
 	wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-agent_2.2.11-1+trusty_amd64.deb
