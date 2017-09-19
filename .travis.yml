@@ -38,9 +38,6 @@ before_install:
 services:
   - elasticsearch
 
-install:
-  - true
-
 script:
   - make continuous-test
 
