@@ -13,6 +13,7 @@ notifications:
 
 before_install:
   - uname -a
+  - pip freeze
   - export NUODB_ROOT=/opt/nuodb
   - export NUODB_INCLUDE_DIR=/opt/nuodb/include
   - export NUODB_LIB_DIR=/opt/nuodb/lib64
