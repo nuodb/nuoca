@@ -12,6 +12,7 @@ notifications:
     - tgates@nuodb.com
 
 before_install:
+  - jdk_switcher use oraclejdk8
   - uname -a
   - pip freeze
   - export NUODB_ROOT=/opt/nuodb
