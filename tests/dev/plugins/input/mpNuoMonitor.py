@@ -72,8 +72,13 @@ class MPNuoMonitor(NuocaMPInputPlugin):
       required_config_items = ['broker', 'domain_username', 'domain_password']
       if not self.has_required_config_items(config, required_config_items):
         return False
-      nuoca_log(logging.INFO, "NuoMonitor plugin config: %s" %
-                str(self._config))
+
+      # Don't reveal the domain password in the NuoCA log file.
+      display_config = {}
+      display_config.update(config)
+      display_config['domain_password'] = ''
+      nuoca_log(logging.INFO, "NuoAdminMonitor plugin config: %s" %
+                str(display_config))
 
       self._broker = os.path.expandvars(config['broker'])
       self._domain_username = os.path.expandvars(config['domain_username'])

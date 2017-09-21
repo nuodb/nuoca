@@ -26,8 +26,6 @@ class TestInputPlugins(unittest.TestCase):
     nuoca_util.initialize_logger("/tmp/nuoca.test.log")
     nuoAdminMonitor_plugin = NuoAdminMonitor(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
-
-    dir_path = os.path.dirname(os.path.realpath(__file__))
     config = {'admin_host': 'localhost',
               'domain_username': 'domain',
               'domain_password': 'bird',
@@ -38,8 +36,6 @@ class TestInputPlugins(unittest.TestCase):
     resp_values = nuoAdminMonitor_plugin.collect(3)
     self.assertIsNotNone(resp_values)
     self.assertTrue(type(resp_values) is list)
-
-
     nuoAdminMonitor_plugin.shutdown()
 
   def _MultiprocessPluginManagerTest(self):
@@ -58,13 +54,13 @@ class TestInputPlugins(unittest.TestCase):
     for a_plugin in all_plugins:
       self.manager.activatePluginByName(a_plugin.name, 'Input')
       self.assertTrue(a_plugin.is_activated)
-      if a_plugin.name == 'NuoAdminMonitor':
+      if a_plugin.name == 'NuoAdminMon':
         nuoAdminMonitor_plugin = a_plugin
     self.assertIsNotNone(nuoAdminMonitor_plugin)
-
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    config = {'agentLogfile':
-              "%s/../test_data/%s.agent.log" % (dir_path, test_node_id)}
+    config = {'admin_host': 'localhost',
+              'domain_username': 'domain',
+              'domain_password': 'bird',
+              'host_uuid_shortname': True}
     plugin_msg = {'action': 'startup', 'config': config}
     plugin_resp_msg = None
     nuoAdminMonitor_plugin.plugin_object.child_pipe.send(plugin_msg)
@@ -73,9 +69,7 @@ class TestInputPlugins(unittest.TestCase):
       plugin_resp_msg = nuoAdminMonitor_plugin.plugin_object.child_pipe.recv()
     self.assertIsNotNone(plugin_resp_msg)
     self.assertEqual(0, plugin_resp_msg['status_code'])
-
     time.sleep(5)
-
     plugin_msg = {'action': 'collect', 'collection_interval': 3}
     plugin_resp_msg = None
     nuoAdminMonitor_plugin.plugin_object.child_pipe.send(plugin_msg)
@@ -104,7 +98,7 @@ class TestInputPlugins(unittest.TestCase):
     topdir = nuoca_util.get_nuoca_topdir()
     input_plugin_dir = os.path.join(topdir, "tests/dev/plugins/input")
     dir_list = [input_plugin_dir]
-    self.NuoAdminMonitorPluginTest()
+    self._NuoAdminMonitorPluginTest()
     self.manager = MultiprocessPluginManager(
         directories_list=dir_list,
         plugin_info_ext="multiprocess-plugin")
