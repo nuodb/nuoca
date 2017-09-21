@@ -12,7 +12,6 @@ notifications:
     - tgates@nuodb.com
 
 before_install:
-  - jdk_switcher use oraclejdk8
   - uname -a
   - pip freeze
   - export NUODB_ROOT=/opt/nuodb
@@ -31,7 +30,7 @@ before_install:
   - sleep 5
   - if [[ "${NUODB_ADD_DOMAIN_PASS}" == "yes" ]] ; then sudo chmod 777 $NUODB_ROOT/etc/default.properties; printf "\ndomainPassword = bird\n" >> $NUODB_ROOT/etc/default.properties; sudo chmod 600 $NUODB_ROOT/etc/default.properties; fi
   - if [[ "${NUODB_START_AGENT}" == "yes" ]]; then sudo service nuoagent start; fi
-  - if [[ "${NUODB_START_REST_API}" == "yes" ]]; then sudo service nuoagent start; fi
+  - if [[ "${NUODB_START_REST_API}" == "yes" ]]; then sudo service nuorestsvc start; fi
   - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process sm host localhost database test archive /var/tmp/nuodb initialize true"
   - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process te host localhost database test options '--dba-user dba --dba-password dba'"
   - ${NUODB_ROOT}/bin/nuosql test@localhost --user dba --password dba < tests/etc/create_user_cloud.sql
