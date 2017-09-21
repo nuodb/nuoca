@@ -15,7 +15,7 @@ from requests.auth import HTTPBasicAuth
 #
 # - NuoAdminMonitor:
 #    description : Monitor NuoDB Admin layer
-#    admin_host: 172.19.0.16
+#    admin_host: localhost
 #    admin_rest_api_port: 8888
 #    domain_username: domain
 #    domain_password: bird
@@ -137,7 +137,8 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
       self._config = config
 
       # Validate the configuration.
-      required_config_items = ['admin_host', 'domain_username', 'domain_password']
+      required_config_items = ['admin_host', 'domain_username',
+                               'domain_password']
       if not self.has_required_config_items(config, required_config_items):
         return False
 
@@ -179,8 +180,6 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
     pass
 
   def collect(self, collection_interval):
-    uuid_hostname_regex = \
-      '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-'
     rval = None
     try:
       nuoca_log(logging.DEBUG, "Called collect() in NuoAdminMonitor Plugin process")

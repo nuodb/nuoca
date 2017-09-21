@@ -1,0 +1,13 @@
+---
+NUOCA_LOGFILE: /tmp/nuoca_nuoadminmonitor_to_printer.log
+
+INPUT_PLUGINS:
+- NuoAdminMon:
+    description : Collection from NuoDB Admin Layer
+    admin_host: localhost
+    domain_username: domain
+    domain_password: bird
+
+OUTPUT_PLUGINS:
+- Printer:
+
