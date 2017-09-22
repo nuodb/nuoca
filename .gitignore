@@ -4,9 +4,14 @@ nuoca.log
 *.pyc
 venv
 *.diff
+continuous-test.log
+integration-test.log
+unit-test.log
 elasticsearch*.tar.gz
 filebeat*.tar.gz
 kibana*.tar.gz
 logstash*.tar.gz
+zabbix-agent_*.deb*
+zabbix-get_*.deb*
 vagrant/ubuntu14_nuoca/
 nuoca.egg-info/
