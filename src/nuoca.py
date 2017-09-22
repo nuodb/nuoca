@@ -335,8 +335,7 @@ class NuoCA(object):
         "Transform": NuocaMPTransformPlugin
     })
 
-  def _load_all_plugins(self):
-    self.manager.collectPlugins()
+  def _activate_plugins(self):
     for input_plugin in self.config.INPUT_PLUGINS:
       input_plugin_name = input_plugin.keys()[0]
       if not self.manager.activatePluginByName(input_plugin_name, 'Input'):
@@ -365,6 +364,33 @@ class NuoCA(object):
           self._output_plugins[output_plugin_name] = (a_plugin,
                                                       output_plugin_config)
     # TODO Transform Plugins
+
+
+  def _load_all_plugins(self):
+    self.manager.collectPlugins()
+    self._activate_plugins()
+
+  def _is_plugin_name_configured(self, name):
+    for configured_input in self.config.INPUT_PLUGINS:
+      if name in configured_input:
+        return True
+    for configured_input in self.config.OUTPUT_PLUGINS:
+      if name in configured_input:
+        return True
+    for configured_input in self.config.TRANSFORM_PLUGINS:
+      if name in configured_input:
+        return True
+    return False
+
+  def _load_configured_plugins(self):
+    self.manager.locatePlugins()
+    plugin_candidates = self.manager.getPluginCandidates()
+    for candidate in plugin_candidates:
+      plugin_configured = self._is_plugin_name_configured(candidate[2].name)
+      if not plugin_configured:
+        self.manager.removePluginCandidate(candidate)
+    self.manager.loadPlugins()
+    self._activate_plugins()
 
   def _shutdown_all_plugins(self):
     for input_plugin in self._input_plugins:
@@ -428,7 +454,8 @@ class NuoCA(object):
     Startup NuoCA
     """
     self._create_plugin_manager()
-    self._load_all_plugins()
+    #self._load_all_plugins()
+    self._load_configured_plugins()
 
     # Find the start of the next time interval
     next_interval_time = None
