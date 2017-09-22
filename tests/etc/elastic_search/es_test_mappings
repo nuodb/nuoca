@@ -41,6 +41,10 @@
           "NuoAdminAgentLog.collect_timestamp": {
               "type": "date",
               "format": "epoch_second"
+          },
+          "NuoAdminMon.collect_timestamp": {
+              "type": "date",
+              "format": "epoch_second"
           }
         }
       }

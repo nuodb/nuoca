@@ -91,7 +91,6 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
 
     enforcer_result = self.get_enforcer()
     regions_result = self.get_regions()
-    print regions_result
     region_count = 0
     for region in regions_result:
       results = {"TimeStamp": collect_timestamp}
