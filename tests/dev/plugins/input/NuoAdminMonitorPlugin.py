@@ -27,7 +27,7 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
     super(NuoAdminMonitor, self).__init__(parent_pipe, 'NuoAdminMon')
     self._config = None
     self._admin_host = None
-    self._admin_rest_api_port = '8888'
+    self._admin_rest_api_port = 8888
     self._enabled = False
     self._auth = None
     self._base_url = None
@@ -39,7 +39,6 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
     self._domain_username = 'domain'
     self._domain_password = 'bird'
     self._domain_metrics = None
-    self._database_regex_pattern = '.*'
     self._host_uuid_shortname = False
     self._timer_thrd = None
     self._admin_collect_interval = 10
@@ -55,15 +54,20 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
       req = requests.get(rest_url, auth=self._auth,
                          timeout=self._admin_collect_timeout)
       if req.status_code != 200:
-        err_msg = "Error code '%d' when calling Admin Rest API: %s" \
-                  % (req.status_code, self.rest_url)
+        err_msg = "NuoAdminMon: Error code '%d' when " \
+                  "calling Admin Rest API: %s" \
+                  % (req.status_code, rest_url)
         nuoca_log(logging.ERROR, err_msg)
-        return {'nuoca_collection_error', err_msg}
+        return {'nuoca_collection_error': err_msg}
       return req.json()
     except requests.RequestException as e:
-      return {'nuoca_collection_error', str(e)}
+      err_msg = str(e)
+      nuoca_log(logging.ERROR, err_msg)
+      return {'nuoca_collection_error': err_msg}
     except Exception as e:
-      return {'nuoca_collection_error', str(e)}
+      err_msg = str(e)
+      nuoca_log(logging.ERROR, err_msg)
+      return {'nuoca_collection_error': err_msg}
 
   def get_enforcer(self):
     return self.get_rest_url(self._domain_enforcer_url)
@@ -89,35 +93,49 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
      u'archivesByGroup', u'archives', u'template', u'active',
      u'unmet_messages', u'options', u'ismet']
 
+    #print "\n\nCollection Timestamp: %s" % collect_timestamp
     enforcer_result = self.get_enforcer()
-    regions_result = self.get_regions()
-    region_count = 0
-    for region in regions_result:
+    #print "Result from Rest API %s: %s" % (self._domain_enforcer_url, enforcer_result)
+    if 'nuoca_collection_error' in enforcer_result:
       results = {"TimeStamp": collect_timestamp}
-      results[u'domainEnforcerEnabled'] = \
-        enforcer_result[u'domainEnforcerEnabled']
-      for region_field in region_result_desired_fields:
-        results[region_field] = regions_result[region_count][region_field]
-      for host in region['hosts']:
-        for host_field in host_result_desired_fields:
-          results["admin.%s" % host_field] = host[host_field]
-        for host_tag_field in host_tags_desired_fields:
-          results["tag.%s" % host_tag_field] = host['tags'][host_tag_field]
-        for process in host['processes']:
-          process_results = {}
-          for process_field in processes_desired_fields:
-            process_results["process.%s" % process_field] \
-              = process[process_field]
-          process_results.update(results)
-          self._monitor_collect_queue.append(process_results)
-      for database in region['databases']:
-        database_results = {}
-        for database_field in databases_desired_fields:
-          database_results["database.%s" % database_field] = \
-            str(database[database_field])
-        database_results.update(results)
-        self._monitor_collect_queue.append(database_results)
-      region_count += 1
+      results['nuoca_collection_error'] = \
+        enforcer_result['nuoca_collection_error']
+      self._monitor_collect_queue.append(results)
+    regions_result = self.get_regions()
+    #print "Result from Rest API %s: %s" % (self._regions_url, regions_result)
+    if 'nuoca_collection_error' in regions_result:
+      results = {"TimeStamp": collect_timestamp}
+      results['nuoca_collection_error'] = \
+        regions_result['nuoca_collection_error']
+      self._monitor_collect_queue.append(results)
+    else:
+      region_count = 0
+      for region in regions_result:
+        results = {"TimeStamp": collect_timestamp}
+        results[u'domainEnforcerEnabled'] = \
+          enforcer_result[u'domainEnforcerEnabled']
+        for region_field in region_result_desired_fields:
+          results[region_field] = regions_result[region_count][region_field]
+        for host in region['hosts']:
+          for host_field in host_result_desired_fields:
+            results["admin.%s" % host_field] = host[host_field]
+          for host_tag_field in host_tags_desired_fields:
+            results["tag.%s" % host_tag_field] = host['tags'][host_tag_field]
+          for process in host['processes']:
+            process_results = {}
+            for process_field in processes_desired_fields:
+              process_results["process.%s" % process_field] \
+                = process[process_field]
+            process_results.update(results)
+            self._monitor_collect_queue.append(process_results)
+        for database in region['databases']:
+          database_results = {}
+          for database_field in databases_desired_fields:
+            database_results["database.%s" % database_field] = \
+              str(database[database_field])
+          database_results.update(results)
+          self._monitor_collect_queue.append(database_results)
+        region_count += 1
 
   def _timer_thread(self):
     while(self._enabled):
@@ -151,20 +169,25 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
       self._admin_host = os.path.expandvars(config['admin_host'])
       self._domain_username = os.path.expandvars(config['domain_username'])
       self._domain_password = os.path.expandvars(config['domain_password'])
-      self._base_url = "http://%s:%s/api/2" % (self._admin_host,
+      if 'admin_collect_interval' in config:
+        self._admin_collect_interval = config['admin_collect_interval']
+      if 'admin_collect_timeout' in config:
+        self._admin_collect_interval = config['admin_collect_timeout']
+      if 'host_uuid_shortname' in config:
+        self._host_uuid_shortname = config['host_uuid_shortname']
+      if 'admin_rest_api_port' in config:
+        if isinstance(config['admin_rest_api_port'], int):
+          self._admin_rest_api_port = config['admin_rest_api_port']
+        else:
+          self._admin_rest_api_port = int(os.path.expandvars(
+              config['admin_rest_api_port']))
+      self._base_url = "http://%s:%d/api/2" % (self._admin_host,
                                                self._admin_rest_api_port)
       self._domain_enforcer_url = "%s/domain/enforcer" % self._base_url
       self._regions_url = "%s/regions" % self._base_url
       self._auth = HTTPBasicAuth(self._domain_username,
                                  self._domain_password)
-      if 'admin_collect_interval' in config:
-        self._admin_collect_interval = config['admin_collect_interval']
-      if 'admin_collect_timeout' in config:
-        self._admin_collect_interval = config['admin_collect_timeout']
-      if 'database_regex_pattern' in config:
-        self._database_regex_pattern = config['database_regex_pattern']
-      if 'host_uuid_shortname' in config:
-        self._host_uuid_shortname = config['host_uuid_shortname']
+
       self._enabled = True
       self._timer_thrd = threading.Thread(target=self._timer_thread)
       self._timer_thrd.daemon = True
