@@ -335,8 +335,8 @@ class NuoCA(object):
         "Transform": NuocaMPTransformPlugin
     })
 
-  def _load_all_plugins(self):
-    self.manager.collectPlugins()
+  # Activate plugins and call the plugin's startup() method.
+  def _activate_and_startup_plugins(self):
     for input_plugin in self.config.INPUT_PLUGINS:
       input_plugin_name = input_plugin.keys()[0]
       if not self.manager.activatePluginByName(input_plugin_name, 'Input'):
@@ -365,6 +365,32 @@ class NuoCA(object):
           self._output_plugins[output_plugin_name] = (a_plugin,
                                                       output_plugin_config)
     # TODO Transform Plugins
+
+  # test if the plugin name is configured in NuoCA.
+  def _is_plugin_name_configured(self, name):
+    for configured_input in self.config.INPUT_PLUGINS:
+      if name in configured_input:
+        return True
+    for configured_input in self.config.OUTPUT_PLUGINS:
+      if name in configured_input:
+        return True
+    for configured_input in self.config.TRANSFORM_PLUGINS:
+      if name in configured_input:
+        return True
+    return False
+
+  # activate only the NuoCA configured plugins.
+  def _activate_configured_plugins(self):
+    self.manager.locatePlugins()
+    # get a list of ALL plugin candidates
+    plugin_candidates = self.manager.getPluginCandidates()
+    for candidate in plugin_candidates:
+      plugin_configured = self._is_plugin_name_configured(candidate[2].name)
+      if not plugin_configured:
+        # Remove this plugin candidate because it is no configued by NuoCA
+        self.manager.removePluginCandidate(candidate)
+    self.manager.loadPlugins()
+    self._activate_and_startup_plugins()
 
   def _shutdown_all_plugins(self):
     for input_plugin in self._input_plugins:
@@ -428,7 +454,7 @@ class NuoCA(object):
     Startup NuoCA
     """
     self._create_plugin_manager()
-    self._load_all_plugins()
+    self._activate_configured_plugins()
 
     # Find the start of the next time interval
     next_interval_time = None
