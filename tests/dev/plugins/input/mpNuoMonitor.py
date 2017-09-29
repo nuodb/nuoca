@@ -4,6 +4,7 @@ import re
 import threading
 import time
 
+from copy import deepcopy
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log
 from nuomon.nuomon_monitor import get_nuodb_metrics
@@ -35,7 +36,7 @@ class NuoMonHandler(MetricsConsumer):
     pass
 
   def onValues(self, values):
-    self.nuo_monitor_obj.nuomonitor_collect_queue.append(values)
+    self.nuo_monitor_obj.nuomonitor_collect_queue.append(deepcopy(values))
     pass
 
 
