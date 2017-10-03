@@ -27,3 +27,9 @@ ${THIS_DIR}/test-oltpbench-plugin.sh
 
 # Zabbix plugin
 python ${NUOCA_TOPDIR}/src/nuoca.py --config-file ${NUOCA_TOPDIR}/tests/dev/configs/zabbix_to_printer.yml --plugin-dir ${NUOCA_TOPDIR}/tests/dev/plugins --collection-interval=1 --self-test
+
+# NuoMonitor plugin
+python ${NUOCA_TOPDIR}/src/nuoca.py --config-file ${NUOCA_TOPDIR}/tests/dev/configs/nuomonitor_to_printer.yml --plugin-dir ${NUOCA_TOPDIR}/tests/dev/plugins --collection-interval=10 --self-test
+
+# NuoAdminMonitor plugin
+python ${NUOCA_TOPDIR}/src/nuoca.py --config-file ${NUOCA_TOPDIR}/tests/dev/configs/nuoadminmonitor_to_printer.yml --plugin-dir ${NUOCA_TOPDIR}/tests/dev/plugins --collection-interval=10 --self-test

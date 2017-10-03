@@ -16,6 +16,8 @@ nuoca_logger = None
 nuoca_loghandler = None
 yapsy_logger = None
 yapsy_loghandler = None
+last_log_message = None
+last_log_error_message = None
 
 # Global top level directory
 nuoca_topdir = None  # Top level directory for NuoCA
@@ -127,6 +129,11 @@ def nuoca_log(log_level, msg):
   :param msg: str: log message
   """
   global nuoca_logger, nuoca_loghandler
+  global last_log_message, last_log_error_message
+
+  last_log_message = msg
+  if log_level == logging.ERROR:
+    last_log_error_message = msg
   if not nuoca_logger:
     sys.stderr.write(msg)
     return
@@ -139,6 +146,20 @@ def nuoca_logging_shutdown():
   Shutdown ALL logging
   """
   logging.shutdown()
+
+
+def nuoca_get_last_log_message():
+  """
+  Return last log message
+  """
+  return last_log_message
+
+
+def nuoca_get_last_log_error_message():
+  """
+  Return last log error message
+  """
+  return last_log_error_message
 
 
 def nuoca_gettimestamp():

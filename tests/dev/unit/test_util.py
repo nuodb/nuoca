@@ -28,7 +28,13 @@ class TestUtilLogging(unittest.TestCase):
   def runTest(self):
     nuoca_util.initialize_logger("/tmp/nuoca.test.log")
     nuoca_util.nuoca_set_log_level(logging.INFO)
-    nuoca_util.nuoca_log(logging.INFO, "Info message")
+    info_message = "Info message"
+    nuoca_util.nuoca_log(logging.INFO, info_message)
+    self.assertEquals(info_message, nuoca_util.nuoca_get_last_log_message())
+    error_message = "Error message"
+    nuoca_util.nuoca_log(logging.ERROR, error_message)
+    self.assertEquals(error_message,
+                      nuoca_util.nuoca_get_last_log_error_message())
     nuoca_util.nuoca_logging_shutdown()
 
 
