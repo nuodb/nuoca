@@ -1,0 +1,8 @@
+NUODB_NODE \[Node %{WORD:node_type} db=\[%{WORD:dbname}\] pid=%{POSINT:node_pid} id=%{INT:nodeid} req=%{WORD:nodegroup} \((%{IPORHOST:peeraddr}:%{NUMBER:nodeport}|%{NUODB_PEER:peer_description})\)\]
+NUODB_ENTITY ([nN]ode|[pP]eer|[dD]omain)
+NUODB_ACTIONS ([Jj]oined|left|state|setId|failed|reaping)
+NUODB_AGENTTYPE (broker|agent)
+NUODB_PEER ((Local)?Peer %{IPORHOST:peeraddr}:%{POSINT:peerport} \(%{NUODB_AGENTTYPE:peertype}\)|local)
+NUODB_PID [0-9]+(,[0-9]{3})?
+# multi-line greedy
+NUODB_GREEDYDATA (.*\n?)+

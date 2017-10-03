@@ -1,0 +1,10 @@
+[Core]
+Name = Logstash
+Module = mpLogstashPlugin
+
+[Documentation]
+Author = Tom Gates
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = Collect from Logstash.
+
