@@ -2,7 +2,7 @@
 NUOCA_LOGFILE: /tmp/nuoca_nuoadminagentlog_to_elastic.log
 
 INPUT_PLUGINS:
-- NuoAdminAgentLog:
+- NuoAdminAgentLogOld:
     description : Collection from NuoDB Admin Agent logfile
     agentLogfile: /var/log/nuodb/agent.log
 

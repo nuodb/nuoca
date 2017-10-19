@@ -28,28 +28,21 @@
 #   make integration-test
 #
 
+DIR := ${CURDIR}
+export NUOCA_ROOT=${DIR}
+export LOGSTASH_HOME=${DIR}/logstash
+export NUOADMINAGENTLOGCONFIG=${DIR}/tests/etc/logstash/nuoadminagentlog.conf
+
 clean: integration-test-clean-vm-box
 	find . -name '*.pyc' -exec rm -f {} +
+	rm -fr logstash
 
 continuous-test: unit-test integration-test
 
-elasticsearch-5.1.1.tar.gz:
-	wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.1.tar.gz
+logstash:
+	bin/setup_logstash.sh
 
-kibana-5.1.1-linux-x86_64.tar.gz:
-	wget https://artifacts.elastic.co/downloads/kibana/kibana-5.1.1-linux-x86_64.tar.gz
-
-logstash-5.1.1.tar.gz:
-	wget https://artifacts.elastic.co/downloads/logstash/logstash-5.1.1.tar.gz
-
-filebeat-5.1.1-linux-x86_64.tar.gz:
-	wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.1.1-linux-x86_64.tar.gz
-
-elk-5.1.1: elasticsearch-5.1.1.tar.gz kibana-5.1.1-linux-x86_64.tar.gz logstash-5.1.1.tar.gz filebeat-5.1.1-linux-x86_64.tar.gz
-
-elk: elk-5.1.1
-
-integration-test:
+integration-test: logstash
 	tests/dev/integration/run_tests.sh
 
 integration-test-destroy-vms:
@@ -88,7 +81,7 @@ integration-test-start-vm: elk
 	fi
 	(cd vagrant/ubuntu14_nuoca; vagrant up es0)
 
-unit-test:
+unit-test: logstash
 	(cd tests/dev && PYTHONPATH=../../src:../..:../../lib ./run_unit_tests.py)
 
 zabbix-install-debian:

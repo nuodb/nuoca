@@ -131,10 +131,15 @@ def nuoca_log(log_level, msg):
   global nuoca_logger, nuoca_loghandler
   global last_log_message, last_log_error_message
 
+  if not msg:
+    return
+
   last_log_message = msg
   if log_level == logging.ERROR:
     last_log_error_message = msg
   if not nuoca_logger:
+    if msg[:-1] != '\n':
+      msg = msg + '\n'
     sys.stderr.write(msg)
     return
   nuoca_logger.log(log_level, msg)

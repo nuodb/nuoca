@@ -57,7 +57,6 @@ class TestInputPlugins(unittest.TestCase):
     self.assertTrue(startup_rval)
     time.sleep(3)
     resp_values = nuoAdminMonitor_plugin.collect(3)
-    print(resp_values)
     expected_msg = "Max retries exceeded with url"
     for resp_item in resp_values:
       self.assertTrue('nuoca_collection_error' in resp_item)

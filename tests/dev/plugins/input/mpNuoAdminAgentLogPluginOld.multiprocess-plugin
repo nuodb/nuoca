@@ -1,6 +1,6 @@
 [Core]
-Name = NuoAdminAgentLog
-Module = mpNuoAdminAgentLogPlugin
+Name = NuoAdminAgentLogOld
+Module = mpNuoAdminAgentLogPluginOld
 
 [Documentation]
 Author = Tom Gates

@@ -1,9 +1,9 @@
 ---
-NUOCA_LOGFILE: /tmp/nuoca_nuoadminagentlog_to_printer.log
+NUOCA_LOGFILE: /tmp/nuoca_nuoadminagentlog_to_file.log
 
 INPUT_PLUGINS:
 - NuoAdminAgentLog:
-    description : Collection from NuoDB Admin Agent logfile
+    description : Collection from Logstash
     nuocaCollectionName: NuoAdminAgentLog
     logstashBin: $LOGSTASH_HOME/bin/logstash
     logstashConfig: $NUOADMINAGENTLOGCONFIG
@@ -12,4 +12,6 @@ INPUT_PLUGINS:
     logstashOptions: --pipeline.workers 1
 
 OUTPUT_PLUGINS:
-- Printer:
+- File:
+    filePath: /tmp/nuoca.nuoadminagentlog.output.json
+

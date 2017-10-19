@@ -1,0 +1,12 @@
+---
+NUOCA_LOGFILE: /tmp/nuoca_nuoadminagentlogold_to_file.log
+
+INPUT_PLUGINS:
+- NuoAdminAgentLogOld:
+    description : Collection from NuoDB Admin Agent logfile
+    agentLogfile: /tmp/agent.log
+
+OUTPUT_PLUGINS:
+- File:
+    filePath: /tmp/nuoca.nuoadminagentlogold.output.json
+
