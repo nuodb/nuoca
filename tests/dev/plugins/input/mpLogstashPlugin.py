@@ -1,14 +1,14 @@
+import hashlib
+import json
 import logging
 import os
 import re
 import socket
 import subprocess
 import threading
-import json
-import hashlib
-from dateutil.parser import parse as date_parse
-from calendar import timegm
 
+from calendar import timegm
+from dateutil.parser import parse as date_parse
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log
 
@@ -95,7 +95,9 @@ class MPLogstash(NuocaMPInputPlugin):
           try:
             json_object = json.loads(line)
           except ValueError:
-            msg = "logstash message ValueError: %s" % line
+            # These messages are typical log messages about logstash itself
+            # which are written to stdout.  Just write them to the nuoca.log
+            msg = "logstash message: %s" % line
             nuoca_log(logging.INFO, msg)
           if json_object:
             self._logstash_collect_queue.append(json_object)
@@ -122,7 +124,6 @@ class MPLogstash(NuocaMPInputPlugin):
       # Validate the configuration.
       #   logstash_bin: full path to the logstash executable
       #   logstash_config: full path to a logstash config file.
-      
       required_config_items = ['logstashBin', 'logstashConfig']
       if not self.has_required_config_items(config, required_config_items):
         return False
@@ -133,12 +134,14 @@ class MPLogstash(NuocaMPInputPlugin):
       if not os.path.isfile(self._logstash_bin):
         msg = "Unable to find 'logstashBin' file: %s" % self._logstash_bin
         nuoca_log(logging.ERROR, msg)
+        return False
 
       self._logstash_config = os.path.expandvars(config['logstashConfig'])
       if not os.path.isfile(self._logstash_config):
         msg = "Unable to find 'logstashConfig' file: %s" % \
               self._logstash_config
         nuoca_log(logging.ERROR, msg)
+        return False
 
       if 'logstashSincedbPath' in config:
         self._logstash_sincedb_path = \
