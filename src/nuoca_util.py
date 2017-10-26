@@ -9,7 +9,7 @@ import subprocess
 from nuoca_config import NuocaConfig
 
 SECONDS_PER_DAY = 3600*24
-
+DEFAULT_SEED_TS = 931752000  # Default NuoCA Epoch Timestamp
 
 # NuoCA Temp Dir
 if not os.path.exists(NuocaConfig.NUOCA_TMPDIR):
@@ -313,7 +313,7 @@ class IntervalSync(object):
     self._unix_epoch = datetime.datetime(1970, 1, 1, tzinfo=self._utc_tzinfo)
 
     if not self._seed_ts:
-      self._seed_ts = 931752000 # default to NuoCA Collection Epoch
+      self._seed_ts = DEFAULT_SEED_TS  # default to NuoCA Collection Epoch
     self._seed_dt = datetime.datetime.fromtimestamp(self._seed_ts,
                                                     self._utc_tzinfo)
 
