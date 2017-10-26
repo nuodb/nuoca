@@ -1,3 +1,4 @@
+import datetime
 import os
 import time
 import uuid
@@ -6,6 +7,8 @@ import hashlib
 import logging
 import subprocess
 from nuoca_config import NuocaConfig
+
+SECONDS_PER_DAY = 3600*24
 
 
 # NuoCA Temp Dir
@@ -21,6 +24,22 @@ last_log_error_message = None
 
 # Global top level directory
 nuoca_topdir = None  # Top level directory for NuoCA
+
+class UTC(datetime.tzinfo):
+  """UTC tzinfo"""
+
+  def __init__(self):
+    self._zero = datetime.timedelta(0)
+
+  def utcoffset(self, dt):
+    return self._zero
+
+  def tzname(self, dt):
+    return "UTC"
+
+  def dst(self, dt):
+    return self._zero
+
 
 def initialize_logger(nuoca_logfile_name):
   global nuoca_logger, nuoca_loghandler
@@ -257,3 +276,80 @@ def coerce_numeric(s):
       return float(s)
     except ValueError:
       return s
+
+
+class IntervalSync(object):
+  """
+  IntervalSync
+
+  A universal temporal algorithm that can be used to automatically
+  synchronize identical collection intervals across processes or nodes,
+  without a predetermined starting timestamp.
+
+  This can be used from cross node synchronization, assuming that the clock
+  on all nodes are suitably synchronized (i.e. NTP time synchronization)
+  and all nodes use the identical 'interval'.
+
+  There is an optional seed timestamp.  If used, it must be identical for
+  all processes/nodes that want to synchronize their intervals.  Clients
+  that want to start the collections at specific time, should use seed_ts.
+
+  """
+  def __init__(self, interval, seed_ts=None):
+    """
+    Initialize IntervalSync
+
+    :param interval: time in seconds
+     :type ``int``
+    :param seed_ts: Optional seed timestamp in UTC epoch seconds.  The
+      seed_ts can be a point in the past, or a point in the future.  When
+      seed_ts is a point in the future, the next interval will begin at that
+      seed_ts.
+     :type ``int``
+    """
+    self._interval = interval
+    self._utc_tzinfo = UTC()
+    self._seed_ts = seed_ts
+    if not self._seed_ts:
+      self._seed_ts = 931752000 # default to NuoCA Collection Epoch
+    self._seed_dt = datetime.datetime.fromtimestamp(self._seed_ts,
+                                                    self._utc_tzinfo)
+
+  def compute_next_interval(self):
+    """
+    Compute the next time interval.
+
+    :return: datetime object for the next interval.
+    """
+    now_dt = datetime.datetime.now(self._utc_tzinfo)
+    seed_delta = now_dt - self._seed_dt
+    seed_delta_total_seconds = seed_delta.total_seconds()
+    if seed_delta_total_seconds >= 0:
+      elasped_intervals = int(seed_delta_total_seconds) / self._interval
+      next_interval = elasped_intervals + 1
+      next_interval_seconds_from_seed = next_interval * self._interval
+      next_interval_days_delta_from_seed = \
+        next_interval_seconds_from_seed / SECONDS_PER_DAY
+      next_interval_seconds_delta_from_seed = \
+        next_interval_seconds_from_seed - \
+        (next_interval_days_delta_from_seed * SECONDS_PER_DAY)
+      next_interval_delta = datetime.timedelta(
+        days=next_interval_days_delta_from_seed,
+        seconds=next_interval_seconds_delta_from_seed)
+      next_interval_dt = self._seed_dt + next_interval_delta
+    else:
+      next_interval_dt = self._seed_dt
+    return next_interval_dt
+
+  def wait_for_next_interval(self):
+    """
+    Wait for the next interval.
+    """
+    next_interval_dt = self.compute_next_interval()
+    while True:
+      utc_now = datetime.datetime.now(self._utc_tzinfo)
+      diff = (next_interval_dt - utc_now).total_seconds()
+      if diff <= 0:
+        return utc_now
+      time.sleep(diff / 2)
+
