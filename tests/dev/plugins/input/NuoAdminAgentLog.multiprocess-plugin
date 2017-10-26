@@ -1,10 +1,10 @@
 [Core]
 Name = NuoAdminAgentLog
-Module = mpNuoAdminAgentLogPlugin
+Module = mpLogstashPlugin
 
 [Documentation]
 Author = Tom Gates
 Version = 0.1
 Website = http://wwww.nuodb.com
-Description = Collection of log data from the NuoDB Admin logfile.
+Description = Collect from NuoDB Admin agent.log using Logstash.
 

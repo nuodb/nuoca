@@ -286,9 +286,13 @@ class NuoCA(object):
         list_count = len(resp_values['collected_values'])
         for list_index in range(list_count):
           new_values = {}
+          key_prefix = a_plugin.name
           collected_dict = resp_values['collected_values'][list_index]
+          if 'nuocaCollectionName' in collected_dict:
+            key_prefix = collected_dict['nuocaCollectionName']
+            del collected_dict['nuocaCollectionName']
           for collected_item in collected_dict:
-            key_name = a_plugin.name + '.' + collected_item
+            key_name = key_prefix + '.' + collected_item
             new_values[key_name] = collected_dict[collected_item]
             if collected_item == 'TimeStamp':
               new_values['timestamp'] = int(collected_dict[collected_item])

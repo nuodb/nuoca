@@ -216,7 +216,8 @@ class Process:
       if nevent:
         break
     if nevent is None and self.event is not None:
-      self.event['message'] += '\n' + line[:-1]
+      if line != "\n":
+        self.event['message'] += '\n' + line[:-1]
     else:
       if self.event is not None:
         process(self.event)
@@ -272,8 +273,8 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
 
   def _process_agent_log_thread(self):
     process = Process()
-    line = None
     while self._enabled:
+      line = None
       try:
         line = self._agentLogQueue.get(block=True, timeout=10)
       except Empty:
@@ -281,8 +282,8 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
       if line:
         process.next(line)
         self._lines_processed += 1
-      if process.processed_event:
-        self.nuoAdminAgentLog_collect_queue.append(process.processed_event)
+        if process.processed_event:
+          self.nuoAdminAgentLog_collect_queue.append(process.processed_event)
       if not line:
         process.complete()
         if process.processed_event:

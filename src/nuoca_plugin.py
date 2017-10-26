@@ -105,6 +105,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     :type plugin_name: ``str``
     """
     super(NuocaMPInputPlugin, self).__init__(parent_pipe, plugin_name, "Input")
+    self._collection_name = plugin_name
 
   def _send_response(self, status_code, err_msg=None, resp_dict=None):
     response = {'status_code': status_code}
@@ -138,6 +139,9 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
           continue
         elif action == 'startup':
           config = request_from_parent['config']
+          if config:
+            if 'nuocaCollectionName' in config:
+              self._collection_name = config['nuocaCollectionName']
           startup_rval = self.startup(config)
           self._send_response(int(not startup_rval))
           continue
@@ -179,7 +183,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     :return: time-series values
     :type: ``dict``
     """
-    rval = {'nuoca_plugin': self.plugin_name,
+    rval = {'nuoca_plugin': self._collection_name,
             'collect_timestamp': nuoca_gettimestamp()}
     return rval
 
