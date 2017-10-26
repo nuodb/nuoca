@@ -467,8 +467,6 @@ class NuoCA(object):
     self._activate_configured_plugins()
     interval_sync = IntervalSync(interval=self._collection_interval,
                                  seed_ts=self._starttime)
-    utc_tzinfo = UTC()
-    unix_epoch = datetime.datetime(1970, 1, 1, tzinfo=utc_tzinfo)
 
     # Collection Interval Loop
     loop_count = 0
