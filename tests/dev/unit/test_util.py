@@ -158,12 +158,10 @@ class TestIntervalSync1(unittest.TestCase):
     ts1_diff = interval_ts1 - now_dt
     ts1_seconds = ts1_diff.total_seconds()
     self.assertLessEqual(ts1_seconds, 6.0)
-    is1.wait_for_next_interval()
-    now_dt2 = datetime.datetime.now(utc_tzinfo)
-    now_dt3 = is1.wait_for_next_interval()
-    ts2_diff = now_dt3 - now_dt2
-    ts2_seconds = ts2_diff.total_seconds()
-    self.assertAlmostEqual(ts2_seconds, 3.0, delta=0.1)
+    ts2 = is1.wait_for_next_interval()
+    ts3 = is1.wait_for_next_interval()
+    ts2_diff = ts3 - ts2
+    self.assertEqual(ts2_diff, 3)
 
 class TestIntervalSync2(unittest.TestCase):
   def runTest(self):

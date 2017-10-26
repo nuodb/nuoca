@@ -310,6 +310,8 @@ class IntervalSync(object):
     self._interval = interval
     self._utc_tzinfo = UTC()
     self._seed_ts = seed_ts
+    self._unix_epoch = datetime.datetime(1970, 1, 1, tzinfo=self._utc_tzinfo)
+
     if not self._seed_ts:
       self._seed_ts = 931752000 # default to NuoCA Collection Epoch
     self._seed_dt = datetime.datetime.fromtimestamp(self._seed_ts,
@@ -343,13 +345,20 @@ class IntervalSync(object):
 
   def wait_for_next_interval(self):
     """
-    Wait for the next interval.
+    Wait for the next interval by sleeping until a precise point in time.
+
+    Return UTC timestamp of the interval
     """
     next_interval_dt = self.compute_next_interval()
+
+    # datetime.total_seconds() returns a floating point number
+    # with microsecond accuracy.
+
+    next_ts = int((next_interval_dt - self._unix_epoch).total_seconds())
     while True:
       utc_now = datetime.datetime.now(self._utc_tzinfo)
       diff = (next_interval_dt - utc_now).total_seconds()
       if diff <= 0:
-        return utc_now
-      time.sleep(diff / 2)
+        return next_ts
+      time.sleep(diff / 2.0)
 

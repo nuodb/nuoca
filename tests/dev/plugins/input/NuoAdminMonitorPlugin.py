@@ -1,12 +1,10 @@
 import logging
 import os
-import re
 import requests
 import threading
-import time
 
 from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log, nuoca_gettimestamp
+from nuoca_util import nuoca_log, nuoca_gettimestamp, IntervalSync
 from requests.auth import HTTPBasicAuth
 
 # NuoAdminMonitor plugin
@@ -43,6 +41,7 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
     self._timer_thrd = None
     self._admin_collect_interval = 10
     self._admin_collect_timeout = 1
+    self._admin_collect_sync = None
     self._monitor_collect_queue = []
 
   @property
@@ -139,15 +138,11 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
 
   def _timer_thread(self):
     while(self._enabled):
-      collect_timestamp = nuoca_gettimestamp()
+      collect_timestamp = self._admin_collect_sync.wait_for_next_interval()
       collect_thread = threading.Thread(target=self._collector_thread,
                                         args=(collect_timestamp,))
       collect_thread.daemon = True
       collect_thread.start()
-      next_collection_timestamp = collect_timestamp + \
-                                  self._admin_collect_interval
-      time.sleep(next_collection_timestamp - collect_timestamp)
-
 
   def startup(self, config=None):
     try:
@@ -187,6 +182,11 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
       self._regions_url = "%s/regions" % self._base_url
       self._auth = HTTPBasicAuth(self._domain_username,
                                  self._domain_password)
+      nuoca_start_ts = None
+      if 'nuoca_start_ts' in config:
+        nuoca_start_ts = config['nuoca_start_ts']
+      self._admin_collect_sync = IntervalSync(self._admin_collect_interval,
+                                              seed_ts=nuoca_start_ts)
 
       self._enabled = True
       self._timer_thrd = threading.Thread(target=self._timer_thread)

@@ -474,9 +474,8 @@ class NuoCA(object):
     loop_count = 0
     while self._enabled:
       loop_count += 1
-      dt = interval_sync.wait_for_next_interval()
-      current_timestamp = int((dt - unix_epoch).total_seconds())
-      self._collection_cycle(current_timestamp)
+      collection_timestamp = interval_sync.wait_for_next_interval()
+      self._collection_cycle(collection_timestamp)
       if self._self_test:
         if loop_count >= self._config.SELFTEST_LOOP_COUNT:
           self._enabled = False
