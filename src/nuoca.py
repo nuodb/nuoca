@@ -351,6 +351,11 @@ class NuoCA(object):
         a_plugin = self.manager.getPluginByName(input_plugin_name, 'Input')
         if a_plugin:
           input_plugin_config = input_plugin.values()[0]
+          if not input_plugin_config:
+            input_plugin_config = {}
+          input_plugin_config['nuoca_start_ts'] = self._starttime
+          input_plugin_config['nuoca_collection_interval'] = \
+            self._collection_interval
           self._startup_plugin(a_plugin, input_plugin_config)
           self._input_plugins[input_plugin_name] = (a_plugin,
                                                     input_plugin_config)
@@ -365,6 +370,11 @@ class NuoCA(object):
         a_plugin = self.manager.getPluginByName(output_plugin_name, 'Output')
         if a_plugin:
           output_plugin_config = output_plugin.values()[0]
+          if not output_plugin_config:
+            output_plugin_config = {}
+          output_plugin_config['nuoca_start_ts'] = self._starttime
+          output_plugin_config['nuoca_collection_interval'] = \
+            self._collection_interval
           self._startup_plugin(a_plugin, output_plugin_config)
           self._output_plugins[output_plugin_name] = (a_plugin,
                                                       output_plugin_config)
@@ -459,24 +469,15 @@ class NuoCA(object):
     """
     self._create_plugin_manager()
     self._activate_configured_plugins()
-
-    # Find the start of the next time interval
-    next_interval_time = None
-    if self._starttime:
-      next_interval_time = self._starttime
-    else:
-      next_interval_time = nuoca_gettimestamp()
+    interval_sync = IntervalSync(interval=self._collection_interval,
+                                 seed_ts=self._starttime)
 
     # Collection Interval Loop
     loop_count = 0
     while self._enabled:
       loop_count += 1
-      current_timestamp = nuoca_gettimestamp()
-      waittime = next_interval_time - current_timestamp
-      if waittime > 0:
-        time.sleep(waittime)
-      next_interval_time += self._collection_interval
-      self._collection_cycle(next_interval_time)
+      collection_timestamp = interval_sync.wait_for_next_interval()
+      self._collection_cycle(collection_timestamp)
       if self._self_test:
         if loop_count >= self._config.SELFTEST_LOOP_COUNT:
           self._enabled = False

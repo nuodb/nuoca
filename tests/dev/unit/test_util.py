@@ -1,7 +1,9 @@
 from __future__ import print_function
 
+import datetime
 import os
 import sys
+import time
 import unittest
 import nuoca_util
 import logging
@@ -79,7 +81,8 @@ class TestUtilParseOptions(unittest.TestCase):
 
   def test_even_multi_elements_are_trimmed(self):
     options = [
-      ' a = peanut  , b = butter,  c =  but spaces  in the   middle are kept   ']
+      ' a = peanut  , b = butter,  '
+      'c =  but spaces  in the   middle are kept   ']
     act = nuoca_util.parse_keyval_list(options)
     exp = {'a': 'peanut',
            'b': 'butter',
@@ -143,6 +146,54 @@ class TestCoerceNumeric(unittest.TestCase):
     val3 = nuoca_util.coerce_numeric('foo')
     self.assertTrue(type(val3) is str)
     self.assertEqual('foo', val3)
+
+
+class TestIntervalSync1(unittest.TestCase):
+  def runTest(self):
+    utc_tzinfo = nuoca_util.UTC()
+    is1 = nuoca_util.IntervalSync(interval=3)
+    now_dt = datetime.datetime.now(utc_tzinfo)
+    interval_ts1 = is1.compute_next_interval()
+    self.assertGreaterEqual(interval_ts1, now_dt)
+    ts1_diff = interval_ts1 - now_dt
+    ts1_seconds = ts1_diff.total_seconds()
+    self.assertLessEqual(ts1_seconds, 6.0)
+    ts2 = is1.wait_for_next_interval()
+    ts3 = is1.wait_for_next_interval()
+    ts2_diff = ts3 - ts2
+    self.assertEqual(ts2_diff, 3)
+
+class TestIntervalSync2(unittest.TestCase):
+  def runTest(self):
+    utc_tzinfo = nuoca_util.UTC()
+    seed_ts1 = int(time.time()) - 1 # start in the past
+    is1 = nuoca_util.IntervalSync(interval=3, seed_ts=seed_ts1)
+    now_dt = datetime.datetime.now(utc_tzinfo)
+    interval_ts1 = is1.compute_next_interval()
+    self.assertGreaterEqual(interval_ts1, now_dt)
+    ts1_diff = interval_ts1 - now_dt
+    ts1_seconds = ts1_diff.total_seconds()
+    self.assertLessEqual(ts1_seconds, 6.0)
+    ts1_epoch_seconds = \
+      (interval_ts1 -
+       datetime.datetime(1970, 1, 1, tzinfo=utc_tzinfo)).total_seconds()
+    self.assertEqual(ts1_epoch_seconds, seed_ts1+3)
+
+class TestIntervalSync3(unittest.TestCase):
+  def runTest(self):
+    utc_tzinfo = nuoca_util.UTC()
+    seed_ts1 = int(time.time()) + 10 # start in the future
+    is1 = nuoca_util.IntervalSync(interval=3, seed_ts=seed_ts1)
+    now_dt = datetime.datetime.now(utc_tzinfo)
+    interval_ts1 = is1.compute_next_interval()
+    self.assertGreaterEqual(interval_ts1, now_dt)
+    ts1_diff = interval_ts1 - now_dt
+    ts1_seconds = ts1_diff.total_seconds()
+    self.assertAlmostEqual(ts1_seconds, 10.0, delta=0.1)
+    ts1_epoch_seconds = \
+      (interval_ts1 -
+       datetime.datetime(1970, 1, 1, tzinfo=utc_tzinfo)).total_seconds()
+    self.assertEqual(ts1_epoch_seconds, seed_ts1)
 
 if __name__ == '__main__':
   sys.exit(unittest.main())

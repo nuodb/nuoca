@@ -50,12 +50,14 @@ class TestInputPlugins(unittest.TestCase):
     print("Testing NuoAdminMon with invalid admin_host config")
     nuoAdminMonitor_plugin = NuoAdminMonitor(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
+    start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'no-such-localhost',
               'domain_username': 'domain',
-              'domain_password': 'bird'}
+              'domain_password': 'bird',
+              'nuoca_start_ts': start_ts}
     startup_rval = nuoAdminMonitor_plugin.startup(config)
     self.assertTrue(startup_rval)
-    time.sleep(3)
+    time.sleep(13)
     resp_values = nuoAdminMonitor_plugin.collect(3)
     expected_msg = "Max retries exceeded with url"
     for resp_item in resp_values:
@@ -67,13 +69,15 @@ class TestInputPlugins(unittest.TestCase):
     print("Testing NuoAdminMon with invalid admin_rest_api_port config")
     nuoAdminMonitor_plugin = NuoAdminMonitor(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
+    start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'localhost',
               'admin_rest_api_port': 8901,
               'domain_username': 'domain',
-              'domain_password': 'bird'}
+              'domain_password': 'bird',
+              'nuoca_start_ts': start_ts}
     startup_rval = nuoAdminMonitor_plugin.startup(config)
     self.assertTrue(startup_rval)
-    time.sleep(3)
+    time.sleep(13)
     resp_values = nuoAdminMonitor_plugin.collect(3)
     print(resp_values)
     expected_msg = "Max retries exceeded with url"
@@ -86,12 +90,14 @@ class TestInputPlugins(unittest.TestCase):
     print("Testing NuoAdminMon with invalid domain_password config")
     nuoAdminMonitor_plugin = NuoAdminMonitor(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
+    start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'localhost',
               'domain_username': 'domain',
-              'domain_password': 'no-such-password'}
+              'domain_password': 'no-such-password',
+              'nuoca_start_ts': start_ts}
     startup_rval = nuoAdminMonitor_plugin.startup(config)
     self.assertTrue(startup_rval)
-    time.sleep(3)
+    time.sleep(13)
     resp_values = nuoAdminMonitor_plugin.collect(3)
     print(resp_values)
     expected_msg = "NuoAdminMon: Error code '401' when calling Admin Rest API"
@@ -104,16 +110,18 @@ class TestInputPlugins(unittest.TestCase):
     print("Testing NuoAdminMon with a valid NuoDB config/instance")
     nuoAdminMonitor_plugin = NuoAdminMonitor(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
+    start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'localhost',
               'admin_rest_api_port': 8888,
               'domain_username': 'domain',
               'domain_password': 'bird',
               'host_uuid_shortname': True,
               'admin_collect_interval': 10,
-              'admin_collect_timeout': 2}
+              'admin_collect_timeout': 2,
+              'nuoca_start_ts': start_ts}
     startup_rval = nuoAdminMonitor_plugin.startup(config)
     self.assertTrue(startup_rval)
-    time.sleep(3)
+    time.sleep(13)
     resp_values = nuoAdminMonitor_plugin.collect(3)
     self.assertIsNotNone(resp_values)
     self.assertTrue(isinstance(resp_values, list))
@@ -140,6 +148,7 @@ class TestInputPlugins(unittest.TestCase):
       if a_plugin.name == 'NuoAdminMon':
         nuoAdminMonitor_plugin = a_plugin
     self.assertIsNotNone(nuoAdminMonitor_plugin)
+    start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'localhost',
               'domain_username': 'domain',
               'domain_password': 'bird',
@@ -152,7 +161,7 @@ class TestInputPlugins(unittest.TestCase):
       plugin_resp_msg = nuoAdminMonitor_plugin.plugin_object.child_pipe.recv()
     self.assertIsNotNone(plugin_resp_msg)
     self.assertEqual(0, plugin_resp_msg['status_code'])
-    time.sleep(5)
+    time.sleep(13)
     plugin_msg = {'action': 'collect', 'collection_interval': 3}
     plugin_resp_msg = None
     nuoAdminMonitor_plugin.plugin_object.child_pipe.send(plugin_msg)
