@@ -5,7 +5,7 @@ from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log, search_running_processes, \
     execute_command, coerce_numeric
 
-# mpZabbix plugin
+# Zabbix plugin
 #
 # This plugin expects that a zabbix agent is running on the localhost and
 # zabbix_get is installed on the localhost.  The 'ZBX' section of the NuoCA
@@ -50,9 +50,9 @@ from nuoca_util import nuoca_log, search_running_processes, \
 #
 
 
-class MPZabbix(NuocaMPInputPlugin):
+class ZabbixPlugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(MPZabbix, self).__init__(parent_pipe, 'ZBX')
+    super(ZabbixPlugin, self).__init__(parent_pipe, 'ZBX')
     self._config = None
 
   def _append_config_key(self, key):
@@ -125,7 +125,7 @@ class MPZabbix(NuocaMPInputPlugin):
 
   def collect(self, collection_interval):
     rval = []
-    collected_values = super(MPZabbix, self).collect(collection_interval)
+    collected_values = super(ZabbixPlugin, self).collect(collection_interval)
     try:
       for key in self._config['keys']:
         command = "zabbix_get -s localhost -k %s" % key

@@ -40,9 +40,9 @@ from nuoca_util import nuoca_log
 #
 
 
-class MPLogstash(NuocaMPInputPlugin):
+class LogstashPlugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(MPLogstash, self).__init__(parent_pipe, 'Logstash')
+    super(LogstashPlugin, self).__init__(parent_pipe, 'Logstash')
     self._config = None
     self._enabled = False
     self._logstash_bin = None
@@ -198,7 +198,7 @@ class MPLogstash(NuocaMPInputPlugin):
     try:
       nuoca_log(logging.DEBUG,
                 "Called collect() in Logstash Plugin process")
-      base_values = super(MPLogstash, self).\
+      base_values = super(LogstashPlugin, self).\
         collect(collection_interval)
       base_values['Hostname'] = self._local_hostname
       if self._host_shortid:

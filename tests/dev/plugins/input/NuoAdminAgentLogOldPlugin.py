@@ -237,9 +237,9 @@ class Process:
       self.processed_event = self.event
 
 
-class MPNuoAdminAgentLog(NuocaMPInputPlugin):
+class NuoAdminAgentLogOldPlugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(MPNuoAdminAgentLog, self).__init__(parent_pipe, 'NuoAdminAgentLog')
+    super(NuoAdminAgentLogOldPlugin, self).__init__(parent_pipe, 'NuoAdminAgentLog')
     self._config = None
     self._enabled = False
     self._agentLogfile = None
@@ -348,7 +348,7 @@ class MPNuoAdminAgentLog(NuocaMPInputPlugin):
     try:
       nuoca_log(logging.DEBUG,
                 "Called collect() in NuoAdminAgentLog Plugin process")
-      base_values = super(MPNuoAdminAgentLog, self).\
+      base_values = super(NuoAdminAgentLogOldPlugin, self).\
         collect(collection_interval)
       base_values['Hostname'] = self._local_hostname
       if self._host_shortid:

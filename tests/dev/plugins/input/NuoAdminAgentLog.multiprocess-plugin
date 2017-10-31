@@ -1,6 +1,6 @@
 [Core]
 Name = NuoAdminAgentLog
-Module = mpLogstashPlugin
+Module = LogstashPlugin
 
 [Documentation]
 Author = Tom Gates

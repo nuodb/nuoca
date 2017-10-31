@@ -10,11 +10,11 @@ from nuoca_util import nuoca_log
 from nuomon.nuomon_monitor import get_nuodb_metrics
 from nuomon.nuomon_broadcast import MetricsConsumer, MetricsProducer
 
-# mpNuoMonitor plugin
+# NuoMonitor plugin
 #
-# Example mpNuoMonitor plugin configuration:
+# Example NuoMonitor plugin configuration:
 #
-# - mpNuoMonitor:
+# - NuoMonitor:
 #    description : Collection from internal nuomonitor tool
 #    database_regex_pattern: dbt2
 #    broker: 172.19.0.16
@@ -40,9 +40,9 @@ class NuoMonHandler(MetricsConsumer):
     pass
 
 
-class MPNuoMonitor(NuocaMPInputPlugin):
+class NuoMonitorPlugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(MPNuoMonitor, self).__init__(parent_pipe, 'NuoMon')
+    super(NuoMonitorPlugin, self).__init__(parent_pipe, 'NuoMon')
     self._config = None
     self._broker = None
     self._enabled = False
@@ -117,7 +117,7 @@ class MPNuoMonitor(NuocaMPInputPlugin):
     rval = None
     try:
       nuoca_log(logging.DEBUG, "Called collect() in NuoMonitor Plugin process")
-      base_values = super(MPNuoMonitor, self).collect(collection_interval)
+      base_values = super(NuoMonitorPlugin, self).collect(collection_interval)
       collection_count = len(self._nuomonitor_collect_queue)
       if not collection_count:
         return rval

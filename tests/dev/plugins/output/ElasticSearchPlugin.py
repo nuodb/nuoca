@@ -4,9 +4,9 @@ from nuoca_plugin import NuocaMPOutputPlugin
 from nuoca_util import nuoca_log
 
 
-class MPElasticSearch(NuocaMPOutputPlugin):
+class ElasticSearchPlugin(NuocaMPOutputPlugin):
   def __init__(self, parent_pipe, config=None):
-    super(MPElasticSearch, self).__init__(parent_pipe, 'ElasticSearch')
+    super(ElasticSearchPlugin, self).__init__(parent_pipe, 'ElasticSearch')
     self._config = config
     self.elastic_hosts = None
     self.es_obj = None
@@ -34,7 +34,7 @@ class MPElasticSearch(NuocaMPOutputPlugin):
     rval = None
     try:
       nuoca_log(logging.DEBUG, "Called store() in MPElasticSearch process")
-      rval = super(MPElasticSearch, self).store(ts_values)
+      rval = super(ElasticSearchPlugin, self).store(ts_values)
       req_resp = self.es_obj.index(index=self._config['INDEX'],
                                    doc_type='nuoca', body=ts_values)
       nuoca_log(logging.DEBUG, "ElasticSearch response: %s" % str(req_resp))

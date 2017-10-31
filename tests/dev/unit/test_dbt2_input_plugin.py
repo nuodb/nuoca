@@ -3,13 +3,13 @@ from __future__ import print_function
 import unittest
 import nuoca_util
 
-from tests.dev.plugins.input.mpDbt2InputPlugin import MPDbt2InputPlugin
+from tests.dev.plugins.input.Dbt2Plugin import Dbt2Plugin
 
 
 class TestInputPlugins(unittest.TestCase):
-  def _MPDbt2InputPluginTest(self):
+  def _Dbt2InputPluginTest(self):
     nuoca_util.initialize_logger("/tmp/nuoca.test.log")
-    dbt2_plugin = MPDbt2InputPlugin(None)
+    dbt2_plugin = Dbt2Plugin(None)
     self.assertIsNotNone(dbt2_plugin)
 
     # startup should fail if directory not specified.
@@ -53,6 +53,6 @@ class TestInputPlugins(unittest.TestCase):
     dbt2_plugin.shutdown()
 
   def runTest(self):
-    self._MPDbt2InputPluginTest()
+    self._Dbt2InputPluginTest()
 
 

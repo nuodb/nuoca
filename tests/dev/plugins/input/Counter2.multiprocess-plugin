@@ -1,6 +1,6 @@
 [Core]
-Name = Counter
-Module = mpCounterPlugin
+Name = Counter2
+Module = CounterPlugin
 
 [Documentation]
 Author = Tom Gates

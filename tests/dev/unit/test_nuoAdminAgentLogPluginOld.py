@@ -13,7 +13,7 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from tests.dev.plugins.input.mpNuoAdminAgentLogPluginOld import MPNuoAdminAgentLog
+from tests.dev.plugins.input.NuoAdminAgentLogOldPlugin import NuoAdminAgentLogOldPlugin
 
 
 class TestInputPlugins(unittest.TestCase):
@@ -22,9 +22,9 @@ class TestInputPlugins(unittest.TestCase):
     self.local_hostname = socket.gethostname()
     super(TestInputPlugins, self).__init__(methodName)
 
-  def _MPNuoAdminAgentLogPluginOldTest(self, test_node_id):
+  def _NuoAdminAgentLogPluginOldTest(self, test_node_id):
     nuoca_util.initialize_logger("/tmp/nuoca.test.log")
-    nuoAdminAgentLog_plugin = MPNuoAdminAgentLog(None)
+    nuoAdminAgentLog_plugin = NuoAdminAgentLogOldPlugin(None)
     self.assertIsNotNone(nuoAdminAgentLog_plugin)
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -137,9 +137,9 @@ class TestInputPlugins(unittest.TestCase):
     topdir = nuoca_util.get_nuoca_topdir()
     input_plugin_dir = os.path.join(topdir, "tests/dev/plugins/input")
     dir_list = [input_plugin_dir]
-    self._MPNuoAdminAgentLogPluginOldTest(
+    self._NuoAdminAgentLogPluginOldTest(
       "06a32504-c2c9-41bc-9b48-030982c5ea43.r0db0")
-    self._MPNuoAdminAgentLogPluginOldTest(
+    self._NuoAdminAgentLogPluginOldTest(
       "fa2461c7-bca2-4df5-91e3-251084e1b8d1.r0db2")
     self.manager = MultiprocessPluginManager(
         directories_list=dir_list,

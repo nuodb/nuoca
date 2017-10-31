@@ -1,9 +1,9 @@
 [Core]
-Name = ElasticSearch
-Module = mpElasticSearch
+Name = Counter
+Module = CounterPlugin
 
 [Documentation]
 Author = Tom Gates
 Version = 0.1
 Website = http://wwww.nuodb.com
-Description = Elastic Search
+Description = A simple counter for testing.
