@@ -1,0 +1,9 @@
+[Core]
+Name = Counter
+Module = CounterPlugin
+
+[Documentation]
+Author = Tom Gates
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = A simple counter for testing.

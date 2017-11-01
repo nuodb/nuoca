@@ -1,0 +1,9 @@
+[Core]
+Name = File
+Module = FilePlugin
+
+[Documentation]
+Author = Tom Gates
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = Write output ot a file.
