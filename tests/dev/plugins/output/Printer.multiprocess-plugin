@@ -1,9 +1,0 @@
-[Core]
-Name = Printer
-Module = PrinterPlugin
-
-[Documentation]
-Author = Tom Gates
-Version = 0.1
-Website = http://wwww.nuodb.com
-Description = A simple printer for testing.

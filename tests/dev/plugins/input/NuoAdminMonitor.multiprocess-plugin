@@ -1,9 +1,0 @@
-[Core]
-Name = NuoAdminMon
-Module = NuoAdminMonitorPlugin
-
-[Documentation]
-Author = Tom Gates
-Version = 0.1
-Website = http://wwww.nuodb.com
-Description = Monitor of NuoDB Admin Layer

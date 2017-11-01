@@ -13,7 +13,7 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from tests.dev.plugins.input.NuoAdminAgentLogOldPlugin import NuoAdminAgentLogOldPlugin
+from plugins.input.NuoAdminAgentLogOldPlugin import NuoAdminAgentLogOldPlugin
 
 
 class TestInputPlugins(unittest.TestCase):
@@ -135,7 +135,7 @@ class TestInputPlugins(unittest.TestCase):
 
   def runTest(self):
     topdir = nuoca_util.get_nuoca_topdir()
-    input_plugin_dir = os.path.join(topdir, "tests/dev/plugins/input")
+    input_plugin_dir = os.path.join(topdir, "plugins/input")
     dir_list = [input_plugin_dir]
     self._NuoAdminAgentLogPluginOldTest(
       "06a32504-c2c9-41bc-9b48-030982c5ea43.r0db0")

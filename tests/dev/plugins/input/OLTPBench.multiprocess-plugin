@@ -1,9 +1,0 @@
-[Core]
-Name = WL.OLTPBench
-Module = OLTPBenchPlugin
-
-[Documentation]
-Author = Isaac Hartford
-Version = 0.1
-Website = http://wwww.nuodb.com
-Description = Internal OLTPBench input plugin

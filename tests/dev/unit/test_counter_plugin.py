@@ -8,7 +8,7 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from tests.dev.plugins.input.CounterPlugin import CounterPlugin
+from plugins.input.CounterPlugin import CounterPlugin
 
 
 class TestInputPlugins(unittest.TestCase):
@@ -92,7 +92,7 @@ class TestInputPlugins(unittest.TestCase):
 
   def runTest(self):
     topdir = nuoca_util.get_nuoca_topdir()
-    input_plugin_dir = os.path.join(topdir, "tests/dev/plugins/input")
+    input_plugin_dir = os.path.join(topdir, "plugins/input")
     dir_list = [input_plugin_dir]
     self._CounterPluginTest()
     self.manager = MultiprocessPluginManager(

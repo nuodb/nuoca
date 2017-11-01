@@ -3,7 +3,7 @@ from __future__ import print_function
 import unittest
 import nuoca_util
 
-from tests.dev.plugins.input.Dbt2Plugin import Dbt2Plugin
+from plugins.input.Dbt2Plugin import Dbt2Plugin
 
 
 class TestInputPlugins(unittest.TestCase):

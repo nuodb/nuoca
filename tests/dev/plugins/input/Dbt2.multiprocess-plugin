@@ -1,9 +1,0 @@
-[Core]
-Name = WL.Dbt2
-Module = Dbt2Plugin
-
-[Documentation]
-Author = Lance Hartford
-Version = 0.1
-Website = http://wwww.nuodb.com
-Description = An input plugin for sending dbt2 stats to NuoCA.
