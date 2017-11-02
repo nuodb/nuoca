@@ -31,7 +31,7 @@
 DIR := ${CURDIR}
 export NUOCA_ROOT=${DIR}
 export LOGSTASH_HOME=${DIR}/logstash
-export NUOADMINAGENTLOGCONFIG=${DIR}/tests/etc/logstash/nuoadminagentlog.conf
+export NUOADMINAGENTLOGCONFIG=${DIR}/etc/logstash/nuoadminagentlog.conf
 
 clean: integration-test-clean-vm-box
 	find . -name '*.pyc' -exec rm -f {} +
