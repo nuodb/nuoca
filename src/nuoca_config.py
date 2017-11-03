@@ -13,8 +13,6 @@ class NuocaConfig(object):
   """
   NUOCA_TMPDIR = '/tmp/nuoca'  # Temporary directory for NuoCA
   NUOCA_LOGFILE = '/tmp/nuoca/nuoca.log'  # Path to logfile for NuoCA
-  VAGRANT_TESTHOST = '192.168.60.10'  # Used for internal testing
-  VAGRANT_USER = 'vagrant'  # Used for internal testing
   PLUGIN_PIPE_TIMEOUT = 5  # Plugin communication pipe timeout in seconds
   NUOCA_CONFIG_FILE = None
   SELFTEST_LOOP_COUNT = 5  # Number of Collection Intervals in selftest.
