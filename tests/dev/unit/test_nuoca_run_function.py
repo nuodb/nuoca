@@ -11,7 +11,7 @@ class TestNuoCARunFunction(unittest.TestCase):
   def setUp(self):
     super(TestNuoCARunFunction, self).setUp()
     self._topdir = nuoca_util.get_nuoca_topdir()
-    self._plugin_dir = os.path.join(self._topdir, "tests", "dev", "plugins")
+    self._plugin_dir = os.path.join(self._topdir, "plugins")
     self._config_dir = os.path.join(self._topdir, "tests", "dev", "configs")
 
   def test_nuoca_function(self):

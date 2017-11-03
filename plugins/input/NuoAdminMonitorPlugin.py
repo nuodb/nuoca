@@ -20,9 +20,9 @@ from requests.auth import HTTPBasicAuth
 #    admin_collect_interval: 10
 #    admin_collect_timeout: 1
 
-class NuoAdminMonitor(NuocaMPInputPlugin):
+class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(NuoAdminMonitor, self).__init__(parent_pipe, 'NuoAdminMon')
+    super(NuoAdminMonitorPlugin, self).__init__(parent_pipe, 'NuoAdminMon')
     self._config = None
     self._admin_host = None
     self._admin_rest_api_port = 8888
@@ -205,7 +205,7 @@ class NuoAdminMonitor(NuocaMPInputPlugin):
     rval = None
     try:
       nuoca_log(logging.DEBUG, "Called collect() in NuoAdminMonitor Plugin process")
-      base_values = super(NuoAdminMonitor, self).collect(collection_interval)
+      base_values = super(NuoAdminMonitorPlugin, self).collect(collection_interval)
       collection_count = len(self.monitor_collect_queue)
       if not collection_count:
         return rval

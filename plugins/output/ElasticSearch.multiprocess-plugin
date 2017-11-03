@@ -1,9 +1,9 @@
 [Core]
-Name = File
-Module = mpFilePlugin
+Name = ElasticSearch
+Module = ElasticSearchPlugin
 
 [Documentation]
 Author = Tom Gates
 Version = 0.1
 Website = http://wwww.nuodb.com
-Description = Write output ot a file.
+Description = Elastic Search

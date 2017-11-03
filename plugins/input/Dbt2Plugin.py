@@ -8,9 +8,9 @@ from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log
 
 
-class MPDbt2InputPlugin(NuocaMPInputPlugin):
+class Dbt2Plugin(NuocaMPInputPlugin):
   def __init__(self, parent_pipe):
-    super(MPDbt2InputPlugin, self).__init__(parent_pipe, 'Dbt2')
+    super(Dbt2Plugin, self).__init__(parent_pipe, 'Dbt2')
     self._dbt2_log_dir = None
 
   def startup(self, config=None):
@@ -80,7 +80,7 @@ class MPDbt2InputPlugin(NuocaMPInputPlugin):
             self.read_chunk(dbt2_parser, mixlog, start_time, False)
             self.read_chunk(dbt2_parser, mixlog, end_time, True)
 
-          metrics = super(MPDbt2InputPlugin, self).collect(collection_interval)
+          metrics = super(Dbt2Plugin, self).collect(collection_interval)
           metrics = dbt2_parser.process_metrics(metrics)
           if metrics is not None:
             rval = [metrics]

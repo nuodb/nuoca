@@ -11,7 +11,7 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from tests.dev.plugins.input.NuoAdminMonitorPlugin import NuoAdminMonitor
+from plugins.input.NuoAdminMonitorPlugin import NuoAdminMonitorPlugin
 
 
 class TestInputPlugins(unittest.TestCase):
@@ -37,7 +37,7 @@ class TestInputPlugins(unittest.TestCase):
   def _NuoAdminMonitorPluginTest(self):
     nuoca_util.initialize_logger("/tmp/nuoca.test.log")
     print("Testing NuoAdminMon with missing config file")
-    nuoAdminMonitor_plugin = NuoAdminMonitor(None)
+    nuoAdminMonitor_plugin = NuoAdminMonitorPlugin(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
     empty_config = {}
     startup_rval = nuoAdminMonitor_plugin.startup(empty_config)
@@ -48,7 +48,7 @@ class TestInputPlugins(unittest.TestCase):
     nuoAdminMonitor_plugin.shutdown()
 
     print("Testing NuoAdminMon with invalid admin_host config")
-    nuoAdminMonitor_plugin = NuoAdminMonitor(None)
+    nuoAdminMonitor_plugin = NuoAdminMonitorPlugin(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
     start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'no-such-localhost',
@@ -67,7 +67,7 @@ class TestInputPlugins(unittest.TestCase):
     nuoAdminMonitor_plugin.shutdown()
 
     print("Testing NuoAdminMon with invalid admin_rest_api_port config")
-    nuoAdminMonitor_plugin = NuoAdminMonitor(None)
+    nuoAdminMonitor_plugin = NuoAdminMonitorPlugin(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
     start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'localhost',
@@ -88,7 +88,7 @@ class TestInputPlugins(unittest.TestCase):
     nuoAdminMonitor_plugin.shutdown()
 
     print("Testing NuoAdminMon with invalid domain_password config")
-    nuoAdminMonitor_plugin = NuoAdminMonitor(None)
+    nuoAdminMonitor_plugin = NuoAdminMonitorPlugin(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
     start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'localhost',
@@ -108,7 +108,7 @@ class TestInputPlugins(unittest.TestCase):
     nuoAdminMonitor_plugin.shutdown()
 
     print("Testing NuoAdminMon with a valid NuoDB config/instance")
-    nuoAdminMonitor_plugin = NuoAdminMonitor(None)
+    nuoAdminMonitor_plugin = NuoAdminMonitorPlugin(None)
     self.assertIsNotNone(nuoAdminMonitor_plugin)
     start_ts = nuoca_util.nuoca_gettimestamp()
     config = {'admin_host': 'localhost',
@@ -188,7 +188,7 @@ class TestInputPlugins(unittest.TestCase):
 
   def runTest(self):
     topdir = nuoca_util.get_nuoca_topdir()
-    input_plugin_dir = os.path.join(topdir, "tests/dev/plugins/input")
+    input_plugin_dir = os.path.join(topdir, "plugins/input")
     dir_list = [input_plugin_dir]
     self._NuoAdminMonitorPluginTest()
     self.manager = MultiprocessPluginManager(

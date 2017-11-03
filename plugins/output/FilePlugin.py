@@ -5,9 +5,9 @@ import json
 from nuoca_plugin import NuocaMPOutputPlugin
 from nuoca_util import nuoca_log
 
-class MPFilePlugin(NuocaMPOutputPlugin):
+class FilePlugin(NuocaMPOutputPlugin):
   def __init__(self, parent_pipe, config=None):
-    super(MPFilePlugin, self).__init__(parent_pipe, 'File')
+    super(FilePlugin, self).__init__(parent_pipe, 'File')
     self._config = config
     self._file_path = None
     self._fp = None
@@ -34,7 +34,7 @@ class MPFilePlugin(NuocaMPOutputPlugin):
     rval = None
     try:
       nuoca_log(logging.DEBUG, "Called store() in MPCounterPlugin process")
-      rval = super(MPFilePlugin, self).store(ts_values)
+      rval = super(FilePlugin, self).store(ts_values)
       json.dump(ts_values, self._fp)
       self._fp.write("\n")
 

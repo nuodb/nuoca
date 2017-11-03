@@ -13,7 +13,7 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from tests.dev.plugins.input.mpLogstashPlugin import MPLogstash
+from plugins.input.LogstashPlugin import LogstashPlugin
 
 
 class TestInputPlugins(unittest.TestCase):
@@ -23,12 +23,12 @@ class TestInputPlugins(unittest.TestCase):
     self._nuoAdminAgentLog_plugin = None
     super(TestInputPlugins, self).__init__(methodName)
 
-  def _MPLogstashPluginTest(self, test_node_id):
+  def _LogstashPluginTest(self, test_node_id):
 
     logstash_plugin = None
     try:
       nuoca_util.initialize_logger("/tmp/nuoca.test.log")
-      logstash_plugin = MPLogstash(None)
+      logstash_plugin = LogstashPlugin(None)
       self.assertIsNotNone(logstash_plugin)
 
       dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -203,11 +203,11 @@ class TestInputPlugins(unittest.TestCase):
 
   def runTest(self):
     topdir = nuoca_util.get_nuoca_topdir()
-    input_plugin_dir = os.path.join(topdir, "tests/dev/plugins/input")
+    input_plugin_dir = os.path.join(topdir, "plugins/input")
     dir_list = [input_plugin_dir]
-    self._MPLogstashPluginTest(
+    self._LogstashPluginTest(
       "06a32504-c2c9-41bc-9b48-030982c5ea43.r0db0")
-    self._MPLogstashPluginTest(
+    self._LogstashPluginTest(
       "fa2461c7-bca2-4df5-91e3-251084e1b8d1.r0db2")
     self.manager = MultiprocessPluginManager(
         directories_list=dir_list,

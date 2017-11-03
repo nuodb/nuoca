@@ -1,6 +1,6 @@
 [Core]
 Name = WL.Dbt2
-Module = mpDbt2InputPlugin
+Module = Dbt2Plugin
 
 [Documentation]
 Author = Lance Hartford

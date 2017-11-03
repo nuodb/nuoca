@@ -15,4 +15,4 @@ zabbix-agent_*.deb*
 zabbix-get_*.deb*
 vagrant/ubuntu14_nuoca/
 nuoca.egg-info/
-logstash/
+logstash/**

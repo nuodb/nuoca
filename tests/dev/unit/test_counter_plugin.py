@@ -8,13 +8,13 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from tests.dev.plugins.input.mpCounterPlugin import MPCounterPlugin
+from plugins.input.CounterPlugin import CounterPlugin
 
 
 class TestInputPlugins(unittest.TestCase):
-  def _MPCounterPluginTest(self):
+  def _CounterPluginTest(self):
     nuoca_util.initialize_logger("/tmp/nuoca.test.log")
-    counter_plugin = MPCounterPlugin(None)
+    counter_plugin = CounterPlugin(None)
     self.assertIsNotNone(counter_plugin)
     config = {'increment': 'not-an-integer'}
     startup_rval = counter_plugin.startup(config)
@@ -92,9 +92,9 @@ class TestInputPlugins(unittest.TestCase):
 
   def runTest(self):
     topdir = nuoca_util.get_nuoca_topdir()
-    input_plugin_dir = os.path.join(topdir, "tests/dev/plugins/input")
+    input_plugin_dir = os.path.join(topdir, "plugins/input")
     dir_list = [input_plugin_dir]
-    self._MPCounterPluginTest()
+    self._CounterPluginTest()
     self.manager = MultiprocessPluginManager(
         directories_list=dir_list,
         plugin_info_ext="multiprocess-plugin")

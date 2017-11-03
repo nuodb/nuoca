@@ -1,6 +1,6 @@
 [Core]
 Name = NuoMon
-Module = mpNuoMonitor
+Module = NuoMonitorPlugin
 
 [Documentation]
 Author = Tom Gates

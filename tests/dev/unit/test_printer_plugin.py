@@ -8,13 +8,13 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from tests.dev.plugins.output.mpPrinterPlugin import MPPrinterPlugin
+from plugins.output.PrinterPlugin import PrinterPlugin
 
 
 class TestOutputPlugins(unittest.TestCase):
-  def _MPPrinterPluginTest(self):
+  def _PrinterPluginTest(self):
     nuoca_util.initialize_logger("/tmp/nuoca.test.log")
-    printer_plugin = MPPrinterPlugin(None)
+    printer_plugin = PrinterPlugin(None)
     self.assertIsNotNone(printer_plugin)
     startup_rval = printer_plugin.startup(None)
     self.assertTrue(startup_rval)
@@ -70,9 +70,9 @@ class TestOutputPlugins(unittest.TestCase):
 
   def runTest(self):
     topdir = nuoca_util.get_nuoca_topdir()
-    output_plugin_dir = os.path.join(topdir, "tests/dev/plugins/output")
+    output_plugin_dir = os.path.join(topdir, "plugins/output")
     dir_list = [output_plugin_dir]
-    self._MPPrinterPluginTest()
+    self._PrinterPluginTest()
     self.manager = MultiprocessPluginManager(
         directories_list=dir_list,
         plugin_info_ext="multiprocess-plugin")
