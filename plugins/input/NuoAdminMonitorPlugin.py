@@ -140,7 +140,7 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
     while(self._enabled):
       collect_timestamp = self._admin_collect_sync.wait_for_next_interval()
       collect_thread = threading.Thread(target=self._collector_thread,
-                                        args=(collect_timestamp,))
+                                        args=(collect_timestamp * 1000,))
       collect_thread.daemon = True
       collect_thread.start()
 
