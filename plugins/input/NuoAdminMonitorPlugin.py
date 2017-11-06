@@ -92,6 +92,8 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
      u'archivesByGroup', u'archives', u'template', u'active',
      u'unmet_messages', u'options', u'ismet']
 
+    collect_timestamp = nuoca_gettimestamp() * 1000
+
     #print "\n\nCollection Timestamp: %s" % collect_timestamp
     enforcer_result = self.get_enforcer()
     #print "Result from Rest API %s: %s" % (self._domain_enforcer_url, enforcer_result)
@@ -140,7 +142,7 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
     while(self._enabled):
       collect_timestamp = self._admin_collect_sync.wait_for_next_interval()
       collect_thread = threading.Thread(target=self._collector_thread,
-                                        args=(collect_timestamp * 1000,))
+                                        args=(collect_timestamp,))
       collect_thread.daemon = True
       collect_thread.start()
 
