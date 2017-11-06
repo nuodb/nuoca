@@ -170,6 +170,7 @@ class TestInputPlugins(unittest.TestCase):
           del collected_line['@timestamp']
           del expected_line['collect_timestamp']
           expected_line['Hostname'] = self.local_hostname
+          expected_line['host'] = self.local_hostname
           #          if 'value' in expected_line:  # TEMP
           #            if expected_line['value'] == '':
           #              del expected_line['value']
