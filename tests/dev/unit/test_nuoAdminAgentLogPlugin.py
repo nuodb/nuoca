@@ -68,6 +68,7 @@ class TestInputPlugins(unittest.TestCase):
           del collected_line['tags']
         try:
           expected_line['Hostname'] = self.local_hostname
+          expected_line['host'] = self.local_hostname
           expected_line['nuoca_plugin'] = 'Logstash'
           if '@timestamp' in collected_line:
             del collected_line['@timestamp']
