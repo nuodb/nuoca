@@ -66,6 +66,9 @@ class TestInputPlugins(unittest.TestCase):
         collected_line = resp_values[counter]
         if 'tags' in collected_line:
           del collected_line['tags']
+        if 'path' in expected_line:
+          expected_line['path'] = collected_line['path']
+
         try:
           expected_line['Hostname'] = self.local_hostname
           expected_line['host'] = self.local_hostname
