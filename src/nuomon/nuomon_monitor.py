@@ -52,7 +52,7 @@ class BaseMetricsListener(BaseListener):
             if self.__first:
                 values['Database'] = self.process.database.name
                 self.__first=False
-            values['TimeStamp'] = time.time()
+            values['TimeStamp'] = time.time() * 1000.0
             self.onChange(values)
 
     def closed(self):
@@ -125,7 +125,7 @@ class MetricsListener(BaseMetricsListener):
         for k,v in self.__values.iteritems():
             if v != 0 and type(v) is int:
                 zeroMetrics[k] = 0
-        zeroMetrics['TimeStamp'] = time.time()
+        zeroMetrics['TimeStamp'] = time.time() * 1000.0
         self.onChange(zeroMetrics)
         pass
 
