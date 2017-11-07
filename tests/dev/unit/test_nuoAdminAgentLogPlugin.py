@@ -184,6 +184,8 @@ class TestInputPlugins(unittest.TestCase):
             del expected_line['tags']
           self.assertIsNotNone(
             collected_line['collect_timestamp'])
+          if 'path' in expected_line:
+            expected_line['path'] = collected_line['path']
           if 'comment' in expected_line:
             if isinstance(expected_line['comment'], basestring):
               expected_line['comment'] = expected_line['comment'].rstrip()
