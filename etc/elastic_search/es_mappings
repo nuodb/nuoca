@@ -20,11 +20,11 @@
           },
           "ZBX.system.localtime": {
               "type": "date",
-              "format": "epoch_millis"
+              "format": "epoch_second"
           },
           "ZBX.system.boottime": {
               "type": "date",
-              "format": "epoch_millis"
+              "format": "epoch_second"
           },
           "ZBX.collect_timestamp": {
               "type": "date",
@@ -42,7 +42,15 @@
               "type": "date",
               "format": "epoch_millis"
           },
+          "NuoAdminAgentLog.TimeStamp": {
+              "type": "date",
+              "format": "epoch_millis"
+          },
           "NuoAdminMon.collect_timestamp": {
+              "type": "date",
+              "format": "epoch_millis"
+          },
+          "NuoAdminMon.TimeStamp": {
               "type": "date",
               "format": "epoch_millis"
           }
