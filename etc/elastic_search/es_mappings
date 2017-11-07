@@ -53,6 +53,10 @@
           "NuoAdminMon.TimeStamp": {
               "type": "date",
               "format": "epoch_millis"
+          },
+          "NuoMon.TimeStamp": {
+              "type": "date",
+              "format": "epoch_millis"
           }
         }
       }
