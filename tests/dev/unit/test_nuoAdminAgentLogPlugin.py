@@ -50,7 +50,7 @@ class TestInputPlugins(unittest.TestCase):
 
       # To capture a new data.json file.
       # with open("%s.data.json" % test_node_id, 'w') as outfile:
-      #   json.dump(resp_values, outfile)
+      # json.dump(resp_values, outfile)
 
       expected_json_file = "%s/../test_data/%s.expected.json.gz" % \
                            (dir_path, test_node_id)
