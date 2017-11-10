@@ -184,7 +184,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     :type: ``dict``
     """
     rval = {'nuoca_plugin': self._collection_name,
-            'collect_timestamp': nuoca_gettimestamp()}
+            'collect_timestamp': nuoca_gettimestamp() * 1000}
     return rval
 
 

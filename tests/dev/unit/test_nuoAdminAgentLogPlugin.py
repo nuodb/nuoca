@@ -57,15 +57,24 @@ class TestInputPlugins(unittest.TestCase):
       json_data = gzip.open(expected_json_file).read()
       expected_line_values = json.loads(json_data)
 
-      counter = 1
+      counter = 0
       for expected_line in expected_line_values:
         del expected_line['collect_timestamp']
+        del expected_line['@timestamp']
+        if 'tags' in expected_line:
+          del expected_line['tags']
         collected_line = resp_values[counter]
+        if 'tags' in collected_line:
+          del collected_line['tags']
+        if 'path' in expected_line:
+          expected_line['path'] = collected_line['path']
+
         try:
           expected_line['Hostname'] = self.local_hostname
-          collected_line['nuoca_plugin'] = 'NuoAdminAgentLog'
-          if 'tags' in collected_line:
-            del collected_line['tags']
+          expected_line['host'] = self.local_hostname
+          expected_line['nuoca_plugin'] = 'Logstash'
+          if '@timestamp' in collected_line:
+            del collected_line['@timestamp']
           self.assertIsNotNone(collected_line['collect_timestamp'])
           if 'comment' in expected_line:
             if isinstance(expected_line['comment'], basestring):
@@ -155,21 +164,28 @@ class TestInputPlugins(unittest.TestCase):
       json_data = gzip.open(expected_json_file).read()
       expected_line_values = json.loads(json_data)
 
-      counter = 1
+      counter = 0
       resp_collected_values = resp_values['collected_values']
       for expected_line in expected_line_values['collected_values']:
         # print("counter: %s" % str(counter))
         collected_line = resp_collected_values[counter]
         try:
+          del expected_line['@timestamp']
+          del collected_line['@timestamp']
           del expected_line['collect_timestamp']
           expected_line['Hostname'] = self.local_hostname
+          expected_line['host'] = self.local_hostname
           #          if 'value' in expected_line:  # TEMP
           #            if expected_line['value'] == '':
           #              del expected_line['value']
-          if 'tags' in collected_line:  # TEMP
+          if 'tags' in collected_line:
             del collected_line['tags']
+          if 'tags' in expected_line:
+            del expected_line['tags']
           self.assertIsNotNone(
             collected_line['collect_timestamp'])
+          if 'path' in expected_line:
+            expected_line['path'] = collected_line['path']
           if 'comment' in expected_line:
             if isinstance(expected_line['comment'], basestring):
               expected_line['comment'] = expected_line['comment'].rstrip()
@@ -217,5 +233,3 @@ class TestInputPlugins(unittest.TestCase):
   def tearDown(self):
     if self.manager:
       NuoCA.kill_all_plugin_processes(self.manager, timeout=10)
-
-

@@ -16,7 +16,7 @@
         "properties" : {
           "timestamp" : {
               "type": "date",
-              "format": "epoch_second"
+              "format": "epoch_millis"
           },
           "ZBX.system.localtime": {
               "type": "date",
@@ -28,23 +28,35 @@
           },
           "ZBX.collect_timestamp": {
               "type": "date",
-              "format": "epoch_second"
+              "format": "epoch_millis"
           },
           "WL.Dbt2.collect_timestamp": {
               "type": "date",
-              "format": "epoch_second"
+              "format": "epoch_millis"
           },
           "WL.OLTPBench.collect_timestamp": {
               "type": "date",
-              "format": "epoch_second"
+              "format": "epoch_millis"
           },
           "NuoAdminAgentLog.collect_timestamp": {
               "type": "date",
-              "format": "epoch_second"
+              "format": "epoch_millis"
+          },
+          "NuoAdminAgentLog.TimeStamp": {
+              "type": "date",
+              "format": "epoch_millis"
           },
           "NuoAdminMon.collect_timestamp": {
               "type": "date",
-              "format": "epoch_second"
+              "format": "epoch_millis"
+          },
+          "NuoAdminMon.TimeStamp": {
+              "type": "date",
+              "format": "epoch_millis"
+          },
+          "NuoMon.TimeStamp": {
+              "type": "date",
+              "format": "epoch_millis"
           }
         }
       }

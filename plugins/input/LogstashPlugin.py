@@ -216,7 +216,9 @@ class LogstashPlugin(NuocaMPInputPlugin):
         collected_dict.update(base_values)
         if 'timestamp' in collected_dict:
           dt = date_parse(collected_dict['timestamp'])
-          collected_dict['TimeStamp'] = timegm(dt.timetuple())
+          epoch_seconds = timegm(dt.timetuple())
+          epoch_millis = epoch_seconds * 1000 + dt.microsecond / 1000
+          collected_dict['TimeStamp'] = epoch_millis
         rval.append(collected_dict)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
