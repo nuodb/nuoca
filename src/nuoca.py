@@ -519,20 +519,20 @@ def nuoca_run(config_file, collection_interval, plugin_dir,
   print("Done.")
 
 
-@click.command()
+@click.command(help="CONFIG_FILE    path to NuoCA Collection Config file")
+@click.argument('config-file', type=str)
 @click.option('--collection-interval', default=30,
-              help='Optional collection interval in seconds')
-@click.option('--config-file', default=None,
-              help='NuoCA configuration file')
+              help='Collection interval in seconds. Default:30')
 @click.option('--plugin-dir', default=None,
-              help='Optional path to plugin directory')
+              help='Path to NuoCA plugin directory')
 @click.option('--starttime', default=None,
-              help='Optional start time in Epoch seconds '
-                   'for first collection interval')
+              help='Start time in Epoch seconds '
+                   'for the first collection interval')
 @click.option('--verbose', is_flag=True, default=False,
               help='Run with verbose messages written to stdout')
 @click.option('--self-test', is_flag=True, default=False,
-              help='Run 5 collection intervals then exit')
+              help='Run SELFTEST_LOOP_COUNT (default 5) '
+                   'collection intervals then exit')
 @click.option('--log-level', default='INFO',
               type=click.Choice(['CRITICAL', 'ERROR', 'WARNING',
                                  'INFO', 'DEBUG']),
@@ -541,13 +541,13 @@ def nuoca_run(config_file, collection_interval, plugin_dir,
               '-o',
               multiple=True,
               default=None,
-              help='Optional. One or more output values as '
-                   'key=value pairs separated by commas. Multples allowed')
+              help='One or more output values as '
+                   'key=value pairs separated by commas. Multiples allowed')
 def nuoca(config_file, collection_interval, plugin_dir,
           starttime, verbose, self_test, log_level, output_values):
   nuoca_run(config_file, collection_interval, plugin_dir,
             starttime, verbose, self_test, log_level, output_values)
 
 if __name__ == "__main__":
-  nuoca()
+  nuoca(prog_name="nuoca")
 

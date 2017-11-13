@@ -2,7 +2,7 @@
 INPUT_PLUGINS:
 - NuoMon:
     description : Collection from internal nuomonitor tool
-    broker: 172.19.0.16
+    broker: localhost
     domain_username: domain
     domain_password: bird
 OUTPUT_PLUGINS:
