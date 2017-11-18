@@ -34,21 +34,28 @@ export LOGSTASH_HOME=${DIR}/logstash
 export NUOADMINAGENTLOGCONFIG=${DIR}/etc/logstash/nuoadminagentlog.conf
 
 clean: integration-test-clean-vm-box
+	bin/stop_zabbix_agentd.sh
 	find . -name '*.pyc' -exec rm -f {} +
 	rm -fr logstash
+	rm -fr zabbix3
 
 continuous-test: unit-test integration-test
 
 logstash:
 	bin/setup_logstash.sh
 
-integration-test: logstash
+integration-test: logstash zabbix3
 	tests/dev/integration/run_tests.sh
 
-unit-test: logstash
+unit-test: logstash zabbix3
 	(cd tests/dev && PYTHONPATH=../../src:../..:../../lib ./run_unit_tests.py)
 
-zabbix-install-debian:
+zabbix3: etc/zabbix3.tgz
+	tar -xzf etc/zabbix3.tgz
+	bin/setup_zabbix.sh
+	bin/start_zabbix_agentd.sh
+
+zabbix2_2-install-debian:
 	wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-agent_2.2.11-1+trusty_amd64.deb
 	wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-get_2.2.11-1+trusty_amd64.deb
 	sudo dpkg -i zabbix-agent_2.2.11-1+trusty_amd64.deb
