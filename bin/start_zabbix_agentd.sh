@@ -11,5 +11,4 @@ if [ $zabbix_rc != 0 ]; then
   ${ZABBIX_HOME}/sbin/zabbix_agentd
 else
   echo "zabbix_agentd is already running. Running version is $zabbix_version"
-  ${ZABBIX_HOME}/sbin/zabbix_agentd
 fi
