@@ -33,11 +33,12 @@ export NUOCA_ROOT=${DIR}
 export LOGSTASH_HOME=${DIR}/logstash
 export NUOADMINAGENTLOGCONFIG=${DIR}/etc/logstash/nuoadminagentlog.conf
 
-clean: integration-test-clean-vm-box
+clean:
 	bin/stop_zabbix_agentd.sh
 	find . -name '*.pyc' -exec rm -f {} +
 	rm -fr logstash
 	rm -fr zabbix3
+	rm -f /tmp/zabbix_agentd.log
 
 continuous-test: unit-test integration-test
 
