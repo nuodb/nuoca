@@ -52,9 +52,8 @@ unit-test: logstash zabbix3
 	(cd tests/dev && PYTHONPATH=../../src:../..:../../lib ./run_unit_tests.py)
 
 zabbix3: etc/zabbix3.tgz
-	tar -xzf etc/zabbix3.tgz
-	bin/setup_zabbix.sh
-	bin/start_zabbix_agentd.sh
+	${NUOCA_ROOT}/bin/setup_zabbix.sh
+	${NUOCA_ROOT}/bin/start_zabbix_agentd.sh
 
 zabbix2_2-install-debian:
 	wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-agent_2.2.11-1+trusty_amd64.deb
