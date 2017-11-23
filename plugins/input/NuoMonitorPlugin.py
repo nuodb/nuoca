@@ -1,6 +1,7 @@
 import logging
 import os
 import re
+import socket
 import threading
 import time
 
@@ -87,6 +88,8 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
       self._domain_password = os.path.expandvars(config['domain_password'])
       if 'domain_metrics_host' in config:
         self._domain_metrics_host = os.path.expandvars(config['domain_metrics_host'])
+        if self._domain_metrics_host == 'localhost':
+          self._domain_metrics_host = socket.gethostname()
       if 'database_regex_pattern' in config:
         self._database_regex_pattern = config['database_regex_pattern']
       if 'host_uuid_shortname' in config:
@@ -129,6 +132,8 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
       rval = []
       for i in range(collection_count):
         collected_dict = self._nuomonitor_collect_queue.pop(0)
+        if collected_dict['Hostname'] != self._domain_metrics_host:
+          continue
         m = re.search(self._database_regex_pattern, collected_dict['Database'])
         if m:
           if self._host_uuid_shortname:
