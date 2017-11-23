@@ -86,7 +86,7 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
       self._domain_username = os.path.expandvars(config['domain_username'])
       self._domain_password = os.path.expandvars(config['domain_password'])
       if 'domain_metrics_host' in config:
-        self._domain_metrics_host = config['domain_metrics_host']
+        self._domain_metrics_host = os.path.expandvars(config['domain_metrics_host'])
       if 'database_regex_pattern' in config:
         self._database_regex_pattern = config['database_regex_pattern']
       if 'host_uuid_shortname' in config:
