@@ -50,6 +50,7 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
     self._domain_username = 'domain'
     self._domain_password = 'bird'
     self._domain_metrics = None
+    self._domain_metrics_host = None
     self._database_regex_pattern = '.*'
     self._host_uuid_shortname = False
     self._thread = None
@@ -84,6 +85,8 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
       self._broker = os.path.expandvars(config['broker'])
       self._domain_username = os.path.expandvars(config['domain_username'])
       self._domain_password = os.path.expandvars(config['domain_password'])
+      if 'domain_metrics_host' in config:
+        self._domain_metrics_host = config['domain_metrics_host']
       if 'database_regex_pattern' in config:
         self._database_regex_pattern = config['database_regex_pattern']
       if 'host_uuid_shortname' in config:
@@ -94,7 +97,8 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
           self._broker,
           self._domain_password,
           listener=MetricsProducer,
-          user=self._domain_username)
+          user=self._domain_username,
+          host=self._domain_metrics_host)
       self._thread = threading.Thread(target=self._nuomon_handler_thread)
       self._thread.daemon = True
       self._thread.start()

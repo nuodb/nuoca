@@ -7,6 +7,7 @@ INPUT_PLUGINS:
     broker: localhost
     domain_username: domain
     domain_password: bird
+    domain_metrics_host: localhost
 
 OUTPUT_PLUGINS:
 - Printer:
