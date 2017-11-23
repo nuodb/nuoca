@@ -132,8 +132,9 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
       rval = []
       for i in range(collection_count):
         collected_dict = self._nuomonitor_collect_queue.pop(0)
-        if collected_dict['Hostname'] != self._domain_metrics_host:
-          continue
+        if self._domain_metrics_host:
+          if collected_dict['Hostname'] != self._domain_metrics_host:
+            continue
         m = re.search(self._database_regex_pattern, collected_dict['Database'])
         if m:
           if self._host_uuid_shortname:
