@@ -29,16 +29,21 @@
 #
 
 DIR := ${CURDIR}
+NUO3RDPARTY := ${HOME}/nuo3rdparty
 export NUOCA_ROOT=${DIR}
 export LOGSTASH_HOME=${DIR}/logstash
 export NUOADMINAGENTLOGCONFIG=${DIR}/etc/logstash/nuoadminagentlog.conf
+export PYTHON_DEST=${NUOCA_ROOT}/python_x86_64-linux
+export PYTHON_DEST_TGZ=${NUOCA_ROOT}/etc/python_x86_64-linux.tgz
 
 clean:
-	bin/stop_zabbix_agentd.sh
+	- bin/stop_zabbix_agentd.sh
 	find . -name '*.pyc' -exec rm -f {} +
+	rm -fr ${PYTHON_DEST} ${PYTHON_DEST_TGZ}
 	rm -fr logstash
 	rm -fr zabbix3
 	rm -f /tmp/zabbix_agentd.log
+	rm -f get-pip.py
 
 continuous-test: unit-test integration-test
 
@@ -64,3 +69,24 @@ zabbix2_2-install-debian:
 zabbix-uninstall-debian:
 	sudo dpkg -r zabbix-agent
 	sudo dpkg -r zabbix-get
+
+get-pip.py:
+	wget https://bootstrap.pypa.io/get-pip.py
+
+python_x86_64-linux: get-pip.py
+	mkdir -p ${PYTHON_DEST}
+	cp -r ${NUO3RDPARTY}/common/python/x86_64-linux ${PYTHON_DEST}
+	cp -r ${NUO3RDPARTY}/common/python/bin ${PYTHON_DEST}
+	cp -r ${NUO3RDPARTY}/common/python/lib ${PYTHON_DEST}
+	cp -r ${NUO3RDPARTY}/common/python/include ${PYTHON_DEST}
+	cp -r ${NUO3RDPARTY}/common/python/share ${PYTHON_DEST}
+	ln -s ../x86_64-linux/bin/python2.7 python_x86_64-linux/bin/python2.7
+	ln -s ../x86_64-linux/bin/python2.7 python_x86_64-linux/bin/python2
+	ln -s ../x86_64-linux/bin/python2.7 python_x86_64-linux/bin/python
+	export PATH=${PYTHON_DEST}/bin:${PATH}
+	${PYTHON_DEST}/bin/python get-pip.py
+	rm -fr ${PYTHON_DEST}/lib/python2.7/site-packages/*
+	${PYTHON_DEST}/bin/python get-pip.py
+	${PYTHON_DEST}/bin/pip install -r requirements.txt
+	find ${PYTHON_DEST} -name '*.pyc' -print | xargs -I {} rm -f {}
+	tar -czf ${PYTHON_DEST_TGZ} python_x86_64-linux
