@@ -44,6 +44,10 @@ clean:
 	rm -fr zabbix3
 	rm -f /tmp/zabbix_agentd.log
 	rm -f get-pip.py
+	rm -fr venv
+
+venv: requirements.txt
+	bin/create_environment.sh
 
 continuous-test: unit-test integration-test
 
