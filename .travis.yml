@@ -36,5 +36,7 @@ services:
 
 script:
   - tests/etc/elastic_search/es_test_create_index.sh
+  - make zabbix logstash python
+  - source bin/nuoca_env.sh
   - make continuous-test
 

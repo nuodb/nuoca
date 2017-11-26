@@ -5,7 +5,7 @@ cd ${NUOCA_TOPDIR}
 
 # Download and setup logstash.
 
-export LOGSTASH_VERSION=5.6.2
+export LOGSTASH_VERSION=5.6.4
 export LOGSTASH_HOME=${NUOCA_TOPDIR}/logstash
 rm -fr logstash-${LOGSTASH_VERSION}.tar.gz
 rm -fr logstash
