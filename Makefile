@@ -56,13 +56,13 @@ continuous-test: unit-test integration-test
 logstash:
 	bin/setup_logstash.sh
 
-integration-test: logstash zabbix3
+integration-test: logstash zabbix
 	tests/dev/integration/run_tests.sh
 
-unit-test: logstash zabbix3
+unit-test: logstash zabbix
 	(cd tests/dev && PYTHONPATH=../../src:../..:../../lib ./run_unit_tests.py)
 
-zabbix3: etc/zabbix3.tgz
+zabbix: etc/zabbix.tgz
 	${NUOCA_ROOT}/bin/setup_zabbix.sh
 	${NUOCA_ROOT}/bin/start_zabbix_agentd.sh
 
