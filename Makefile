@@ -38,6 +38,10 @@ endif
 export NUOCA_ROOT=${DIR}
 PYTHON_ROOT := ${NUOCA_ROOT}/python
 
+zabbix_version := 3.0.13
+zabbix_version_name := zabbix-$(zabbix_version)
+zabbix_url := "http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/$(zabbix_version)/zabbix-$(zabbix_version).tar.gz/download"
+
 clean:
 	- bin/stop_zabbix_agentd.sh
 	find . -name '*.pyc' -exec rm -f {} +
@@ -56,14 +60,20 @@ continuous-test: unit-test integration-test
 logstash:
 	bin/setup_logstash.sh
 
-integration-test: logstash zabbix3
+integration-test: logstash zabbix
 	tests/dev/integration/run_tests.sh
 
-unit-test: logstash zabbix3
+unit-test: logstash zabbix
 	(cd tests/dev && PYTHONPATH=../../src:../..:../../lib ./run_unit_tests.py)
 
-zabbix3: etc/zabbix3.tgz
-	${NUOCA_ROOT}/bin/setup_zabbix.sh
+zabbix:
+	curl -s -L -o ${NUOCA_ROOT}/zabbix_src.tgz $(zabbix_url)
+	tar -xzf ${NUOCA_ROOT}/zabbix_src.tgz
+	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix=${NUOCA_ROOT}/zabbix) > /tmp/nuoca_zabbix_configure.log 2>&1
+	(cd ${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
+
+
+zabbix_start: zabbiz
 	${NUOCA_ROOT}/bin/start_zabbix_agentd.sh
 
 zabbix2_2-install-debian:
