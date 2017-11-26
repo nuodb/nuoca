@@ -16,4 +16,5 @@ zabbix-get_*.deb*
 vagrant/ubuntu14_nuoca/
 nuoca.egg-info/
 logstash/**
-zabbix3/**
+python/**
+zabbix/**

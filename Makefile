@@ -72,24 +72,11 @@ zabbix:
 	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix=${NUOCA_ROOT}/zabbix) > /tmp/nuoca_zabbix_configure.log 2>&1
 	(cd ${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
 
-
 zabbix_start: zabbiz
 	${NUOCA_ROOT}/bin/start_zabbix_agentd.sh
 
-zabbix2_2-install-debian:
-	wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-agent_2.2.11-1+trusty_amd64.deb
-	wget https://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix/zabbix-get_2.2.11-1+trusty_amd64.deb
-	sudo dpkg -i zabbix-agent_2.2.11-1+trusty_amd64.deb
-	sudo dpkg -i zabbix-get_2.2.11-1+trusty_amd64.deb
-
-zabbix-uninstall-debian:
-	sudo dpkg -r zabbix-agent
-	sudo dpkg -r zabbix-get
-
-get-pip.py:
-	wget https://bootstrap.pypa.io/get-pip.py
-
-python: get-pip.py
+python:
+	curl -s -L -o get-pip.py https://bootstrap.pypa.io/get-pip.py
 	mkdir -p ${PYTHON_ROOT}
 	cp -r ${NUO3RDPARTY}/common/python/x86_64-linux ${PYTHON_ROOT}
 	cp -r ${NUO3RDPARTY}/common/python/bin ${PYTHON_ROOT}
@@ -105,4 +92,5 @@ python: get-pip.py
 	${PYTHON_ROOT}/bin/python get-pip.py
 	${PYTHON_ROOT}/bin/pip install -r requirements.txt
 	find ${PYTHON_ROOT} -name '*.pyc' -print | xargs -I {} rm -f {}
+	rm -f get-pip.py
 
