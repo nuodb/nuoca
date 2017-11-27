@@ -1,9 +1,9 @@
 #!/bin/bash
 
-NUOCA_TOPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-cd ${NUOCA_TOPDIR}
+NUOCA_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+cd ${NUOCA_HOME}
 
-ZABBIX_HOME=${NUOCA_TOPDIR}/zabbix
+ZABBIX_HOME=${NUOCA_HOME}/zabbix
 rm -fr ${ZABBIX_HOME}
-tar -xzf ${NUOCA_TOPDIR}/etc/zabbix.tgz
+tar -xzf ${NUOCA_HOME}/etc/zabbix.tgz
 echo "Done."

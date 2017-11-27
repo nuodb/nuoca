@@ -1,14 +1,14 @@
 #!/bin/bash
 
-NUOCA_TOPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-cd ${NUOCA_TOPDIR}
+NUOCA_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+cd ${NUOCA_HOME}
 
 # Setup logstash.
 
 LOGSTASH_VERSION=5.6.4    # Same as Logstach version in NuoDB bld pkg.
-LOGSTASH_HOME=${NUOCA_TOPDIR}/logstash
+LOGSTASH_HOME=${NUOCA_HOME}/logstash
 LOGSTASH_TARBALL_NAME=logstash-${LOGSTASH_VERSION}.tar.gz
-LOGSTASH_TARBALL_PATH=${NUOCA_TOPDIR}/etc/${LOGSTASH_TARBALL_NAME}
+LOGSTASH_TARBALL_PATH=${NUOCA_HOME}/etc/${LOGSTASH_TARBALL_NAME}
 LOGSTASH_URL=https://artifacts.elastic.co/downloads/logstash/${LOGSTASH_TARBALL_NAME}
 
 
@@ -22,4 +22,4 @@ fi
 echo "Untaring logstash tarball"
 tar -xzf ${LOGSTASH_TARBALL_PATH}
 rm -fr ${LOGSTASH_HOME}
-mv ${NUOCA_TOPDIR}/logstash-${LOGSTASH_VERSION} ${NUOCA_TOPDIR}/logstash
+mv ${NUOCA_HOME}/logstash-${LOGSTASH_VERSION} ${NUOCA_HOME}/logstash
