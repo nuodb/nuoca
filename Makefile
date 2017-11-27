@@ -35,8 +35,8 @@ ifdef THIRDPARTY_DIR
 NUO3RDPARTY := $(THIRDPARTY_DIR)
 endif
 
-export NUOCA_ROOT=${DIR}
-PYTHON_ROOT := ${NUOCA_ROOT}/python
+export NUOCA_HOME=${DIR}
+PYTHON_ROOT := ${NUOCA_HOME}/python
 
 zabbix_version := 3.0.13
 zabbix_version_name := zabbix-$(zabbix_version)
@@ -67,13 +67,13 @@ unit-test: logstash zabbix
 	(cd tests/dev && PYTHONPATH=../../src:../..:../../lib ./run_unit_tests.py)
 
 zabbix:
-	curl -s -L -o ${NUOCA_ROOT}/zabbix_src.tgz $(zabbix_url)
-	tar -xzf ${NUOCA_ROOT}/zabbix_src.tgz
-	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix=${NUOCA_ROOT}/zabbix) > /tmp/nuoca_zabbix_configure.log 2>&1
+	curl -s -L -o ${NUOCA_HOME}/zabbix_src.tgz $(zabbix_url)
+	tar -xzf ${NUOCA_HOME}/zabbix_src.tgz
+	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix=${NUOCA_HOME}/zabbix) > /tmp/nuoca_zabbix_configure.log 2>&1
 	(cd ${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
 
 zabbix_start: zabbiz
-	${NUOCA_ROOT}/bin/start_zabbix_agentd.sh
+	${NUOCA_HOME}/bin/start_zabbix_agentd.sh
 
 python:
 	curl -s -L -o get-pip.py https://bootstrap.pypa.io/get-pip.py
