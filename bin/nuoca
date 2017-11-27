@@ -1,5 +1,6 @@
 #!/bin/bash
 
 NUOCA_TOPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-cd ${NUOCA_TOPDIR}
-PYTHONPATH=${NUOCA_TOPDIR}/src:${NUOCA_TOPDIR}:${NUOCA_TOPDIR}/lib python src/nuoca.py $*
+
+source ${NUOCA_TOPDIR}/bin/nuoca_env.sh
+python ${NUOCA_TOPDIR}/src/nuoca.py $*
