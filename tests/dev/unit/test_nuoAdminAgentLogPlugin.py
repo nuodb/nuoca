@@ -42,7 +42,7 @@ class TestInputPlugins(unittest.TestCase):
                 'host_uuid_shortname': True}
       startup_rval = logstash_plugin.startup(config)
       self.assertTrue(startup_rval)
-      time.sleep(30)
+      time.sleep(60)
       resp_values = logstash_plugin.collect(3)
       self.assertIsNotNone(resp_values)
       self.assertTrue(type(resp_values) is list)
@@ -140,7 +140,7 @@ class TestInputPlugins(unittest.TestCase):
       self.assertIsNotNone(plugin_resp_msg)
       self.assertEqual(0, plugin_resp_msg['status_code'])
 
-      time.sleep(30)
+      time.sleep(60)
 
       plugin_msg = {'action': 'collect', 'collection_interval': 3}
       plugin_resp_msg = None

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-NUOCA_TOPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-cd ${NUOCA_TOPDIR}
-export ZABBIX_HOME=${NUOCA_TOPDIR}/zabbix3
+NUOCA_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+cd ${NUOCA_HOME}
+export ZABBIX_HOME=${NUOCA_HOME}/zabbix
 
 zabbix_version=$(${ZABBIX_HOME}/bin/zabbix_get -s localhost -p 10050 -k agent.version 2> /dev/null)
 zabbix_rc=$?

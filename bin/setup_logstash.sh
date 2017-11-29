@@ -1,17 +1,25 @@
 #!/bin/bash
 
-NUOCA_TOPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-cd ${NUOCA_TOPDIR}
+NUOCA_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+cd ${NUOCA_HOME}
 
-# Download and setup logstash.
+# Setup logstash.
 
-export LOGSTASH_VERSION=5.6.2
-export LOGSTASH_HOME=${NUOCA_TOPDIR}/logstash
-rm -fr logstash-${LOGSTASH_VERSION}.tar.gz
-rm -fr logstash
-echo "Downloading logstash version: ${LOGSTASH_VERSION}"
-wget -q https://artifacts.elastic.co/downloads/logstash/logstash-${LOGSTASH_VERSION}.tar.gz
+LOGSTASH_VERSION=5.6.4    # Same as Logstach version in NuoDB bld pkg.
+LOGSTASH_HOME=${NUOCA_HOME}/logstash
+LOGSTASH_TARBALL_NAME=logstash-${LOGSTASH_VERSION}.tar.gz
+LOGSTASH_TARBALL_PATH=${NUOCA_HOME}/etc/${LOGSTASH_TARBALL_NAME}
+LOGSTASH_URL=https://artifacts.elastic.co/downloads/logstash/${LOGSTASH_TARBALL_NAME}
+
+
+# Download, if needed
+if [ ! -f ${LOGSTASH_TARBALL_PATH} ]; then
+  echo "Logstash tarball not found: ${LOGSTASH_TARBALL_PATH}"
+  echo "Downloading logstash: ${LOGSTASH_VERSION}"
+  curl -s -L -o ${LOGSTASH_TARBALL_PATH} ${LOGSTASH_URL} 
+fi
+
 echo "Untaring logstash tarball"
-tar -xzf logstash-${LOGSTASH_VERSION}.tar.gz
-mv logstash-${LOGSTASH_VERSION} logstash
-rm -fr logstash-${LOGSTASH_VERSION}.tar.gz
+tar -xzf ${LOGSTASH_TARBALL_PATH}
+rm -fr ${LOGSTASH_HOME}
+mv ${NUOCA_HOME}/logstash-${LOGSTASH_VERSION} ${NUOCA_HOME}/logstash
