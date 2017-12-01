@@ -17,10 +17,10 @@
 #   make integration-test
 #
 
-export NUOCA_HOME := ${CURDIR}
-export PYTHON_ROOT := ${NUOCA_HOME}/python
+export NUOCA_HOME=${CURDIR}
+export PYTHON_ROOT=${NUOCA_HOME}/python
 ifndef LOGSTASH_HOME
-	export LOGSTASH_HOME :=${NUOCA_HOME}/logstash
+	export LOGSTASH_HOME=${NUOCA_HOME}/logstash
 endif
 export NUODB_PORT=${48004:-$NUODB_PORT}
 export NUODB_DOMAIN_PASSWORD=${bird:-$NUODB_DOMAIN_PASSWORD}
@@ -54,6 +54,7 @@ continuous-test: unit-test integration-test
 
 logstash:
 	bin/setup_logstash.sh
+	export LOGSTASH_HOME=${NUOCA_HOME}/logstash
 
 integration-test: logstash zabbix
 	tests/dev/integration/run_tests.sh

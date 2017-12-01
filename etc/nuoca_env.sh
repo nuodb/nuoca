@@ -1,4 +1,4 @@
-if [[ -z "${LOGSTASH_HOME}" ]]; then
+if [ -n "${LOGSTASH_HOME}" ]; then
     export LOGSTASH_HOME="${NUOCA_HOME}/logstash"
 fi
 export NUODB_PORT=${48004:-$NUODB_PORT}
