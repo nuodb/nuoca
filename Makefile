@@ -28,14 +28,7 @@
 #   make integration-test
 #
 
-DIR := ${CURDIR}
-NUO3RDPARTY := ${HOME}/nuo3rdparty
-
-ifdef THIRDPARTY_DIR
-NUO3RDPARTY := $(THIRDPARTY_DIR)
-endif
-
-export NUOCA_HOME=${DIR}
+export NUOCA_HOME=${CURDIR}
 PYTHON_ROOT := ${NUOCA_HOME}/python
 
 zabbix_version := 3.0.13
@@ -72,25 +65,6 @@ zabbix:
 	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix=${NUOCA_HOME}/zabbix) > /tmp/nuoca_zabbix_configure.log 2>&1
 	(cd ${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
 
-zabbix_start: zabbiz
+zabbix_start: zabbix
 	${NUOCA_HOME}/bin/start_zabbix_agentd.sh
-
-python:
-	curl -s -L -o get-pip.py https://bootstrap.pypa.io/get-pip.py
-	mkdir -p ${PYTHON_ROOT}
-	cp -r ${NUO3RDPARTY}/common/python/x86_64-linux ${PYTHON_ROOT}
-	cp -r ${NUO3RDPARTY}/common/python/bin ${PYTHON_ROOT}
-	cp -r ${NUO3RDPARTY}/common/python/lib ${PYTHON_ROOT}
-	cp -r ${NUO3RDPARTY}/common/python/include ${PYTHON_ROOT}
-	cp -r ${NUO3RDPARTY}/common/python/share ${PYTHON_ROOT}
-	ln -s ${PYTHON_ROOT}/x86_64-linux/bin/python2.7 ${PYTHON_ROOT}/bin/python2.7
-	ln -s ${PYTHON_ROOT}/x86_64-linux/bin/python2.7 ${PYTHON_ROOT}/bin/python2
-	ln -s ${PYTHON_ROOT}/x86_64-linux/bin/python2.7 ${PYTHON_ROOT}/bin/python
-	export PATH=${PYTHON_ROOT}/bin:${PATH}
-	${PYTHON_ROOT}/bin/python get-pip.py
-	rm -fr ${PYTHON_ROOT}/lib/python2.7/site-packages/*
-	${PYTHON_ROOT}/bin/python get-pip.py
-	${PYTHON_ROOT}/bin/pip install -r requirements.txt
-	find ${PYTHON_ROOT} -name '*.pyc' -print | xargs -I {} rm -f {}
-	rm -f get-pip.py
 
