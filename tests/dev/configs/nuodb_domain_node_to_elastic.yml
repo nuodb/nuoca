@@ -38,7 +38,7 @@ INPUT_PLUGINS:
 - NuoAdminMon:
     description : Collection from NuoDB Admin Layer
     admin_host: localhost
-    admin_port: $NUODB_AGENTPORT
+    admin_port: $NUODB_PORT
     domain_username: domain
     domain_password: $NUODB_DOMAIN_PASSWORD
 

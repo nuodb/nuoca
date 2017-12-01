@@ -66,10 +66,18 @@ class LogstashPlugin(NuocaMPInputPlugin):
 
   def _run_logstash_thread(self):
     self._logstash_subprocess = None
+    msg = "Env: %s=%s" % ('NUOCA_HOME', os.environ['NUOCA_HOME'])
+    nuoca_log(logging.INFO, msg)
     if 'logstashInputFilePath' in self._config:
+      msg = "Env: LOGSTASH_INPUT_FILE_PATH=%s" % \
+            self._config['logstashInputFilePath']
+      nuoca_log(logging.INFO, msg)
       os.environ["LOGSTASH_INPUT_FILE_PATH"] = \
         self._config['logstashInputFilePath']
     if self._logstash_sincedb_path:
+      msg = "Env: LOGSTASH_SINCEDB_PATH=%s" % \
+            self._logstash_sincedb_path
+      nuoca_log(logging.INFO, msg)
       os.environ["LOGSTASH_SINCEDB_PATH"] = self._logstash_sincedb_path
     try:
       popen_args = [self._logstash_bin,
@@ -77,6 +85,13 @@ class LogstashPlugin(NuocaMPInputPlugin):
                     "--path.config", self._logstash_config]
       if self._logstash_options:
         popen_args.extend(self._logstash_options)
+      msg = "Starting %s --node.name %s --path.config %s" % \
+            (self._logstash_bin,
+             self._nuocaCollectionName,
+             self._logstash_config)
+      for item in self._logstash_options:
+        msg += " %s" % str(item)
+      nuoca_log(logging.INFO, msg)
       self._logstash_subprocess = \
         subprocess.Popen(popen_args, stdout=subprocess.PIPE)
     except Exception as e:
