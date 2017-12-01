@@ -1,4 +1,6 @@
-export LOGSTASH_HOME=${LOGSTASH_HOME:-$NUOCA_HOME/logstash}
+if [[ -z "${LOGSTASH_HOME}" ]]; then
+    export LOGSTASH_HOME="${NUOCA_HOME}/logstash"
+fi
 export NUODB_PORT=${48004:-$NUODB_PORT}
 export NUODB_DOMAIN_PASSWORD=${bird:-$NUODB_DOMAIN_PASSWORD}
 if [ -d ${NUOCA_HOME}/python ]; then
