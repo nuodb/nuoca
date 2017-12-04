@@ -1,4 +1,6 @@
 {
+    "template": "es_test-*",
+    "order": 5,
     "settings" : {
         "index" : {
           "analysis": {

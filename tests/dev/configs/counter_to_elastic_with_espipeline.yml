@@ -1,0 +1,12 @@
+---
+INPUT_PLUGINS:
+- Counter:
+    description : A simple counter
+    interval : 1
+OUTPUT_PLUGINS:
+- Printer:
+- ElasticSearch:
+    HOST: localhost
+    PORT: 9200
+    INDEX : es_test
+    PIPELINE: es_test_pipeline

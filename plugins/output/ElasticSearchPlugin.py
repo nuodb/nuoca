@@ -10,6 +10,7 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
     self._config = config
     self.elastic_hosts = None
     self.es_obj = None
+    self.es_index_pipeline = None
 
   def startup(self, config=None):
     try:
@@ -17,6 +18,8 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
       required_config_items = ['HOST', 'PORT', 'INDEX']
       if not self.has_required_config_items(config, required_config_items):
         return False
+      if 'PIPELINE' in config:
+        self.es_index_pipeline = config['PIPELINE']
       self.elastic_hosts = [{"host": self._config['HOST'],
                              "port": self._config['PORT']}]
       self.es_obj = Elasticsearch(self.elastic_hosts, timeout=10)
@@ -36,7 +39,8 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
       nuoca_log(logging.DEBUG, "Called store() in MPElasticSearch process")
       rval = super(ElasticSearchPlugin, self).store(ts_values)
       req_resp = self.es_obj.index(index=self._config['INDEX'],
-                                   doc_type='nuoca', body=ts_values)
+                                   doc_type='nuoca', body=ts_values,
+                                   pipeline=self.es_index_pipeline)
       nuoca_log(logging.DEBUG, "ElasticSearch response: %s" % str(req_resp))
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))

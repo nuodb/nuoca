@@ -5,7 +5,7 @@ python:
   - "2.7"
 
 env:
-  - NUOVERSION=2.6.1.5 NUODB_ADD_DOMAIN_PASS=yes NUODB_START_AGENT=yes NUODB_START_REST_API=yes
+  - NUOVERSION=2.6.1.5 NUODB_ADD_DOMAIN_PASS=yes NUODB_START_AGENT=yes NUODB_START_REST_API=yes ES_VERSION=5.6.4 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 
 notifications:
   recipients:
@@ -19,6 +19,9 @@ before_install:
   - export NUODB_LIB_DIR=/opt/nuodb/lib64
   - export TZ=America/New_York
   - cat /etc/debian_version
+  - wget ${ES_DOWNLOAD_URL}
+  - tar -xzf elasticsearch-${ES_VERSION}.tar.gz
+  - ./elasticsearch-${ES_VERSION}/bin/elasticsearch &
   - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled'
   - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/defrag'
   - wget -q http://download.nuohub.org/nuodb_${NUOVERSION}_amd64.deb --output-document=/var/tmp/nuodb.deb
@@ -33,13 +36,15 @@ before_install:
   - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process te host localhost database test options '--dba-user dba --dba-password dba'"
   - ${NUODB_ROOT}/bin/nuosql test@localhost --user dba --password dba < tests/etc/create_user_cloud.sql
 
-services:
-  - elasticsearch
+install:
+  - pip install -r requirements.txt
 
 script:
+  - printenv
+  - wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200
+  - curl -XGET http://localhost:9200
   - tests/etc/elastic_search/es_test_create_index.sh
   - make zabbix
   - make logstash
   - source etc/nuoca_env.sh
   - make continuous-test
-
