@@ -46,11 +46,13 @@ class BaseMetricsListener(BaseListener):
             for child in root:
                 items[child.attrib['name']] = self.__get_item(child.attrib)
             items['Database'] = dict(unit="IDENTIFIER", description="Database Name")
+            items['Region'] = dict(unit="IDENTIFIER", description="Region Name")
             self.onStart(items)
         elif root.tag == 'Status':
             values = dict( [ (k, parseStr(v)) for k,v in root.attrib.iteritems() ])
             if self.__first:
                 values['Database'] = self.process.database.name
+                values['Region'] = self.process.peer.get_tag('region')
                 self.__first=False
             values['TimeStamp'] = int(time.time() * 1000.0)
             self.onChange(values)
