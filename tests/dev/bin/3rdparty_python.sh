@@ -13,7 +13,7 @@ if [ -d $PYTHON_ROOT ]; then
 fi
 
 curl -s -L -o get-pip.py https://bootstrap.pypa.io/get-pip.py
-mkdir -p ${PYTHON_ROOT}Oh
+mkdir -p ${PYTHON_ROOT}
 cp -r ${NUO3RDPARTY}/common/python/x86_64-linux ${PYTHON_ROOT}
 cp -r ${NUO3RDPARTY}/common/python/bin ${PYTHON_ROOT}
 cp -r ${NUO3RDPARTY}/common/python/lib ${PYTHON_ROOT}
