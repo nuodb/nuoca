@@ -91,6 +91,8 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
     [u'status', u'name', u'tagConstraints', u'variables', u'groupOptions',
      u'archivesByGroup', u'archives', u'template', u'active',
      u'unmet_messages', u'options', u'ismet']
+    database_boolean_fields = \
+    [u'active', u'ismet']
 
     collect_timestamp = nuoca_gettimestamp() * 1000
 
@@ -132,8 +134,12 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
         for database in region['databases']:
           database_results = {}
           for database_field in databases_desired_fields:
-            database_results["database.%s" % database_field] = \
-              str(database[database_field])
+            if database_field in database_boolean_fields:
+              database_results["database.%s" % database_field] = \
+                str(database[database_field]).lower()
+            else:
+              database_results["database.%s" % database_field] = \
+                str(database[database_field])
           database_results.update(results)
           self._monitor_collect_queue.append(database_results)
         region_count += 1
