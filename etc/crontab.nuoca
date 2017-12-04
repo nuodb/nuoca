@@ -1,0 +1,4 @@
+@Once 1 SECONDS  ${NUODB_HOME}/etc/nuoca/bin/start_nuoca.sh
+#@FixedRate 30 SECONDS     date +"Once every 30 seconds %H:%M:%S"
+#@FixedRate 15 SECONDS     date +"Once every 15 seconds %H:%M:%S"
+#*/10 * * * * * date +"Crontab on 10 second marks %H:%M:%S"

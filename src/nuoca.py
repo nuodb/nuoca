@@ -1,4 +1,5 @@
 import click
+import signal
 import traceback
 from nuoca_util import *
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
@@ -6,6 +7,7 @@ from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 from nuoca_config import NuocaConfig
 
+nuoca_obj = None
 
 class NuoCA(object):
   """
@@ -494,11 +496,18 @@ class NuoCA(object):
     nuoca_logging_shutdown()
 
 
+def signal_term_handler(signal, frame):
+  global nuoca_obj
+  if nuoca_obj:
+    print "Got SIGTERM"
+    sys.exit(0)
+
 def nuoca_run(config_file, collection_interval, plugin_dir,
               starttime, verbose, self_test,
               log_level, output_values):
-  nuoca_obj = None
+  global nuoca_obj
   try:
+    signal.signal(signal.SIGTERM, signal_term_handler)
     nuoca_obj = NuoCA(config_file, collection_interval, plugin_dir,
                       starttime, verbose, self_test,
                       logging.getLevelName(log_level), output_values)
@@ -516,7 +525,7 @@ def nuoca_run(config_file, collection_interval, plugin_dir,
   finally:
     if nuoca_obj:
       nuoca_obj.shutdown(nuoca_obj.config.SUBPROCESS_EXIT_TIMEOUT)
-  print("Done.")
+    print("Done.")
 
 
 @click.command(help="CONFIG_FILE    path to NuoCA Collection Config file")

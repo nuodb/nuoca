@@ -24,7 +24,9 @@ before_install:
   - wget -q http://download.nuohub.org/nuodb_${NUOVERSION}_amd64.deb --output-document=/var/tmp/nuodb.deb
   - sudo dpkg -i /var/tmp/nuodb.deb
   - sleep 5
-  - if [[ "${NUODB_ADD_DOMAIN_PASS}" == "yes" ]] ; then sudo chmod 777 $NUODB_ROOT/etc/default.properties; printf "\ndomainPassword = bird\n" >> $NUODB_ROOT/etc/default.properties; sudo chmod 600 $NUODB_ROOT/etc/default.properties; fi
+  - export NUODB_AGENTPORT=48004
+  - export DOMAIN_PASSWORD=bird
+  - if [[ "${NUODB_ADD_DOMAIN_PASS}" == "yes" ]] ; then sudo chmod 777 $NUODB_ROOT/etc/default.properties; printf "\ndomainPassword = ${DOMAIN_PASSWORD}\n" >> $NUODB_ROOT/etc/default.properties; sudo chmod 600 $NUODB_ROOT/etc/default.properties; fi
   - if [[ "${NUODB_START_AGENT}" == "yes" ]]; then sudo service nuoagent start; fi
   - if [[ "${NUODB_START_REST_API}" == "yes" ]]; then sudo service nuorestsvc start; fi
   - ${NUODB_ROOT}/bin/nuodbmgr --broker localhost --password bird --command "start process sm host localhost database test archive /var/tmp/nuodb initialize true"

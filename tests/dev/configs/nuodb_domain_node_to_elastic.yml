@@ -40,7 +40,7 @@ INPUT_PLUGINS:
     admin_host: localhost
     admin_port: $NUODB_PORT
     domain_username: domain
-    domain_password: $NUODB_DOMAIN_PASSWORD
+    domain_password: $DOMAIN_PASSWORD
 
 OUTPUT_PLUGINS:
 - ElasticSearch:

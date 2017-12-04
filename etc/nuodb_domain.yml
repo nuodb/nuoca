@@ -1,5 +1,5 @@
 ---
-NUOCA_LOGFILE: /tmp/nuoca.log
+NUOCA_LOGFILE: /var/log/nuodb/nuoca.log
 
 INPUT_PLUGINS:
 - ZBX:
@@ -38,12 +38,12 @@ INPUT_PLUGINS:
 - NuoAdminMon:
     description : Collection from NuoDB Admin Layer
     admin_host: localhost
-    admin_port: $NUODB_PORT
+    admin_port: $NUODB_AGENTPORT
     domain_username: domain
     domain_password: $DOMAIN_PASSWORD
 - NuoMon:
     description : Collection from internal nuomonitor tool
-    broker: localhost:$NUODB_PORT
+    broker: localhost:$NUODB_AGENTPORT
     domain_username: domain
     domain_password: $DOMAIN_PASSWORD
     database_regex_pattern: '^(?!nuodb_system|\\.).*'
@@ -51,5 +51,7 @@ INPUT_PLUGINS:
     domain_metrics_host: localhost
 
 OUTPUT_PLUGINS:
-- File:
-    filePath: /tmp/nuoca.nuodb_domain.output.json
+- ElasticSearch:
+    HOST: localhost
+    PORT: 9200
+    INDEX : es_test

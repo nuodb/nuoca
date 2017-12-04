@@ -13,8 +13,10 @@ kibana*.tar.gz
 logstash*.tar.gz
 zabbix-agent_*.deb*
 zabbix-get_*.deb*
+zabbix_src.tgz
 vagrant/ubuntu14_nuoca/
 nuoca.egg-info/
 logstash/**
 python/**
 zabbix/**
+zabbix-3.0.13/**

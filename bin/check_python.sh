@@ -13,13 +13,6 @@ if [[ $python_version != "Python 2.7."* ]]; then
   exit 1
 fi
 
-virtualenv_path=$(which virtualenv)
-which_virtualenv_rc=$?
-if [ $which_virtualenv_rc != 0 ]; then
-  echo "ERROR: virtualenv not found.  You must have python virtualenv in your path."
-  exit 1
-fi
-
 pip_path=$(which pip)
 which_pip_rc=$?
 if [ $which_pip_rc != 0 ]; then
