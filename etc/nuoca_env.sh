@@ -3,7 +3,7 @@ if [ -n "${LOGSTASH_HOME}" ]; then
 fi
 export NUODB_PORT=${48004:-$NUODB_PORT}
 export NUODB_DOMAIN_PASSWORD=${bird:-$NUODB_DOMAIN_PASSWORD}
-if [ -d ${NUOCA_HOME}/python ]; then
+if [ -d "${NUOCA_HOME}/python" ]; then
   export PATH=${NUOCA_HOME}/python/bin:${PATH}
   export PYTHONHOME=${NUOCA_HOME}/python:${NUOCA_HOME}/python/x86_64-linux
 fi

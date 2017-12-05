@@ -17,19 +17,19 @@
 #   make integration-test
 #
 
-export NUOCA_HOME=${CURDIR}
-export PYTHON_ROOT=${NUOCA_HOME}/python
+export NUOCA_HOME ?= ${CURDIR}
+export PYTHON_ROOT ?= ${NUOCA_HOME}/python
 ifndef LOGSTASH_HOME
-	export LOGSTASH_HOME=${NUOCA_HOME}/logstash
+	export LOGSTASH_HOME ?= ${NUOCA_HOME}/logstash
 endif
-export NUODB_PORT=${48004:-$NUODB_PORT}
-export NUODB_DOMAIN_PASSWORD=${bird:-$NUODB_DOMAIN_PASSWORD}
-export PYTHONPATH=${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib
-export NUOADMINAGENTLOGCONFIG=${NUOCA_HOME}/etc/logstash/nuoadminagentlog.conf
+export NUODB_PORT ?= 48004
+export NUODB_DOMAIN_PASSWORD ?= bird
+export PYTHONPATH ?= ${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib
+export NUOADMINAGENTLOGCONFIG ?= ${NUOCA_HOME}/etc/logstash/nuoadminagentlog.conf
 
 zabbix_version := 3.0.13
 zabbix_version_name := zabbix-$(zabbix_version)
-zabbix_url := "http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/$(zabbix_version)/zabbix-$(zabbix_version).tar.gz/download"
+zabbix_url := http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/$(zabbix_version)/zabbix-$(zabbix_version).tar.gz/download
 
 .PHONY: showenv
 .PHONY: clean
@@ -54,7 +54,6 @@ continuous-test: unit-test integration-test
 
 logstash:
 	bin/setup_logstash.sh
-	export LOGSTASH_HOME=${NUOCA_HOME}/logstash
 
 integration-test: logstash zabbix
 	tests/dev/integration/run_tests.sh
@@ -63,11 +62,11 @@ unit-test: logstash zabbix
 	(cd tests/dev && ./run_unit_tests.py)
 
 zabbix:
-	curl -s -L -o ${NUOCA_HOME}/zabbix_src.tgz $(zabbix_url)
-	tar -xzf ${NUOCA_HOME}/zabbix_src.tgz
-	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix=${NUOCA_HOME}/zabbix) > /tmp/nuoca_zabbix_configure.log 2>&1
+	curl -s -L -o '${NUOCA_HOME}/zabbix_src.tgz' '$(zabbix_url)'
+	tar xzf '${NUOCA_HOME}/zabbix_src.tgz'
+	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix="${NUOCA_HOME}/zabbix") > /tmp/nuoca_zabbix_configure.log 2>&1
 	(cd ${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
 
 zabbix_start: zabbix
-	${NUOCA_HOME}/bin/start_zabbix_agentd.sh
+	'${NUOCA_HOME}/bin/start_zabbix_agentd.sh'
 
