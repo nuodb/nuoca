@@ -56,9 +56,11 @@ logstash:
 	bin/setup_logstash.sh
 
 integration-test: logstash zabbix
+	printenv
 	tests/dev/integration/run_tests.sh
 
 unit-test: logstash zabbix
+	printenv
 	(cd tests/dev && ./run_unit_tests.py)
 
 zabbix:
