@@ -57,12 +57,12 @@ logstash:
 	export LOGSTASH_HOME=${NUOCA_HOME}/logstash
 
 integration-test: logstash zabbix
-	source ${NUOCA_HOME}/etc/nuoca_env.sh
+	. ${NUOCA_HOME}/etc/nuoca_env.sh
 	printenv
 	tests/dev/integration/run_tests.sh
 
 unit-test: logstash zabbix
-	source ${NUOCA_HOME}/etc/nuoca_env.sh
+	. ${NUOCA_HOME}/etc/nuoca_env.sh
 	printenv
 	(cd tests/dev && ./run_unit_tests.py)
 
