@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 python_path=$(which python)
 which_python_rc=$?
