@@ -54,6 +54,7 @@ continuous-test: unit-test integration-test
 
 logstash:
 	bin/setup_logstash.sh
+	export LOGSTASH_HOME=${NUOCA_HOME}/logstash
 
 integration-test: logstash zabbix
 	printenv
