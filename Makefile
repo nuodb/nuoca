@@ -17,7 +17,7 @@
 #   make integration-test
 #
 
-export NUOCA_HOME ?= ${CURDIR}
+export NUOCA_HOME=${CURDIR}
 export PYTHON_ROOT ?= ${NUOCA_HOME}/python
 ifndef LOGSTASH_HOME
 	export LOGSTASH_HOME ?= ${NUOCA_HOME}/logstash
