@@ -49,15 +49,14 @@ logstash:
 	bin/setup_logstash.sh
 
 integration-test: logstash zabbix
-	. ${NUOCA_HOME}/etc/nuoca_env.sh
-	tests/dev/integration/run_tests.sh
+	. "${NUOCA_HOME}/etc/nuoca_env.sh" && tests/dev/integration/run_tests.sh
 
 unit-test: logstash zabbix
-	(cd tests/dev && . ${NUOCA_HOME}/etc/nuoca_env.sh && ./run_unit_tests.py)
+	cd tests/dev && . "${NUOCA_HOME}/etc/nuoca_env.sh" && ./run_unit_tests.py
 
 zabbix:
-	curl -s -L -o '${NUOCA_HOME}/zabbix_src.tgz' '$(zabbix_url)'
-	tar xzf '${NUOCA_HOME}/zabbix_src.tgz'
+	curl -s -L -o "${NUOCA_HOME}/zabbix_src.tgz" "$(zabbix_url)"
+	tar xzf "${NUOCA_HOME}/zabbix_src.tgz"
 	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix="${NUOCA_HOME}/zabbix") > /tmp/nuoca_zabbix_configure.log 2>&1
 	(cd ${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
 
