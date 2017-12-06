@@ -62,9 +62,9 @@ integration-test: logstash zabbix
 	tests/dev/integration/run_tests.sh
 
 unit-test: logstash zabbix
-	. ${NUOCA_HOME}/etc/nuoca_env.sh
+#	. ${NUOCA_HOME}/etc/nuoca_env.sh
 	printenv
-	(cd tests/dev && ./run_unit_tests.py)
+	(cd tests/dev && . ${NUOCA_HOME}/etc/nuoca_env.sh && ./run_unit_tests.py)
 
 zabbix:
 	curl -s -L -o '${NUOCA_HOME}/zabbix_src.tgz' '$(zabbix_url)'
