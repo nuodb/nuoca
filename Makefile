@@ -19,13 +19,6 @@
 
 export NUOCA_HOME ?= ${CURDIR}
 export PYTHON_ROOT ?= ${NUOCA_HOME}/python
-#ifndef LOGSTASH_HOME
-#	export LOGSTASH_HOME=${NUOCA_HOME}/logstash
-#endif
-#export NUODB_PORT=48004
-#export NUODB_DOMAIN_PASSWORD=bird
-#export PYTHONPATH=${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib
-#export NUOADMINAGENTLOGCONFIG=${NUOCA_HOME}/etc/logstash/nuoadminagentlog.conf
 
 zabbix_version := 3.0.13
 zabbix_version_name := zabbix-$(zabbix_version)
@@ -54,16 +47,12 @@ continuous-test: unit-test integration-test
 
 logstash:
 	bin/setup_logstash.sh
-#	export LOGSTASH_HOME=${NUOCA_HOME}/logstash
 
 integration-test: logstash zabbix
 	. ${NUOCA_HOME}/etc/nuoca_env.sh
-	printenv
 	tests/dev/integration/run_tests.sh
 
 unit-test: logstash zabbix
-#	. ${NUOCA_HOME}/etc/nuoca_env.sh
-	printenv
 	(cd tests/dev && . ${NUOCA_HOME}/etc/nuoca_env.sh && ./run_unit_tests.py)
 
 zabbix:
