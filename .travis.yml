@@ -46,5 +46,4 @@ script:
   - tests/etc/elastic_search/es_test_create_index.sh
   - make zabbix
   - make logstash
-  - source etc/nuoca_env.sh
   - make continuous-test

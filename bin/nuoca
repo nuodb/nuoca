@@ -5,5 +5,5 @@ CMD=${0##*/}
 DIR=`cd "${0%$CMD}." && pwd`
 NUOCA_HOME=${DIR%/*}
 
-. ${NUOCA_HOME}/etc/nuoca_env.sh
+. "${NUOCA_HOME}/etc/nuoca_env.sh"
 exec python "${NUOCA_HOME}"/src/nuoca.py "$@"

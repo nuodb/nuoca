@@ -15,6 +15,6 @@ if [ -d $ZABBIX_HOME ]; then
 fi
 curl -s -L -o ${NUOCA_HOME}/zabbix_src.tgz ${zabbix_url}
 tar -xzf ${NUOCA_HOME}/zabbix_src.tgz
-(cd ${zabbix_version_name} && ./configure --enable-agent --prefix=${NUOCA_HOME}/zabbix) > /tmp/nuoca_zabbix_configure.log 2>&1
-(cd ${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
+(cd "${zabbix_version_name}" && ./configure --enable-agent --prefix=${NUOCA_HOME}/zabbix) > /tmp/nuoca_zabbix_configure.log 2>&1
+(cd "${zabbix_version_name}" && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
 
