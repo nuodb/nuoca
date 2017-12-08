@@ -31,6 +31,7 @@ import uuid
 import sys
 import hashlib
 import logging
+import logging.handlers
 import subprocess
 from nuoca_config import NuocaConfig
 
@@ -74,7 +75,7 @@ def initialize_logger(nuoca_logfile_name):
   logging.basicConfig(level=logging.INFO)
   # Global NuoCA logger
   nuoca_logger = logging.getLogger('nuoca')
-  nuoca_loghandler = logging.FileHandler(nuoca_logfile_name)
+  nuoca_loghandler = logging.handlers.WatchedFileHandler(nuoca_logfile_name)
   nuoca_loghandler.setLevel(logging.INFO)
   nuoca_loghandler.setFormatter(
     logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
