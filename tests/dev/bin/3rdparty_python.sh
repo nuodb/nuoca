@@ -19,9 +19,11 @@ cp -r ${NUO3RDPARTY}/common/python/bin ${PYTHON_ROOT}
 cp -r ${NUO3RDPARTY}/common/python/lib ${PYTHON_ROOT}
 cp -r ${NUO3RDPARTY}/common/python/include ${PYTHON_ROOT}
 cp -r ${NUO3RDPARTY}/common/python/share ${PYTHON_ROOT}
-ln -s ${PYTHON_ROOT}/x86_64-linux/bin/python2.7 ${PYTHON_ROOT}/bin/python2.7
-ln -s ${PYTHON_ROOT}/x86_64-linux/bin/python2.7 ${PYTHON_ROOT}/bin/python2
-ln -s ${PYTHON_ROOT}/x86_64-linux/bin/python2.7 ${PYTHON_ROOT}/bin/python
+cd ${PYTHON_ROOT}/bin
+ln -s ../x86_64-linux/bin/python2.7 python2.7
+ln -s ../x86_64-linux/bin/python2.7 python2
+ln -s ../x86_64-linux/bin/python2.7 python
+cd ${NUOCA_HOME}
 export PATH=${PYTHON_ROOT}/bin:${PATH}
 ${PYTHON_ROOT}/bin/python get-pip.py
 rm -fr ${PYTHON_ROOT}/lib/python2.7/site-packages/*
