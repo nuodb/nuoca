@@ -24,6 +24,7 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import os
 import logging
 from elasticsearch import Elasticsearch
 from nuoca_plugin import NuocaMPOutputPlugin
@@ -36,6 +37,7 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
     self._config = config
     self.elastic_hosts = None
     self.es_obj = None
+    self.es_index = None
     self.es_index_pipeline = None
 
   def startup(self, config=None):
@@ -45,9 +47,14 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
       if not self.has_required_config_items(config, required_config_items):
         return False
       if 'PIPELINE' in config:
-        self.es_index_pipeline = config['PIPELINE']
-      self.elastic_hosts = [{"host": self._config['HOST'],
-                             "port": self._config['PORT']}]
+        self.es_index_pipeline = os.path.expandvars(config['PIPELINE'])
+      host = os.path.expandvars(self._config['HOST'])
+      if isinstance(self._config['PORT'], int):
+        port = self._config['PORT']
+      else:
+        port = os.path.expandvars(self._config['PORT'])
+      self.es_index = os.path.expandvars(self._config['INDEX'])
+      self.elastic_hosts = [{"host": host, "port": port}]
       self.es_obj = Elasticsearch(self.elastic_hosts, timeout=10)
       logger = logging.getLogger('elasticsearch')
       logger.setLevel(logging.WARNING)
@@ -62,9 +69,9 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
   def store(self, ts_values):
     rval = None
     try:
-      nuoca_log(logging.DEBUG, "Called store() in MPElasticSearch process")
+      nuoca_log(logging.DEBUG, "Called store() in NuoCA ElasticSearch process")
       rval = super(ElasticSearchPlugin, self).store(ts_values)
-      req_resp = self.es_obj.index(index=self._config['INDEX'],
+      req_resp = self.es_obj.index(index=self.es_index,
                                    doc_type='nuoca', body=ts_values,
                                    pipeline=self.es_index_pipeline)
       nuoca_log(logging.DEBUG, "ElasticSearch response: %s" % str(req_resp))

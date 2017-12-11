@@ -40,8 +40,8 @@ class NuoCA(object):
   NuoDB Collection Agent
   """
   def __init__(self, config_file=None, collection_interval=30,
-               plugin_dir=None, starttime=None, verbose=False,
-               self_test=False, log_level=logging.INFO,
+               plugin_dir=None, starttime=None, mode=None,
+               verbose=False, self_test=False, log_level=logging.INFO,
                output_values=None):
     """
     :param config_file: Path to NuoCA configuration file.
@@ -55,6 +55,9 @@ class NuoCA(object):
 
     :param starttime: Epoch timestamp of start time of the first collection.
     :type starttime: ``int``, ``None``
+
+    :param mode: Run mode; [coach | insights]
+    :type plugin_dir: ``str``
 
     :param verbose: Flag to indicate printing of verbose messages to stdout.
     :type verbose: ``bool``
@@ -91,6 +94,7 @@ class NuoCA(object):
       self._starttime = int(starttime)
     self._plugin_topdir = plugin_dir
     self._enabled = True
+    self._mode = mode
     self._verbose = verbose  # Used to make stdout verbose.
     self._self_test = self_test
     self._output_values = parse_keyval_list(output_values)
@@ -144,6 +148,14 @@ class NuoCA(object):
     activated_list = [x for x in input_list if x.is_activated]
     return activated_list
 
+  def _get_deactivated_input_plugins(self):
+    """
+    Get a list of "deactivated" input plugins
+    """
+    input_list = self.manager.getPluginsOfCategory('Input')
+    deactivated_list = [x for x in input_list if not x.is_activated]
+    return deactivated_list
+
   def _get_activated_output_plugins(self):
     """
     Get a list of "activated" output plugins
@@ -151,6 +163,14 @@ class NuoCA(object):
     output_list = self.manager.getPluginsOfCategory('Output')
     activated_list = [x for x in output_list if x.is_activated]
     return activated_list
+
+  def _get_deactivated_output_plugins(self):
+    """
+    Get a list of "activated" output plugins
+    """
+    output_list = self.manager.getPluginsOfCategory('Output')
+    deactivated_list = [x for x in output_list if not x.is_activated]
+    return deactivated_list
 
   def _get_plugin_respose(self, a_plugin):
     """
@@ -333,6 +353,25 @@ class NuoCA(object):
                   "Error attempting to collect"
                   " response from plugin: %s\n%s"
                   % (a_plugin.name, str(e)))
+
+    try:
+      deactivated_plugins = self._get_deactivated_input_plugins()
+      for a_plugin in deactivated_plugins:
+        for a_config in self._config.INPUT_PLUGINS:
+          a_config_name = a_config.keys()[0]
+          if a_config_name == a_plugin.name:
+            self._activate_and_startup_input_plugin(a_config)
+      deactivated_plugins = self._get_deactivated_output_plugins()
+      for a_plugin in deactivated_plugins:
+        for a_config in self._config.OUTPUT_PLUGINS:
+          a_config_name = a_config.keys()[0]
+          if a_config_name == a_plugin.name:
+            self._activate_and_startup_output_plugin(a_config)
+    except Exception as e:
+      nuoca_log(logging.WARNING,
+                "Unable to reactivate deactived plugins during collection: %s"
+                % str(e))
+
     return rval
 
   def _store_outputs(self, collected_inputs):
@@ -367,45 +406,50 @@ class NuoCA(object):
         "Transform": NuocaMPTransformPlugin
     })
 
-  # Activate plugins and call the plugin's startup() method.
-  def _activate_and_startup_plugins(self):
-    for input_plugin in self.config.INPUT_PLUGINS:
-      input_plugin_name = input_plugin.keys()[0]
+  def _activate_and_startup_input_plugin(self, input_plugin):
+    input_plugin_name = input_plugin.keys()[0]
+    a_plugin = self.manager.getPluginByName(input_plugin_name, 'Input')
+    if a_plugin and not a_plugin.is_activated:
       if not self.manager.activatePluginByName(input_plugin_name, 'Input'):
         err_msg = "Cannot activate input plugin: '%s', Skipping." % \
                   input_plugin_name
         nuoca_log(logging.WARNING, err_msg)
       else:
-        a_plugin = self.manager.getPluginByName(input_plugin_name, 'Input')
-        if a_plugin:
-          input_plugin_config = input_plugin.values()[0]
-          if not input_plugin_config:
-            input_plugin_config = {}
-          input_plugin_config['nuoca_start_ts'] = self._starttime
-          input_plugin_config['nuoca_collection_interval'] = \
-            self._collection_interval
-          self._startup_plugin(a_plugin, input_plugin_config)
-          self._input_plugins[input_plugin_name] = (a_plugin,
-                                                    input_plugin_config)
+        input_plugin_config = input_plugin.values()[0]
+        if not input_plugin_config:
+          input_plugin_config = {}
+        input_plugin_config['nuoca_start_ts'] = self._starttime
+        input_plugin_config['nuoca_collection_interval'] = \
+          self._collection_interval
+        self._startup_plugin(a_plugin, input_plugin_config)
+        self._input_plugins[input_plugin_name] = (a_plugin,
+                                                  input_plugin_config)
 
-    for output_plugin in self.config.OUTPUT_PLUGINS:
-      output_plugin_name = output_plugin.keys()[0]
+  def _activate_and_startup_output_plugin(self, output_plugin):
+    output_plugin_name = output_plugin.keys()[0]
+    a_plugin = self.manager.getPluginByName(output_plugin_name, 'Output')
+    if a_plugin and not a_plugin.is_activated:
       if not self.manager.activatePluginByName(output_plugin_name, 'Output'):
         err_msg = "Cannot activate output plugin: '%s', Skipping." % \
                   output_plugin_name
         nuoca_log(logging.WARNING, err_msg)
       else:
-        a_plugin = self.manager.getPluginByName(output_plugin_name, 'Output')
-        if a_plugin:
-          output_plugin_config = output_plugin.values()[0]
-          if not output_plugin_config:
-            output_plugin_config = {}
-          output_plugin_config['nuoca_start_ts'] = self._starttime
-          output_plugin_config['nuoca_collection_interval'] = \
-            self._collection_interval
-          self._startup_plugin(a_plugin, output_plugin_config)
-          self._output_plugins[output_plugin_name] = (a_plugin,
-                                                      output_plugin_config)
+        output_plugin_config = output_plugin.values()[0]
+        if not output_plugin_config:
+          output_plugin_config = {}
+        output_plugin_config['nuoca_start_ts'] = self._starttime
+        output_plugin_config['nuoca_collection_interval'] = \
+          self._collection_interval
+        self._startup_plugin(a_plugin, output_plugin_config)
+        self._output_plugins[output_plugin_name] = (a_plugin,
+                                                  output_plugin_config)
+
+  # Activate plugins and call the plugin's startup() method.
+  def _activate_and_startup_plugins(self):
+    for input_plugin in self.config.INPUT_PLUGINS:
+      self._activate_and_startup_input_plugin(input_plugin)
+    for output_plugin in self.config.OUTPUT_PLUGINS:
+      self._activate_and_startup_output_plugin(output_plugin)
     # TODO Transform Plugins
 
   # test if the plugin name is configured in NuoCA.
@@ -529,13 +573,13 @@ def signal_term_handler(signal, frame):
     sys.exit(0)
 
 def nuoca_run(config_file, collection_interval, plugin_dir,
-              starttime, verbose, self_test,
+              starttime, mode, verbose, self_test,
               log_level, output_values):
   global nuoca_obj
   try:
     signal.signal(signal.SIGTERM, signal_term_handler)
     nuoca_obj = NuoCA(config_file, collection_interval, plugin_dir,
-                      starttime, verbose, self_test,
+                      starttime, mode, verbose, self_test,
                       logging.getLevelName(log_level), output_values)
     nuoca_obj.start()
   except AttributeError as e:
@@ -563,6 +607,8 @@ def nuoca_run(config_file, collection_interval, plugin_dir,
 @click.option('--starttime', default=None,
               help='Start time in Epoch seconds '
                    'for the first collection interval')
+@click.option('--mode', default='coach',
+              help='Run mode [coach | insights]')
 @click.option('--verbose', is_flag=True, default=False,
               help='Run with verbose messages written to stdout')
 @click.option('--self-test', is_flag=True, default=False,
@@ -579,9 +625,9 @@ def nuoca_run(config_file, collection_interval, plugin_dir,
               help='One or more output values as '
                    'key=value pairs separated by commas. Multiples allowed')
 def nuoca(config_file, collection_interval, plugin_dir,
-          starttime, verbose, self_test, log_level, output_values):
+          starttime, mode, verbose, self_test, log_level, output_values):
   nuoca_run(config_file, collection_interval, plugin_dir,
-            starttime, verbose, self_test, log_level, output_values)
+            starttime, mode, verbose, self_test, log_level, output_values)
 
 if __name__ == "__main__":
   nuoca(prog_name="nuoca")

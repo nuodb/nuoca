@@ -17,8 +17,8 @@
 #   make integration-test
 #
 
-export NUOCA_HOME ?= ${CURDIR}
-export PYTHON_ROOT ?= ${NUOCA_HOME}/python
+export NUOCA_HOME=${CURDIR}
+export PYTHON_ROOT=${NUOCA_HOME}/python
 
 zabbix_version := 3.0.13
 zabbix_version_name := zabbix-$(zabbix_version)
@@ -49,10 +49,10 @@ logstash:
 	bin/setup_logstash.sh
 
 integration-test: logstash zabbix
-	. "${NUOCA_HOME}/etc/nuoca_env.sh" && tests/dev/integration/run_tests.sh
+	. "${NUOCA_HOME}/etc/nuoca_setup.sh" && tests/dev/integration/run_tests.sh
 
 unit-test: logstash zabbix
-	cd tests/dev && . "${NUOCA_HOME}/etc/nuoca_env.sh" && ./run_unit_tests.py
+	tests/dev/run_unit_tests.sh
 
 zabbix:
 	curl -s -L -o "${NUOCA_HOME}/zabbix_src.tgz" "$(zabbix_url)"

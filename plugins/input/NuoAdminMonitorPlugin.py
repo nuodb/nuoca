@@ -199,9 +199,17 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
       self._domain_username = os.path.expandvars(config['domain_username'])
       self._domain_password = os.path.expandvars(config['domain_password'])
       if 'admin_collect_interval' in config:
-        self._admin_collect_interval = config['admin_collect_interval']
+        if isinstance(config['admin_collect_interval'], int):
+          self._admin_collect_interval = config['admin_collect_interval']
+        else:
+          self._admin_collect_interval = \
+            os.path.expandvars(config['admin_collect_interval'])
       if 'admin_collect_timeout' in config:
-        self._admin_collect_interval = config['admin_collect_timeout']
+        if isinstance(config['admin_collect_timeout'], int):
+          self._admin_collect_timeout = config['admin_collect_timeout']
+        else:
+          self._admin_collect_timeout = \
+            os.path.expandvars(config['admin_collect_timeout'])
       if 'host_uuid_shortname' in config:
         self._host_uuid_shortname = config['host_uuid_shortname']
       if 'admin_rest_api_port' in config:

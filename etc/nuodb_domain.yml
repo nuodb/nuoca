@@ -32,19 +32,20 @@ INPUT_PLUGINS:
     description : Collection from NuoDB Admin Agent logfile
     nuocaCollectionName: NuoAdminAgentLog
     logstashBin: $LOGSTASH_HOME/bin/logstash
-    logstashConfig: $NUOCA_HOME/etc/logstash/nuoadminagentlog.conf
+    logstashConfig: $NUOADMINAGENTLOGCONFIG
     logstashInputFilePath: /var/log/nuodb/agent.log
     logstashOptions: --pipeline.workers 1 --pipeline.batch.size 30
 - NuoAdminMon:
     description : Collection from NuoDB Admin Layer
     admin_host: localhost
-    admin_port: $NUODB_AGENTPORT
-    domain_username: domain
+    admin_port: $NUODB_PORT
+    admin_collect_interval: 30
+    domain_username: $DOMAIN_USER
     domain_password: $DOMAIN_PASSWORD
 - NuoMon:
     description : Collection from internal nuomonitor tool
-    broker: localhost:$NUODB_AGENTPORT
-    domain_username: domain
+    broker: localhost:$NUODB_PORT
+    domain_username: $DOMAIN_USER
     domain_password: $DOMAIN_PASSWORD
     database_regex_pattern: '^(?!nuodb_system|\\.).*'
     host_uuid_shortname: True

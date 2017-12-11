@@ -154,7 +154,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
       if self._logstash_subprocess:
         self._logstash_subprocess.kill()
     except Exception as e:
-      msg = "Excpetion trying to kill logstash process: %s" % str(e)
+      msg = "Exception trying to kill logstash process: %s" % str(e)
       nuoca_log(logging.ERROR, msg)
 
   def startup(self, config=None):
@@ -228,7 +228,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
       return False
 
   def shutdown(self):
-    self.enabled = False
+    self._enabled = False
     if self._logstash_subprocess:
       self._logstash_subprocess.terminate()
       self._logstash_subprocess = None
