@@ -32,8 +32,8 @@ import re
 import socket
 import subprocess
 import threading
+import time
 
-from calendar import timegm
 from dateutil.parser import parse as date_parse
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log
@@ -257,7 +257,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
         collected_dict.update(base_values)
         if 'timestamp' in collected_dict:
           dt = date_parse(collected_dict['timestamp'])
-          epoch_seconds = timegm(dt.timetuple())
+          epoch_seconds = int(time.mktime(dt.timetuple()))
           epoch_millis = epoch_seconds * 1000 + dt.microsecond / 1000
           collected_dict['TimeStamp'] = epoch_millis
         rval.append(collected_dict)
