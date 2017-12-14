@@ -26,7 +26,7 @@ before_install:
   - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/defrag'
   - wget -q http://download.nuohub.org/nuodb_${NUOVERSION}_amd64.deb --output-document=/var/tmp/nuodb.deb
   - sudo dpkg -i /var/tmp/nuodb.deb
-  - sleep 5
+  - sleep 6
   - export NUODB_AGENTPORT=48004
   - export DOMAIN_PASSWORD=bird
   - if [[ "${NUODB_ADD_DOMAIN_PASS}" == "yes" ]] ; then sudo chmod 777 $NUODB_ROOT/etc/default.properties; printf "\ndomainPassword = ${DOMAIN_PASSWORD}\n" >> $NUODB_ROOT/etc/default.properties; sudo chmod 600 $NUODB_ROOT/etc/default.properties; fi
