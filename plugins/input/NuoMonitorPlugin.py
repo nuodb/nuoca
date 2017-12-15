@@ -34,8 +34,9 @@ import time
 from copy import deepcopy
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log
-from nuomon.nuomon_monitor import get_nuodb_metrics
-from nuomon.nuomon_broadcast import MetricsConsumer, MetricsProducer
+from nuomon.nuomon_monitor import DomainListener, MetricsDomain
+from nuomon.nuomon_broadcast import MetricsConsumer, MetricsProducer, \
+  MetricsListener, EventListener
 
 # NuoMonitor plugin
 #
@@ -56,13 +57,16 @@ class NuoMonHandler(MetricsConsumer):
 
   def __init__(self, nuo_monitor_obj):
     super(NuoMonHandler, self).__init__()
+    nuoca_log(logging.DEBUG, "NuoMon: NuoMonHandler.__init__()")
     self.nuo_monitor_obj = nuo_monitor_obj
     pass
 
   def onMetrics(self, description):
+    nuoca_log(logging.DEBUG, "NuoMon: NuoMonHandler.onMetrics()")
     pass
 
   def onValues(self, values):
+    nuoca_log(logging.DEBUG, "NuoMon: NuoMonHandler.onValues()")
     self.nuo_monitor_obj.nuomonitor_collect_queue.append(deepcopy(values))
     pass
 
@@ -74,6 +78,7 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
     self._broker = None
     self._enabled = False
     self._numon_handler_ready = False
+    self._domain = None
     self._domain_username = 'domain'
     self._domain_password = 'bird'
     self._domain_metrics = None
@@ -82,6 +87,30 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
     self._host_uuid_shortname = False
     self._thread = None
     self._nuomonitor_collect_queue = []
+    self._collection_interval = 30
+
+  def wait_for_terminate(self):
+    if self._domain:
+      self._domain.waitForTerminate()
+
+  def get_nuodb_metrics(self, broker, password, listener, user='domain',
+                        database=None, host=None, process=None, args=None,
+                        domain_listener=None):
+    # Listener is class derived from MetricsListener
+    if listener is None:
+      listener = MetricsListener
+    if domain_listener is None:
+      domain_listener = EventListener
+
+    self._domain = DomainListener(user=user,
+                                  password=password,
+                                  database=database,
+                                  host=host,
+                                  process=process,
+                                  listener=listener,
+                                  args=args,
+                                  domain_listener=domain_listener())
+    return MetricsDomain(broker, user, password, self._domain)
 
   @property
   def nuomonitor_collect_queue(self):
@@ -91,38 +120,21 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
     obj = NuoMonHandler(self)
     obj.start()
     self._numon_handler_ready = True
-    self._domain_metrics.wait_forever()
+    time.sleep(10)
+    self.wait_for_terminate()
+    nuoca_log(logging.INFO, "NuoMon: NuoDB connection terminated")
+    self._domain_metrics.disconnect()
+    self._numon_handler_ready = False
+    while not self._numon_handler_ready:
+      time.sleep(self._collection_interval)
+      nuoca_log(logging.INFO, "NuoMon: calling startup")
+      self.startup_nuomon()
 
-  def startup(self, config=None):
+  def startup_nuomon(self):
     try:
-      self._config = config
-
-      # Validate the configuration.
-      required_config_items = ['broker', 'domain_username', 'domain_password']
-      if not self.has_required_config_items(config, required_config_items):
-        return False
-
-      # Don't reveal the domain password in the NuoCA log file.
-      display_config = {}
-      display_config.update(config)
-      display_config['domain_password'] = ''
-      nuoca_log(logging.INFO, "NuoAdminMonitor plugin config: %s" %
-                str(display_config))
-
-      self._broker = os.path.expandvars(config['broker'])
-      self._domain_username = os.path.expandvars(config['domain_username'])
-      self._domain_password = os.path.expandvars(config['domain_password'])
-      if 'domain_metrics_host' in config:
-        self._domain_metrics_host = os.path.expandvars(config['domain_metrics_host'])
-        if self._domain_metrics_host == 'localhost':
-          self._domain_metrics_host = socket.gethostname()
-      if 'database_regex_pattern' in config:
-        self._database_regex_pattern = config['database_regex_pattern']
-      if 'host_uuid_shortname' in config:
-        self._host_uuid_shortname = config['host_uuid_shortname']
-      self._enabled = True
+      self._numon_handler_ready = False
       self._domain_metrics = \
-        get_nuodb_metrics(
+        self.get_nuodb_metrics(
           self._broker,
           self._domain_password,
           listener=MetricsProducer,
@@ -137,21 +149,58 @@ class NuoMonitorPlugin(NuocaMPInputPlugin):
         time.sleep(1)
       return self._numon_handler_ready
     except Exception as e:
-      nuoca_log(logging.ERROR, "NuoMon Plugin: %s" % str(e))
+      nuoca_log(logging.ERROR, "NuoMon Startup error: %s" % str(e))
+      return False
+
+
+  def startup(self, config=None):
+    try:
+      self._config = config
+
+      # Validate the configuration.
+      required_config_items = ['broker', 'domain_username', 'domain_password']
+      if not self.has_required_config_items(config, required_config_items):
+        return False
+
+      # Don't reveal the domain password in the NuoCA log file.
+      display_config = {}
+      display_config.update(config)
+      display_config['domain_password'] = ''
+      nuoca_log(logging.INFO, "NuoMon: plugin config: %s" %
+                str(display_config))
+
+      self._broker = os.path.expandvars(config['broker'])
+      self._domain_username = os.path.expandvars(config['domain_username'])
+      self._domain_password = os.path.expandvars(config['domain_password'])
+      if 'domain_metrics_host' in config:
+        self._domain_metrics_host = os.path.expandvars(config['domain_metrics_host'])
+        if self._domain_metrics_host == 'localhost':
+          self._domain_metrics_host = socket.gethostname()
+      if 'database_regex_pattern' in config:
+        self._database_regex_pattern = config['database_regex_pattern']
+      if 'host_uuid_shortname' in config:
+        self._host_uuid_shortname = config['host_uuid_shortname']
+      self.startup_nuomon()
+      return self._numon_handler_ready
+    except Exception as e:
+      nuoca_log(logging.ERROR, "NuoMon Plugin Startup error: %s" % str(e))
       return False
 
   def shutdown(self):
-    self.enabled = False
+    self._enabled = False
     pass
 
   def collect(self, collection_interval):
     uuid_hostname_regex = \
       '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-'
     rval = None
+    self._collection_interval = collection_interval
     try:
-      nuoca_log(logging.DEBUG, "Called collect() in NuoMonitor Plugin process")
+      nuoca_log(logging.DEBUG, "NuoMon: collect()")
       base_values = super(NuoMonitorPlugin, self).collect(collection_interval)
       collection_count = len(self._nuomonitor_collect_queue)
+      nuoca_log(logging.DEBUG, "NuoMon: collection_count %s" %
+                str(collection_count))
       if not collection_count:
         return rval
 

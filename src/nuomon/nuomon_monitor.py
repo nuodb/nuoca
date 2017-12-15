@@ -182,20 +182,20 @@ def get_nuodb_metrics(broker, password, listener, user='domain', database=None, 
     if domain_listener is None:
         domain_listener = EventListener
         
-    domain = __DomainListener(user=user,
-                              password=password,
-                              database=database,
-                              host=host,
-                              process=process,
-                              listener=listener,
-                              args=args,
-                              domain_listener=domain_listener())
+    domain = DomainListener(user=user,
+                            password=password,
+                            database=database,
+                            host=host,
+                            process=process,
+                            listener=listener,
+                            args=args,
+                            domain_listener=domain_listener())
     return MetricsDomain(broker, user, password,domain)
 
 # implementation
 """ TODO:  Add event stream """
 
-class __DomainListener(object):
+class DomainListener(object):
     cached_addresses = {}
     running_monitors = {}
 

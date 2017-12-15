@@ -29,6 +29,8 @@ from nuomon_util import *
 from pubsub import pub
 import threading
 
+from nuoca_util import nuoca_log
+
 __all__=['MetricsConsumer', 'MetricsProducer', 'EventConsumer', 'EventProducer']
 
 
@@ -230,17 +232,20 @@ class EventProducer(EventListener):
 class MetricsProducer(MetricsListener):
     def __init__(self):
         super(MetricsProducer,self).__init__()
+        nuoca_log(logging.DEBUG, "nuomon_broadcast MetricsProducer.__init__()")
         self.identity = None
 
     @print_exc
     def onStart(self,metrics):
         super(MetricsProducer,self).onStart(metrics)
+        nuoca_log(logging.DEBUG, "nuomon_broadcast MetricsProducer.onStart()")
         pub.sendMessage('metrics.description',description=self.metrics)
         pub.subscribe(self.onMetricsRequest,'metrics.request.description')
         pub.subscribe(self.onValuesRequest,'metrics.request.values')
 
     @print_exc        
     def onChange(self,values):
+        nuoca_log(logging.DEBUG, "nuomon_broadcast MetricsProducer.onChange()")
         if len(self.values) > 0:
             pub.sendMessage('metrics.values.updated',identity=self.getIdentity(),body=values)
         super(MetricsProducer,self).onChange(values)
