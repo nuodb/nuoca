@@ -30,10 +30,11 @@ INPUT_PLUGINS:
 - NuoAdminAgentLog:
     description : Collection from NuoDB Admin Agent logfile
     nuocaCollectionName: NuoAdminAgentLog
-    logstashBin: /opt/nuoca/logstash/bin/logstash
-    logstashConfig: /opt/nuoca/etc/logstash/nuoadminagentlog.conf
+    logstashBin: $LOGSTASH_HOME/bin/logstash
+    logstashConfig: $NUOADMINAGENTLOGCONFIG
     logstashInputFilePath: /var/log/nuodb/agent.log
     logstashOptions: --pipeline.workers 1 --pipeline.batch.size 30
+    logstashSincedbPath: /dev/null
     host_uuid_shortname: true
 - NuoAdminMon:
     description : Collection from NuoDB Admin Layer
@@ -46,4 +47,4 @@ OUTPUT_PLUGINS:
 - ElasticSearch:
     HOST: localhost
     PORT: 9200
-    INDEX : nuodb
+    INDEX : es_test

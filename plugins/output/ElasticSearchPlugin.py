@@ -27,6 +27,7 @@
 import os
 import logging
 from elasticsearch import Elasticsearch
+from elasticsearch import helpers
 from nuoca_plugin import NuocaMPOutputPlugin
 from nuoca_util import nuoca_log
 
@@ -39,6 +40,9 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
     self.es_obj = None
     self.es_index = None
     self.es_index_pipeline = None
+    self.ES_LIMIT_SIZE = 1000
+    self.ES_BULK_CHUNK_SIZE = 75
+    self.ES_BULK_CHUNK_BYTES = 6291456
 
   def startup(self, config=None):
     try:
@@ -66,15 +70,45 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
   def shutdown(self):
     pass
 
+  def _bulk_index(self, ts_values):
+    offset = 0
+    total = 0
+    b_complete = False
+    limit_size = self.ES_LIMIT_SIZE
+    update_count = 0
+    total = len(ts_values)
+    es_index = self.es_index
+    if self.es_index_pipeline:
+      es_index
+    while not b_complete:
+      actions = []
+      items_to_process = limit_size
+      if offset + limit_size > total:
+        items_to_process = total - offset
+      for i in range(items_to_process):
+        row = ts_values[i]
+        action = {"_index": es_index,
+                  "_type": "nuoca",
+                  "_source": row}
+        actions.append(action)
+      if len(actions) > 0:
+        resp = helpers.bulk(self.es_obj,
+                            actions,
+                            chunk_size=self.ES_BULK_CHUNK_SIZE,
+                            max_chunk_bytes=self.ES_BULK_CHUNK_BYTES)
+        nuoca_log(logging.DEBUG, "ES bluk response: %s" % str(resp))
+        update_count += resp[0]
+      if offset + items_to_process >= total:
+        b_complete = True
+      offset += limit_size
+    nuoca_log(logging.DEBUG, "ES Indexed %d documents" % update_count)
+
   def store(self, ts_values):
     rval = None
     try:
       nuoca_log(logging.DEBUG, "Called store() in NuoCA ElasticSearch process")
       rval = super(ElasticSearchPlugin, self).store(ts_values)
-      req_resp = self.es_obj.index(index=self.es_index,
-                                   doc_type='nuoca', body=ts_values,
-                                   pipeline=self.es_index_pipeline)
-      nuoca_log(logging.DEBUG, "ElasticSearch response: %s" % str(req_resp))
+      self._bulk_index(ts_values)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval

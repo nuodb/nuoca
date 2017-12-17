@@ -44,7 +44,7 @@ class TestOutputPlugins(unittest.TestCase):
     self.assertIsNotNone(printer_plugin)
     startup_rval = printer_plugin.startup(None)
     self.assertTrue(startup_rval)
-    printer_plugin.store({'message': 'hello'})
+    printer_plugin.store([{'message': 'hello'}])
 
   def _MultiprocessPluginManagerTest(self):
     child_pipe_timeout = 600
@@ -73,7 +73,7 @@ class TestOutputPlugins(unittest.TestCase):
     self.assertIsNotNone(plugin_resp_msg)
     self.assertEqual(0, plugin_resp_msg['status_code'])
 
-    store_data = {'foo': 1, 'bar': 2}
+    store_data = [{'foo': 1, 'bar': 2}]
     plugin_msg = {'action': "store", 'ts_values': store_data}
     plugin_resp_msg = None
     printer_plugin.plugin_object.child_pipe.send(plugin_msg)

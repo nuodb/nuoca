@@ -138,7 +138,7 @@ class NuoCA(object):
       if 'timestamp' not in list_item:
         list_item['timestamp'] = collection_time
     # TODO Transformations
-      self._store_outputs(list_item)
+    self._store_outputs(collected_inputs)
 
   def _get_activated_input_plugins(self):
     """
