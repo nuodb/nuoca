@@ -13,11 +13,10 @@ fi
 
 python "${NUOCA_HOME}/src/insights.py" enable $SUB_ARG
 
-echo "If the nuoagent & nuorestsvc service is running, NuoDB Insights metrics collection"
-echo "will begin at the top of the hour.  If the nuoagent & nuorestsvc service are not"
-echo "running, or to start collecting immediately, restart the nuoagent & nuorestsvc with"
-echo "the commands: "
+echo "If the nuoagent service is running, NuoDB Insights metrics collection"
+echo "will begin at the top of the hour.  If the nuoagent service is not"
+echo "running, or to start collecting immediately, you can (re)start the "
+echo "nuoagent the command: "
 echo " "
 echo "  service nuoagent restart"
-echo "  service nuorestsvc restart"
 echo " "
