@@ -37,6 +37,8 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
     super(ElasticSearchPlugin, self).__init__(parent_pipe, 'ElasticSearch')
     self._config = config
     self.elastic_hosts = None
+    self.port = None
+    self.url_prefix = None
     self.es_obj = None
     self.es_index = None
     self.es_index_pipeline = None
@@ -47,18 +49,25 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
   def startup(self, config=None):
     try:
       self._config = config
-      required_config_items = ['HOST', 'PORT', 'INDEX']
+      required_config_items = ['HOST', 'INDEX']
       if not self.has_required_config_items(config, required_config_items):
         return False
       if 'PIPELINE' in config:
         self.es_index_pipeline = os.path.expandvars(config['PIPELINE'])
       host = os.path.expandvars(self._config['HOST'])
-      if isinstance(self._config['PORT'], int):
-        port = self._config['PORT']
-      else:
-        port = os.path.expandvars(self._config['PORT'])
+      if 'PORT' in self._config:
+        if isinstance(self._config['PORT'], int):
+          self.port = self._config['PORT']
+        else:
+          self.port = os.path.expandvars(self._config['PORT'])
+      if 'URL_PREFIX' in config:
+        self.url_prefix = os.path.expandvars(self._config['URL_PREFIX'])
       self.es_index = os.path.expandvars(self._config['INDEX'])
-      self.elastic_hosts = [{"host": host, "port": port}]
+      elastic_host = {'host': host}
+      if self.port:
+        elastic_host['port'] = self.port
+      if self.url_prefix:
+        elastic_host['url_prefix'] = self.url_prefix
       self.es_obj = Elasticsearch(self.elastic_hosts, timeout=10)
       logger = logging.getLogger('elasticsearch')
       logger.setLevel(logging.WARNING)
