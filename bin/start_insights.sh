@@ -12,6 +12,7 @@ export DOMAIN_USER=domain
 
 RESPONSE=`python  "${NUOCA_HOME}/src/insights.py" startup`
 if [ "$RESPONSE" = "Startup" ]; then
+  service nuorestsvc start
   nuocaCount=$(ps -ef | grep "${NUOCA_HOME}/src/nuoca.py" | wc -l)
   if [ $nuocaCount -le 1 ]; then
     echo "Starting NuoCA"
