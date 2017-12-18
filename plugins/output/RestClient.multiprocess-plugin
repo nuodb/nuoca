@@ -1,0 +1,9 @@
+[Core]
+Name = RestClient
+Module = RestClientPlugin
+
+[Documentation]
+Author = Tom Gates
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = Calls REST APIs

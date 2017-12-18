@@ -1,0 +1,13 @@
+{
+  "description": "ic date-time index naming",
+  "processors": [
+      {
+      "date_index_name" : {
+        "field" : "timestamp",
+        "index_name_prefix" : "ic-",
+        "date_rounding" : "w",
+        "date_formats" : [ "UNIX_MS", "yyyy-MM-dd'T'HH:mm:ss.SSSZ" ]
+      }
+    }
+  ]
+}

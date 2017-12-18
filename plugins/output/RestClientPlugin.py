@@ -32,9 +32,9 @@ from nuoca_plugin import NuocaMPOutputPlugin
 from nuoca_util import nuoca_log
 
 
-class RestClientOutputPlugin(NuocaMPOutputPlugin):
+class RestClientPlugin(NuocaMPOutputPlugin):
   def __init__(self, parent_pipe, config=None):
-    super(RestClientOutputPlugin, self).__init__(parent_pipe, 'RestClient')
+    super(RestClientPlugin, self).__init__(parent_pipe, 'RestClient')
     self._config = config
 
   def startup(self, config=None):
@@ -54,9 +54,10 @@ class RestClientOutputPlugin(NuocaMPOutputPlugin):
     rval = None
     try:
       nuoca_log(logging.DEBUG,
-                "Called store() in MPClientOutputPlugin process")
-      rval = super(RestClientOutputPlugin, self).store(ts_values)
-      requests.post(self._config["url"], json=json.dumps(ts_values))
+                "Called store() in RestClientPlugin process")
+      rval = super(RestClientPlugin, self).store(ts_values)
+      requests.post(self._config["url"], json=ts_values,
+                    headers={"content-type":"application/json"})
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval

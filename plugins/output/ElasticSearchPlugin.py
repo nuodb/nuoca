@@ -48,6 +48,8 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
 
   def startup(self, config=None):
     try:
+      logger = logging.getLogger('elasticsearch')
+      logger.setLevel(logging.WARNING)
       self._config = config
       required_config_items = ['HOST', 'INDEX']
       if not self.has_required_config_items(config, required_config_items):
@@ -68,9 +70,8 @@ class ElasticSearchPlugin(NuocaMPOutputPlugin):
         elastic_host['port'] = self.port
       if self.url_prefix:
         elastic_host['url_prefix'] = self.url_prefix
+      self.elastic_hosts = [elastic_host]
       self.es_obj = Elasticsearch(self.elastic_hosts, timeout=10)
-      logger = logging.getLogger('elasticsearch')
-      logger.setLevel(logging.WARNING)
       return True
     except Exception as e:
       nuoca_log(logging.ERROR, "ElasticSearch Store error: %s" % str(e))

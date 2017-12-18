@@ -1,0 +1,8 @@
+---
+INPUT_PLUGINS:
+- Counter:
+    description : A simple counter
+    interval : 1
+OUTPUT_PLUGINS:
+- RestClient:
+    url: http://localhost:8080

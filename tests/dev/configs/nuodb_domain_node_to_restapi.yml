@@ -1,5 +1,4 @@
 ---
-NUOCA_LOGFILE: /var/log/nuodb/nuoca.log
 
 INPUT_PLUGINS:
 - ZBX:
@@ -35,22 +34,15 @@ INPUT_PLUGINS:
     logstashConfig: $NUOADMINAGENTLOGCONFIG
     logstashInputFilePath: /var/log/nuodb/agent.log
     logstashOptions: --pipeline.workers 1 --pipeline.batch.size 30
+    logstashSincedbPath: /dev/null
+    host_uuid_shortname: true
 - NuoAdminMon:
     description : Collection from NuoDB Admin Layer
     admin_host: localhost
     admin_port: $NUODB_PORT
-    admin_collect_interval: 30
-    domain_username: $DOMAIN_USER
+    domain_username: domain
     domain_password: $DOMAIN_PASSWORD
-- NuoMon:
-    description : Collection from internal nuomonitor tool
-    broker: localhost:$NUODB_PORT
-    domain_username: $DOMAIN_USER
-    domain_password: $DOMAIN_PASSWORD
-    database_regex_pattern: '^(?!nuodb_system|\\.).*'
-    host_uuid_shortname: True
-    domain_metrics_host: localhost
 
 OUTPUT_PLUGINS:
 - RestClient:
-    url: http://insights.nuodb.com/ingest
+    url: http://localhost:8080
