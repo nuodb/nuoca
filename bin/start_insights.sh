@@ -19,8 +19,9 @@ if [ "$RESPONSE" = "Startup" ]; then
     export ES_PORT="9200"
     export ES_INDEX="ic"
     export EX_PIPELINE="ic"
+    export INSIGHTS_SUB_ID=`cat ${NUODB_CFGDIR}/insights.sub.id`
     "${NUOCA_HOME}/bin/start_zabbix_agentd.sh"
-    python "${NUOCA_HOME}/src/nuoca.py" --mode insights --collection-interval 30 "${NUOCA_HOME}/etc/nuodb_domain.yml" > /dev/null 2>&1 &
+    python "${NUOCA_HOME}/src/nuoca.py" --mode insights -o sub_id=${INSIGHTS_SUB_ID} --collection-interval 30 "${NUOCA_HOME}/etc/nuodb_domain.yml" > /dev/null 2>&1 &
     NUOCA_PID=$!
     echo "$NUOCA_PID" > "${NUODB_RUNDIR}/nuoca.pid"
   fi
