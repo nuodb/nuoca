@@ -36,7 +36,7 @@ from requests.auth import HTTPBasicAuth
 subscription_fields = {
   u'subscriber_token': 'insights.sub.token',
   u'subscriber_dashboard_url': 'insights.sub.dashboard_url',
-  u'subscriber_elastic_url': 'insights.sub.elastic_url',
+  u'subscriber_ingest_url': 'insights.sub.ingest_url',
   u'subscriber_id': 'insights.sub.id'
 }
 
