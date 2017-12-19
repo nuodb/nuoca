@@ -53,4 +53,4 @@ INPUT_PLUGINS:
 
 OUTPUT_PLUGINS:
 - RestClient:
-    url: http://insights.nuodb.com/ingest
+    url: ${INSIGHTS_INGEST_URL}
