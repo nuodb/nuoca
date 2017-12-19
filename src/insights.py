@@ -186,6 +186,7 @@ def post_domain_config_value(key, value):
   url = 'http://localhost:8888/api/2/domain/config'
   headers = {'Accept': 'application/json',
              'Content-Type': 'application/json'}
+  ret = None
   try:
     data = {"key": key,
             "value": value }
