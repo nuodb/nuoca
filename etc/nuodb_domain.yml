@@ -53,4 +53,6 @@ INPUT_PLUGINS:
 
 OUTPUT_PLUGINS:
 - RestClient:
-    url: ${INSIGHTS_INGEST_URL}
+    url: $INSIGHTS_INGEST_URL
+    auth_token: $INSIGHTS_TOKEN
+
