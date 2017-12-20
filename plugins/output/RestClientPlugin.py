@@ -24,6 +24,7 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import os
 import logging
 import requests
 import json
@@ -37,6 +38,7 @@ class RestClientPlugin(NuocaMPOutputPlugin):
     super(RestClientPlugin, self).__init__(parent_pipe, 'RestClient')
     self._config = config
     self._url = None
+    self._auth_token = None
 
   def startup(self, config=None):
     try:
@@ -45,6 +47,8 @@ class RestClientPlugin(NuocaMPOutputPlugin):
       if not self.has_required_config_items(config, required_config_items):
         return False
       self._url = os.path.expandvars(config['url'])
+      if 'auth_token' in config:
+        self._auth_token = os.path.expandvars(config['auth_token'])
       return True
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
@@ -58,8 +62,11 @@ class RestClientPlugin(NuocaMPOutputPlugin):
       nuoca_log(logging.DEBUG,
                 "Called store() in RestClientPlugin process")
       rval = super(RestClientPlugin, self).store(ts_values)
+      headers = {"content-type":"application/json"}
+      if self._auth_token:
+        headers['Authorization'] = "Bearer %s" % self._auth_token
       requests.post(self._url, json=ts_values,
-                    headers={"content-type":"application/json"})
+                    headers=headers)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval

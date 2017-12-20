@@ -6,3 +6,4 @@ INPUT_PLUGINS:
 OUTPUT_PLUGINS:
 - RestClient:
     url: http://localhost:8080
+    auth_token: $INSIGHTS_TOKEN
