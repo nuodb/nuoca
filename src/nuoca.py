@@ -25,6 +25,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import click
+import socket
 import signal
 import traceback
 from nuoca_util import *
@@ -82,6 +83,7 @@ class NuoCA(object):
         raise AttributeError(msg)
 
     self._config = NuocaConfig(config_file)
+    self._hostname = socket.gethostname()
 
     initialize_logger(self._config.NUOCA_LOGFILE)
 
@@ -137,6 +139,7 @@ class NuoCA(object):
       list_item['collection_interval'] = self._collection_interval
       if 'timestamp' not in list_item:
         list_item['timestamp'] = collection_time
+      list_item['NuoCA.hostname'] = self._hostname
     # TODO Transformations
     self._store_outputs(collected_inputs)
 
