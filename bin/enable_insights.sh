@@ -2,8 +2,6 @@
 
 NUOCA_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-(cd "${NUOCA_HOME}" && make -s logstash)
-
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
