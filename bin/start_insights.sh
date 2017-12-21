@@ -8,6 +8,11 @@ NUOCA_HOME=${DIR%/*}
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
+# Setup logstash if it has not been setup.
+if [ ! -d "${NUOCA_HOME}/logstash" ]; then
+  (cd "${NUOCA_HOME}" && ./bin/setup_logstash.sh)
+fi
+
 export DOMAIN_USER=domain
 
 RESPONSE=`python  "${NUOCA_HOME}/src/insights.py" startup`
