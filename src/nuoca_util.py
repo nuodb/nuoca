@@ -33,6 +33,8 @@ import hashlib
 import logging
 import logging.handlers
 import subprocess
+from copy import deepcopy
+from logging import Handler
 from nuoca_config import NuocaConfig
 
 SECONDS_PER_DAY = 3600*24
@@ -44,6 +46,7 @@ if not os.path.exists(NuocaConfig.NUOCA_TMPDIR):
 
 nuoca_logger = None
 nuoca_loghandler = None
+nuoca_collect_loghandler = None
 yapsy_logger = None
 yapsy_loghandler = None
 last_log_message = None
@@ -68,8 +71,64 @@ class UTC(datetime.tzinfo):
     return self._zero
 
 
-def initialize_logger(nuoca_logfile_name):
-  global nuoca_logger, nuoca_loghandler
+class CollectHandler(Handler):
+  def __init__(self):
+    self._nuoca_log_collect_queue = []
+    Handler.__init__(self)
+
+  def emit(self, record):
+    """
+    Emit a record.
+
+    If a formatter is specified, it is used to format the record.
+    """
+    try:
+      collect_item = {
+        'timestamp': int(record.created * 1000.0),
+        'NuoCA.filename': record.filename,
+        'NuoCA.funcName': record.funcName,
+        'NuoCA.log_level': record.levelname,
+        'NuoCA.lineno': record.lineno,
+        'NuoCA.message': record.message
+      }
+      if record.levelno != 20:
+        collect_item['NuoCA.pathname'] = record.pathname
+        collect_item['NuoCA.process'] = record.process
+        collect_item['NuoCA.processName'] = record.processName
+        collect_item['NuoCA.thread'] = record.thread
+        collect_item['NuoCA.threadName'] = record.threadName
+      self._nuoca_log_collect_queue.append(deepcopy(collect_item))
+    except (KeyboardInterrupt, SystemExit):
+      raise
+    except:
+      self.handleError(record)
+
+  @property
+  def nuoca_log_collect_queue(self):
+    return self._nuoca_log_collect_queue
+
+  def collect(self, collection_interval):
+    rval = None
+    self._collection_interval = collection_interval
+    try:
+      collection_count = len(self._nuoca_log_collect_queue)
+      if not collection_count:
+        return rval
+
+      rval = []
+      for i in range(collection_count):
+        collected_dict = self._nuoca_log_collect_queue.pop(0)
+        rval.append(collected_dict)
+    except Exception as e:
+      pass
+    return rval
+
+def get_nuoca_collect_loghandler():
+  global nuoca_collect_loghandler
+  return nuoca_collect_loghandler
+
+def initialize_logger(nuoca_logfile_name, collect_self=False):
+  global nuoca_logger, nuoca_loghandler, nuoca_collect_loghandler
   global yapsy_logger, yapsy_loghandler
 
   logging.basicConfig(level=logging.INFO)
@@ -81,6 +140,14 @@ def initialize_logger(nuoca_logfile_name):
     logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
   nuoca_logger.addHandler(nuoca_loghandler)
 
+  # NuoCA loghandler to turn NuoCA logging events into a NuoCA collected item.
+  if collect_self:
+    nuoca_collect_loghandler = CollectHandler()
+    nuoca_collect_loghandler.setLevel(logging.INFO)
+    nuoca_collect_loghandler.setFormatter(
+      logging.Formatter('%(asctime)s NuoCA %(levelname)s %(message)s'))
+    nuoca_logger.addHandler(nuoca_collect_loghandler)
+
   # Global Yapsy logger
   yapsy_logger = logging.getLogger('yapsy')
   yapsy_loghandler = logging.FileHandler(nuoca_logfile_name)
@@ -88,7 +155,8 @@ def initialize_logger(nuoca_logfile_name):
   yapsy_loghandler.setFormatter(
     logging.Formatter('%(asctime)s YAPSY %(levelname)s %(message)s'))
   yapsy_logger.addHandler(yapsy_loghandler)
-
+  if collect_self:
+    yapsy_logger.addHandler(nuoca_collect_loghandler)
 
 def randomid():
   """
@@ -165,6 +233,8 @@ def nuoca_set_log_level(log_level):
   logging.getLogger('nuoca').setLevel(level=log_level)
   logging.getLogger('yapsy').setLevel(level=log_level)
   nuoca_loghandler.setLevel(log_level)
+  if nuoca_collect_loghandler:
+    nuoca_collect_loghandler.setLevel(log_level)
   yapsy_loghandler.setLevel(log_level)
 
 

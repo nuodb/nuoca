@@ -1,0 +1,66 @@
+{
+    "template": "cm-*",
+    "order": 5,
+    "settings" : {
+        "index" : {
+          "analysis": {
+            "analyzer": {
+              "default": {
+                "type": "whitespace",
+                "tokenizer": "whitespace"
+              }
+            }
+          }
+        }
+    },
+    "mappings" : {
+      "nuoca" : {
+        "properties" : {
+          "timestamp" : {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "ZBX.system.localtime": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_second"
+          },
+          "ZBX.system.boottime": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_second"
+          },
+          "ZBX.collect_timestamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "WL.Dbt2.collect_timestamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "WL.OLTPBench.collect_timestamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoAdminAgentLog.collect_timestamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoAdminAgentLog.TimeStamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoAdminMon.collect_timestamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoAdminMon.TimeStamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoMon.TimeStamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          }
+        }
+      }
+    }
+}

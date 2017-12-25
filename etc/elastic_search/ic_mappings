@@ -21,6 +21,29 @@
           "NuoCA.hostname": {
               "type": "keyword"
           },
+          "NuoCA.filename": {
+              "type": "keyword"
+          },
+          "NuoCA.funcName": {
+              "type": "keyword"
+          },
+          "NuoCA.log_level": {
+              "type": "keyword"
+          },
+          "NuoCA.message": {
+              "type" : "text",
+	          "norms": "false",
+	          "doc_values": "false"
+          },
+          "NuoCA.pathname": {
+              "type": "keyword"
+          },
+          "NuoCA.processName": {
+              "type": "keyword"
+          },
+          "NuoCA.threadName": {
+              "type": "keyword"
+          },
           "ZBX.nuoca_plugin": {
               "type": "keyword"
           },
