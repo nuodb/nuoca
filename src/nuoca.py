@@ -28,6 +28,7 @@ import click
 import socket
 import signal
 import traceback
+import yaml
 from nuoca_util import *
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
@@ -82,10 +83,24 @@ class NuoCA(object):
         nuoca_log(logging.ERROR, msg)
         raise AttributeError(msg)
 
+    self._nuodb_cfgdir = None
+    self.get_nuodb_cfgdir()
+    self._nuoca_settings = self.read_nuoca_settings()
+
+    # override default log level
+    log_level = self._get_settings_loglevel()
+
+    # collect nuoca.log?
+    self._collect_nuoca_log = False
+    collect_nuoca_log = self.get_nuoca_settings_value('collect.nuoca.log')
+    if collect_nuoca_log:
+      self._collect_nuoca_log = True
+
+    # nuoca config file
     self._config = NuocaConfig(config_file)
     self._hostname = socket.gethostname()
 
-    initialize_logger(self._config.NUOCA_LOGFILE)
+    initialize_logger(self._config.NUOCA_LOGFILE, self._collect_nuoca_log)
 
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
@@ -123,9 +138,58 @@ class NuoCA(object):
                                 output_plugin_dir,
                                 transform_plugin_dir]
 
+  def get_nuodb_cfgdir(self):
+    if self._nuodb_cfgdir:
+      return self._nuodb_cfgdir
+    try:
+      self._nuodb_cfgdir = os.path.expandvars('$NUODB_CFGDIR')
+    except:
+      pass
+    return self._nuodb_cfgdir
+
+  def read_nuoca_settings(self):
+    settings = None
+    try:
+      if self._nuodb_cfgdir:
+        settings_file = os.path.join(self._nuodb_cfgdir, 'nuoca_settings.yml')
+        with open(settings_file, 'r') as f:
+          settings = yaml.load(f.read())
+          print settings
+        f.close()
+    except:
+      pass
+    return settings
+
+  def get_nuoca_settings_value(self, variable):
+    if not self._nuoca_settings:
+      return None
+    try:
+      value = self._nuoca_settings[variable]
+      return value
+    except:
+      return None
+
   @property
   def config(self):
     return self._config
+
+  def _get_settings_loglevel(self):
+    loglevel = None
+    try:
+      loglevel_str = self.get_nuoca_settings_value('nuoca.logging.level')
+      level_mappings= {
+        'DEBUG': logging.DEBUG,
+        'INFO': logging.INFO,
+        'WARNING': logging.WARNING,
+        'ERROR': logging.ERROR,
+        'CRITICAL': logging.CRITICAL
+      }
+      loglevel = level_mappings[loglevel_str]
+    except:
+      pass
+    if not loglevel:
+      loglevel = logging.INFO
+    return loglevel
 
   def _collection_cycle(self, collection_time):
     """
@@ -374,6 +438,17 @@ class NuoCA(object):
       nuoca_log(logging.WARNING,
                 "Unable to reactivate deactived plugins during collection: %s"
                 % str(e))
+
+    if self._collect_nuoca_log:
+      try:
+        nuoca_collect_loghandler = get_nuoca_collect_loghandler()
+        items = nuoca_collect_loghandler.collect(self._collection_interval)
+        for item in items:
+          if self._output_values:
+            item.update(self._output_values)
+          rval.append(item)
+      except:
+        pass
 
     return rval
 

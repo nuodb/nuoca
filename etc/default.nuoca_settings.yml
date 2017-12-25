@@ -1,0 +1,8 @@
+# Global settings for NuoCA
+#
+# Override Default Logging Level INFO,
+# with one of DEBUG, INFO, WARNING, ERROR, CRITICAL
+# nuoca.logging.level: DEBUG
+#
+# Enable nuoca.log collection (default is false)
+# collect.nuoca.log: true
