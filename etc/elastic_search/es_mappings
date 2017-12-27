@@ -18,6 +18,9 @@
               "type": "date",
               "format": "strict_date_optional_time||epoch_millis"
           },
+          "NuoCA.plugin_name": {
+              "type": "keyword"
+          },
           "NuoCA.hostname": {
               "type": "keyword"
           },
@@ -42,9 +45,6 @@
               "type": "keyword"
           },
           "NuoCA.threadName": {
-              "type": "keyword"
-          },
-          "ZBX.nuoca_plugin": {
               "type": "keyword"
           },
           "ZBX.system.hostname": {
@@ -185,9 +185,6 @@
           },
           "NuoAdminAgentLog.nodeport": {
               "type": "long"
-          },
-          "NuoAdminAgentLog.nuoca_plugin": {
-              "type": "keyword"
           },
           "NuoAdminAgentLog.path": {
               "type": "keyword"
@@ -456,9 +453,6 @@
               "type": "keyword"
           },
           "TestID": {
-              "type": "keyword"
-          },
-          "WL.OLTPBench.nuoca_plugin": {
               "type": "keyword"
           },
           "NuoCA.Hostname": {

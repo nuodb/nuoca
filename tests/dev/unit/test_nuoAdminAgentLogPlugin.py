@@ -85,6 +85,7 @@ class TestInputPlugins(unittest.TestCase):
 
       counter = 0
       for expected_line in expected_line_values:
+        del expected_line['nuoca_plugin']
         del expected_line['collect_timestamp']
         del expected_line['@timestamp']
         if 'tags' in expected_line:
@@ -98,7 +99,6 @@ class TestInputPlugins(unittest.TestCase):
         try:
           expected_line['Hostname'] = self.local_hostname
           expected_line['host'] = self.local_hostname
-          expected_line['nuoca_plugin'] = 'Logstash'
           if '@timestamp' in collected_line:
             del collected_line['@timestamp']
           self.assertIsNotNone(collected_line['collect_timestamp'])
@@ -196,6 +196,7 @@ class TestInputPlugins(unittest.TestCase):
         # print("counter: %s" % str(counter))
         collected_line = resp_collected_values[counter]
         try:
+          del expected_line['nuoca_plugin']
           del expected_line['@timestamp']
           del collected_line['@timestamp']
           del expected_line['collect_timestamp']

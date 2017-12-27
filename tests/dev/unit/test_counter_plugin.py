@@ -54,7 +54,6 @@ class TestInputPlugins(unittest.TestCase):
     resp_values = counter_plugin.collect(3)
     self.assertIsNotNone(resp_values)
     self.assertTrue(type(resp_values) is list)
-    self.assertIsNotNone(resp_values[0]['nuoca_plugin'])
     self.assertEqual(2, resp_values[0]['counter'])
     self.assertIsNotNone(resp_values[0]['collect_timestamp'])
     counter_plugin.shutdown()
@@ -98,7 +97,6 @@ class TestInputPlugins(unittest.TestCase):
     self.assertEqual(0, plugin_resp_msg['status_code'])
     self.assertIsNotNone(resp_values['collected_values'])
     self.assertTrue(type(resp_values['collected_values']) is list)
-    self.assertIsNotNone(resp_values['collected_values'][0]['nuoca_plugin'])
     self.assertEqual(1, resp_values['collected_values'][0]['counter'])
     self.assertIsNotNone(resp_values['collected_values'][0]['collect_timestamp'])
 

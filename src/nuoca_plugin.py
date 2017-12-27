@@ -209,8 +209,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     :return: time-series values
     :type: ``dict``
     """
-    rval = {'nuoca_plugin': self._collection_name,
-            'collect_timestamp': nuoca_gettimestamp() * 1000}
+    rval = {'collect_timestamp': nuoca_gettimestamp() * 1000}
     return rval
 
 
