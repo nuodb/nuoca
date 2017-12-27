@@ -411,6 +411,7 @@ class NuoCA(object):
             new_values[key_name] = collected_dict[collected_item]
             if collected_item == 'TimeStamp':
               new_values['timestamp'] = int(collected_dict[collected_item])
+            new_values['NuoCA.plugin_name'] = key_prefix
           if self._output_values:
             new_values.update(self._output_values)
           rval.append(new_values)
@@ -446,6 +447,7 @@ class NuoCA(object):
         for item in items:
           if self._output_values:
             item.update(self._output_values)
+          item['NuoCA.plugin_name'] = 'NuoCALog'
           rval.append(item)
       except:
         pass
