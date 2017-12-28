@@ -42,6 +42,7 @@ INPUT_PLUGINS:
     admin_collect_interval: 30
     domain_username: $DOMAIN_USER
     domain_password: $DOMAIN_PASSWORD
+    database_regex_pattern: '^(?!nuodb_system|\\.).*'
 - NuoMon:
     description : Collection from internal nuomonitor tool
     broker: localhost:$NUODB_PORT
