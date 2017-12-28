@@ -26,6 +26,7 @@
 
 import logging
 import os
+import re
 import requests
 import threading
 
@@ -52,6 +53,7 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
     self._config = None
     self._admin_host = None
     self._admin_rest_api_port = 8888
+    self._database_regex_pattern = '.*'
     self._enabled = False
     self._auth = None
     self._base_url = None
@@ -210,6 +212,8 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
         else:
           self._admin_collect_timeout = \
             os.path.expandvars(config['admin_collect_timeout'])
+      if 'database_regex_pattern' in config:
+        self._database_regex_pattern = config['database_regex_pattern']
       if 'host_uuid_shortname' in config:
         self._host_uuid_shortname = config['host_uuid_shortname']
       if 'admin_rest_api_port' in config:
@@ -255,7 +259,9 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
       rval = []
       for i in range(collection_count):
         collected_dict = self.monitor_collect_queue.pop(0)
-        rval.append(collected_dict)
+        m = re.search(self._database_regex_pattern, collected_dict['process.dbname'])
+        if m:
+          rval.append(collected_dict)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval
