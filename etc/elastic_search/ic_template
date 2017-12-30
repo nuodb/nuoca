@@ -20,6 +20,9 @@
               "type": "date",
               "format": "strict_date_optional_time||epoch_millis"
           },
+          "sub_id": {
+              "type": "keyword"
+          },
           "NuoCA.plugin_name": {
               "type": "keyword"
           },
