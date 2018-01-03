@@ -203,7 +203,7 @@ class NuoCA(object):
       list_item['collection_interval'] = self._collection_interval
       if 'timestamp' not in list_item:
         list_item['timestamp'] = collection_time
-      list_item['NuoCA.hostname'] = self._hostname
+      list_item['NuoCA.Hostname'] = self._hostname
     # TODO Transformations
     self._store_outputs(collected_inputs)
 
