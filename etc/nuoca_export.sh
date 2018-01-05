@@ -13,10 +13,10 @@ export NUODB_PORT
 export NUODB_DOMAIN_PASSWORD
 export PATH
 
-# Only set PYTHONHOME if we are using the python
-# we got from nuo3rdparty.
-[ "$PYTHONHOME" ] && export PYTHONHOME
-
+export PYTHONCMD
 export PYTHONPATH
 export NUOADMINAGENTLOGCONFIG
 export NUODB_INSIGHTS_SERVICE_API
+
+# Only export PYTHONHOME if set.
+[ -z "$PYTHONHOME" ] || export PYTHONHOME

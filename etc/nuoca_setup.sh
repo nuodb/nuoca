@@ -2,23 +2,40 @@
 #
 # This file should be _sourced_ by other scripts.
 
-: "${NUOCA_HOME?ERROR: NUOCA_HOME is not set!}"
+: "${NUOCA_HOME:?ERROR: NUOCA_HOME is not set!}"
 
-NUODB_HOME=${NUODB_HOME:-"/opt/nuodb"}
+# See if we're running nuoca from within a NuoDB package
+if [ -z "$NUODB_HOME" ]; then
+    case $NUOCA_HOME in
+        (*/etc/nuoca)
+            if [ -f "$NUOCA_HOME/../../etc/nuodb_setup.sh" ]; then
+                NUODB_HOME=${NUOCA_HOME%/etc/nuoca}
+            fi ;;
+        (*) : not NuoDB ;;
+    esac
+    : ${NUODB_HOME:=/opt/nuodb}
+fi
 
+[ -f "$NUODB_HOME/etc/nuodb_setup.sh" ] || { echo "Invalid NUODB_HOME: $NUODB_HOME"; exit 1; }
 . "${NUODB_HOME}/etc/nuodb_setup.sh"
 
-LOGSTASH_HOME=${LOGSTASH_HOME:-"${NUOCA_HOME}/logstash"}
-NUODB_PORT=${NUODB_PORT:-48004}
+: ${NUODB_PORT:=48004}
 NUODB_DOMAIN_PASSWORD=${DOMAIN_PASSWORD:-bird}
 
-# Are we running the python that we built in nuo3rdparty?
-if [ -d ${NUOCA_HOME}/python ]; then
-  PATH="${NUOCA_HOME}/python/bin:${PATH}"
-  PYTHONHOME="${NUOCA_HOME}/python:${NUOCA_HOME}/python/x86_64-linux"
-fi
+: ${LOGSTASH_HOME:="${NUOCA_HOME}/logstash"}
+: ${NUODB_INSIGHTS_SERVICE_API:="http://insights.nuodb.com/api/1"}
 
 PATH="${PATH}:${NUOCA_HOME}/zabbix/bin"
 PYTHONPATH="${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib"
 NUOADMINAGENTLOGCONFIG="${NUOCA_HOME}/etc/logstash/nuoadminagentlog.conf"
-NUODB_INSIGHTS_SERVICE_API=${NUODB_INSIGHTS_SERVICE_API:-"http://insights.nuodb.com/api/1"}
+
+# Are we running Python included in the NuoDB package?
+_pypath="${NUOCA_HOME%/*}/python"
+PYTHONCMD="$_pypath/nuopython"
+if [ -x "$PYTHONCMD" ]; then
+    PATH="${_pypath}/bin:${PATH}"
+    PYTHONHOME="${_pypath}:${_pypath}/x86_64-linux"
+else
+    PYTHONCMD=python
+fi
+unset _pypath

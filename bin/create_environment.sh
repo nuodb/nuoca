@@ -5,9 +5,9 @@ CMD=${0##*/}
 DIR=`cd "${0%$CMD}." && pwd`
 NUOCA_HOME=${DIR%/*}
 
-cd ${NUOCA_HOME}
+cd "${NUOCA_HOME}"
 
-source bin/check_python.sh
+. bin/check_python.sh
 
 if [ -f venv ]; then
   echo "Removing old venv..."
@@ -16,6 +16,6 @@ fi
 
 echo "Creating venv..."
 virtualenv venv
-source venv/bin/activate
+. venv/bin/activate
 pip install -r requirements.txt
 echo "Done."
