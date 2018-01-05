@@ -20,7 +20,7 @@ LOGSTASH_URL=https://artifacts.elastic.co/downloads/logstash/${LOGSTASH_TARBALL_
 if [ ! -f "${LOGSTASH_TARBALL_PATH}" ]; then
   echo "Logstash tarball not found: ${LOGSTASH_TARBALL_PATH}"
   echo "Downloading logstash: ${LOGSTASH_VERSION}"
-  curl -s -L -o "${LOGSTASH_TARBALL_PATH}" ${LOGSTASH_URL}
+  curl -s -L -o "${LOGSTASH_TARBALL_PATH}" "${LOGSTASH_URL}"
 fi
 
 echo "Untaring logstash tarball"

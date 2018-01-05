@@ -8,4 +8,4 @@ NUOCA_HOME=${DIR%/*}
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
-exec python "${NUOCA_HOME}"/src/nuoca.py "$@"
+exec "$PYTHONCMD" "${NUOCA_HOME}"/src/nuoca.py "$@"

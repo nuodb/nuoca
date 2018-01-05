@@ -11,8 +11,6 @@ echo "NUOCA_HOME=$NUOCA_HOME"
 
 cd "${THIS_DIR}"
 
-export PYTHONPATH="${NUOCA_HOME}/lib"
-
 # counter plugin
 "${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/counter.yml"
 

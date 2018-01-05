@@ -1,13 +1,14 @@
 #!/bin/sh
+# (C) Copyright NuoDB, Inc. 2017  All Rights Reserved.
 
 die () { echo "$*" ; exit 1; }
 
-python_path=$(which python) || die "ERROR: python not found ..."
-
-python_version=`python --version 2>&1`
+python_path=$(which "${PYTHONCMD:-python}") || die "ERROR: Python not found!"
+python_version=`"$python_path" --version 2>&1`
 case "$python_version" in
     "Python 2.7"*) break ;;
-    *) die "ERROR: python version 2.7 not found." ;;
+    *) die "ERROR: Python version 2.7 not found." ;;
 esac
 
-pip_path=$(which pip) || die "ERROR: pip not found ..."
+# Why do we need pip to run nuoca?
+#pip_path=$(which pip) || die "ERROR: pip not found ..."
