@@ -1,0 +1,231 @@
+{
+    "template": "ic_nuoadminmon-*",
+    "order": 5,
+    "settings" : {
+        "index" : {
+          "analysis": {
+            "analyzer": {
+              "default": {
+                "type": "whitespace",
+                "tokenizer": "whitespace"
+              }
+            }
+          }
+        }
+    },
+    "mappings" : {
+      "nuoca" : {
+        "properties" : {
+          "timestamp" : {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "sub_id": {
+              "type": "keyword"
+          },
+          "NuoCA.plugin_name": {
+              "type": "keyword"
+          },
+          "NuoCA.Hostname": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.TimeStamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoAdminMon.admin.address": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.admin.hostname": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.admin.id": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.admin.ipaddress": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.admin.stableId": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.admin.version": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.database.active": {
+              "type": "boolean"
+          },
+          "NuoAdminMon.database.archives": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.database.archivesByGroup": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.database.groupOptions": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.database.name": {
+              "type": "boolean"
+          },
+          "NuoAdminMon.database.options": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.database.status": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.database.tagConstraints": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.database.template": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.database.unmet_messages": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.database.variables": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.nuoca_colection_error": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          },
+          "NuoAdminMon.process.address": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.process.agentid": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.process.dbname": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.process.hostname": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.process.nodeId": {
+              "type": "long"
+          },
+          "NuoAdminMon.process.pid": {
+              "type": "long"
+          },
+          "NuoAdminMon.process.port": {
+              "type": "long"
+          },
+          "NuoAdminMon.process.status": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.process.type": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.process.uuid": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.process.version": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.process.region": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.archive_base": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.cores": {
+              "type": "long"
+          },
+          "NuoAdminMon.tag.cputype": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.default_archive_base": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.default_journal_base": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.default_region_base": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.journal_base": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.os_num_cores": {
+              "type": "long"
+          },
+          "NuoAdminMon.tag.os_num_cpu": {
+              "type": "long"
+          },
+          "NuoAdminMon.tag.os_num_fs": {
+              "type": "long"
+          },
+          "NuoAdminMon.tag.os_ram_mb": {
+              "type": "long"
+          },
+          "NuoAdminMon.tag.ostype": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.osversion": {
+              "type": "keyword"
+          },
+          "NuoAdminMon.tag.region": {
+              "type": "keyword"
+          }
+        }
+      }
+    }
+}

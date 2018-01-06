@@ -1,0 +1,78 @@
+{
+    "template": "ic_nuomon-*",
+    "order": 5,
+    "settings" : {
+        "index" : {
+          "analysis": {
+            "analyzer": {
+              "default": {
+                "type": "whitespace",
+                "tokenizer": "whitespace"
+              }
+            }
+          }
+        }
+    },
+    "mappings" : {
+      "nuoca" : {
+        "properties" : {
+          "timestamp" : {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "sub_id": {
+              "type": "keyword",
+	      "ignore_above": 20
+          },
+          "NuoCA.plugin_name": {
+              "type": "keyword",
+	      "ignore_above": 32
+          },
+          "NuoCA.Hostname": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
+          "NuoMon.TimeStamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoMon.ArchiveDirectory": {
+              "type": "keyword",
+	      "ignore_above": 1024
+          },
+          "NuoMon.Database": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
+          "NuoMon.Hostname": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
+          "NuoMon.HostShortID": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
+          "NuoMon.HostShortIDwithPID": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
+          "NuoMon.NodeState": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
+          "NuoMon.NodeType": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
+          "NuoMon.NodeRegion": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
+          "NuoMon.Region": {
+              "type": "keyword",
+	      "ignore_above": 256
+          }
+        }
+      }
+    }
+}

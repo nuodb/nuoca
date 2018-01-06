@@ -1,5 +1,5 @@
 {
-    "template": "ic-*",
+    "template": "ic_zbx-*",
     "order": 5,
     "settings" : {
         "index" : {
