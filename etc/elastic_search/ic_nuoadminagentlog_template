@@ -1,0 +1,193 @@
+{
+    "template": "ic_nuoadminagentlog-*",
+    "order": 5,
+    "settings" : {
+        "index" : {
+          "analysis": {
+            "analyzer": {
+              "default": {
+                "type": "whitespace",
+                "tokenizer": "whitespace"
+              }
+            }
+          }
+        }
+    },
+    "mappings" : {
+      "nuoca" : {
+        "properties" : {
+          "timestamp" : {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "sub_id": {
+              "type": "keyword"
+          },
+          "NuoCA.plugin_name": {
+              "type": "keyword"
+          },
+          "NuoCA.Hostname": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.collect_timestamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoAdminAgentLog.HostShortID": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.Hostname": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.action": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.bhostname": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.bindaddr": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.bhost": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.bindport": {
+              "type": "long"
+          },
+          "NuoAdminAgentLog.comment": {
+              "type": "text",
+	          "norms": "false",
+	          "doc_values": "false"
+          },
+          "NuoAdminAgentLog.dbname": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.directory": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.TimeStamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoAdminAgentLog.engine_pid": {
+              "type": "long"
+          },
+          "NuoAdminMon.collect_timestamp": {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "NuoAdminAgentLog.entity": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.exitcode": {
+              "type": "long"
+          },
+          "NuoAdminAgentLog.host": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.iporaddr": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.java_home": {
+              "type" : "text",
+	          "norms": "false",
+	          "doc_values": "false"
+          },
+          "NuoAdminAgentLog.java_runtime": {
+              "type" : "text",
+	          "norms": "false",
+	          "doc_values": "false"
+          },
+          "NuoAdminAgentLog.java_version": {
+              "type" : "text",
+	          "norms": "false",
+	          "doc_values": "false"
+          },
+          "NuoAdminAgentLog.java_vm": {
+              "type" : "text",
+	          "norms": "false",
+	          "doc_values": "false"
+          },
+          "NuoAdminAgentLog.logger": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.loglevel": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.message": {
+              "type" : "text",
+	          "norms": "false",
+	          "doc_values": "false"
+          },
+          "NuoAdminAgentLog.newnodeid": {
+              "type": "long"
+          },
+          "NuoAdminAgentLog.description": {
+              "type" : "text",
+	          "norms": "false",
+	          "doc_values": "false"
+          },
+          "NuoAdminAgentLog.node_pid": {
+              "type": "long"
+          },
+          "NuoAdminAgentLog.node_state": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.node_type": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.nodegroup": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.nodeid": {
+              "type": "long"
+          },
+          "NuoAdminAgentLog.nodeport": {
+              "type": "long"
+          },
+          "NuoAdminAgentLog.path": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.peeraddr": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.peertype": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.port": {
+              "type": "long"
+          },
+          "NuoAdminAgentLog.property": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.propertyfile": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.stableid": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.startId": {
+              "type": "long"
+          },
+          "NuoAdminAgentLog.tags": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.thread": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.value": {
+              "type": "keyword"
+          },
+          "NuoAdminAgentLog.version": {
+              "type" : "text",
+              "fields" : {
+                 "keyword" : {
+                   "type" : "keyword",
+                   "ignore_above" : 256
+                 }
+              }
+          }
+        }
+      }
+    }
+}
