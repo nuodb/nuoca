@@ -12,4 +12,9 @@ NUOCA_HOME=${DIR%/*}
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
-"$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" --disable
+propsfile="$NUODB_HOME"/etc/default.properties
+user="$(grep ^domainUser $propsfile | sed 's/.*=//')"
+[ "$user" ] && export DOMAIN_USER="$user" || export DOMAIN_USER="domain"
+export DOMAIN_PASSWORD="$(grep ^domainPassword $propsfile | sed 's/.*=//')"
+
+"$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" disable
