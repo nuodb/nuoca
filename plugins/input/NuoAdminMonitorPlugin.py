@@ -238,8 +238,11 @@ class NuoAdminMonitorPlugin(NuocaMPInputPlugin):
       rval = []
       for i in range(collection_count):
         collected_dict = self.monitor_collect_queue.pop(0)
-        m = re.search(self._database_regex_pattern, collected_dict['process.dbname'])
-        if m:
+        if 'process.dbname' in collected_dict:
+          m = re.search(self._database_regex_pattern, collected_dict['process.dbname'])
+          if m:
+            rval.append(collected_dict)
+        else:
           rval.append(collected_dict)
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
