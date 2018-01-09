@@ -23,8 +23,14 @@ export DOMAIN_USER=domain
 RESPONSE=`"$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" startup`
 if [ "$RESPONSE" = "Startup" ]; then
   service nuorestsvc start
+
+  # Check to see if nuoca is already running
   nuocaCount=$(ps -ef | grep "${NUOCA_HOME}/src/nuoca.py" | wc -l)
   if [ $nuocaCount -le 1 ]; then
+    # Set default nuoca settings.yml if not set.
+    if [ ! -f "${NUODB_CFGDIR}/nuoca_settings.yml" ]; then
+      cp "${NUOCA_HOME}/etc/insights.default.nuoca_settings.yml" "${NUODB_CFGDIR}/nuoca_settings.yml"
+    fi
     echo "Starting NuoCA"
     export INSIGHTS_SUB_ID=`cat ${NUODB_CFGDIR}/insights.sub.id`
     export INSIGHTS_INGEST_URL=`cat ${NUODB_CFGDIR}/insights.sub.ingest_url`
