@@ -15,7 +15,7 @@ NUOCA_HOME=${DIR%/*}
 
 if [ -f "${NUODB_RUNDIR}/nuoca.pid" ]; then
   NUOCA_PID=`cat "${NUODB_RUNDIR}/nuoca.pid"`
-  kill -SIGTERM $NUOCA_PID
+  kill $NUOCA_PID
   echo "Killed Insights PID: $NUOCA_PID"
   rm -f "${NUODB_RUNDIR}/nuoca.pid"
 fi
