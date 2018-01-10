@@ -26,7 +26,7 @@ fi
 NUODB_DOMAIN_PASSWORD=${DOMAIN_PASSWORD:-bird}
 
 : ${LOGSTASH_HOME:="${NUOCA_HOME}/logstash"}
-: ${NUODB_INSIGHTS_SERVICE_API:="http://insights.nuodb.com/api/1"}
+: ${NUODB_INSIGHTS_SERVICE_API:="https://insights.nuodb.com/api/1"}
 
 PATH="${PATH}:${NUOCA_HOME}/zabbix/bin"
 PYTHONPATH="${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib"
