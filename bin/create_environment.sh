@@ -9,7 +9,7 @@ NUOCA_HOME=${DIR%/*}
 
 cd ${NUOCA_HOME}
 
-. bin/check_python.sh
+#. bin/check_python.sh
 
 if [ -f venv ]; then
   echo "Removing old venv..."
