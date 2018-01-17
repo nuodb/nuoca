@@ -20,11 +20,10 @@ fi
 
 export DOMAIN_USER=domain
 
-# make sure the REST API is running
-"$NUODB_HOME"/etc/nuorestsvc start
-
 RESPONSE=`"$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" startup`
 if [ "$RESPONSE" = "Startup" ]; then
+  # make sure the REST API is running
+  "$NUODB_HOME"/etc/nuorestsvc start
 
   # Check to see if nuoca is already running
   nuocaCount=$(ps -ef | grep "${NUOCA_HOME}/src/nuoca.py" | wc -l)
