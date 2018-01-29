@@ -56,6 +56,14 @@
               "type": "keyword",
 	      "ignore_above": 256
           },
+          "NuoMon.NodeShortType": {
+              "type": "keyword",
+              "ignore_above": 16
+          },
+          "NuoMon.HostNameNuoTypePID": {
+              "type": "keyword",
+              "ignore_above": 256
+          },
           "NuoMon.NodeState": {
               "type": "keyword",
 	      "ignore_above": 256
