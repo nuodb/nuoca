@@ -37,3 +37,6 @@ cd "${THIS_DIR}"
 
 # NuoAdminMonitor plugin
 "${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=10 --self-test "${NUOCA_HOME}/tests/dev/configs/nuoadminmonitor_to_printer.yml"
+
+# NuoInfluxDB plugin
+"${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=10 --self-test "${NUOCA_HOME}/tests/dev/configs/nuomonitor_to_influxdb.yml"

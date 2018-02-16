@@ -1,0 +1,9 @@
+[Core]
+Name = InfluxDB
+Module = InfluxDBPlugin
+
+[Documentation]
+Author = Dirk Butson
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = NuoMon to InfluxDB
