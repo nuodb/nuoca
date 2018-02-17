@@ -65,6 +65,8 @@ fi
 
 echo " "
 "$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" enable $SUB_ARG
+exit_status=$?
+if [ "$exit_status" = "0" ]; then
 echo " "
 echo "If the nuoagent service is running, NuoDB Insights metrics collection"
 echo "will begin at the top of the hour.  If the nuoagent service is not"
@@ -73,3 +75,4 @@ echo "nuoagent with the command: "
 echo " "
 echo "  service nuoagent restart"
 echo " "
+fi

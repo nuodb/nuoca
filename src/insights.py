@@ -114,6 +114,15 @@ def read_stored_sub_info():
   return sub_info
 
 def get_subscription(sub_id=None):
+  try:
+    sub_info = read_stored_sub_info()
+    domain_info = get_domain_sub_info()
+    if sub_info or domain_info:
+      die("Insights Error: Insights is already enabled.")
+  except Exception, e:
+    die("Insights Error: Failed to obtain Insights subscription info: %s"
+        % str(e))
+
   url = os.environ['NUODB_INSIGHTS_SERVICE_API'] + '/subscriber/'
   if sub_id:
     url += sub_id
