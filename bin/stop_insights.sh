@@ -18,5 +18,6 @@ if [ -f "${NUODB_RUNDIR}/nuoca.pid" ]; then
   kill $NUOCA_PID
   echo "Killed Insights PID: $NUOCA_PID"
   rm -f "${NUODB_RUNDIR}/nuoca.pid"
+  "${NUOCA_HOME}/bin/stop_zabbix_agentd.sh"
 fi
 
