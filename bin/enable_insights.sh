@@ -13,8 +13,15 @@ NUOCA_HOME=${DIR%/*}
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
+# enable_insights can have one optional argument.  If it is
+# '--accept-tou', then the user is accepting the "terms of use"
+# without prompt.  Otherwise it provides a way for an existing
+# Insights subscriber to add this NuoDB domain to their
+# existing Insights Subscription ID.
 if [ ! -z $1 ]; then
-  SUB_ARG="--subscriber_id $1"
+  if [ "${1}" != "--accept-tou" ]; then
+    SUB_ARG="--subscriber_id $1"
+  fi
 else
   cat <<EOF
 NuoDB Insights Opt-In
