@@ -18,3 +18,5 @@ user="$(grep ^domainUser $propsfile | sed 's/.*=//')"
 export DOMAIN_PASSWORD="$(grep ^domainPassword $propsfile | sed 's/.*=//')"
 
 "$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" disable
+
+"${NUOCA_HOME}/bin/stop_insights.sh"
