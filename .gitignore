@@ -12,13 +12,13 @@ unit-test.log
 elasticsearch*.tar.gz
 filebeat*.tar.gz
 kibana*.tar.gz
-logstash*.tar.gz
+extern/logstash*.tar.gz
 zabbix-agent_*.deb*
 zabbix-get_*.deb*
 zabbix_src.tgz
 vagrant/ubuntu14_nuoca/
 nuoca.egg-info/
-logstash/**
+extern/logstash/**
 python/**
-zabbix/**
-zabbix-3.0.13/**
+extern/zabbix/**
+extern/zabbix-3.0.13/**

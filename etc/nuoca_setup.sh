@@ -25,10 +25,10 @@ fi
 : ${NUODB_PORT:=48004}
 NUODB_DOMAIN_PASSWORD=${DOMAIN_PASSWORD:-bird}
 
-: ${LOGSTASH_HOME:="${NUOCA_HOME}/logstash"}
+: ${LOGSTASH_HOME:="${NUOCA_HOME}/extern/logstash"}
 : ${NUODB_INSIGHTS_SERVICE_API:="https://insights.nuodb.com/api/1"}
 
-PATH="${PATH}:${NUOCA_HOME}/zabbix/bin"
+PATH="${PATH}:${NUOCA_HOME}/extern/zabbix/bin"
 PYTHONPATH="${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib"
 NUOADMINAGENTLOGCONFIG="${NUOCA_HOME}/etc/logstash/nuoadminagentlog.conf"
 

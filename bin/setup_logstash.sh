@@ -15,9 +15,9 @@ cd "${NUOCA_HOME}"
 # Setup logstash.
 
 LOGSTASH_VERSION=5.6.4    # Same as Logstach version in NuoDB bld pkg.
-LOGSTASH_HOME=${NUOCA_HOME}/logstash
+LOGSTASH_HOME=${NUOCA_HOME}/extern/logstash
 LOGSTASH_TARBALL_NAME=logstash-${LOGSTASH_VERSION}.tar.gz
-LOGSTASH_TARBALL_PATH=${NUOCA_HOME}/etc/${LOGSTASH_TARBALL_NAME}
+LOGSTASH_TARBALL_PATH=${NUOCA_HOME}/extern/${LOGSTASH_TARBALL_NAME}
 LOGSTASH_URL=https://artifacts.elastic.co/downloads/logstash/${LOGSTASH_TARBALL_NAME}
 
 
@@ -29,7 +29,7 @@ if [ ! -f "${LOGSTASH_TARBALL_PATH}" ]; then
 fi
 
 echo "Untaring logstash tarball"
-tar -xzf "${LOGSTASH_TARBALL_PATH}"
-rm -fr "${LOGSTASH_HOME}"
-mv "${NUOCA_HOME}/logstash-${LOGSTASH_VERSION}" "${NUOCA_HOME}/logstash"
-chown -R --reference="${NUOCA_HOME}" "${NUOCA_HOME}/logstash"
+(cd extern; tar -xzf "${LOGSTASH_TARBALL_PATH}")
+rm -fr "${NUOCA_HOME}/extern/${LOGSTASH_HOME}"
+mv "${NUOCA_HOME}/extern/logstash-${LOGSTASH_VERSION}" "${NUOCA_HOME}/extern/logstash"
+chown -R --reference="${NUOCA_HOME}" "${NUOCA_HOME}/extern/logstash"

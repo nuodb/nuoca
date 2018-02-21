@@ -34,8 +34,8 @@ clean:
 	- bin/stop_zabbix_agentd.sh
 	find . -name '*.pyc' -exec rm -f {} +
 	rm -fr $(PYTHON_ROOT)
-	rm -fr logstash
-	rm -fr zabbix
+	rm -fr extern/logstash
+	rm -fr extern/zabbix
 	rm -f /tmp/zabbix_agentd.log
 	rm -f get-pip.py
 	rm -fr venv
@@ -45,21 +45,21 @@ venv: requirements.txt
 
 continuous-test: unit-test integration-test
 
-logstash:
+extern/logstash:
 	bin/setup_logstash.sh
 
-integration-test: logstash zabbix
+integration-test: extern/logstash extern/zabbix
 	. "${NUOCA_HOME}/etc/nuoca_setup.sh" && tests/dev/integration/run_tests.sh
 
-unit-test: logstash zabbix
+unit-test: extern/logstash extern/zabbix
 	tests/dev/run_unit_tests.sh
 
-zabbix:
-	curl -s -L -o "${NUOCA_HOME}/zabbix_src.tgz" "$(zabbix_url)"
-	tar xzf "${NUOCA_HOME}/zabbix_src.tgz"
-	(cd ${zabbix_version_name} && ./configure --enable-agent --prefix="${NUOCA_HOME}/zabbix") > /tmp/nuoca_zabbix_configure.log 2>&1
-	(cd ${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
+extern/zabbix:
+	curl -s -L -o "${NUOCA_HOME}/extern/zabbix_src.tgz" "$(zabbix_url)"
+	(cd extern && tar xzf "${NUOCA_HOME}/extern/zabbix_src.tgz")
+	(cd extern/${zabbix_version_name} && ./configure --enable-agent --prefix="${NUOCA_HOME}/extern/zabbix") > /tmp/nuoca_zabbix_configure.log 2>&1
+	(cd extern/${zabbix_version_name} && make install-strip) > /tmp/nuoca_zabbix_install.log 2>&1
 
-zabbix_start: zabbix
+zabbix_start: extern/zabbix
 	'${NUOCA_HOME}/bin/start_zabbix_agentd.sh'
 

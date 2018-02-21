@@ -50,6 +50,6 @@ script:
   - tests/etc/elastic_search/es_test_create_index.sh
   - tests/etc/influxdb/test_create_database.sh
   - curl -XPOST 'http://localhost:8086/query' --data-urlencode 'q=SHOW DATABASES'
-  - make zabbix
-  - make logstash
+  - make extern/zabbix
+  - make extern/logstash
   - make continuous-test

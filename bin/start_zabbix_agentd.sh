@@ -11,7 +11,7 @@ DIR=`cd "${0%$CMD}." && pwd`
 NUOCA_HOME=${DIR%/*}
 
 cd "${NUOCA_HOME}"
-export ZABBIX_HOME="${NUOCA_HOME}/zabbix"
+export ZABBIX_HOME="${NUOCA_HOME}/extern/zabbix"
 
 zabbix_version=$("${ZABBIX_HOME}/bin/zabbix_get" -s localhost -p 10050 -k agent.version 2> /dev/null)
 zabbix_rc=$?

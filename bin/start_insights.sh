@@ -14,7 +14,7 @@ NUOCA_HOME=${DIR%/*}
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
 # Setup logstash if it has not been setup.
-if [ ! -d "${NUOCA_HOME}/logstash" ]; then
+if [ ! -d "${NUOCA_HOME}/extern/logstash" ]; then
   (cd "${NUOCA_HOME}" && ./bin/setup_logstash.sh)
 fi
 
