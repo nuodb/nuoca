@@ -7,6 +7,7 @@ import os
 import click
 import requests
 import json
+import sys
 
 from requests.auth import HTTPBasicAuth
 
@@ -55,6 +56,33 @@ def check_environment():
   check_env_var('NUODB_LOGDIR')
   check_env_var('NUODB_RUNDIR')
   check_env_var('NUODB_INSIGHTS_SERVICE_API', check_dir=False)
+
+def insights_tou_filepath():
+  nuoca_home = os.environ['NUOCA_HOME']
+  file_path = os.path.join(nuoca_home, 'etc', 'insights_tou.txt')
+  return file_path
+
+def display_insights_tou():
+  with open(insights_tou_filepath()) as f:
+    print f.read()
+
+def ask_Y_N(question):
+  # raw_input returns the empty string for "enter"
+  yes = {'yes', 'y'}
+  no = {'no', 'n'}
+  while True:
+    sys.stdout.write(question)
+    choice = raw_input().lower()
+    if choice in yes:
+      return True
+    elif choice in no:
+      return False
+    else:
+      sys.stdout.write('Please answer Y or N.')
+
+def accept_insights_tou():
+  display_insights_tou()
+  return ask_Y_N('Do you agree? Y or N: ')
 
 def show_insights():
   filesystem_sub_info = read_stored_sub_info()
@@ -113,7 +141,7 @@ def read_stored_sub_info():
     return None
   return sub_info
 
-def get_subscription(sub_id=None):
+def get_subscription(root_url=None, sub_id=None):
   try:
     sub_info = read_stored_sub_info()
     domain_info = get_domain_sub_info()
@@ -123,7 +151,10 @@ def get_subscription(sub_id=None):
     die("Insights Error: Failed to obtain Insights subscription info: %s"
         % str(e))
 
-  url = os.environ['NUODB_INSIGHTS_SERVICE_API'] + '/subscriber/'
+  if not root_url:
+    root_url = os.environ['NUODB_INSIGHTS_SERVICE_API']
+
+  url = root_url + '/subscriber/'
   if sub_id:
     url += sub_id
   sub_info = None
@@ -200,13 +231,20 @@ def cli(ctx):
   pass
 
 @click.command(short_help="Enable Insights")
-@click.option('--subscriber_id', default=None,
+@click.option('--subscriber-id', default=None,
               help='Subscriber ID')
+@click.option('--accept-tou', default=None, is_flag=True,
+              help='Accept Terms Of Use Agreement')
+@click.option('--root-url', default=None,
+              help='Root URL for Insights Server')
 @click.option('--verbose', is_flag=True, default=False,
               help='Run with verbose messages written to stdout')
 @click.pass_context
-def enable(ctx, subscriber_id, verbose):
-  sub_info = get_subscription(subscriber_id)
+def enable(ctx, subscriber_id, accept_tou, root_url, verbose):
+  if not accept_tou:
+    if not accept_insights_tou():
+      sys.exit(1)
+  sub_info = get_subscription(root_url, subscriber_id)
   print("Insights Subscriber ID: %s" % sub_info['subscriber_id'])
   print()
   print("NuoDB Insights is now enabled. To access your personalized dashboard, visit: %s"
