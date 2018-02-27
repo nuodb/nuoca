@@ -22,7 +22,7 @@ export PYTHON_ROOT=${NUOCA_HOME}/python
 
 zabbix_version := 3.0.13
 zabbix_version_name := zabbix-$(zabbix_version)
-zabbix_url := http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/$(zabbix_version)/zabbix-$(zabbix_version).tar.gz/download
+zabbix_url := https://s3.amazonaws.com/nuohub.org/zabbix-$(zabbix_version).tar.gz
 
 .PHONY: showenv
 .PHONY: clean
