@@ -34,8 +34,7 @@ clean:
 	- bin/stop_zabbix_agentd.sh
 	find . -name '*.pyc' -exec rm -f {} +
 	rm -fr $(PYTHON_ROOT)
-	rm -fr extern/logstash
-	rm -fr extern/zabbix
+	rm -fr extern/*
 	rm -f /tmp/zabbix_agentd.log
 	rm -f get-pip.py
 	rm -fr venv

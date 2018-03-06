@@ -1,0 +1,11 @@
+---
+NUOCA_LOGFILE: /tmp/nuoca_counter_to_kafka.log
+
+INPUT_PLUGINS:
+- Counter:
+    description : A simple counter
+    interval : 1
+OUTPUT_PLUGINS:
+- KafkaProducer:
+    servers: [ 'localhost:9092' ]
+    defaulttopic: nuocatest

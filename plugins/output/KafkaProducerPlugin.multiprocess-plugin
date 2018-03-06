@@ -1,0 +1,9 @@
+[Core]
+Name = KafkaProducer
+Module = KafkaProducerPlugin
+
+[Documentation]
+Author = Dirk Butson
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = Output plugin to Kafka

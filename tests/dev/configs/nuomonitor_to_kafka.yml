@@ -1,0 +1,15 @@
+---
+NUOCA_LOGFILE: /tmp/nuoca_nuomonitor_to_kafka.log
+
+INPUT_PLUGINS:
+- NuoMon:
+    description : Collection from internal nuomonitor tool
+    broker: localhost
+    domain_username: domain
+    domain_password: bird
+
+OUTPUT_PLUGINS:
+- KafkaProducer:
+    servers: [ 'localhost:9092' ]
+    defaulttopic: nuoca-nuomon-test
+    
