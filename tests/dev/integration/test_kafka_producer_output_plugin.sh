@@ -21,16 +21,37 @@ DIR=`cd "${0%$CMD}." && pwd`
 THIS_DIR=${DIR%/*}
 
 NUOCA_HOME=`cd "${THIS_DIR}/../.." && pwd`
+KAFKA_HOME="$NUOCA_HOME/extern/kafka"
 echo "NUOCA_HOME=$NUOCA_HOME"
+echo "KAFKA_HOME=$KAFKA_HOME"
 
 cd "${THIS_DIR}"
 
 # Kafka Producer Output Plugin
 "${NUOCA_HOME}/tests/dev/bin/setup_kafka.sh"
+
+echo "### Start of ${KAFKA_HOME}/kafka-server.log ###"
+cat "${KAFKA_HOME}/kafka-server.log"
+echo "### END of ${KAFKA_HOME}/kafka-server.log ###"
+
 "${NUOCA_HOME}/tests/dev/bin/kafka_create_topic.sh"
 "${NUOCA_HOME}/tests/dev/bin/kafka_start_file_sink_consumer.sh"
+
+echo "### Start of /tmp/kafka_connect_file_sink.log ###"
+cat "/tmp/kafka_connect_file_sink.log"
+echo "### END of /tmp/kafka_connect_file_sink.log ###"
+
 echo "Testing Kafka Plugin..."
 "${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/kafka_test.yml"
+
+echo "### Start of /tmp/nuoca.counter.output.json ###"
+cat "/tmp/nuoca.counter.output.json"
+echo "### END of /tmp/nuoca.counter.output.json ###"
+
+echo "### Start of /tmp/nuocatest.kafka.sink.txt ###"
+cat "/tmp/nuocatest.kafka.sink.txt"
+echo "### END of /tmp/nuocatest.kafka.sink.txt ###"
+
 echo "Checking Kafka sink file: /tmp/nuocatest.kafka.sink.txt"
 python "${NUOCA_HOME}/tests/dev/integration/kafka_file_sink_compare.py" /tmp/nuoca.counter.output.json /tmp/nuocatest.kafka.sink.txt
 kafka_cmp_status=$?
