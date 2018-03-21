@@ -53,6 +53,9 @@ integration-test: extern/logstash extern/zabbix
 unit-test: extern/logstash extern/zabbix
 	tests/dev/run_unit_tests.sh
 
+installer-test:
+	tests/dev/run_installer_tests.sh
+
 extern/zabbix:
 	curl -s -L -o "${NUOCA_HOME}/extern/zabbix_src.tgz" "$(zabbix_url)"
 	(cd extern && tar xzf "${NUOCA_HOME}/extern/zabbix_src.tgz")

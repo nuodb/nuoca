@@ -44,6 +44,8 @@ echo "### END of /tmp/kafka_connect_file_sink.log ###"
 echo "Testing Kafka Plugin..."
 "${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/kafka_test.yml"
 
+sleep 5
+
 echo "### Start of /tmp/nuoca.counter.output.json ###"
 cat "/tmp/nuoca.counter.output.json"
 echo "### END of /tmp/nuoca.counter.output.json ###"
