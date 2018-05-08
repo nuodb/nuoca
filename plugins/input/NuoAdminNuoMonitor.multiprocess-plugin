@@ -1,0 +1,10 @@
+[Core]
+Name = NuoAdminNuoMon
+Module = NuoAdminNuoMonitorPlugin
+
+[Documentation]
+Author = Tom Gates
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = Collection of stats from the internal nuoAdminNuoMonitor tool.
+

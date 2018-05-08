@@ -1,0 +1,15 @@
+---
+NUOCA_LOGFILE: /var/log/nuodb/nuoca.log
+
+INPUT_PLUGINS:
+- NuoAdminNuoMon:
+    description : Collection from NuoDB engines
+    nuocaCollectionName: NuoMon
+    api_server: localhost:8888
+    client_key: /opt/nuodb/tls-config/keys/nuocmd.pem
+
+OUTPUT_PLUGINS:
+- RestClient:
+    url: $INSIGHTS_INGEST_URL
+    auth_token: $INSIGHTS_TOKEN
+
