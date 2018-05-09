@@ -1,0 +1,11 @@
+[Core]
+Name = WL.SimpleDriver
+Module = LogstashPlugin
+
+[Documentation]
+Author = NuoDB QA
+Version = 0.1
+Website = http://wwww.nuodb.com
+Description = Collect from NuoDB SimpleDriver CSV output file(s)
+
+
