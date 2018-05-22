@@ -13,15 +13,16 @@ NUOCA_HOME=${DIR%/*}
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
-# Setup logstash if it has not been setup.
-if [ ! -d "${NUOCA_HOME}/extern/logstash" ]; then
-  (cd "${NUOCA_HOME}" && ./bin/setup_logstash.sh)
-fi
-
 export DOMAIN_USER=domain
 
 RESPONSE=`"$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" startup`
 if [ "$RESPONSE" = "Startup" ]; then
+
+  # Setup logstash if it has not been setup.
+  if [ ! -d "${NUOCA_HOME}/extern/logstash" ]; then
+    (cd "${NUOCA_HOME}" && ./bin/setup_logstash.sh)
+  fi
+
   # make sure the REST API is running
   "$NUODB_HOME"/etc/nuorestsvc start
 
