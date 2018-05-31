@@ -2,7 +2,7 @@
 INPUT_PLUGINS:
 - Counter:
     description : A simple counter
-    interval : 1
+    increment : 1
 OUTPUT_PLUGINS:
 - Printer:
 - ElasticSearch:
