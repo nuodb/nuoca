@@ -32,6 +32,6 @@ if [ "$exit_status" = "0" ]; then
   echo "running, or to start collecting immediately, you can (re)start the "
   echo "nuoagent with the command: "
   echo " "
-  echo "  service nuoagent restart"
+  echo "  \"${NUODB_HOME}/etc/nuoagent\" restart"
   echo " "
 fi

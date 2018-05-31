@@ -34,11 +34,12 @@ if [ "$RESPONSE" = "Startup" ]; then
       cp "${NUOCA_HOME}/etc/insights.default.nuoca_settings.yml" "${NUODB_CFGDIR}/nuoca_settings.yml"
     fi
     echo "Starting NuoCA"
-    export INSIGHTS_SUB_ID=`cat ${NUODB_CFGDIR}/insights.sub.id`
-    export INSIGHTS_INGEST_URL=`cat ${NUODB_CFGDIR}/insights.sub.ingest_url`
-    export INSIGHTS_TOKEN=`cat ${NUODB_CFGDIR}/insights.sub.token`
+    export INSIGHTS_SUB_ID=`cat "${NUODB_CFGDIR}/insights.sub.id"`
+    export INSIGHTS_INGEST_URL=`cat "${NUODB_CFGDIR}/insights.sub.ingest_url"`
+    export INSIGHTS_TOKEN=`cat "${NUODB_CFGDIR}/insights.sub.token"`
+    export NUOCA_LOGFILE="${NUODB_LOGDIR}/nuoca.log"
     "${NUOCA_HOME}/bin/start_zabbix_agentd.sh"
-    "$PYTHONCMD" "${NUOCA_HOME}/src/nuoca.py" --mode insights -o sub_id=${INSIGHTS_SUB_ID} --collection-interval 30 "${NUOCA_HOME}/etc/nuodb_domain.yml" > /dev/null 2>&1 &
+    "$PYTHONCMD" "${NUOCA_HOME}/src/nuoca.py" --mode insights -o sub_id=${INSIGHTS_SUB_ID} --collection-interval 30 "${NUOCA_HOME}/etc/nuodb_domain.yml" > "${NUODB_LOGDIR}/nuoca.output" 2>&1 &
     NUOCA_PID=$!
     echo "$NUOCA_PID" > "${NUODB_RUNDIR}/nuoca.pid"
   fi

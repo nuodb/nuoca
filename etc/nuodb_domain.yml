@@ -1,6 +1,5 @@
 ---
-NUOCA_LOGFILE: /var/log/nuodb/nuoca.log
-
+NUOCA_LOGFILE: $NUOCA_LOGFILE
 INPUT_PLUGINS:
 - ZBX:
     description : Collect machine stats from Zabbix

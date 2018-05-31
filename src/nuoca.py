@@ -3,6 +3,7 @@
 # This source code is licensed under the MIT license found in the LICENSE
 # file in the root directory of this source tree.
 
+import os
 import click
 import socket
 import signal
@@ -78,8 +79,8 @@ class NuoCA(object):
     # nuoca config file
     self._config = NuocaConfig(config_file)
     self._hostname = socket.gethostname()
-
-    initialize_logger(self._config.NUOCA_LOGFILE, self._collect_nuoca_log)
+    logfile = os.path.expandvars(self._config.NUOCA_LOGFILE)
+    initialize_logger(logfile, self._collect_nuoca_log)
 
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
