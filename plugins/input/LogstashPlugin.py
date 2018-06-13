@@ -78,7 +78,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
             self._config['logstashInputFilePath']
       nuoca_log(logging.INFO, msg)
       os.environ["LOGSTASH_INPUT_FILE_PATH"] = \
-        self._config['logstashInputFilePath']
+        os.path.expandvars(self._config['logstashInputFilePath'])
     if self._logstash_sincedb_path:
       msg = "Env: LOGSTASH_SINCEDB_PATH=%s" % \
             self._logstash_sincedb_path
