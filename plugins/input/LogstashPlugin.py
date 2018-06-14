@@ -43,6 +43,10 @@ from nuoca_util import nuoca_log
 #      is set to this value.  In this way, you can parameterize the
 #      file.sincedb_path in a logstash config file.
 #
+#  Users can set 'timestamp_iso8601' in their collection to force the event
+#  timestamp to become the epoch_millis (the number of milliseconds since
+#  Unix Epoch)
+#
 
 
 class LogstashPlugin(NuocaMPInputPlugin):
@@ -234,9 +238,21 @@ class LogstashPlugin(NuocaMPInputPlugin):
       for i in range(collection_count):
         collected_dict = self._logstash_collect_queue.pop(0)
         collected_dict.update(base_values)
-        if 'timestamp' in collected_dict:
-          dt = date_parse(collected_dict['timestamp'])
-          epoch_seconds = int(time.mktime(dt.timetuple()))
+        if 'timestamp_iso8601' in collected_dict:
+          dt = date_parse(collected_dict['timestamp_iso8601'])
+          tt = dt.timetuple()
+          # When processing the ISO8601 time string, there is no way to
+          # determine local daylight saving time from the timestring, so the
+          # call to dt.timetuple() sets tm_idst=0.  But we want to force
+          # time.mktime() to consider daylight savings time in it's calculation
+          # so we need to set tm_isdst=-1.  The Python time tuple 'tt' is
+          # read-only, so I made a writeable list 'tt_writeable' to set
+          # tm_isdst (the 9th element in the list) to -1.  And then create
+          # a new time tuple 'tt' from the writeable version.
+          tt_writeable = list(tt)
+          tt_writeable[8] = -1
+          tt = time.struct_time(tuple(tt_writeable))
+          epoch_seconds = int(time.mktime(tt))
           epoch_millis = epoch_seconds * 1000 + dt.microsecond / 1000
           collected_dict['TimeStamp'] = epoch_millis
         rval.append(collected_dict)

@@ -54,8 +54,8 @@ class TestInputPlugins(unittest.TestCase):
       self.assertTrue(len(resp_values) > 0)
 
       # To capture a new data.json file.
-      # with open("%s.data.json" % test_node_id, 'w') as outfile:
-      # json.dump(resp_values, outfile)
+      #with open("%s.data.json" % test_node_id, 'w') as outfile:
+      #  json.dump(resp_values, outfile)
 
       expected_json_file = "%s/../test_data/%s.expected.json.gz" % \
                            (dir_path, test_node_id)
@@ -64,9 +64,9 @@ class TestInputPlugins(unittest.TestCase):
 
       counter = 0
       for expected_line in expected_line_values:
-        del expected_line['nuoca_plugin']
         del expected_line['collect_timestamp']
         del expected_line['@timestamp']
+
         if 'tags' in expected_line:
           del expected_line['tags']
         collected_line = resp_values[counter]
@@ -161,8 +161,8 @@ class TestInputPlugins(unittest.TestCase):
       self.assertTrue(type(resp_values['collected_values']) is list)
 
       # To capture a new data.json file.
-      # with open("%s.data.json" % test_node_id, 'w') as outfile:
-      #   json.dump(resp_values, outfile)
+      #with open("%s.data.json" % test_node_id, 'w') as outfile:
+      #  json.dump(resp_values, outfile)
 
       expected_json_file = "%s/../test_data/%s.expected.json.gz" % \
                            (dir_path, test_node_id)
@@ -175,7 +175,6 @@ class TestInputPlugins(unittest.TestCase):
         # print("counter: %s" % str(counter))
         collected_line = resp_collected_values[counter]
         try:
-          del expected_line['nuoca_plugin']
           del expected_line['@timestamp']
           del collected_line['@timestamp']
           del expected_line['collect_timestamp']
