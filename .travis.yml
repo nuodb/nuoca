@@ -53,3 +53,14 @@ script:
   - make extern/zabbix
   - make extern/logstash
   - make continuous-test
+  - echo Starting Tarball Testing Phase
+  - sudo service nuoagent stop
+  - sudo service nuorestsvc stop
+  - bin/stop_zabbix_agentd.sh
+  - wget -q http://download.nuohub.org/nuodb-ce-${NUOVERSION}.linux.x86_64.tar.gz --output-document=/tmp/nuodb.tar.gz
+  - sudo chmod 777 tests/dev/install_nuodb_tar.sh
+  - make install-nuodb-tar
+  - make extern/zabbix
+  - make extern/logstash
+  - bin/start_zabbix_agentd.sh
+  - make tar-test

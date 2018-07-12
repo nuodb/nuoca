@@ -65,3 +65,8 @@ extern/zabbix:
 zabbix_start: extern/zabbix
 	'${NUOCA_HOME}/bin/start_zabbix_agentd.sh'
 
+install-nuodb-tar:
+	'${NUOCA_HOME}/tests/dev/install_nuodb_tar.sh'
+
+tar-test: extern/logstash extern/zabbix
+	tests/dev/run_tar_tests.sh
