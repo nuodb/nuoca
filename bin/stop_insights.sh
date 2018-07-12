@@ -13,11 +13,25 @@ NUOCA_HOME=${DIR%/*}
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
-if [ -f "${NUODB_RUNDIR}/nuoca.pid" ]; then
+if [ -f "${NUODB_RUNDIR}/nuoca.pid" ]
+then
   NUOCA_PID=`cat "${NUODB_RUNDIR}/nuoca.pid"`
   kill $NUOCA_PID
-  echo "Killed Insights PID: $NUOCA_PID"
   rm -f "${NUODB_RUNDIR}/nuoca.pid"
-  "${NUOCA_HOME}/bin/stop_zabbix_agentd.sh"
 fi
 
+count=0
+while [ $count -lt 15 ]
+do
+  [ "$(ps -ef | grep '[n]uoca\.py' | awk '{print $2}')" ] || break
+  count=$(expr $count + 1)
+  sleep 1
+done
+
+for x in $(ps -ef | grep '[n]uoca\.py' | awk '{print $2}')
+do
+  kill -9 $x &> /dev/null;
+done
+
+echo "Shutdown Insights PID: $NUOCA_PID"
+"${NUOCA_HOME}/bin/stop_zabbix_agentd.sh"
