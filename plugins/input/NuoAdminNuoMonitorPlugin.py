@@ -176,7 +176,6 @@ class NuoAdminNuoMonMessageConsumer(object):
         mc = self._process_metrics_dict[process.start_id]
       mc.message_received(xml_message)
       items = mc.values
-      print items
       # json_msg = pynuoadmin.nuodb_mgmt.xml_to_json(xml_message, message_name)
       json_msg = items
       if len(json_msg) != 0:
