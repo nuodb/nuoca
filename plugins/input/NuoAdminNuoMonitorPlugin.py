@@ -15,7 +15,7 @@ from copy import deepcopy
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log
 
-import pynuoadmin.nuodb_mgmt
+import nuodb_mgmt
 
 # NuoAdminNuoMonitor plugin
 #
@@ -176,7 +176,6 @@ class NuoAdminNuoMonMessageConsumer(object):
         mc = self._process_metrics_dict[process.start_id]
       mc.message_received(xml_message)
       items = mc.values
-      # json_msg = pynuoadmin.nuodb_mgmt.xml_to_json(xml_message, message_name)
       json_msg = items
       if len(json_msg) != 0:
         # add timestamp to message attributes; TODO: in the future, we
@@ -238,7 +237,7 @@ class NuoAdminNuoMonitorPlugin(NuocaMPInputPlugin):
       else:
         api_server = 'https://' + api_server
 
-    return pynuoadmin.nuodb_mgmt.AdminConnection(api_server, client_key, server_cert)
+    return nuodb_mgmt.AdminConnection(api_server, client_key, server_cert)
 
   def wait_for_terminate(self):
     if self._domain:
