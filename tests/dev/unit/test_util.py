@@ -200,5 +200,38 @@ class TestIntervalSync3(unittest.TestCase):
        datetime.datetime(1970, 1, 1, tzinfo=utc_tzinfo)).total_seconds()
     self.assertEqual(ts1_epoch_seconds, seed_ts1)
 
+class TestToBool(unittest.TestCase):
+  def runTest(self):
+    # Test cases
+    assert nuoca_util.to_bool('true'), '"true" is True'
+    assert nuoca_util.to_bool('True'), '"True" is True'
+    assert nuoca_util.to_bool('TRue'), '"TRue" is True'
+    assert nuoca_util.to_bool('TRUE'), '"TRUE" is True'
+    assert nuoca_util.to_bool('T'), '"T" is True'
+    assert nuoca_util.to_bool('t'), '"t" is True'
+    assert nuoca_util.to_bool('1'), '"1" is True'
+    assert nuoca_util.to_bool(True), 'True is True'
+    assert nuoca_util.to_bool(u'true'), 'unicode "true" is True'
+
+    assert nuoca_util.to_bool('false') is False, '"false" is False'
+    assert nuoca_util.to_bool('False') is False, '"False" is False'
+    assert nuoca_util.to_bool('FAlse') is False, '"FAlse" is False'
+    assert nuoca_util.to_bool('FALSE') is False, '"FALSE" is False'
+    assert nuoca_util.to_bool('F') is False, '"F" is False'
+    assert nuoca_util.to_bool('f') is False, '"f" is False'
+    assert nuoca_util.to_bool('0') is False, '"0" is False'
+    assert nuoca_util.to_bool(False) is False, 'False is False'
+    assert nuoca_util.to_bool(u'false') is False, 'unicode "false" is False'
+
+    # Expect ValueError to be raised for invalid parameter...
+    try:
+      nuoca_util.to_bool('')
+      nuoca_util.to_bool(12)
+      nuoca_util.to_bool([])
+      nuoca_util.to_bool('yes')
+      nuoca_util.to_bool('FOObar')
+    except ValueError, e:
+      pass
+
 if __name__ == '__main__':
   sys.exit(unittest.main())

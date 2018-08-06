@@ -10,6 +10,7 @@ INPUT_PLUGINS:
     logstashInputFilePath: /tmp/agent.log
     logstashSincedbPath: /dev/null
     logstashOptions: --pipeline.workers 1
+    dropThrottledEvents: True
 
 OUTPUT_PLUGINS:
 - File:

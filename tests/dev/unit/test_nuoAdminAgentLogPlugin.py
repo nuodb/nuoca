@@ -44,7 +44,8 @@ class TestInputPlugins(unittest.TestCase):
                 'logstashSincedbPath': "/dev/null",
                 'logstashOptions': '--pipeline.workers 1',
                 'nuocaCollectionName': 'NuoAdminAgentLog',
-                'host_uuid_shortname': True}
+                'host_uuid_shortname': True,
+                'dropThrottledEvents': True}
       startup_rval = logstash_plugin.startup(config)
       self.assertTrue(startup_rval)
       time.sleep(60)

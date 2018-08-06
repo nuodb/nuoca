@@ -16,6 +16,7 @@ import time
 from dateutil.parser import parse as date_parse
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log
+from nuoca_util import to_bool
 
 # Logstash plugin
 #
@@ -42,6 +43,8 @@ from nuoca_util import nuoca_log
 #      If this is set, then a shell environment variable LOGSTASH_SINCEDB_PATH
 #      is set to this value.  In this way, you can parameterize the
 #      file.sincedb_path in a logstash config file.
+#    dropThrottledEvents: boolean (optional, default=false)
+#      if the is set, then drop any events with the "throttled" tag.
 #
 #  Users can set 'timestamp_iso8601' in their collection to force the event
 #  timestamp to become the epoch_millis (the number of milliseconds since
@@ -62,6 +65,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
     self._logstash_subprocess = None
     self._logstash_sincedb_path = None
     self._logstash_options = None
+    self._drop_throttled = False
     self._line_counter = 0
     self._lines_processed = 0
     self._local_hostname = socket.gethostname()
@@ -186,6 +190,9 @@ class LogstashPlugin(NuocaMPInputPlugin):
         logstash_options = os.path.expandvars(config['logstashOptions'])
         self._logstash_options = logstash_options.split(' ')
 
+      if 'dropThrottledEvents' in config:
+        self._drop_throttled = to_bool(config['dropThrottledEvents'])
+
       if 'nuocaCollectionName' in config:
         self._nuocaCollectionName = config['nuocaCollectionName']
 
@@ -220,6 +227,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
 
   def collect(self, collection_interval):
     rval = None
+    drop_throttled_count = 0
     try:
       nuoca_log(logging.DEBUG,
                 "Called collect() in Logstash Plugin process")
@@ -238,6 +246,11 @@ class LogstashPlugin(NuocaMPInputPlugin):
       for i in range(collection_count):
         collected_dict = self._logstash_collect_queue.pop(0)
         collected_dict.update(base_values)
+        if self._drop_throttled and \
+                'tags' in collected_dict and \
+                'throttled' in collected_dict['tags']:
+          drop_throttled_count += 1
+          continue
         if 'timestamp_iso8601' in collected_dict:
           dt = date_parse(collected_dict['timestamp_iso8601'])
           tt = dt.timetuple()
@@ -256,6 +269,20 @@ class LogstashPlugin(NuocaMPInputPlugin):
           epoch_millis = epoch_seconds * 1000 + dt.microsecond / 1000
           collected_dict['TimeStamp'] = epoch_millis
         rval.append(collected_dict)
+
+      if self._drop_throttled and drop_throttled_count > 0:
+        msg = "Logstash (%s) dropping %d throttled events" % \
+              (self._nuocaCollectionName, drop_throttled_count)
+        nuoca_log(logging.INFO, msg)
+        drop_throttle_event = { }
+        epoch_seconds = int(time.mktime(dt.timetuple()))
+        epoch_millis = epoch_seconds * 1000 + dt.microsecond / 1000
+        drop_throttle_event['TimeStamp'] = epoch_millis
+        drop_throttle_event['logger'] = 'NuoCA'
+        drop_throttle_event['loglevel'] = 'INFO'
+        drop_throttle_event['message'] = msg
+        rval.append(drop_throttle_event)
+
     except Exception as e:
       nuoca_log(logging.ERROR, str(e))
     return rval
