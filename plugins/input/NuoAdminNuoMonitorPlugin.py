@@ -32,6 +32,7 @@ import nuodb_mgmt
 #    broker: 172.19.0.16
 #    client_key: /opt/nuodb/tls-config/keys/nuocmd.pem
 #    server_cert: None
+#    server_id: nuoadmin0
 
 class BaseCollector(object):
 
@@ -149,12 +150,12 @@ class NuoAdminNuoMonMessageConsumer(object):
     self._nuo_monitor_obj = nuo_monitor_obj
     self._process_metrics_dict = {}
 
-  def get_stats(self, db_name=None, start_id=None):
-    for process_msg in self._get_messages(None, db_name, start_id):
+  def get_stats(self, db_name=None, start_id=None, server_id=None):
+    for process_msg in self._get_messages(None, db_name, start_id, server_id):
       if process_msg and 'msg' in process_msg:
         self._nuo_monitor_obj.nuoAdminNuoMonitor_collect_queue.append(deepcopy(process_msg['msg']))
 
-  def _get_messages(self, log_options, db_name, start_id,
+  def _get_messages(self, log_options, db_name, start_id, server_id,
                     include_process=False):
 
     # message generator is for a single process if `start_id` is specified;
@@ -168,6 +169,9 @@ class NuoAdminNuoMonMessageConsumer(object):
     # log messages
     message_name = 'Status' if log_options is None else 'LogMessage'
     for process, xml_message in msg_stream:
+      if server_id:
+        if process.server_id != server_id:
+          continue
       if process.start_id not in self._process_metrics_dict:
         mc = MetricsCollector()
         self._process_metrics_dict[process.start_id] = mc
@@ -184,6 +188,7 @@ class NuoAdminNuoMonMessageConsumer(object):
           json_msg['Time'] = self._get_timestamp()
         # combine process and message; if `include_process`, return all
         # process attributes; otherwise just return start ID
+
         if include_process:
           process._dict['msg'] = json_msg
           yield process
@@ -208,6 +213,7 @@ class NuoAdminNuoMonitorPlugin(NuocaMPInputPlugin):
     self._config = None
     self._nuocaCollectionName = None
     self._api_server = NuoAdminNuoMonitorPlugin.DEFAULT_API_SERVER
+    self._server_id = None
     self._client_key = None
     self._server_cert = None
     self._enabled = False
@@ -249,7 +255,7 @@ class NuoAdminNuoMonitorPlugin(NuocaMPInputPlugin):
 
   def _NuoAdminNuoMon_handler_thread(self):
     self._numon_handler_ready = True
-    self._domain_metrics.get_stats()
+    self._domain_metrics.get_stats(server_id=self._server_id)
 
   def startup_NuoAdminNuoMon(self):
     try:
@@ -285,6 +291,8 @@ class NuoAdminNuoMonitorPlugin(NuocaMPInputPlugin):
                 str(display_config))
 
       self._api_server = os.path.expandvars(config['api_server'])
+      if 'server_id' in config:
+        self._server_id = os.path.expandvars(config['server_id'])
       if 'client_key' in config:
         self._client_key = os.path.expandvars(config['client_key'])
       if 'server_cert' in config:
