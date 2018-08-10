@@ -25,6 +25,7 @@ before_install:
   - ./elasticsearch-${ES_VERSION}/bin/elasticsearch &
   - wget https://dl.influxdata.com/influxdb/releases/influxdb_${INFLUX_VERSION}_amd64.deb
   - sudo dpkg -i influxdb_${INFLUX_VERSION}_amd64.deb
+  - echo "starting influxdb"
   - sudo service influxdb start
   - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled'
   - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/defrag'
