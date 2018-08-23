@@ -7,7 +7,7 @@ INPUT_PLUGINS:
     nuocaCollectionName: NuoAdminAgentLog
     logstashBin: $LOGSTASH_HOME/bin/logstash
     logstashConfig: $NUOADMINAGENTLOGCONFIG
-    logstashInputFilePath: /tmp/agent.log
+    logstashInputFilePath: [ $NUODB_LOGDIR/agent.log, $NUODB_LOGDIR/nuoadmin.log ]
     logstashSincedbPath: /dev/null
     logstashOptions: --pipeline.workers 1
 

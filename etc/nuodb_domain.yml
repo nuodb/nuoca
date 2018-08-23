@@ -32,7 +32,7 @@ INPUT_PLUGINS:
     nuocaCollectionName: NuoAdminAgentLog
     logstashBin: $LOGSTASH_HOME/bin/logstash
     logstashConfig: $NUOADMINAGENTLOGCONFIG
-    logstashInputFilePath: $NUODB_LOGDIR/agent.log
+    logstashInputFilePath: [ $NUODB_LOGDIR/agent.log, $NUODB_LOGDIR/nuoadmin.log ]
     logstashOptions: --pipeline.workers 1 --pipeline.batch.size 30
     dropThrottledEvents: True
 - NuoAdminMon:

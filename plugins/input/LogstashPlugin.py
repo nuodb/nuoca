@@ -81,12 +81,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
     self._logstash_subprocess = None
     msg = "Env: %s=%s" % ('NUOCA_HOME', os.environ['NUOCA_HOME'])
     nuoca_log(logging.INFO, msg)
-    if 'logstashInputFilePath' in self._config:
-      msg = "Env: LOGSTASH_INPUT_FILE_PATH=%s" % \
-            self._config['logstashInputFilePath']
-      nuoca_log(logging.INFO, msg)
-      os.environ["LOGSTASH_INPUT_FILE_PATH"] = \
-        os.path.expandvars(self._config['logstashInputFilePath'])
+
     if self._logstash_sincedb_path:
       msg = "Env: LOGSTASH_SINCEDB_PATH=%s" % \
             self._logstash_sincedb_path
@@ -171,6 +166,40 @@ class LogstashPlugin(NuocaMPInputPlugin):
               self._logstash_config
         nuoca_log(logging.ERROR, msg)
         return False
+      nuoca_log(logging.INFO, "logstashConfig: %s" % str(self._logstash_config))
+
+      logstash_input_file_path = '/dev/null'
+      logstash_input_file_path2 = '/dev/null'
+
+      if 'logstashInputFilePath' in self._config:
+        if isinstance(self._config['logstashInputFilePath'], str):
+          msg = "Env: LOGSTASH_INPUT_FILE_PATH=%s" % \
+                self._config['logstashInputFilePath']
+          nuoca_log(logging.INFO, msg)
+          logstash_input_file_path = \
+            os.path.expandvars(self._config['logstashInputFilePath'])
+
+      if isinstance(self._config['logstashInputFilePath'], list):
+        if len(self._config['logstashInputFilePath']) > 2:
+          msg = "logstashInputFilePath list has more than 2 elements: %s" % \
+                self._config['logstashInputFilePath']
+          nuoca_log(logging.ERROR, msg)
+          return
+        else:
+          msg = "Env: LOGSTASH_INPUT_FILE_PATH=%s" % \
+                self._config['logstashInputFilePath'][0]
+          nuoca_log(logging.INFO, msg)
+          logstash_input_file_path = \
+            os.path.expandvars(self._config['logstashInputFilePath'][0])
+          logstash_input_file_path2 = \
+            os.path.expandvars(self._config['logstashInputFilePath'][1])
+
+      os.environ["LOGSTASH_INPUT_FILE_PATH"] = logstash_input_file_path
+      msg = "Env: LOGSTASH_INPUT_FILE_PATH=%s" % logstash_input_file_path
+      nuoca_log(logging.INFO, msg)
+      os.environ["LOGSTASH_INPUT_FILE_PATH2"] = logstash_input_file_path2
+      msg = "Env: LOGSTASH_INPUT_FILE_PATH2=%s" % logstash_input_file_path2
+      nuoca_log(logging.INFO, msg)
 
       if 'logstashSincedbPath' in config:
         self._logstash_sincedb_path = \
@@ -179,7 +208,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
         if 'logstashInputFilePath' in config:
           nuoca_log(logging.INFO, "Logstash Plugin Input File Path: %s" %
                     str(config['logstashInputFilePath']))
-          hexdigest = hashlib.md5(config['logstashInputFilePath']).hexdigest()
+          hexdigest = hashlib.md5(str(config['logstashInputFilePath'])).hexdigest()
           self._logstash_sincedb_path = \
             "%s/.sincedb_%s" % (os.environ['HOME'], hexdigest)
 
