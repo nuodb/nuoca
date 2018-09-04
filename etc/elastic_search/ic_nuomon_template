@@ -48,6 +48,10 @@
               "type": "keyword",
 	      "ignore_above": 256
           },
+          "NuoMon.DomainName": {
+              "type": "keyword",
+	      "ignore_above": 256
+          },
           "NuoMon.HostShortID": {
               "type": "keyword",
 	      "ignore_above": 256
