@@ -54,6 +54,7 @@ class BaseMetricsListener(BaseListener):
             items['Database'] = dict(unit="IDENTIFIER", description="Database Name")
             items['Region'] = dict(unit="IDENTIFIER", description="Region Name")
             items['DomainName'] = dict(unit="IDENTIFIER", description="Domain Name")
+            items['Version'] = dict(unit="IDENTIFIER", description="NuoDB Version String")
             self.onStart(items)
         elif root.tag == 'Status':
             values = dict( [ (k, parseStr(v)) for k,v in root.attrib.iteritems() ])
@@ -61,6 +62,7 @@ class BaseMetricsListener(BaseListener):
                 values['Database'] = self.process.database.name
                 values['Region'] = self.process.peer.get_tag('region')
                 values['DomainName'] = self.process.peer.domain.domain_name
+                values['Version'] = self.process.version
                 self.__first=False
             values['TimeStamp'] = int(time.time() * 1000.0)
             self.onChange(values)

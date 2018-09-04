@@ -83,6 +83,10 @@
           "NuoMon.Region": {
               "type": "keyword",
 	      "ignore_above": 256
+          },
+          "NuoMon.Version": {
+              "type": "keyword",
+	      "ignore_above": 256
           }
         }
       }
