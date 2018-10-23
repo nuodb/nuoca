@@ -14,5 +14,5 @@ if [ -d ${NUOCA_HOME}/python ]; then
   export PYTHONHOME=${NUOCA_HOME}/python:${NUOCA_HOME}/python/x86_64-linux
 fi
 export PATH=${PATH}:${NUOCA_HOME}/extern/zabbix/bin
-export PYTHONPATH=${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib
+export PYTHONPATH=${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib:${NUODB_ROOT}/drivers/pynuoadmin
 export NUOADMINAGENTLOGCONFIG=${NUOCA_HOME}/etc/logstash/nuoadminagentlog.conf

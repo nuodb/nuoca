@@ -1,0 +1,14 @@
+---
+NUOCA_LOGFILE: /tmp/nuoca_nuonewadminmonitor_to_printer.log
+
+INPUT_PLUGINS:
+- NuoAdminMon:
+    description : Collection from NuoDB Admin Layer
+    nuocaCollectionName: NuoAdminMon2
+    api_server: localhost:8888
+    client_key: /etc/nuodb/tls-config/keys/nuocmd.pem
+    server_cert: None
+
+OUTPUT_PLUGINS:
+- Printer:
+

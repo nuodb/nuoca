@@ -29,7 +29,7 @@ NUODB_DOMAIN_PASSWORD=${DOMAIN_PASSWORD:-bird}
 : ${NUODB_INSIGHTS_SERVICE_API:="https://insights.nuodb.com/api/1"}
 
 PATH="${PATH}:${NUOCA_HOME}/extern/zabbix/bin"
-PYTHONPATH="${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib"
+PYTHONPATH="${NUOCA_HOME}/src:${NUOCA_HOME}:${NUOCA_HOME}/lib:${NUODB_ROOT}/drivers/pynuoadmin"
 NUOADMINAGENTLOGCONFIG="${NUOCA_HOME}/etc/logstash/nuoadminagentlog.conf"
 
 # Are we running Python included in the NuoDB package?

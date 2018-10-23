@@ -1,0 +1,305 @@
+{
+    "template": "ic_nuoadminmon2-*",
+    "order": 5,
+    "settings" : {
+        "index" : {
+          "analysis": {
+            "analyzer": {
+              "default": {
+                "type": "whitespace",
+                "tokenizer": "whitespace"
+              }
+            }
+          }
+        }
+    },
+    "mappings" : {
+      "nuoca" : {
+        "properties" : {
+          "timestamp" : {
+              "type": "date",
+              "format": "strict_date_optional_time||epoch_millis"
+          },
+          "sub_id": {
+              "type": "keyword"
+          },
+          "NuoCA.plugin_name": {
+              "type": "keyword"
+          },
+          "NuoCA.Hostname": {
+              "type": "keyword"
+          },
+          "NuoAdminMon2": {
+            "properties": {
+              "NuoCA": {
+                "properties": {
+                  "ApiServerID": {
+                    "type": "keyword"
+                  },
+                  "docType": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "TimeStamp": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+              },
+              "archive": {
+                "properties": {
+                  "dbName": {
+                    "type": "keyword"
+                  },
+                  "host": {
+                    "type": "keyword"
+                  },
+                  "id": {
+                    "type": "long"
+                  },
+                  "path": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "database": {
+                "properties": {
+                  "databaseOptions": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "defaultRegionId": {
+                    "type": "long"
+                  },
+                  "hostAssignments": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "incarnation": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "name": {
+                    "type": "keyword"
+                  },
+                  "regions": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "servers": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "peer": {
+                "properties": {
+                  "address": {
+                    "type": "keyword"
+                  },
+                  "connectedState": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "id": {
+                    "type": "keyword"
+                  },
+                  "isLocal": {
+                    "type": "boolean"
+                  },
+                  "peerMemberState": {
+                    "type": "keyword"
+                  },
+                  "peerState": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "process": {
+                "properties": {
+                  "address": {
+                    "type": "keyword"
+                  },
+                  "archiveDir": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "archiveId": {
+                    "type": "long"
+                  },
+                  "dbName": {
+                    "type": "keyword"
+                  },
+                  "durableState": {
+                    "type": "keyword"
+                  },
+                  "host": {
+                    "type": "keyword"
+                  },
+                  "hostname": {
+                    "type": "keyword"
+                  },
+                  "ipAddress": {
+                    "type": "keyword"
+                  },
+                  "isExternalStartup": {
+                    "type": "boolean"
+                  },
+                  "labels": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "lastHeardFrom": {
+                    "type": "long"
+                  },
+                  "nodeId": {
+                    "type": "long"
+                  },
+                  "options": {
+                    "properties": {
+                      "archive": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      },
+                      "archive-id": {
+                        "type": "long"
+                      },
+                      "commit": {
+                        "type": "keyword"
+                      },
+                      "database": {
+                        "type": "keyword"
+                      },
+                      "engine-type": {
+                        "type": "keyword"
+                      },
+                      "geo-region": {
+                        "type": "keyword"
+                      },
+                      "initialize": {
+                        "type": "boolean"
+                      },
+                      "log-over-conn": {
+                        "type": "keyword"
+                      },
+                      "region-name": {
+                        "type": "keyword"
+                      },
+                      "user-data": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      },
+                      "verbose": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "pid": {
+                    "type": "long"
+                  },
+                  "port": {
+                    "type": "long"
+                  },
+                  "regionId": {
+                    "type": "long"
+                  },
+                  "regionName": {
+                    "type": "keyword"
+                  },
+                  "startId": {
+                    "type": "long"
+                  },
+                  "state": {
+                    "type": "keyword"
+                  },
+                  "type": {
+                    "type": "keyword"
+                  },
+                  "version": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "region": {
+                "properties": {
+                  "id": {
+                    "type": "long"
+                  },
+                  "name": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+}

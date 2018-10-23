@@ -29,7 +29,7 @@ import nuodb_mgmt
 # - NuoAdminNuoMonitor:
 #    description : Collection from internal nuoAdminNuoMonitor tool
 #    database_regex_pattern: dbt2
-#    broker: 172.19.0.16
+#    api_server: localhost:8888
 #    client_key: /opt/nuodb/tls-config/keys/nuocmd.pem
 #    server_cert: None
 #    server_id: nuoadmin0
