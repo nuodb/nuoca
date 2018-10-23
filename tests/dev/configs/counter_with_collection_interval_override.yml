@@ -1,0 +1,11 @@
+---
+NUOCA_LOGFILE: /tmp/nuoca_counter.log
+NUOCA_COLLECTION_INTERVAL: 1
+
+INPUT_PLUGINS:
+- Counter:
+    description : A simple counter
+    increment : 1
+OUTPUT_PLUGINS:
+- Printer:
+

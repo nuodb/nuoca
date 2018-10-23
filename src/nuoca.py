@@ -85,6 +85,13 @@ class NuoCA(object):
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
     self._collection_interval = collection_interval
+
+    # Override the command line/default NuoCA collection interval if
+    # NUOCA_COLLECTION_INTERVAL is specified in the NuoCA config file.
+    if self._config.NUOCA_COLLECTION_INTERVAL:
+      self._collection_interval = \
+        int(self._config.NUOCA_COLLECTION_INTERVAL)
+
     if not starttime:
       self._starttime = None
     else:

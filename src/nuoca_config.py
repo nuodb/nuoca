@@ -22,6 +22,7 @@ class NuocaConfig(object):
   NUOCA_CONFIG_FILE = None
   SELFTEST_LOOP_COUNT = 5  # Number of Collection Intervals in selftest.
   SUBPROCESS_EXIT_TIMEOUT = 5  # Max seconds to wait for subprocess exit
+  NUOCA_COLLECTION_INTERVAL = None  # Override NuoCA Collection Interval
 
   # Plugins that will be populated from the NuoCA configuration file.
   INPUT_PLUGINS = []
