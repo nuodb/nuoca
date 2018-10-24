@@ -13,6 +13,7 @@ import subprocess
 import threading
 import time
 
+from datetime import datetime
 from dateutil.parser import parse as date_parse
 from nuoca_plugin import NuocaMPInputPlugin
 from nuoca_util import nuoca_log
@@ -200,7 +201,6 @@ class LogstashPlugin(NuocaMPInputPlugin):
       os.environ["LOGSTASH_INPUT_FILE_PATH2"] = logstash_input_file_path2
       msg = "Env: LOGSTASH_INPUT_FILE_PATH2=%s" % logstash_input_file_path2
       nuoca_log(logging.INFO, msg)
-
       if 'logstashSincedbPath' in config:
         self._logstash_sincedb_path = \
           os.path.expandvars(config['logstashSincedbPath'])
@@ -256,6 +256,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
 
   def collect(self, collection_interval):
     rval = None
+    dt = datetime.utcnow()
     drop_throttled_count = 0
     try:
       nuoca_log(logging.DEBUG,

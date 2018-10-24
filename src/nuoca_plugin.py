@@ -8,7 +8,7 @@ Created on May 4, 2017
 
 @author: tgates
 """
-
+import os
 import traceback
 import logging
 from nuoca_util import nuoca_gettimestamp, nuoca_log
@@ -147,6 +147,12 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
           if config:
             if 'nuocaCollectionName' in config:
               self._collection_name = config['nuocaCollectionName']
+            if 'environmentVariables' in config:
+              for env_var in config['environmentVariables']:
+                os.environ[env_var['name']] = env_var['value']
+                msg = "Env: %s=%s" % (env_var['name'], env_var['value'])
+                nuoca_log(logging.INFO, msg)
+
           startup_rval = self.startup(config)
           self._send_response(int(not startup_rval))
           continue
@@ -239,6 +245,13 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
           continue
         elif action == 'startup':
           config = request_from_parent['config']
+          if config:
+            if 'environmentVariables' in config:
+              for env_var in config['environmentVariables']:
+                os.environ[env_var['name']] = env_var['value']
+                msg = "Env: %s=%s" % (env_var['name'], env_var['value'])
+                nuoca_log(logging.INFO, msg)
+
           startup_rval = self.startup(config)
           self._send_response(int(not startup_rval))
           continue

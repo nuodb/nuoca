@@ -1,0 +1,13 @@
+---
+NUOCA_LOGFILE: /tmp/nuoca_counter_with_env_vars.log
+
+INPUT_PLUGINS:
+- Counter:
+    description : A simple counter
+    increment : 1
+    environmentVariables:
+      - name: "FOO"
+        value: "BAR"
+OUTPUT_PLUGINS:
+- Printer:
+

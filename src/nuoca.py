@@ -362,6 +362,9 @@ class NuoCA(object):
       response = self._get_plugin_respose(a_plugin)
       if not response:
         continue
+      if 'resp_values' not in response:
+        continue
+
       resp_values = response['resp_values']
 
       # noinspection PyBroadException
