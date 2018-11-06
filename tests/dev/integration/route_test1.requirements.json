@@ -1,0 +1,30 @@
+[
+    {
+        "field": "NuoMon.NodeType",
+        "value_operator": "=",
+        "value": "Storage",
+	    "cardinality_operator": ">",
+	    "cardinality_value": 0
+    },
+    {
+        "field": "NuoMon.NodeType",
+        "value_operator": "=",
+        "value": "Transaction",
+	    "cardinality_operator": ">",
+	    "cardinality_value": 0
+    },
+    {
+        "field": "NuoCA.plugin_name",
+        "value_operator": "=",
+        "value": "NuoAdminMon",
+	    "cardinality_operator": ">",
+	    "cardinality_value": 0
+    },
+    {
+        "field": "NuoCA.plugin_name",
+        "value_operator": "=",
+        "value": "ZBX",
+	    "cardinality_operator": "=",
+	    "cardinality_value": 0
+    }
+]

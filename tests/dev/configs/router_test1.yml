@@ -1,0 +1,56 @@
+---
+NUOCA_LOGFILE: $NUOCA_LOGFILE
+NUOCA_COLLECTION_INTERVAL: 10
+
+INPUT_PLUGINS:
+- ZBX:
+    description : Collect machine stats from Zabbix
+    server: localhost
+    autoDiscoverMonitors: true
+    NuoCA.route: NoSuchPlugin,RestClient,Printer,ElasticSearch,KafkaProducer,InfluxDB
+    keys:
+    - system.uptime
+    - system.cpu.intr
+    - vm.memory.size[available]
+    - system.cpu.switches
+    - system.cpu.util[,interrupt]
+    - system.boottime
+    - system.cpu.util[,idle]
+    - system.cpu.util[,system]
+    - system.cpu.util[,iowait]
+    - system.cpu.util[,nice]
+    - system.cpu.util[,user]
+    - system.cpu.util[,softirq]
+    - system.localtime
+    - system.cpu.util[,steal]
+    - system.users.num
+    - proc.num[]
+    - vm.memory.size[total]
+    - system.uname
+    - system.hostname
+    - kernel.maxproc
+    - kernel.maxfiles
+- NuoAdminMon:
+    description : Collection from NuoDB Admin Layer
+    admin_host: localhost
+    admin_port: $NUODB_PORT
+    admin_collect_interval: 10
+    domain_username: $NUODB_DOMAIN_USER
+    domain_password: $NUODB_DOMAIN_PASSWORD
+    database_regex_pattern: '^(?!nuodb_system|\\.).*'
+    NuoCA.route: RestClient,Printer,ElasticSearch,KafkaProducer,InfluxDB,NoSuchPlugin,File
+- NuoMon:
+    description : Collection from internal nuomonitor tool
+    broker: localhost:$NUODB_PORT
+    domain_username: $NUODB_DOMAIN_USER
+    domain_password: $NUODB_DOMAIN_PASSWORD
+    database_regex_pattern: '^(?!nuodb_system|\\.).*'
+    host_uuid_shortname: True
+    domain_metrics_host: localhost
+    NuoCA.route: RestClient,Printer,ElasticSearch,KafkaProducer,InfluxDB,File,NoSuchPlugin
+
+OUTPUT_PLUGINS:
+- Printer:
+- File:
+    filePath: /tmp/nuoca.router_test1.output.json
+

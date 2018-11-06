@@ -1,0 +1,30 @@
+[
+    {
+        "field": "Counter.collect_timestamp",
+        "value_operator": ">",
+        "value": 0,
+	    "cardinality_operator": "=",
+	    "cardinality_value": 1
+    },
+    {
+        "field": "NuoCA.route",
+        "value_operator": "=",
+        "value": "Printer,File",
+	    "cardinality_operator": "=",
+	    "cardinality_value": 1
+    },
+    {
+        "field": "NuoCA.plugin_name",
+        "value_operator": "=",
+        "value": "Counter",
+	    "cardinality_operator": "=",
+	    "cardinality_value": 1
+    },
+    {
+        "field": "Counter.counter",
+        "value_operator": "=",
+        "value": 1,
+	    "cardinality_operator": "=",
+	    "cardinality_value": 1
+    }
+]

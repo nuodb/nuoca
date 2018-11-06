@@ -1,0 +1,14 @@
+---
+SELFTEST_LOOP_COUNT: 1
+SUBPROCESS_EXIT_TIMEOUT: 1
+
+INPUT_PLUGINS:
+- Counter:
+    description : A simple counter
+    increment : 1
+    NuoCA.route: Printer,File
+OUTPUT_PLUGINS:
+- Printer:
+- File:
+    filePath: /tmp/nuoca.router_test2.output.json
+

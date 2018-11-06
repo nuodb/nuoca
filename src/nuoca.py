@@ -401,7 +401,11 @@ class NuoCA(object):
             new_values[key_name] = collected_dict[collected_item]
             if collected_item == 'TimeStamp':
               new_values['timestamp'] = int(collected_dict[collected_item])
-            new_values['NuoCA.plugin_name'] = key_prefix
+          new_values['NuoCA.plugin_name'] = key_prefix
+          for input_plugin_config in self._config.INPUT_PLUGINS:
+            if input_plugin_config.keys()[0] == a_plugin.name:
+              if 'NuoCA.route' in input_plugin_config.values()[0]:
+                new_values['NuoCA.route'] =  input_plugin_config.values()[0]['NuoCA.route']
           if self._output_values:
             new_values.update(self._output_values)
           rval.append(new_values)
@@ -448,18 +452,30 @@ class NuoCA(object):
     if not collected_inputs:
       return
     rval = {}
-    plugin_msg = {'action': 'store', 'ts_values': collected_inputs}
     activated_plugins = self._get_activated_output_plugins()
+    output_plugins_used = []
     for a_plugin in activated_plugins:
+      outputs = collected_inputs
       # noinspection PyBroadException
       try:
-        a_plugin.plugin_object.child_pipe.send(plugin_msg)
+        if self._config.is_routing:
+          outputs = []
+          for input_item in collected_inputs:
+            if 'NuoCA.route' in input_item:
+              if a_plugin.name in input_item['NuoCA.route'].split(','):
+                outputs.append(input_item)
+            else:
+              outputs.append(input_item)
+        if len(outputs) > 0:
+          output_plugins_used.append(a_plugin)
+          plugin_msg = {'action': 'store', 'ts_values': outputs}
+          a_plugin.plugin_object.child_pipe.send(plugin_msg)
       except Exception as e:
         nuoca_log(logging.ERROR,
                   "Unable to send 'Store' message to plugin: %s\n%s"
                   % (a_plugin.name, str(e)))
 
-    for a_plugin in activated_plugins:
+    for a_plugin in output_plugins_used:
       resp_values = self._get_plugin_respose(a_plugin)
       if not resp_values:
         continue

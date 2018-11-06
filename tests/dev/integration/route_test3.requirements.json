@@ -1,0 +1,9 @@
+[
+    {
+        "field": "Counter.counter",
+        "value_operator": ">",
+        "value": 0,
+	    "cardinality_operator": "=",
+	    "cardinality_value": 0
+    }
+]
