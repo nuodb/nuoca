@@ -10,10 +10,13 @@ CMD=${0##*/}
 DIR=`cd "${0%$CMD}." && pwd`
 NUOCA_HOME=${DIR%/*}
 
+propsfile="$NUODB_HOME"/etc/default.properties
+user="$(grep ^domainUser $propsfile | sed 's/.*=//')"
+[ "$user" ] && export DOMAIN_USER="$user" || export DOMAIN_USER="domain"
+export DOMAIN_PASSWORD="$(grep ^domainPassword $propsfile | sed 's/.*=//')"
+
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
-
-export DOMAIN_USER=domain
 
 RESPONSE=`"$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" startup`
 if [ "$RESPONSE" = "Startup" ]; then
@@ -43,4 +46,6 @@ if [ "$RESPONSE" = "Startup" ]; then
     NUOCA_PID=$!
     echo "$NUOCA_PID" > "${NUODB_RUNDIR}/nuoca.pid"
   fi
+elif [ "$RESPONSE" = "Disable" ]; then
+  . "${NUOCA_HOME}/bin/disable_insights.sh"
 fi

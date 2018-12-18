@@ -27,8 +27,8 @@ def die(msg):
   exit(1)
 
 def get_domain_auth():
-  auth = HTTPBasicAuth(os.environ['DOMAIN_USER'],
-                       os.environ['DOMAIN_PASSWORD'])
+  auth = HTTPBasicAuth(os.environ['DOMAIN_USER'].strip(),
+                       os.environ['DOMAIN_PASSWORD'].strip())
   return auth
 
 def get_domain_session():
@@ -167,6 +167,7 @@ def get_subscription(root_url=None, sub_id=None):
         "Endpoint '%s'\n%s" % (url, str(e)))
   try:
     store_subscription_info(sub_info)
+    post_domain_config_value("disable_insights", "")
   except Exception, e:
     try:
       delete_stored_subscription_info()
@@ -223,7 +224,7 @@ def clear_domain_sub_info():
   global subscription_fields
   for sub_store_name in subscription_fields.itervalues():
     post_domain_config_value(sub_store_name, "")
-
+  post_domain_config_value("disable_insights", True)
 
 @click.group()
 @click.pass_context
@@ -270,6 +271,7 @@ def show(ctx, verbose):
 @click.command(short_help="Startup Insights")
 @click.pass_context
 def startup(ctx):
+  check_if_insights_disabled = get_domain_config_value("disable_insights")
   filesystem_sub_info = None
   domain_sub_info = get_domain_sub_info()
   if not domain_sub_info:
@@ -277,11 +279,15 @@ def startup(ctx):
     if not filesystem_sub_info:
       print "Skip"
       return
-    store_domain_sub_info(filesystem_sub_info)
+    if not check_if_insights_disabled:
+      store_domain_sub_info(filesystem_sub_info)
   filesystem_sub_info = read_stored_sub_info()
   if not filesystem_sub_info:
     store_subscription_info(domain_sub_info)
-  print "Startup"
+  if check_if_insights_disabled:
+    print "Disable"
+  else:
+    print "Startup"
 
 cli.add_command(enable)
 cli.add_command(disable)
@@ -291,4 +297,3 @@ cli.add_command(startup)
 # Customers do not call this directly.
 if __name__ == '__main__':
   cli()
-

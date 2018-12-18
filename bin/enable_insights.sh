@@ -10,6 +10,11 @@ CMD=${0##*/}
 DIR=`cd "${0%$CMD}." && pwd`
 NUOCA_HOME=${DIR%/*}
 
+propsfile="$NUODB_HOME"/etc/default.properties
+user="$(grep ^domainUser $propsfile | sed 's/.*=//')"
+[ "$user" ] && export DOMAIN_USER="$user" || export DOMAIN_USER="domain"
+export DOMAIN_PASSWORD="$(grep ^domainPassword $propsfile | sed 's/.*=//')"
+
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
 
