@@ -125,6 +125,7 @@ class NuocaMPInputPlugin(NuocaMPPlugin):
     This function is called by Yapsy
     """
     self.enabled = True
+    nuoca_log(logging.INFO, "Plugin: %s,  PID: %d" % (self.plugin_name, os.getpid()))
     while self.enabled:
       try:
         request_from_parent = self.parent_pipe.recv()
@@ -226,6 +227,7 @@ class NuocaMPOutputPlugin(NuocaMPPlugin):
     This function is called by Yapsy
     """
     self.enabled = True
+    nuoca_log(logging.INFO, "Plugin: %s,  PID: %d" % (self.plugin_name, os.getpid()))
     while self.enabled:
       try:
         request_from_parent = self.parent_pipe.recv()

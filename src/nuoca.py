@@ -84,6 +84,7 @@ class NuoCA(object):
 
     nuoca_set_log_level(log_level)
     nuoca_log(logging.INFO, "nuoca server init.")
+    nuoca_log(logging.INFO, "NuoCA, PID: %d" % os.getpid())
     self._collection_interval = collection_interval
 
     # Override the command line/default NuoCA collection interval if
