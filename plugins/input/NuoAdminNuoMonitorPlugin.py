@@ -151,9 +151,18 @@ class NuoAdminNuoMonMessageConsumer(object):
     self._process_metrics_dict = {}
 
   def get_stats(self, db_name=None, start_id=None, server_id=None):
-    for process_msg in self._get_messages(None, db_name, start_id, server_id):
-      if process_msg and 'msg' in process_msg:
-        self._nuo_monitor_obj.nuoAdminNuoMonitor_collect_queue.append(deepcopy(process_msg['msg']))
+    while self._nuo_monitor_obj._enabled:
+      try:
+        for process_msg in self._get_messages(None, db_name,
+                                              start_id, server_id):
+          if process_msg and 'msg' in process_msg:
+            self._nuo_monitor_obj.nuoAdminNuoMonitor_collect_queue.append(
+              deepcopy(process_msg['msg']))
+      except Exception as e:
+        nuoca_log(logging.ERROR, "Exception in NuoAdminNuoMonMessage"
+                                 "ConsumerNuoAdminNuoMon.get_stats: %s"
+                  % str(e))
+      time.sleep(10)
 
   def _get_messages(self, log_options, db_name, start_id, server_id,
                     include_process=False):
@@ -261,6 +270,7 @@ class NuoAdminNuoMonitorPlugin(NuocaMPInputPlugin):
     try:
       self._numon_handler_ready = False
       self._conn = self._get_admin_conn()
+      self._enabled = True
       self._domain_metrics = NuoAdminNuoMonMessageConsumer(self._conn, self)
       self._thread = threading.Thread(target=self._NuoAdminNuoMon_handler_thread)
       self._thread.daemon = True
