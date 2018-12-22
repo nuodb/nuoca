@@ -4,7 +4,7 @@ elasticsearch>=5.0.0,<6.0.0
 python-dateutil==2.6.1
 PyPubSub==3.3.0
 PyYaml==3.12
-requests==2.14.2
+requests==2.21.0
 wrapt==1.10.11
 Yapsy==1.11.223
 kafka-python==1.4.1
