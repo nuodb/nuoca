@@ -247,7 +247,7 @@ def enable(ctx, subscriber_id, accept_tou, root_url, verbose):
       sys.exit(1)
   sub_info = get_subscription(root_url, subscriber_id)
   print("Insights Subscriber ID: %s" % sub_info['subscriber_id'])
-  print()
+  print('')
   print("NuoDB Insights is now enabled. To access your personalized dashboard, visit: %s"
         % sub_info['subscriber_dashboard_url'])
 
