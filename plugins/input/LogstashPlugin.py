@@ -256,7 +256,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
 
   def collect(self, collection_interval):
     rval = None
-    dt = datetime.utcnow()
+    dt1 = datetime.utcnow()
     drop_throttled_count = 0
     try:
       nuoca_log(logging.DEBUG,
@@ -282,8 +282,8 @@ class LogstashPlugin(NuocaMPInputPlugin):
           drop_throttled_count += 1
           continue
         if 'timestamp_iso8601' in collected_dict:
-          dt = date_parse(collected_dict['timestamp_iso8601'])
-          tt = dt.timetuple()
+          dt1 = date_parse(collected_dict['timestamp_iso8601'])
+          tt = dt1.timetuple()
           # When processing the ISO8601 time string, there is no way to
           # determine local daylight saving time from the timestring, so the
           # call to dt.timetuple() sets tm_idst=0.  But we want to force
@@ -296,7 +296,7 @@ class LogstashPlugin(NuocaMPInputPlugin):
           tt_writeable[8] = -1
           tt = time.struct_time(tuple(tt_writeable))
           epoch_seconds = int(time.mktime(tt))
-          epoch_millis = epoch_seconds * 1000 + dt.microsecond / 1000
+          epoch_millis = epoch_seconds * 1000 + dt1.microsecond / 1000
           collected_dict['TimeStamp'] = epoch_millis
         rval.append(collected_dict)
 
@@ -305,8 +305,8 @@ class LogstashPlugin(NuocaMPInputPlugin):
               (self._nuocaCollectionName, drop_throttled_count)
         nuoca_log(logging.INFO, msg)
         drop_throttle_event = { }
-        epoch_seconds = int(time.mktime(dt.timetuple()))
-        epoch_millis = epoch_seconds * 1000 + dt.microsecond / 1000
+        epoch_seconds = int(time.mktime(dt1.timetuple()))
+        epoch_millis = epoch_seconds * 1000 + dt1.microsecond / 1000
         drop_throttle_event['TimeStamp'] = epoch_millis
         drop_throttle_event['logger'] = 'NuoCA'
         drop_throttle_event['loglevel'] = 'INFO'
