@@ -76,6 +76,12 @@ class NuoCA(object):
     if collect_nuoca_log:
       self._collect_nuoca_log = True
 
+    # logCollectionCount?
+    self._log_collection_counts = False
+    log_collection_counts = self.get_nuoca_settings_value('logCollectionCounts')
+    if log_collection_counts:
+      self._log_collection_counts = True
+
     # nuoca config file
     self._config = NuocaConfig(config_file)
     self._hostname = socket.gethostname()
@@ -380,6 +386,9 @@ class NuoCA(object):
           nuoca_log(logging.DEBUG,
                     "No time-series values were collected from plugin: %s"
                     % a_plugin.name)
+          if self._log_collection_counts:
+            nuoca_log(logging.INFO,
+                    "%s Collection Count: 0" % a_plugin.name)
           continue
         if type(resp_values['collected_values']) is not list:
           nuoca_log(logging.ERROR,
@@ -390,6 +399,10 @@ class NuoCA(object):
           continue
 
         list_count = len(resp_values['collected_values'])
+        if self._log_collection_counts:
+          nuoca_log(logging.INFO,
+                    "%s Collection Count: %d" % (a_plugin.name, list_count))
+
         for list_index in range(list_count):
           new_values = {}
           key_prefix = a_plugin.name

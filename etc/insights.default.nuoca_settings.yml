@@ -5,4 +5,9 @@
 # nuoca.logging.level: DEBUG
 #
 # Enable nuoca.log collection (default is false)
+# collect.nuoca.log: true
+#
+# Enable Logging of collection counts (default is false)
+# logCollectionCounts: true
+
 collect.nuoca.log: true
