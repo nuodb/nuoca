@@ -147,7 +147,7 @@ class NuoCA(object):
       if self._nuodb_cfgdir:
         settings_file = os.path.join(self._nuodb_cfgdir, 'nuoca_settings.yml')
         with open(settings_file, 'r') as f:
-          settings = yaml.load(f.read())
+          settings = yaml.safe_load(f.read())
           print settings
         f.close()
     except:

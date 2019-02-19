@@ -65,7 +65,7 @@ class NuocaConfig(object):
       raise AttributeError("You must provide a NuoCA Config file")
     if not os.path.exists(config_file):
       raise AttributeError("Config file: %s does not exist" % config_file)
-    userconfig = yaml.load(open(config_file).read())
+    userconfig = yaml.safe_load(open(config_file).read())
     self._validate(userconfig)
     self._adjust_route(userconfig)
     if not userconfig:
