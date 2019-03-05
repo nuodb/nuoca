@@ -114,7 +114,14 @@ class LogstashPlugin(NuocaMPInputPlugin):
       while self._enabled:
         json_object = None
         line = self._logstash_subprocess.stdout.readline()
-        if line:
+        if not line:
+          # Check to see if the logstash process failed unexpectedly
+          if self._logstash_subprocess.poll() != None:
+            self._enabled = False
+            msg = "logstash process has unexpectedly exited, returncode:%s" % \
+                  self._logstash_subprocess.returncode
+            nuoca_log(logging.ERROR, msg)
+        else:
           self._line_counter += 1
           try:
             json_object = json.loads(line)
@@ -256,6 +263,8 @@ class LogstashPlugin(NuocaMPInputPlugin):
 
   def collect(self, collection_interval):
     rval = None
+    if not self._enabled:
+      return 0
     dt1 = datetime.utcnow()
     drop_throttled_count = 0
     try:
