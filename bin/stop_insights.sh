@@ -12,6 +12,14 @@ NUOCA_HOME=${DIR%/*}
 
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
+. "${NUOCA_HOME}/etc/utils.sh"
+
+log_msg "INFO" "Called stop_insights.sh."
+
+get_nuodb_user_group
+log_user
+get_nuoagent_creds
+
 
 if [ -f "${NUODB_RUNDIR}/nuoca.pid" ]
 then
@@ -34,4 +42,9 @@ do
 done
 
 echo "Shutdown Insights PID: $NUOCA_PID"
+log_msg "INFO" "stop_insights.sh: Killed PID: $NUOCA_PID"
+log_msg "INFO" "stop_insights.sh: Stopping Zabbix Agent."
 "${NUOCA_HOME}/bin/stop_zabbix_agentd.sh"
+log_msg "INFO" "stop_insights.sh: Zabbix Agent Stopped."
+
+

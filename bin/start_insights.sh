@@ -10,16 +10,17 @@ CMD=${0##*/}
 DIR=`cd "${0%$CMD}." && pwd`
 NUOCA_HOME=${DIR%/*}
 
-propsfile="$NUODB_HOME"/etc/default.properties
-user="$(grep ^domainUser $propsfile | sed 's/.*=//' | tr -d '[:space:]')"
-[ "$user" ] && export DOMAIN_USER="$user" || export DOMAIN_USER="domain"
-export DOMAIN_PASSWORD="$(grep ^domainPassword $propsfile | sed 's/.*=//' | tr -d '[:space:]')"
-
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
+. "${NUOCA_HOME}/etc/utils.sh"
+
+get_nuodb_user_group
+log_user
+get_nuoagent_creds
 
 RESPONSE=`"$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" startup`
 if [ "$RESPONSE" = "Startup" ]; then
+  log_msg "INFO" "start_insights.sh: Insights startup requested."
 
   # Setup logstash if it has not been setup.
   if [ ! -d "${NUOCA_HOME}/extern/logstash" ]; then
@@ -42,9 +43,13 @@ if [ "$RESPONSE" = "Startup" ]; then
     export INSIGHTS_TOKEN=`cat "${NUODB_CFGDIR}/insights.sub.token"`
     export NUOCA_LOGFILE="${NUODB_LOGDIR}/nuoca.log"
     "${NUOCA_HOME}/bin/start_zabbix_agentd.sh"
+    msg="start_insights.sh: starting NuoCA on SubID: ${INSIGHTS_SUB_ID}"
+    log_msg "INFO" "$msg"
     "$PYTHONCMD" "${NUOCA_HOME}/src/nuoca.py" --mode insights -o sub_id=${INSIGHTS_SUB_ID} --collection-interval 30 "${NUOCA_HOME}/etc/nuodb_domain.yml" > "${NUODB_LOGDIR}/nuoca.output" 2>&1 &
     NUOCA_PID=$!
     echo "$NUOCA_PID" > "${NUODB_RUNDIR}/nuoca.pid"
+    msg="start_insights.sh: NuoCA started, PID: ${NUOCA_PID}"
+    log_msg "INFO" "$msg"
   fi
 elif [ "$RESPONSE" = "Disable" ]; then
   . "${NUOCA_HOME}/bin/disable_insights.sh"

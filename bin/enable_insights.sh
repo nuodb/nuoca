@@ -10,15 +10,15 @@ CMD=${0##*/}
 DIR=`cd "${0%$CMD}." && pwd`
 NUOCA_HOME=${DIR%/*}
 
-propsfile="$NUODB_HOME"/etc/default.properties
-user="$(grep ^domainUser $propsfile | sed 's/.*=//')"
-[ "$user" ] && export DOMAIN_USER="$user" || export DOMAIN_USER="domain"
-export DOMAIN_PASSWORD="$(grep ^domainPassword $propsfile | sed 's/.*=//')"
-
 . "${NUOCA_HOME}/etc/nuoca_setup.sh"
 . "${NUOCA_HOME}/etc/nuoca_export.sh"
+. "${NUOCA_HOME}/etc/utils.sh"
 
 echo " "
+log_msg "INFO" "Called enable_insights.sh"
+get_nuodb_user_group
+log_user
+get_nuoagent_creds
 
 # if just one argument, then it is required to be an existing
 # NuoDB Insights Subscriber ID.
@@ -31,6 +31,7 @@ else
 fi
 
 if [ "$exit_status" = "0" ]; then
+  chown "$NUODB_USER:$NUODB_GROUP" "$NUODB_CFGDIR"/insights.*
   echo " "
   echo "If the nuoagent service is running, NuoDB Insights metrics collection"
   echo "will begin at the top of the hour.  If the nuoagent service is not"
@@ -39,4 +40,10 @@ if [ "$exit_status" = "0" ]; then
   echo " "
   echo "  \"${NUODB_HOME}/etc/nuoagent\" restart"
   echo " "
+  insights_sub_id=$(cat ${NUODB_CFGDIR}/insights.sub.id)
+  msg="Insights enabled: Subcriber ID: ${insights_sub_id}"
+  log_msg "INFO" "$msg"
+else
+  msg="enable_insights.sh: Error exit status: ${exit_status}"
+  log_msg "ERROR" "$msg"
 fi

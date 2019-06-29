@@ -24,6 +24,14 @@ domain_session = None
 
 def die(msg):
   print msg
+  try:
+    insights_log_path = os.path.join(os.environ['NUODB_LOGDIR'],
+                                     'insights.log')
+    insights_log_fp = open(insights_log_path, "a")
+    insights_log_fp.write(msg+'\n')
+    insights_log_fp.close()
+  except:
+    pass
   exit(1)
 
 def get_domain_auth():

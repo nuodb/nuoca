@@ -29,7 +29,7 @@ before_install:
   - sudo service influxdb start
   - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled'
   - sudo sh -c 'echo madvise > /sys/kernel/mm/transparent_hugepage/defrag'
-  - wget -q http://download.nuohub.org/nuodb_${NUOVERSION}_amd64.deb --output-document=/var/tmp/nuodb.deb
+  - wget -q http://ce-downloads.nuohub.org/nuodb-ce_${NUOVERSION}_amd64.deb --output-document=/var/tmp/nuodb.deb
   - sudo dpkg -i /var/tmp/nuodb.deb
   - sleep 5
   - export NUODB_AGENTPORT=48004
@@ -59,7 +59,7 @@ script:
   - sudo service nuoagent stop
   - sudo service nuorestsvc stop
   - bin/stop_zabbix_agentd.sh
-  - wget -q http://download.nuohub.org/nuodb-ce-${NUOVERSION}.linux.x86_64.tar.gz --output-document=/tmp/nuodb.tar.gz
+  - wget -q http://ce-downloads.nuohub.org/nuodb-ce-${NUOVERSION}.linux.x86_64.tar.gz --output-document=/tmp/nuodb.tar.gz
   - sudo chmod 777 tests/dev/install_nuodb_tar.sh
   - make install-nuodb-tar
   - make extern/zabbix
