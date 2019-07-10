@@ -32,17 +32,25 @@ fi
 
 if [ "$exit_status" = "0" ]; then
   chown "$NUODB_USER:$NUODB_GROUP" "$NUODB_CFGDIR"/insights.*
+  insights_sub_id=$(cat ${NUODB_CFGDIR}/insights.sub.id)
+  msg="Insights enabled: Subcriber ID: ${insights_sub_id}"
+  log_msg "INFO" "$msg"
   echo " "
+  echo "Instructions for customers running legacy Admin (nuoagent)"
+  echo "=========================================================="
   echo "If the nuoagent service is running, NuoDB Insights metrics collection"
-  echo "will begin at the top of the hour.  If the nuoagent service is not"
-  echo "running, or to start collecting immediately, you can (re)start the "
+  echo "will automatically begin within 5 minutes.  If the nuoagent service is"
+  echo "not running, or to start collecting immediately, you can (re)start the"
   echo "nuoagent with the command: "
   echo " "
   echo "  \"${NUODB_HOME}/etc/nuoagent\" restart"
   echo " "
-  insights_sub_id=$(cat ${NUODB_CFGDIR}/insights.sub.id)
-  msg="Insights enabled: Subcriber ID: ${insights_sub_id}"
-  log_msg "INFO" "$msg"
+  echo "Instructions for customers running NuoDB Admin (nuoadmin)"
+  echo "=========================================================="
+  echo "If you are running nuoadmin with TLS enabled (which is the default)"
+  echo "you must manually provision a TLS key for NuoDB Insights and copy it"
+  echo "into '${NUODB_CFGDIR}/keys/nuodb_insights.pem'. NuoDB Insights metrics"
+  echo "collection will automatically begin within 5 minutes."
 else
   msg="enable_insights.sh: Error exit status: ${exit_status}"
   log_msg "ERROR" "$msg"

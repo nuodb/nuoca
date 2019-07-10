@@ -54,7 +54,9 @@ log_user () {
 
 get_nuoagent_creds () {
     propsfile="$NUODB_HOME"/etc/default.properties
-    user="$(get_property domainUser "$propsfile")"
-    ["$user" ] && export DOMAIN_USER="$user" || export DOMAIN_USER="domain"
-    export DOMAIN_PASSWORD="$(get_property domainPassword "$propsfile")"
+    if [ -f "$propsfile" ]; then
+	user="$(get_property domainUser "$propsfile")"
+	["$user" ] && export DOMAIN_USER="$user" || export DOMAIN_USER="domain"
+	export DOMAIN_PASSWORD="$(get_property domainPassword "$propsfile")"
+    fi
 }

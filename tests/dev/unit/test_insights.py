@@ -16,7 +16,7 @@ class TestGetDomainAuth(unittest.TestCase):
   def runTest(self):
     os.environ['DOMAIN_USER'] = 'a_domain_username'
     os.environ['DOMAIN_PASSWORD'] = 'a_domain_password'
-    auth = insights.get_domain_auth()
+    auth = insights.get_legacy_domain_auth()
     self.assertTrue(auth)
     self.assertEquals(auth.username, os.environ['DOMAIN_USER'])
     self.assertEquals(auth.password, os.environ['DOMAIN_PASSWORD'])

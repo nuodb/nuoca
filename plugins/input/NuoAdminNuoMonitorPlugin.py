@@ -251,8 +251,11 @@ class NuoAdminNuoMonitorPlugin(NuocaMPInputPlugin):
         api_server = 'http://' + api_server
       else:
         api_server = 'https://' + api_server
+    verify = server_cert
+    if not verify:
+      verify = False
 
-    return nuodb_mgmt.AdminConnection(api_server, client_key, server_cert)
+    return nuodb_mgmt.AdminConnection(api_server, client_key, verify=verify)
 
   def wait_for_terminate(self):
     if self._domain:
