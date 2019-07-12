@@ -22,11 +22,9 @@ getown () {
 }
 
 get_nuodb_user_group () {
-    # Find the owner.  We assume it's the owner of the $NUODB_HOME/jar directory
-    NUODB_USER=`getown user "$NUODB_HOME/jar"` \
-        || die "Cannot determine the owner of the NuoDB installation $NUODB_HOME"
-    NUODB_GROUP=`getown group "$NUODB_HOME/jar"` \
-        || die "Cannot determine the group of the NuoDB installation $NUODB_HOME"
+    # set NUODB_USER and NUODB_GROUP if they are not already specified
+    : ${NUODB_USER:=nuodb}
+    : ${NUODB_GROUP:=nuodb}
 }
 
 log_msg () {
@@ -44,9 +42,9 @@ log_user () {
     if [ `id -u` -eq 0 ]; then
         log_msg "INFO" "utils.sh running as user: root"
     elif [ `id -un` = "$NUODB_USER" ]; then
-        log_msg "INFO" "utils.sh running as user: nuodb"
+        log_msg "INFO" "utils.sh running as user: $NUODB_USER"
     else
-        msg="Not running as 'root' or 'nuodb' user."
+        msg="Not running as 'root' or '$NUODB_USER' user."
         echo "WARNING: $msg"
         log_msg "WARNING" "$msg"
     fi
