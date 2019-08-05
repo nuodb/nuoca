@@ -1,7 +1,8 @@
-dist: trusty
+dist: xenial
 sudo: required
-group: deprecated-2017Q4
 language: python
+jdk:
+  - oraclejdk11
 python:
   - "2.7"
 
@@ -18,6 +19,7 @@ before_install:
   - export NUODB_ROOT=/opt/nuodb
   - export NUODB_INCLUDE_DIR=/opt/nuodb/include
   - export NUODB_LIB_DIR=/opt/nuodb/lib64
+  - export JDK_SWITCHER_DEFAULT=oraclejdk11
   - export TZ=America/New_York
   - cat /etc/debian_version
   - wget ${ES_DOWNLOAD_URL}

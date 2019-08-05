@@ -20,6 +20,36 @@ from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
 
 from plugins.input.LogstashPlugin import LogstashPlugin
 
+# List of key fields to compare.
+compare_keys = [
+  "action", "bhostname", "bindaddr", "bhost", "bindport", "comment",
+  "dbname", "directory", "TimeStamp", "engine_pid", "entity", "exitcode",
+  "iporaddr", "java_home", "java_runtime", "java_version", "java_vm",
+  "logger", "loglevel", "message", "newnodeid", "description", "node_pid",
+  "node_state", "node_type", "nodegroup", "nodeid", "nodeport", "peeraddr",
+  "peertype", "port", "property", "propertyfile", "stableid", "startId",
+  "thread", "value", "version"]
+
+def hash_key_value(o):
+  return o['hash']
+
+# Make a list of dictionaries that contain all of the keys to compare
+# and add a 'hash' of those key field values.
+def values_to_compare(src_dict_list, compare_keys_list):
+  ret_dict_list = list()
+  for src_dict in src_dict_list:
+    ret_dict = dict()
+    for key in compare_keys_list:
+      if key in src_dict:
+        value = src_dict[key]
+        if isinstance(value, (str, unicode)):
+          ret_dict[key] = value.rstrip()
+        else:
+          ret_dict[key] = value
+    ret_dict['hash'] = hash(frozenset(ret_dict.items()))
+    ret_dict_list.append(ret_dict)
+  ret_dict_list.sort(key=hash_key_value)
+  return ret_dict_list
 
 class TestInputPlugins(unittest.TestCase):
   def __init__(self, methodName='runTest'):
@@ -29,8 +59,8 @@ class TestInputPlugins(unittest.TestCase):
     super(TestInputPlugins, self).__init__(methodName)
 
   def _LogstashPluginTest(self, test_node_id):
-
     logstash_plugin = None
+
     try:
       nuoca_util.initialize_logger("/tmp/nuoca.test.log")
       logstash_plugin = LogstashPlugin(None)
@@ -48,11 +78,12 @@ class TestInputPlugins(unittest.TestCase):
                 'dropThrottledEvents': True}
       startup_rval = logstash_plugin.startup(config)
       self.assertTrue(startup_rval)
-      time.sleep(60)
+      time.sleep(90)
       resp_values = logstash_plugin.collect(3)
       self.assertIsNotNone(resp_values)
       self.assertTrue(type(resp_values) is list)
       self.assertTrue(len(resp_values) > 0)
+      resp_values_compare = values_to_compare(resp_values, compare_keys)
 
       # To capture a new data.json file.
       #with open("%s.data.json" % test_node_id, 'w') as outfile:
@@ -62,46 +93,22 @@ class TestInputPlugins(unittest.TestCase):
                            (dir_path, test_node_id)
       json_data = gzip.open(expected_json_file).read()
       expected_line_values = json.loads(json_data)
+      expected_values_compare = values_to_compare(expected_line_values,
+                                                  compare_keys)
+
+      self.assertEqual(len(expected_values_compare),
+                       len(resp_values_compare),
+                       "Compare count of expected .vs. collected")
 
       counter = 0
-      for expected_line in expected_line_values:
-        del expected_line['collect_timestamp']
-        del expected_line['@timestamp']
-
-        if 'tags' in expected_line:
-          del expected_line['tags']
-        collected_line = resp_values[counter]
-        if 'tags' in collected_line:
-          del collected_line['tags']
-        if 'path' in expected_line:
-          expected_line['path'] = collected_line['path']
-
+      for expected_line in expected_values_compare:
+        collected_line = resp_values_compare[counter]
         try:
-          expected_line['Hostname'] = self.local_hostname
-          expected_line['host'] = self.local_hostname
-          if '@timestamp' in collected_line:
-            del collected_line['@timestamp']
-          self.assertIsNotNone(collected_line['collect_timestamp'])
-          if 'comment' in expected_line:
-            if isinstance(expected_line['comment'], basestring):
-              expected_line['comment'] = expected_line['comment'].rstrip()
-          if 'message' in expected_line:
-            if isinstance(expected_line['message'], basestring):
-              expected_line['message'] = expected_line['message'].rstrip()
-          s1 = False
-          try:
-            s1 = set(expected_line.items()).issubset(
-              set(collected_line.items()))
-          except Exception as e:
-            print(str(e))
-          if not s1:
-            pass
           self.assertDictContainsSubset(expected_line,
                                         collected_line)
           counter += 1
         finally:
           pass
-
 
     finally:
       if logstash_plugin:
@@ -146,7 +153,7 @@ class TestInputPlugins(unittest.TestCase):
       self.assertIsNotNone(plugin_resp_msg)
       self.assertEqual(0, plugin_resp_msg['status_code'])
 
-      time.sleep(60)
+      time.sleep(90)
 
       plugin_msg = {'action': 'collect', 'collection_interval': 3}
       plugin_resp_msg = None
@@ -160,6 +167,7 @@ class TestInputPlugins(unittest.TestCase):
       self.assertEqual(0, plugin_resp_msg['status_code'])
       self.assertIsNotNone(resp_values['collected_values'])
       self.assertTrue(type(resp_values['collected_values']) is list)
+      resp_values_compare = values_to_compare(resp_values['collected_values'], compare_keys)
 
       # To capture a new data.json file.
       #with open("%s.data.json" % test_node_id, 'w') as outfile:
@@ -170,42 +178,17 @@ class TestInputPlugins(unittest.TestCase):
       json_data = gzip.open(expected_json_file).read()
       expected_line_values = json.loads(json_data)
 
+      expected_values_compare = values_to_compare(expected_line_values['collected_values'],
+                                                  compare_keys)
+
+      self.assertEqual(len(expected_values_compare),
+                       len(resp_values_compare),
+                       "Compare count of expected .vs. collected")
+
       counter = 0
-      resp_collected_values = resp_values['collected_values']
-      for expected_line in expected_line_values['collected_values']:
-        # print("counter: %s" % str(counter))
-        collected_line = resp_collected_values[counter]
+      for expected_line in expected_values_compare:
+        collected_line = resp_values_compare[counter]
         try:
-          del expected_line['@timestamp']
-          del collected_line['@timestamp']
-          del expected_line['collect_timestamp']
-          expected_line['Hostname'] = self.local_hostname
-          expected_line['host'] = self.local_hostname
-          #          if 'value' in expected_line:  # TEMP
-          #            if expected_line['value'] == '':
-          #              del expected_line['value']
-          if 'tags' in collected_line:
-            del collected_line['tags']
-          if 'tags' in expected_line:
-            del expected_line['tags']
-          self.assertIsNotNone(
-            collected_line['collect_timestamp'])
-          if 'path' in expected_line:
-            expected_line['path'] = collected_line['path']
-          if 'comment' in expected_line:
-            if isinstance(expected_line['comment'], basestring):
-              expected_line['comment'] = expected_line['comment'].rstrip()
-          if 'message' in expected_line:
-            if isinstance(expected_line['message'], basestring):
-              expected_line['message'] = expected_line['message'].rstrip()
-          s1 = False
-          try:
-            s1 = set(expected_line.items()).issubset(
-              set(collected_line.items()))
-          except Exception as e:
-            print(str(e))
-          if not s1:
-            pass
           self.assertDictContainsSubset(expected_line,
                                         collected_line)
           counter += 1

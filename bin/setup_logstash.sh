@@ -5,7 +5,7 @@
 # This source code is licensed under the MIT license found in the LICENSE
 # file in the root directory of this source tree.
 
-LOGSTASH_VERSION=5.6.4    # Same as logstash version in NuoDB bld extern.
+LOGSTASH_VERSION=7.2.0    # Same as logstash version in NuoDB bld extern.
 
 # Find the NuoCA home directory.
 CMD=${0##*/}
