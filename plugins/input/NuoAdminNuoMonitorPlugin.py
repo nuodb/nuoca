@@ -255,7 +255,7 @@ class NuoAdminNuoMonitorPlugin(NuocaMPInputPlugin):
     if not verify:
       verify = False
 
-    return nuodb_mgmt.AdminConnection(api_server, client_key, verify=verify)
+    return nuodb_mgmt.AdminConnection(api_server, client_key, verify)
 
   def wait_for_terminate(self):
     if self._domain:

@@ -312,7 +312,7 @@ def _find_nuoadmin_conn():
 
   try:
     conn =  nuodb_mgmt.AdminConnection(test_url_base, test_client_key,
-                                       verify=False)
+                                       False)
     admin_cfg = conn.get_admin_config()
     if admin_cfg and admin_cfg.properties:
       conn_success = True
@@ -327,7 +327,7 @@ def _find_nuoadmin_conn():
   except Exception as e:
     test_url_base = nuoadmin_nonssl_url_base
   try:
-    conn =  nuodb_mgmt.AdminConnection(test_url_base, None, None)
+    conn =  nuodb_mgmt.AdminConnection(test_url_base, None, False)
     admin_cfg = conn.get_admin_config()
     if admin_cfg and admin_cfg.properties:
       conn_success = True
