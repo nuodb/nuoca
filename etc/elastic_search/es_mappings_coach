@@ -62,6 +62,270 @@
               "type": "date",
               "format": "strict_date_optional_time||epoch_millis"
           },
+
+          "WL.SimpleDriver.del.ops_rate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.ave_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.inactive_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.row_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.ops_recent_rate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.running_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.total_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.min_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.ops_count": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.tx_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.ave_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.end_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.abort_conflict": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.sleeping_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.max_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.ops_recent": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.ops_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.ops_aggregate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.rows_aggragate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.tx_aggragate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.start_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.executing_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.max_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.latency_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.thread_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.min_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.del.abort_deadlock": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.del.ave_sleep_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.ops_rate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.ave_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.inactive_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.row_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.ops_recent_rate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.running_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.total_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.min_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.ops_count": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.tx_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.ave_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.end_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.abort_conflict": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.sleeping_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.max_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.ops_recent": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.ops_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.ops_aggregate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.rows_aggragate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.tx_aggragate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.start_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.executing_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.max_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.latency_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.thread_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.min_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.ins.abort_deadlock": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.ins.ave_sleep_time": {
+              "type": "float"
+          },
+
+          "WL.SimpleDriver.sel.ops_rate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.ave_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.inactive_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.row_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.ops_recent_rate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.running_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.total_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.min_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.ops_count": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.tx_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.ave_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.end_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.abort_conflict": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.sleeping_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.max_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.ops_recent": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.ops_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.ops_aggregate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.rows_aggragate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.tx_aggragate": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.start_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.executing_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.max_latency": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.latency_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.thread_count": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.min_tx_time": {
+              "type": "float"
+          },
+          "WL.SimpleDriver.sel.abort_deadlock": {
+              "type": "integer"
+          },
+          "WL.SimpleDriver.sel.ave_sleep_time": {
+              "type": "float"
+          },
+
           "NuoAdminAgentLog.collect_timestamp": {
               "type": "date",
               "format": "strict_date_optional_time||epoch_millis"
