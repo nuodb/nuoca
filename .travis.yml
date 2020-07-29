@@ -7,11 +7,15 @@ python:
   - "2.7"
 
 env:
-  - NUOVERSION=3.4.1.1 NUODB_ADD_DOMAIN_PASS=yes NUODB_START_AGENT=yes NUODB_START_REST_API=yes ES_VERSION=5.6.4 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz INFLUX_VERSION=1.4.3
+  global:
+    - NUODB_ADD_DOMAIN_PASS=yes 
+    - NUODB_START_AGENT=yes
+    - NUODB_START_REST_API=yes 
+    - ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 
 notifications:
   recipients:
-    - tgates@nuodb.com
+    - drivers@nuodb.com
 
 before_install:
   - uname -a
