@@ -15,7 +15,7 @@ setup(
     url="https://github.com/nuodb/nuoca",
     license='MIT',
     keywords='nuodb scalable cloud database',
-    packages=find_packages(exclude=["tests"]),
+    packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests", "tests/*"]),
     install_requires=[
         'aenum>=2.0.8',
         'click>=6.7',
