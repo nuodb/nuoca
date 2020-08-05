@@ -20,7 +20,7 @@ get_nuodb_user_group
 log_user
 get_nuoagent_creds
 
-"$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" disable
+"$PYTHONCMD" "${NUOCA_HOME}/pynuoca/insights.py" disable
 
 "${NUOCA_HOME}/bin/stop_insights.sh"
 log_msg "INFO" "Insights is disabled."

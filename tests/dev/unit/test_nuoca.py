@@ -8,8 +8,8 @@ from __future__ import print_function
 import os
 import unittest
 import logging
-import nuoca_util
-import nuoca
+from pynuoca import nuoca_util
+from pynuoca import nuoca
 
 
 class TestNuoCA(unittest.TestCase):

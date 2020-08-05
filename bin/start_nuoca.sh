@@ -14,6 +14,6 @@ NUOCA_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
 "${NUOCA_HOME}/bin/start_zabbix_agentd.sh"
 
-"$PYTHONCMD" "${NUOCA_HOME}/src/nuoca.py" --mode insights --collection-interval 30 "${NUOCA_HOME}/etc/nuodb_domain.yml" > /dev/null 2>&1 &
+"$PYTHONCMD" "${NUOCA_HOME}/pynuoca/nuoca.py" --mode insights --collection-interval 30 "${NUOCA_HOME}/etc/nuodb_domain.yml" > /dev/null 2>&1 &
 NUOCA_PID=$!
 echo "$NUOCA_PID" > /var/run/nuodb/nuoca.pid

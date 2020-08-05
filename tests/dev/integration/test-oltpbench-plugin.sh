@@ -19,7 +19,7 @@ fail() {
 }
 
 start_nuoca() {
-    python src/nuoca.py --config-file ${fake_cfg} --plugin-dir tests/dev/plugins --collection-interval=1 --self-test
+    python pynuoca/nuoca.py --config-file ${fake_cfg} --plugin-dir tests/dev/plugins --collection-interval=1 --self-test
 }
 
 bg_fake_client() {

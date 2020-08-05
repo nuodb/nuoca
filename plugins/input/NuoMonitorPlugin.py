@@ -11,10 +11,10 @@ import threading
 import time
 
 from copy import deepcopy
-from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log
-from nuomon.nuomon_monitor import DomainListener, MetricsDomain
-from nuomon.nuomon_broadcast import MetricsConsumer, MetricsProducer, \
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin
+from pynuoca.nuoca_util import nuoca_log
+from pynuoca.nuomon.nuomon_monitor import DomainListener, MetricsDomain
+from pynuoca.nuomon.nuomon_broadcast import MetricsConsumer, MetricsProducer, \
   MetricsListener, EventListener
 
 # NuoMonitor plugin

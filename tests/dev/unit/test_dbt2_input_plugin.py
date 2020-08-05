@@ -6,7 +6,7 @@
 from __future__ import print_function
 
 import unittest
-import nuoca_util
+from pynuoca import nuoca_util
 
 from plugins.input.Dbt2Plugin import Dbt2Plugin
 

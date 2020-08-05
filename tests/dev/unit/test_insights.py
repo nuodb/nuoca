@@ -8,8 +8,7 @@ from __future__ import print_function
 import os
 import shutil
 import unittest
-import nuoca_util
-import insights
+from pynuoca import insights
 
 
 class TestGetDomainAuth(unittest.TestCase):

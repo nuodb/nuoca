@@ -23,10 +23,10 @@ get_nuoagent_creds
 # if just one argument, then it is required to be an existing
 # NuoDB Insights Subscriber ID.
 if [ "$#" -eq 1 ]; then
-  "$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" enable --subscriber-id $1
+  "$PYTHONCMD" "${NUOCA_HOME}/pynuoca/insights.py" enable --subscriber-id $1
   exit_status=$?
 else
-  "$PYTHONCMD" "${NUOCA_HOME}/src/insights.py" enable $*
+  "$PYTHONCMD" "${NUOCA_HOME}/pynuoca/insights.py" enable $*
   exit_status=$?
 fi
 

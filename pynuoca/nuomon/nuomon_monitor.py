@@ -6,8 +6,8 @@
 # file in the root directory of this source tree.
 
 import os, sys, yaml
-import time,aenum
-import pynuodb,socket
+import time, aenum
+import socket
 import threading, logging
 from nuomon_util import *
 

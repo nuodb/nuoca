@@ -10,7 +10,7 @@ import os
 import sys
 import time
 import unittest
-import nuoca_util
+from pynuoca import nuoca_util
 import logging
 import socket
 

@@ -9,9 +9,9 @@ import socket
 import signal
 import traceback
 import yaml
-from nuoca_util import *
+from pynuoca.nuoca_util import *
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
-from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 from nuoca_config import NuocaConfig
 

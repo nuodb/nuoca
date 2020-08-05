@@ -9,8 +9,8 @@ import re
 import requests
 import threading
 
-from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log, nuoca_gettimestamp, IntervalSync
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin
+from pynuoca.nuoca_util import nuoca_log, nuoca_gettimestamp, IntervalSync
 from requests.auth import HTTPBasicAuth
 
 # Unverified HTTPS request is being made because the NuoDB Admin service does

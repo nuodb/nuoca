@@ -12,8 +12,8 @@ import time
 import datetime
 
 from copy import deepcopy
-from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin
+from pynuoca.nuoca_util import nuoca_log
 
 import nuodb_mgmt
 

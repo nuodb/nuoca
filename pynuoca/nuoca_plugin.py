@@ -11,7 +11,7 @@ Created on May 4, 2017
 import os
 import traceback
 import logging
-from nuoca_util import nuoca_gettimestamp, nuoca_log
+from pynuoca.nuoca_util import nuoca_gettimestamp, nuoca_log
 from yapsy.IMultiprocessChildPlugin import IMultiprocessChildPlugin
 
 

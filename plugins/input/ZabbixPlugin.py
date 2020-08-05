@@ -6,8 +6,8 @@
 import logging
 import re
 
-from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log, search_running_processes, \
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin
+from pynuoca.nuoca_util import nuoca_log, search_running_processes, \
     execute_command, coerce_numeric
 
 # Zabbix plugin

@@ -8,8 +8,8 @@ import logging
 import requests
 import json
 
-from nuoca_plugin import NuocaMPOutputPlugin
-from nuoca_util import nuoca_log
+from pynuoca.nuoca_plugin import NuocaMPOutputPlugin
+from pynuoca.nuoca_util import nuoca_log
 
 
 class RestClientPlugin(NuocaMPOutputPlugin):

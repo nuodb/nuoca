@@ -8,7 +8,7 @@ from nuomon_util import *
 from pubsub import pub
 import threading
 
-from nuoca_util import nuoca_log
+from pynuoca.nuoca_util import nuoca_log
 
 __all__=['MetricsConsumer', 'MetricsProducer', 'EventConsumer', 'EventProducer']
 

@@ -9,8 +9,8 @@ import time
 from math import sqrt
 from stat import ST_CTIME
 
-from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin
+from pynuoca.nuoca_util import nuoca_log
 
 
 class Dbt2Plugin(NuocaMPInputPlugin):

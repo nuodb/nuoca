@@ -15,9 +15,9 @@ import time
 
 from datetime import datetime
 from dateutil.parser import parse as date_parse
-from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log
-from nuoca_util import to_bool
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin
+from pynuoca.nuoca_util import nuoca_log
+from pynuoca.nuoca_util import to_bool
 
 # Logstash plugin
 #

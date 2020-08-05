@@ -4,8 +4,8 @@
 # file in the root directory of this source tree.
 
 import logging
-from nuoca_plugin import NuocaMPInputPlugin
-from nuoca_util import nuoca_log, coerce_numeric
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin
+from pynuoca.nuoca_util import nuoca_log, coerce_numeric
 import subprocess
 import re
 import os

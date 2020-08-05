@@ -7,8 +7,8 @@ from __future__ import print_function
 
 import os
 import unittest
-import nuoca_util
-import nuoca
+from pynuoca import nuoca_util
+from pynuoca import nuoca
 
 
 class TestNuoCARunFunction(unittest.TestCase):

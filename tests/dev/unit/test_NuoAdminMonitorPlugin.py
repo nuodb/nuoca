@@ -7,13 +7,13 @@ from __future__ import print_function
 
 import os
 import unittest
-import nuoca_util
+from pynuoca import nuoca_util
 import socket
 import time
 
-from nuoca import NuoCA
+from pynuoca.nuoca import NuoCA
 from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
-from nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
+from pynuoca.nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
 from plugins.input.NuoAdminMonitorPlugin import NuoAdminMonitorPlugin

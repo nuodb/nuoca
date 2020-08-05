@@ -22,3 +22,7 @@ extern/logstash/**
 python/**
 extern/zabbix/**
 extern/zabbix-3.0.13/**
+build
+dist
+*egg-info
+**/*.egg-info
