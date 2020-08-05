@@ -31,9 +31,9 @@ setup(
         'pynuodb>=2.3.2',
     ],
     scripts=['bin/nuoca',
-        'etc/nuoca_setup.sh',
-        'etc/nuoca_export.sh',
-        'etc/nuoca_env.sh',
+    ],
+    data_files=[
+        ('etc', ['etc/nuoca_setup.sh', 'etc/nuoca_export.sh', 'etc/nuoca_env.sh']),
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
