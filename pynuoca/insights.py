@@ -10,7 +10,11 @@ import json
 import sys
 
 from requests.auth import HTTPBasicAuth
-import nuodb_mgmt
+
+try:
+    from pynuoadmin import nuodb_mgmt
+except ImportError:
+    import nuodb_mgmt
 
 # Allow calls the localhost Admin API without server verification.
 # https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings

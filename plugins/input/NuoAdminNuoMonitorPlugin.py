@@ -15,8 +15,10 @@ from copy import deepcopy
 from pynuoca.nuoca_plugin import NuocaMPInputPlugin
 from pynuoca.nuoca_util import nuoca_log
 
-import nuodb_mgmt
-
+try:
+    from pynuoadmin import nuodb_mgmt
+except ImportError:
+    import nuodb_mgmt
 
 # NuoAdminNuoMonitor plugin
 #
