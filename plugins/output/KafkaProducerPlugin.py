@@ -1,4 +1,4 @@
-# Copyright (c) 2017, NuoDB, Inc.
+# Copyright (c) 2017-2020, NuoDB, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,53 +24,51 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import os
 import logging
 from kafka import KafkaProducer
 import json
-
 
 from pynuoca.nuoca_plugin import NuocaMPOutputPlugin
 from pynuoca.nuoca_util import nuoca_log
 
 
 class KafkaProducerPlugin(NuocaMPOutputPlugin):
-  def __init__(self, parent_pipe, config=None):
-    super(KafkaProducerPlugin, self).__init__(parent_pipe, 'KafkaProducer')
-    self._config       = config
-    self._producer     = None
-    self._defaulttopic = None
-    
-  def startup(self, config=None):
-    try:
-      self._config = config
-      
-      servers = config.get('servers','localhost:9092')
-      self._defaulttopic = config.get('defaulttopic',None)
-      print servers
-      self._producer = KafkaProducer(bootstrap_servers=servers,
-                                     value_serializer=lambda v: json.dumps(v).encode('utf-8')
-      )
-      return True
-    except Exception as e:
-      nuoca_log(logging.ERROR, str(e))
+    def __init__(self, parent_pipe, config=None):
+        super(KafkaProducerPlugin, self).__init__(parent_pipe, 'KafkaProducer')
+        self._config = config
+        self._producer = None
+        self._defaulttopic = None
 
-  def shutdown(self):
-    pass
+    def startup(self, config=None):
+        try:
+            self._config = config
 
-  def store(self, ts_values):
-    rval = None
-    try:
-      nuoca_log(logging.DEBUG,
-                "Called store() in KafkaProducerPlugin process")
-      rval = super(KafkaProducerPlugin, self).store(ts_values)
-      topic = self._defaulttopic
-      if topic is not None:
-        if type(ts_values) is list:
-          for svalues in ts_values:
-            self._producer.send(topic,svalues)
-        else:
-          self._producer.send(topic,ts_values)
-    except Exception as e:
-      nuoca_log(logging.ERROR, str(e))
-    return rval
+            servers = config.get('servers', 'localhost:9092')
+            self._defaulttopic = config.get('defaulttopic', None)
+            print servers
+            self._producer = KafkaProducer(bootstrap_servers=servers,
+                                           value_serializer=lambda v: json.dumps(v).encode('utf-8')
+                                           )
+            return True
+        except Exception as e:
+            nuoca_log(logging.ERROR, str(e))
+
+    def shutdown(self):
+        pass
+
+    def store(self, ts_values):
+        rval = None
+        try:
+            nuoca_log(logging.DEBUG,
+                      "Called store() in KafkaProducerPlugin process")
+            rval = super(KafkaProducerPlugin, self).store(ts_values)
+            topic = self._defaulttopic
+            if topic is not None:
+                if type(ts_values) is list:
+                    for svalues in ts_values:
+                        self._producer.send(topic, svalues)
+                else:
+                    self._producer.send(topic, ts_values)
+        except Exception as e:
+            nuoca_log(logging.ERROR, str(e))
+        return rval
