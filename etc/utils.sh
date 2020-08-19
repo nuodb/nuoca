@@ -31,11 +31,11 @@ log_msg () {
     log_level=$1
     msg=$2
     timestamp=$(date -u)
-    if [ ! -f "${NUODB_LOGDIR}/insights.log" ]; then
-        touch "${NUODB_LOGDIR}/insights.log"
-        chown "$NUODB_USER:$NUODB_GROUP" "${NUODB_LOGDIR}/insights.log"
+    if [ ! -f "${NUODB_LOGDIR}/nuodb_nuoca.log" ]; then
+        touch "${NUODB_LOGDIR}/nuodb_nuoca.log"
+        chown "$NUODB_USER:$NUODB_GROUP" "${NUODB_LOGDIR}/nuodb_nuoca.log"
     fi
-    echo "${timestamp}: ${log_level} ${msg}" >> "${NUODB_LOGDIR}/insights.log"
+    echo "${timestamp}: ${log_level} ${msg}" >> "${NUODB_LOGDIR}/nuodb_nuoca.log"
 }
 
 log_user () {

@@ -53,7 +53,6 @@ INPUT_PLUGINS:
     domain_metrics_host: localhost
 
 OUTPUT_PLUGINS:
-- RestClient:
-    url: $INSIGHTS_INGEST_URL
-    auth_token: $INSIGHTS_TOKEN
+- File:
+    filePath: /tmp/nuoca_nuodb_domain.output.json
 

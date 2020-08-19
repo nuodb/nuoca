@@ -17,7 +17,6 @@ import unittest
 
 def main():
     test_names = ['unit.test_counter_plugin',
-                  'unit.test_insights',
                   'unit.test_nuoca',
                   'unit.test_nuoca_run_function']
     suite = unittest.TestLoader().loadTestsFromNames(test_names)

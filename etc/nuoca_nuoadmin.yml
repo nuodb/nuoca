@@ -39,16 +39,15 @@ INPUT_PLUGINS:
     description : Collection from NuoDB Admin Layer
     nuocaCollectionName: NuoAdminMon2
     api_server: ${NUODB_API_SERVER}
-    client_key: ${NUODB_INSIGHTS_KEY}
+    client_key: ${NUODB_NUOCA_CLIENT_KEY}
     server_cert: None
 - NuoAdminNuoMon:
     description : Collection from NuoDB engines
     nuocaCollectionName: NuoMon
     api_server: ${NUODB_API_SERVER}
-    client_key: ${NUODB_INSIGHTS_KEY}
+    client_key: ${NUODB_NUOCA_CLIENT_KEY}
     host_uuid_shortname: True
 
 OUTPUT_PLUGINS:
-- RestClient:
-    url: $INSIGHTS_INGEST_URL
-    auth_token: $INSIGHTS_TOKEN
+- File:
+    filePath: /tmp/nuoca_nuoadmin.output.json

@@ -26,17 +26,16 @@ fi
 NUODB_DOMAIN_PASSWORD=${DOMAIN_PASSWORD:-bird}
 
 : ${LOGSTASH_HOME:="${NUOCA_HOME}/extern/logstash"}
-: ${NUODB_INSIGHTS_SERVICE_API:="https://insights.nuodb.com/api/1"}
 : ${NUOADMIN_API_SERVER_NONSSL:="http://localhost:8888"}
 : ${NUOADMIN_API_SERVER_SSL:="https://localhost:8888"}
 
 
-if [ -z "${NUODB_INSIGHTS_KEY}" ]; then
+if [ -z "${NUODB_NUOCA_CLIENT_KEY}" ]; then
   if [ -f "${NUODB_CFGDIR}/keys/nuodb_insights.pem" ]; then
-    export NUODB_INSIGHTS_KEY="${NUODB_CFGDIR}/keys/nuodb_insights.pem"
+    export NUODB_NUOCA_CLIENT_KEY="${NUODB_CFGDIR}/keys/nuodb_insights.pem"
   else
     if [ -f  "${NUODB_CFGDIR}/keys/nuocmd.pem" ]; then
-      export NUODB_INSIGHTS_KEY="${NUODB_CFGDIR}/keys/nuocmd.pem"
+      export NUODB_NUOCA_CLIENT_KEY="${NUODB_CFGDIR}/keys/nuocmd.pem"
     fi
   fi
 fi

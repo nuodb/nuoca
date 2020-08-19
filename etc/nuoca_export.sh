@@ -19,7 +19,6 @@ export PATH
 export PYTHONCMD
 export PYTHONPATH
 export NUOADMINAGENTLOGCONFIG
-export NUODB_INSIGHTS_SERVICE_API
 
 # Only export PYTHONHOME if set.
 [ -z "$PYTHONHOME" ] || export PYTHONHOME
