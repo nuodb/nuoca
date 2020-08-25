@@ -33,7 +33,8 @@ setup(
     scripts=['bin/nuoca',
     ],
     data_files=[
-        ('etc', ['etc/nuoca_setup.sh', 'etc/nuoca_export.sh', 'etc/nuoca_env.sh', 'etc/nuoca_settings.yml']),
+        #('etc', ['etc/nuoca_setup.sh', 'etc/nuoca_export.sh', 'etc/nuoca_env.sh', 'etc/nuoca_settings.yml']),
+        ('etc', ['etc/nuoca_settings.yml']),
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
