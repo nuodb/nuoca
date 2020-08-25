@@ -16,6 +16,7 @@ setup(
     license='MIT',
     keywords='nuodb scalable cloud database',
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests", "tests/*"]),
+    include_package_data=True,
     install_requires=[
         'aenum>=2.0.8',
         'click>=6.7',
@@ -33,7 +34,8 @@ setup(
     scripts=['bin/nuoca',
     ],
     data_files=[
-        ('etc', ['etc/nuoca_setup.sh', 'etc/nuoca_export.sh', 'etc/nuoca_env.sh', 'etc/nuoca_settings.yml']),
+        ('etc', ['etc/nuoca_setup.sh', 'etc/nuoca_export.sh', 'etc/nuoca_env.sh',
+                 'etc/nuoca_settings.yml', 'etc/nuoca.yml']),
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',

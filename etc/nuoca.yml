@@ -1,0 +1,12 @@
+NUOCA_LOGFILE: /var/log/nuodb/nuoca.log
+
+INPUT_PLUGINS:
+- NuoAdminNuoMon:
+    description : Collection from NuoDB engines
+    nuocaCollectionName: NuoMon
+    client_key: ${NUOCMD_CLIENT_KEY}
+    api_server: ${NUOCMD_API_SERVER}
+
+OUTPUT_PLUGINS:
+- File:
+    filePath: /tmp/output.txt
