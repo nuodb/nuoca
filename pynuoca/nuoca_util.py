@@ -202,7 +202,7 @@ def get_nuoca_topdir():
     if not nuoca_topdir:
         this_file = os.path.realpath(__file__)
         this_dir = os.path.dirname(this_file)
-        nuoca_topdir = os.path.abspath(os.path.join(this_dir, '..'))
+        nuoca_topdir = os.path.abspath(this_dir)
     return nuoca_topdir
 
 
