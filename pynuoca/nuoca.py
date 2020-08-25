@@ -65,8 +65,8 @@ class NuoCA(object):
                 nuoca_log(logging.ERROR, msg)
                 raise AttributeError(msg)
 
-        self._nuodb_cfgdir = None
-        self.get_nuodb_cfgdir()
+        self._nuoca_cfgdir = None
+        self.get_nuoca_cfgdir()
         self._nuoca_settings = self.read_nuoca_settings()
 
         # override default log level
@@ -134,20 +134,21 @@ class NuoCA(object):
                                     output_plugin_dir,
                                     transform_plugin_dir]
 
-    def get_nuodb_cfgdir(self):
-        if self._nuodb_cfgdir:
-            return self._nuodb_cfgdir
+    def get_nuoca_cfgdir(self):
+        if self._nuoca_cfgdir:
+            return self._nuoca_cfgdir
         try:
-            self._nuodb_cfgdir = os.path.expandvars('$NUODB_CFGDIR')
+            self._nuoca_cfgdir = os.path.join(os.path.expandvars('$NUOCA_HOME'), 'etc')
         except:
             pass
-        return self._nuodb_cfgdir
+        return self._nuoca_cfgdir
 
     def read_nuoca_settings(self):
         settings = None
         try:
-            if self._nuodb_cfgdir:
-                settings_file = os.path.join(self._nuodb_cfgdir, 'nuoca_settings.yml')
+            if self._nuoca_cfgdir:
+                settings_file = os.path.join(self._nuoca_cfgdir, 'nuoca_settings.yml')
+                nuoca_log(logging.INFO, "Using CONFIG file %s" % settings_file)
                 with open(settings_file, 'r') as f:
                     settings = yaml.safe_load(f.read())
                     print settings
