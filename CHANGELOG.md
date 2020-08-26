@@ -1,5 +1,18 @@
 # Changelog
 
+## [v20.0.1](https://github.com/nuodb/nuoca/tree/v20.0.1) (2020-08-26)
+
+[Full Changelog](https://github.com/nuodb/nuoca/compare/v20.0.0...v20.0.1)
+
+**Implemented enhancements:**
+
+- Moved all python code into the pynuoca directory [\#15](https://github.com/nuodb/nuoca/pull/15) ([vegichan](https://github.com/vegichan))
+
+**Fixed bugs:**
+
+- Added missing multiprocess-plugin files to pypi [\#13](https://github.com/nuodb/nuoca/pull/13) ([vegichan](https://github.com/vegichan))
+- Fixed relative path resolution and the /usr/bin/nuoca script [\#10](https://github.com/nuodb/nuoca/pull/10) ([vegichan](https://github.com/vegichan))
+
 ## [v20.0.0](https://github.com/nuodb/nuoca/tree/v20.0.0) (2020-08-24)
 
 [Full Changelog](https://github.com/nuodb/nuoca/compare/v4.0.0...v20.0.0)
