@@ -13,7 +13,7 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from pynuoca.nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from plugins.input.CounterPlugin import CounterPlugin
+from pynuoca.plugins.input.CounterPlugin import CounterPlugin
 
 
 class TestInputPlugins(unittest.TestCase):
@@ -94,7 +94,7 @@ class TestInputPlugins(unittest.TestCase):
       self.assertFalse(a_plugin.is_activated)
 
   def runTest(self):
-    topdir = nuoca_util.get_nuoca_topdir()
+    topdir = nuoca_util.get_nuoca_sourcedir()
     input_plugin_dir = os.path.join(topdir, "plugins/input")
     dir_list = [input_plugin_dir]
     self._CounterPluginTest()

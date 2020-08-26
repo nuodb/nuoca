@@ -13,7 +13,7 @@ from yapsy.MultiprocessPluginManager import MultiprocessPluginManager
 from pynuoca.nuoca_plugin import NuocaMPInputPlugin, NuocaMPOutputPlugin, \
     NuocaMPTransformPlugin
 
-from plugins.output.PrinterPlugin import PrinterPlugin
+from pynuoca.plugins.output.PrinterPlugin import PrinterPlugin
 
 
 class TestOutputPlugins(unittest.TestCase):
@@ -74,7 +74,7 @@ class TestOutputPlugins(unittest.TestCase):
       self.assertFalse(a_plugin.is_activated)
 
   def runTest(self):
-    topdir = nuoca_util.get_nuoca_topdir()
+    topdir = nuoca_util.get_nuoca_sourcedir()
     output_plugin_dir = os.path.join(topdir, "plugins/output")
     dir_list = [output_plugin_dir]
     self._PrinterPluginTest()

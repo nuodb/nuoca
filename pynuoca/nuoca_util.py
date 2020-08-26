@@ -33,7 +33,7 @@ last_log_error_message = None
 
 # Global top level directory
 nuoca_topdir = None  # Top level directory for NuoCA
-
+nuoca_sourcedir = None
 
 class UTC(datetime.tzinfo):
     """UTC tzinfo"""
@@ -204,6 +204,21 @@ def get_nuoca_topdir():
         this_dir = os.path.dirname(this_file)
         nuoca_topdir = os.path.abspath(os.path.join(this_dir, '..'))
     return nuoca_topdir
+
+
+def get_nuoca_sourcedir():
+    """
+    Get the NuoCA python source directory
+
+    :return: full path to the NuoCA python source directory
+    :type: str
+    """
+    global nuoca_sourcedir
+    if not nuoca_sourcedir:
+        this_file = os.path.realpath(__file__)
+        this_dir = os.path.dirname(this_file)
+        nuoca_sourcedir = os.path.abspath(this_dir)
+    return nuoca_sourcedir
 
 
 def nuoca_set_log_level(log_level):

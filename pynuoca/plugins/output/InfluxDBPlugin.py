@@ -29,7 +29,7 @@ import logging
 from pynuoca.nuoca_plugin import NuocaMPOutputPlugin
 from pynuoca.nuoca_util import nuoca_log
 import requests
-import metrics_influx
+from pynuoca.lib import metrics_influx
 import gzip
 
 try:

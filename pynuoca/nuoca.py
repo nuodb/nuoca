@@ -124,9 +124,9 @@ class NuoCA(object):
         self._transform_plugins = {}
 
         if not self._plugin_topdir:
-            self._plugin_topdir = os.path.join(get_nuoca_topdir(),
-                                               "plugins")
+            self._plugin_topdir = os.path.join(get_nuoca_sourcedir(), "plugins")
         nuoca_log(logging.INFO, "plugin dir: %s" % self._plugin_topdir)
+
         input_plugin_dir = os.path.join(self._plugin_topdir, "input")
         output_plugin_dir = os.path.join(self._plugin_topdir, "output")
         transform_plugin_dir = os.path.join(self._plugin_topdir, "transform")

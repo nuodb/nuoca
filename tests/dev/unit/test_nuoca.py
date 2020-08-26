@@ -17,11 +17,13 @@ class TestNuoCA(unittest.TestCase):
   def setUp(self):
     super(TestNuoCA, self).setUp()
     self._topdir = nuoca_util.get_nuoca_topdir()
-    self._plugin_dir = os.path.join(self._topdir, "plugins")
+    self._sourcedir = nuoca_util.get_nuoca_sourcedir()
+    self._plugin_dir = os.path.join(self._sourcedir, "plugins")
     self._config_dir = os.path.join(self._topdir, "tests", "dev", "configs")
 
   def test_dirs(self):
     self.assertTrue(os.path.isdir(self._topdir))
+    self.assertTrue(os.path.isdir(self._sourcedir))
     self.assertTrue(os.path.isdir(self._plugin_dir))
     self.assertTrue(os.path.isdir(self._config_dir))
 

@@ -8,7 +8,7 @@ from __future__ import print_function
 import unittest
 from pynuoca import nuoca_util
 
-from plugins.input.Dbt2Plugin import Dbt2Plugin
+from pynuoca.plugins.input.Dbt2Plugin import Dbt2Plugin
 
 
 class TestInputPlugins(unittest.TestCase):

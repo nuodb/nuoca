@@ -18,14 +18,14 @@ cd "${THIS_DIR}"
 
 # counter plugin
 echo "## Running counter"
-"${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/counter.yml"
+"${NUOCA_HOME}/bin/nuoca" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/counter.yml"
 echo "## Completed counter"
 
 # counter plugin to ElasticSearch plugin
 echo "## Running ElasticSearch plugin"
 "${NUOCA_HOME}/tests/etc/elastic_search/es_test_delete_index.sh"
 "${NUOCA_HOME}/tests/etc/elastic_search/es_test_create_index.sh"
-"${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/counter_to_elastic.yml"
+"${NUOCA_HOME}/bin/nuoca" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/counter_to_elastic.yml"
 "${NUOCA_HOME}/tests/etc/elastic_search/es_test_show_counts.sh"
 "${NUOCA_HOME}/tests/etc/elastic_search/es_test_get_count.sh"
 echo "## Running ElasticSearch plugin"
@@ -37,22 +37,22 @@ echo "## Completed oltpbench plugin"
 
 # Zabbix plugin
 echo "## Running Zabbix plugin"
-"${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/zabbix_to_printer.yml"
+"${NUOCA_HOME}/bin/nuoca" --collection-interval=1 --self-test "${NUOCA_HOME}/tests/dev/configs/zabbix_to_printer.yml"
 echo "## Completed Zabbix plugin"
 
 # NuoMonitor plugin
 echo "## Running NuoMonitor plugin"
-"${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=10 --self-test "${NUOCA_HOME}/tests/dev/configs/nuomonitor_to_printer.yml"
+"${NUOCA_HOME}/bin/nuoca" --collection-interval=10 --self-test "${NUOCA_HOME}/tests/dev/configs/nuomonitor_to_printer.yml"
 echo "## Completed NuoMonitor plugin"
 
 # NuoMonitor plugin
 echo "## Running NuoMonitor plugin"
-"${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=10 --self-test "${NUOCA_HOME}/tests/dev/configs/nuoadminmonitor_to_printer.yml"
+"${NUOCA_HOME}/bin/nuoca" --collection-interval=10 --self-test "${NUOCA_HOME}/tests/dev/configs/nuoadminmonitor_to_printer.yml"
 echo "## Completed NuoMonitor plugin"
 
 # InfluxDB plugin
 echo "## Running InfluxDB plugin"
-"${NUOCA_HOME}/bin/nuoca" --plugin-dir "${NUOCA_HOME}/plugins" --collection-interval=10 --self-test "${NUOCA_HOME}/tests/dev/configs/nuomonitor_to_influxdb.yml"
+"${NUOCA_HOME}/bin/nuoca" --collection-interval=10 --self-test "${NUOCA_HOME}/tests/dev/configs/nuomonitor_to_influxdb.yml"
 echo "## Completed InfluxDB plugin"
 
 # Kafka Producer Output Plugin
