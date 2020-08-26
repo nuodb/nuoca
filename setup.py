@@ -45,7 +45,7 @@ setup(
         "Programming Language :: Python :: 2",
         'Programming Language :: Python :: 2.7',
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+        "Operating System :: POSIX",
         'Topic :: Database :: Front-Ends',
     ],
 )
