@@ -1,5 +1,13 @@
 # Changelog
 
+## [v20.0.2](https://github.com/nuodb/nuoca/tree/v20.0.2) (2020-09-30)
+
+[Full Changelog](https://github.com/nuodb/nuoca/compare/v20.0.1...v20.0.2)
+
+**Implemented enhancements:**
+
+- Updated nuodb\_setup for delivery in the nuodb-client package [\#16](https://github.com/nuodb/nuoca/pull/16) ([madscientist](https://github.com/madscientist))
+
 ## [v20.0.1](https://github.com/nuodb/nuoca/tree/v20.0.1) (2020-08-26)
 
 [Full Changelog](https://github.com/nuodb/nuoca/compare/v20.0.0...v20.0.1)
