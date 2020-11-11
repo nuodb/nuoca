@@ -1,23 +1,21 @@
-#!/bin/sh
-
 # (C) Copyright NuoDB, Inc. 2017-2019
 #
 # This source code is licensed under the MIT license found in the LICENSE
 # file in the root directory of this source tree.
 
-# Useful functions to be used by other scripts.  The other scripts should
-# source "${NUOCA_HOME}/etc/nuoca_setup.sh" and then source this script.
+# Useful functions to be used by other scripts.  These functions assume that
+# $NUOCA_HOME/etc/nuoca_setup.sh has been sourced before they are called.
 
-die () { e=$1; shift; log_failure_msg "$*"; exit $e; }
+die () { e=$1; shift; log_msg "ERROR" "$*"; exit $e; }
 
 get_property() {
-    grep "^ *$1 *=" "$2" | sed "s/.*= *//"
+    sed -n "s/^ *$1 *= *//p" "$2"
 }
 
 getown () {
     case $1 in
         (user)  stat -c %U "$2" 2>/dev/null || stat -f %Su "$2" 2>/dev/null ;;
-	(group) stat -c %G "$2" 2>/dev/null || stat -f %Sg "$2" 2>/dev/null ;;
+        (group) stat -c %G "$2" 2>/dev/null || stat -f %Sg "$2" 2>/dev/null ;;
     esac
 }
 
@@ -53,8 +51,8 @@ log_user () {
 get_nuoagent_creds () {
     propsfile="$NUODB_HOME"/etc/default.properties
     if [ -f "$propsfile" ]; then
-	user="$(get_property domainUser "$propsfile")"
-	["$user" ] && export DOMAIN_USER="$user" || export DOMAIN_USER="domain"
-	export DOMAIN_PASSWORD="$(get_property domainPassword "$propsfile")"
+        user="$(get_property domainUser "$propsfile")"
+        export DOMAIN_USER=${user:-domain}
+        export DOMAIN_PASSWORD="$(get_property domainPassword "$propsfile")"
     fi
 }

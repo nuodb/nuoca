@@ -1,12 +1,21 @@
+#!/bin/sh
+#
 # (C) Copyright NuoDB, Inc. 2017-2018
 #
 # This source code is licensed under the MIT license found in the LICENSE
 # file in the root directory of this source tree.
-#
-# This file should be _sourced_ by other scripts.
 
-NUOCA_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-. "${NUOCA_HOME}/etc/nuoca_setup.sh"
+# Find the NuoCA home directory.
+# This is a standalone script so we don't need BASH_SOURCE.
+_nuoca_env_CMD=${0##*/}
+: ${NUOCA_HOME:=$(cd "${0%$_nuoca_env_CMD}.." && pwd)}
+unset _nuoca_env_CMD
+
+[ -f "$NUOCA_HOME/etc/nuoca_setup.sh" ] \
+    || { echo "Cannot locate NUOCA_HOME"; return 1; }
+
+. "${NUOCA_HOME}/etc/nuoca_setup.sh" || return 1
+
 echo "NUODB_HOME=${NUODB_HOME}"
 echo "LOGSTASH_HOME=${LOGSTASH_HOME}"
 echo "NUODB_PORT=${NUODB_PORT}"

@@ -1,11 +1,14 @@
 #!/bin/sh
 
 # Find the NuoCA home directory.
-CMD=${0##*/}
-DIR=`cd "${0%$CMD}." && pwd`
-NUOCA_HOME=${DIR%/*}
+_nuoca_CMD=${0##*/}
+NUOCA_HOME=$(cd "${0%$_nuoca_CMD}.." && pwd)
+unset _nuoca_CMD
 
-. "${NUOCA_HOME}/etc/nuoca_setup.sh"
-. "${NUOCA_HOME}/etc/nuoca_export.sh"
+[ -f "$NUOCA_HOME/etc/nuoca_setup.sh" ] \
+    || { echo "Cannot locate NUOCA_HOME"; return 1; }
+
+. "${NUOCA_HOME}/etc/nuoca_setup.sh" || exit 1
+. "${NUOCA_HOME}/etc/nuoca_export.sh" || exit 1
 
 exec "$PYTHONCMD" -m pynuoca.nuoca "$@"

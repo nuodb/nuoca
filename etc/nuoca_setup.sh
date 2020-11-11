@@ -12,12 +12,13 @@ if [ -f "$NUOCA_HOME"/etc/nuodb_setup.sh ]; then
 elif [ -n "$NUOCLIENT_HOME" ] && [ -f "$NUOCLIENT_HOME"/etc/nuodb_setup.sh ]; then
     _home="$NUOCLIENT_HOME"
 elif [ -n "$NUODB_HOME" ] && [ -f "$NUODB_HOME"/etc/nuodb_setup.sh ]; then
-    _home="NUODB_HOME"
+    _home="$NUODB_HOME"
 elif [ -f /opt/nuodb/etc/nuodb_setup.sh ]; then
     _home=/opt/nuodb
 else
-    echo "Cannot locate NuoDB installation"
-    exit 1
+    echo 'NuoCA setup failed: Cannot locate NuoDB database installation'
+    echo 'Please set $NUODB_HOME'
+    return 1
 fi
 
 . "$_home"/etc/nuodb_setup.sh
