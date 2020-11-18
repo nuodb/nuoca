@@ -1,5 +1,14 @@
 # Changelog
 
+## [v20.0.3](https://github.com/nuodb/nuoca/tree/v20.0.3) (2020-11-18)
+
+[Full Changelog](https://github.com/nuodb/nuoca/compare/v20.0.2...v20.0.3)
+
+**Implemented enhancements:**
+
+- Refactored shell scripting related to command line tools and environment setup.
+
+
 ## [v20.0.2](https://github.com/nuodb/nuoca/tree/v20.0.2) (2020-09-30)
 
 [Full Changelog](https://github.com/nuodb/nuoca/compare/v20.0.1...v20.0.2)
